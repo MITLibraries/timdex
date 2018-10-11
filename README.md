@@ -1,24 +1,16 @@
-# README
+# TIMDEX is Messy Data Easily Xchanged
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+(or something like that)
 
-Things you may want to cover:
+This application interfaces with an ElasticSearch backend and exposes a set of
+API Endpoints to allow registered users to query our data.
 
-* Ruby version
+The backend is populated via [pipelines](https://github.com/MITLibraries/mario).
 
-* System dependencies
+# Architecture Decision Records
 
-* Configuration
+This repository contains Architecture Decision Records in the
+[docs/architecture-decisions directory](docs/architecture_decisions).
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+[adr-tools](https://github.com/npryce/adr-tools) should allow easy creation of
+additional records with a standardized template.
