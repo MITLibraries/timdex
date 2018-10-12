@@ -5,6 +5,9 @@
     "EMAIL_FROM": {
       "required": true
     },
+    "EMAIL_URL_HOST": {
+      "required": true
+    },
     "LANG": {
       "required": true
     },
