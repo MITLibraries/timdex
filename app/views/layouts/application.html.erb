@@ -10,6 +10,15 @@
   </head>
 
   <body>
+    <% if user_signed_in? %>
+      <%= link_to("Sign out", destroy_user_session_path, method: :delete, id: "sign_in", class: 'action-auth')  %>
+    <% else %>
+      <%= link_to("Sign in", new_user_session_path, id: "sign_in", class: 'action-auth') %>
+    <% end %>
+
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
     <%= yield %>
   </body>
 </html>
