@@ -11,6 +11,7 @@
     "LANG": {
       "required": true
     },
+    "PR_BUILD": "true",
     "RACK_ENV": {
       "required": true
     },
