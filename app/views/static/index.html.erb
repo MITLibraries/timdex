@@ -1,1 +1,5 @@
 <p>This is a splash page. It is amazing.</p>
+
+<% if user_signed_in? %>
+  curl -X GET --header 'Authorization: Bearer <%= JWTWrapper.encode({ user_id: current_user.id }) %>' '<%= search_url(q: 'whatever')%>'
+<% end %>

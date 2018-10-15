@@ -28,6 +28,7 @@ additional records with a standardized template.
   application. In development, often `localhost:3000`. On heroku, often
   `yourapp.herokuapp.com`. However, if you use a custom domain in production,
   that should be the value you use in production.
+- `JWT_SECRET_KEY`: generate with `rails secret`
 
 # Production required Environment Variables
 - `SMTP_ADDRESS`
