@@ -6,6 +6,7 @@ ruby '2.5.1'
 gem 'bootsnap', require: false
 gem 'devise'
 gem 'jbuilder'
+gem 'jwt'
 gem 'lograge'
 gem 'puma'
 gem 'rails', '~> 5.2'
@@ -34,4 +35,5 @@ group :test do
   gem 'chromedriver-helper'
   gem 'coveralls', require: false
   gem 'selenium-webdriver'
+  gem 'timecop'
 end

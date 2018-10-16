@@ -11,6 +11,9 @@
     "HEROKU_APP_NAME": {
       "required": true
     },
+    "JWT_SECRET_KEY": {
+      "required": true
+    },
     "LANG": {
       "required": true
     },
