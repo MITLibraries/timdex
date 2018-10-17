@@ -1,0 +1,21 @@
+<div class="wrap-outer-header-local layout-band">
+  <div class="wrap-header-local">
+    <div class="local-identity">
+      <h2 class="title title-site"><a href="/">TIMDEX</a></h2>
+    </div>
+    <div class="wrap-local-nav">
+      <div class="wrap-bar">
+        <nav class="local-nav" aria-label="Main menu">
+          <%= nav_link_to("Home", root_path) %>
+        </nav>
+        <nav class="nav-user" aria-label="User menu">
+          <% if user_signed_in? %>
+          <%= link_to("Sign out", destroy_user_session_path, method: :delete, id: "sign_in", class: 'action-auth')  %>
+          <% else %>
+          <%= link_to("Sign in", new_user_session_path, id: "sign_in", class: 'action-auth') %>
+          <% end %>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
