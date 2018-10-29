@@ -5,6 +5,7 @@ ruby '2.5.1'
 
 gem 'bootsnap', require: false
 gem 'devise'
+gem 'elasticsearch'
 gem 'jbuilder'
 gem 'jwt'
 gem 'lograge'
@@ -37,4 +38,5 @@ group :test do
   gem 'coveralls', require: false
   gem 'selenium-webdriver'
   gem 'timecop'
+  gem 'vcr'
 end

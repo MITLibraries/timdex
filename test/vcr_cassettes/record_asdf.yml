@@ -1,0 +1,28 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:9200/timdex/_all/asdf
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v0.15.3
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      content-type:
+      - application/json; charset=UTF-8
+      content-length:
+      - '78'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"_index":"timdex","_type":"_all","_id":"asdf","found":false}'
+    http_version: 
+  recorded_at: Mon, 29 Oct 2018 20:32:59 GMT
+recorded_with: VCR 4.0.0

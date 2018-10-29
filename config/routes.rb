@@ -5,5 +5,6 @@ Rails.application.routes.draw do
 
   get 'auth', to: 'auth#auth'
   get 'search', to: 'search#search'
+  get 'record/:id', to: 'search#record', as: 'record'
   get 'ping', to: 'search#ping'
 end
