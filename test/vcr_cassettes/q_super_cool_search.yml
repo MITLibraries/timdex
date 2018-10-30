@@ -1,0 +1,256 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:9200/_search?q=super+cool+search
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v0.15.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json; charset=UTF-8
+      content-length:
+      - '6733'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"took":22,"timed_out":false,"_shards":{"total":5,"successful":5,"skipped":0,"failed":0},"hits":{"total":40,"max_score":8.569454,"hits":[{"_index":"timdex","_type":"marc","_id":"001714562","_score":8.569454,"_source":{"identifier":"001714562","title":"Marvel
+        zombies /","creators":["Kirkman, Robert."],"contributors":[{"kind":"contributor
+        added entry","value":["Phillips, Sean."]}],"subjects":["Zombies Comic books,
+        strips, etc.","Science fiction comic books, strips, etc.","Young adult fiction,
+        American."],"isbns":["0785126082 (hbk.)","9780785126089 (hbk.)","0785120149
+        (pbk.)","9780785120148 (pbk.)","078512277X (hbk.)","9780785122777 (hbk.)"],"oclcs":["(OCoLC)64961966","(OCoLC)144518185"],"country_of_publication":"nyu","languages":["English"],"publication_date":"2006","content_type":"Text","call_numbers":["PN6728.M367
+        K57 2006","741.5973"],"imprint":["New York : Marvel ; London : Diamond [distributor],
+        2006."],"physical_description":"1 v. (unpaged) : chiefly col. ill. ; 29 cm.","notes":["writer,
+        Robert Kirkman ; artist, Sean Phillips."],"summary":["Torn from the pages
+        of Ultimate Fantastic Four! On an Earth shockingly similar to the Marvel Universe''s,
+        an alien virus has mutated all of the world''s greatest super heroes into
+        flesh-eating monsters! It took them only hours to destroy life as we know
+        it - but what happens when they run out of humans to eat?! Follow their search
+        for more food, and witness the arrival of the Silver Surfer! Collects Marvel
+        Zombies #1-5."],"format":["HUM"],"literary_form":"fiction"}},{"_index":"timdex","_type":"marc","_id":"002344118","_score":6.331503,"_source":{"identifier":"002344118","title":"Ms.
+        Marvel /","alternate_titles":["No normal.","Generation why.","Crushed.","Last
+        days.","Super famous.","Civil war II.","Damage per second.","Mecca."],"creators":["Wilson,
+        G. Willow, 1982- author."],"contributors":[{"kind":"contributor added entry","value":["Herring,
+        Ian (Illustrator), colorist.","Caramagna, Joe, letterer.","Alphona, Adrian,
+        artist.","Wyatt, Jacob, artist.","Waid, Mark, 1962- author.","Bondoc, Elmo,
+        artist.","Miyazawa, Takeshi, artist.","Ramos, Humberto, artist.","Olazaba,
+        Victor, artist.","Kniivila, Irma, colorist.","Delgado, Edgar, 1976- colorist.","Leon,
+        Nico, artist.","Andolfo, Mirka, artist.","Gaston, Francesco, artist.","Failla,
+        Marco, artist.","Olortegui, Diego, artist.","Lanham, Travis, letterer."]},{"kind":"creator
+        CB added entry","value":["Marvel Comics Group, publisher."]}],"subjects":["Marvel,
+        Ms. (Fictitious character) Comic books, strips, etc.","Women superheroes Comic
+        books, strips, etc.","Muslim women Comic books, strips, etc.","Pakistani Americans
+        Comic books, strips, etc.","Teenage girls Comic books, strips, etc.","Superheroes
+        Comic books, strips, etc.","Muslim teenagers Comic books, strips, etc.","Muslim
+        girls Comic books, strips, etc."],"isbns":["9780785190219 (v. 1 ; paperback)","078519021X
+        (v. 1 ; paperback)","9780785190226 (v. 2 ; paperback)","0785190228 (v. 2 ;
+        paperback)","9780785192275 (v. 3 ; paperback)","0785192271 (v. 3 ; paperback)","9780785197362
+        (v. 4 ; paperback)","0785197362 (v. 4 ; paperback)","9780785196112 (v. 5 ;
+        paperback)","0785196110 (v. 5 ; paperback)","9780785196129 (v. 6 ; paperback)","0785196129
+        (v. 6 ; paperback)","9781302903053 (v. 7 ; paperback)","1302903055 (v. 7 ;
+        paperback)","9781302906085 (v. 8 ; paperback)","1302906089 (v. 8 ; paperback)","9780785198284","0785198288","9780785198369","0785198369"],"dois":["99976039560"],"oclcs":["(OCoLC)893721517","(OCoLC)926097695","NHCCYBP"],"country_of_publication":"nyu","languages":["English"],"publication_date":"2014","content_type":"Text","call_numbers":["PN6728.M766","PZ7.7.W5584","741.5973"],"imprint":["New
+        York, N.Y. : Marvel Worldwide, Inc., a subsidiary of Marvel Entertainment,
+        LLC, [2014]-","\ufffd2014-"],"physical_description":"volumes : color illustrations
+        ; 26 cm.","notes":["writer, G. Willow Wilson ; color artist, Ian Herring ;
+        letterer, VC''s Joe Caramagna.","\"Collected editions\"--Inside front cover,
+        volume 1.","Volume 1 reprints Ms. Marvel (2014) #1-5 and the Ms. Marvel story
+        from All-New Marvel Now! Point One. Volume 2 reprints #6-11 (2014 series).
+        Volume 3 reprints #12-15 (2014 series) and S.H.I.E.L.D. #2. Volume 4 reprints
+        #16-19 (2014 series) and Amazing Spider-Man #7-8 (2014 series). Volume 5 reprints
+        Ms. Marvel #1-6 (2016 series). Volume 6 reprints #7-12 (2016 series). Volume
+        7 reprints #13-18 (2016 series). Volume 8 reprints #19-24 (2016 series)."],"contents":["V.
+        1. No normal -- v.2. Generation why -- v. 3. Crushed -- v. 4. Last days --
+        v. 5. Super famous -- v. 6. Civil War II -- v. 7. Damage per second -- v.
+        8. Mecca --"],"summary":["\"Kamala Khan is an ordinary girl from Jersey City
+        - until she''s suddenly empowered with extraordinary gifts. But who truly
+        is the new Ms. Marvel? Teenager? Muslim? Inhuman? Find out as she takes the
+        Marvel Universe by storm!\"--Page 4 of cover, volume 1."],"format":["HUM"],"literary_form":"fiction","related_items":[{"kind":"in
+        series","value":["Marvel now!"]}]}},{"_index":"timdex","_type":"marc","_id":"002433978","_score":6.2800455,"_source":{"identifier":"002433978","title":"Ms.
+        Marvel. Vol. 5, Super famous /","alternate_titles":["Miss Marvel","Ms. Marvel.
+        Super famous, 5","Super famous"],"creators":["Wilson, G. Willow, 1982- author."],"contributors":[{"kind":"contributor
+        added entry","value":["Miyazawa, Takeshi, illustrator.","Alphona, Adrian,
+        illustrator.","Leon, Nico, illustrator.","Herring, Ian, artisit."]}],"subjects":["Marvel,
+        Ms. Comic books, strips, etc.","Marvel, Ms.","Women superheroes Comic books,
+        strips, etc.","Muslim women Comic books, strips, etc.","Pakistani Americans
+        Comic books, strips, etc.","Teenage girls Comic books, strips, etc.","Comic
+        books, strips, etc. United States.","Comic books, strips, etc.","Muslim women.","Pakistani
+        Americans.","Teenage girls.","Women superheroes.","United States."],"isbns":["9780785196112","0785196110
+        (paperback)"],"oclcs":["NHCCYBP"],"country_of_publication":"nyu","languages":["English"],"publication_date":"2016","content_type":"Text","imprint":["New
+        York, NY : Marvel Worldwide, Inc., a subsidiary of Marvel Entertainment, LLC,
+        [2016]","\ufffd2016"],"physical_description":"1 volume (unpaged) : chiefly
+        color illustrations ; 26 cm","notes":["writer, G. Willow Wilson ; artists,
+        Takeshi Miyazawa (#1, pp. 1-22 \u0026 #2-3), Adrian Alphona (#1, pp. 22-30)
+        \u0026 Nico Leon (#4-6) ; color artist, Ian Herring.","Title from indicia.","Contains
+        material originally published in magazine form as Ms. Marvel #1-6."],"summary":["\"She''s
+        your new favorite. She''s everyone''s new favorite. And now she''s joining
+        the big leagues. Look out world, Kamala Khan is an Avenger! But is she really
+        cut out to be one of Earth''s Mightiest Heroes? Saving the world is important,
+        but Jersey City still needs its protector--and a development company that
+        co-opted Ms. Marvel''s face for its project has more in mind for gentrification
+        than just real estate! Can Kamala take down the evil suits destroying her
+        home without ruining her grades and personal life? \"--Description from forbiddenplanet.co.uk."],"literary_form":"fiction"}},{"_index":"timdex","_type":"marc","_id":"002400091","_score":6.1873093,"_source":{"identifier":"002400091","title":"The
+        hunt for the golden mole : all creatures great and small and why they matter
+        /","creators":["Girling, Richard, author."],"subjects":["Golden moles Somalia.","Extinct
+        animals Somalia.","Hunting Moral and ethical aspects.","Nature conservation
+        South Africa.","Biodiversity South Africa."],"isbns":["9781619024502 (alk.
+        paper)","1619024500 (alk. paper)","9781619025851 (paperback)","161902585X
+        (paperback)"],"oclcs":["(OCoLC)871211548","NHCCYBP"],"lccn":"  2014022506","country_of_publication":"cau","languages":["English"],"publication_date":"2014","content_type":"Text","call_numbers":["QL737.A352
+        G57 2014","591.68"],"imprint":["Berkeley, CA : Counterpoint Press, 2014."],"physical_description":"312
+        pages : illustrations ; 24 cm","notes":["Richard Girling.","Includes bibliographical
+        references and index."],"contents":["Dr. Storer in the chair -- Rhinoceros
+        pie -- Beings akin to ourselves -- Werewolf seized in Southend -- Penitent
+        butchers -- Resurrection -- Chopsticks -- Ol Pejeta -- The virtuous circle
+        -- Unpronounceable teeth -- Valete et salvete -- Unbelievabilia -- The mole."],"summary":["Chronicles
+        the history of the conservation movement and the scientific debate about extinction
+        as reflected by the search for the elusive Somali golden mole."],"format":["HUM"],"literary_form":"nonfiction"}},{"_index":"timdex","_type":"marc","_id":"001281536","_score":6.1368184,"_source":{"identifier":"001281536","title":"The
+        ultimates /","creators":["Millar, Mark."],"contributors":[{"kind":"contributor
+        added entry","value":["Hitch, Bryan.","Neary, Paul.","Mounts, Paul.","Eliopoulos,
+        Chris.","Currie, Andrew."]}],"subjects":["Graphic novels.","Comic books, strips,
+        etc."],"isbns":["0785109609 (v. 1)","078511078X (v. 2)"],"oclcs":["(OCoLC)56472415"],"country_of_publication":"nyu","languages":["English"],"publication_date":"2002","content_type":"Text","edition":"Direct
+        ed.","imprint":["New York, NY : Marvel Comics, 2002-"],"physical_description":"v.
+        \u003c1-2\u003e : chiefly col. ill. ; 26 cm.","notes":["writer, Mark Millar
+        ; pencils, Bryan Hitch ; inks, Paul Neary \u0026 Andrew Currie ; colors, Paul
+        Mounts ; letters, Chris Eliopoulos.","Contains material originally published
+        in magazine form as The ultimates."],"contents":["v. 1. Super-human -- v.
+        2. Homeland security"],"format":["HUM"],"literary_form":"nonfiction"}},{"_index":"timdex","_type":"marc","_id":"001502747","_score":5.801376,"_source":{"identifier":"001502747","title":"Radical
+        alterity /","creators":["Baudrillard, Jean, 1929-2007."],"contributors":[{"kind":"contributor
+        added entry","value":["Guillaume, Marc, 1940-"]}],"subjects":["Other (Philosophy)"],"isbns":["9781584350491
+        (pbk.)","1584350490 (pbk.)"],"oclcs":["(OCoLC)181142540"],"country_of_publication":"cau","languages":["English","English","","","","","","French","","","",""],"publication_date":"2008","content_type":"Text","call_numbers":["121.2"],"imprint":["Los
+        Angeles, CA : Semiotext(e) ; Cambridge, Mass. ; London : distributed by the
+        MIT Press, c2008."],"physical_description":"165 p. ; 23 cm.","notes":["Jean
+        Baudrillard, Marc Guillaume ; translated by Ames Hodges.","Translated from
+        the French."],"contents":["Introduction: Cool Thinking by Marc Guillaume --
+        Radical Alterity -- 1. Spectrality as the Ellipsis of the Other -- 2. The
+        Other, Somewhere Else -- 3. The Sidereal Voyage -- 4. Artificial Stupidity
+        or the Intelligence of Others -- 5. Artificiality and Seduction -- Secret
+        Alterity -- 1. Because illusion and Reality are not Opposed -- 2. What They
+        Looked Like Photographed."],"format":["HUM"],"literary_form":"nonfiction","related_items":[{"kind":"in
+        series","value":["Semiotext(e) foreign agents series."]}]}},{"_index":"timdex","_type":"marc","_id":"002433979","_score":5.786652,"_source":{"identifier":"002433979","title":"Ms.
+        Marvel /","alternate_titles":["No Normal","Generation Why","Crushed","Last
+        Days","Super Famous"],"creators":["Wilson, G. Willow, 1982- author."],"contributors":[{"kind":"contributor
+        added entry","value":["Bondoc, Elmo, artist.","Miyazawa, Takeshi, artist.","Alphona,
+        Adrian, artist.","Herring, Ian (Illustrator), colorist.","Caramagna, Joe,
+        letterer."]}],"subjects":["Women superheroes Comic books, strips, etc.","Muslim
+        women Comic books, strips, etc.","Pakistani Americans Comic books, strips,
+        etc.","Teenage girls Comic books, strips, etc.","Superheroes Comic books,
+        strips, etc.","Muslim women.","Pakistani Americans.","Superheroes.","Teenage
+        girls.","Women superheroes."],"isbns":["9780785190226","9780785190219 (v.
+        1) (paperback)","078519021X (v. 1) (paperback)","0785190228 (v. 2) (paperback)","0785192271
+        (v. 3) (paperback)","9780785192275 (v. 3) (paperback)","9780785197362 (v.
+        4) (paperback)","0785197362 (v. 4) (paperback)","9780785196112 (v. 5) (paperback)","0785196110
+        (v. 5) (paperback)"],"oclcs":["NHCCYBP"],"country_of_publication":"nyu","languages":["English"],"publication_date":"2014","content_type":"Text","edition":"Collected
+        editions.","imprint":["New York, N.Y. : Marvel Worldwide, Inc., a subsidiary
+        of Marvel Entertainment, LLC, [2014]-","\ufffd2014-"],"physical_description":"volumes
+        : chiefly color illustrations ; 26 cm.","notes":["writer, G. Willow Wilson
+        ; artists, Adrian Alphona, Elmo Bondoc, Takeshi Miyazawa ; color artist, Ian
+        Herring ; letterer, VC''s Joe Caramagna.","\"Collecting Ms. Marvel (2014)
+        # 1-5 and material from All-New Marvel Now! Point One # 1, written by G. Willow
+        Wilson and illustrated by Adrian Alpona\"--Page 4 of cover, volume 1.","\"Collecting
+        Ms. Marvel (2014) #12-15 and S.H.I.E.L.D. #2, written by G. Willow Wilson
+        with Mark Waid, and illustrated by Takeshi Miyazawa and Elmo Bondoc with Humberto
+        Ramos\"--Page 4 of cover, volume 3.","\"Collected editions\"--Inside front
+        cover, volume 1."],"contents":["v. 1. No normal -- v. 2. Generation Why --
+        v. 3. Crushed -- v. 4. Last Days -- v. 5. Super Famous"],"summary":["\"Kamala
+        Khan is an ordinary girl from Jersey City - until she''s suddenly empowered
+        with extraordinary gifts. But who truly is the new Ms. Marvel? Teenager? Muslim?
+        Inhuman? Find out as she takes the Marvel Universe by storm!\"--Page 4 of
+        cover, volume 1."],"literary_form":"fiction","related_items":[{"kind":"in
+        series","value":["Marvel now!"]}]}},{"_index":"timdex","_type":"marc","_id":"002433980","_score":5.7831717,"_source":{"identifier":"002433980","title":"Ms.
+        Marvel /","alternate_titles":["No Normal","Generation Why","Crushed","Last
+        Days","Super Famous"],"creators":["Wilson, G. Willow, 1982- author."],"contributors":[{"kind":"contributor
+        added entry","value":["Bondoc, Elmo, artist.","Miyazawa, Takeshi, artist.","Alphona,
+        Adrian, artist.","Herring, Ian (Illustrator), colorist.","Caramagna, Joe,
+        letterer."]}],"subjects":["Women superheroes Comic books, strips, etc.","Muslim
+        women Comic books, strips, etc.","Pakistani Americans Comic books, strips,
+        etc.","Teenage girls Comic books, strips, etc.","Superheroes Comic books,
+        strips, etc.","Muslim women.","Pakistani Americans.","Superheroes.","Teenage
+        girls.","Women superheroes."],"isbns":["9780785192275","9780785190219 (v.
+        1) (paperback)","078519021X (v. 1) (paperback)","0785190228 (v. 2) (paperback)","9780785190226
+        (v. 2) (paperback)","0785192271 (v. 3) (paperback)","9780785197362 (v. 4)
+        (paperback)","0785197362 (v. 4) (paperback)","9780785196112 (v. 5) (paperback)","0785196110
+        (v. 5) (paperback)"],"oclcs":["NHCCYBP"],"country_of_publication":"nyu","languages":["English"],"publication_date":"2014","content_type":"Text","edition":"Collected
+        editions.","imprint":["New York, N.Y. : Marvel Worldwide, Inc., a subsidiary
+        of Marvel Entertainment, LLC, [2014]-","\ufffd2014-"],"physical_description":"volumes
+        : chiefly color illustrations ; 26 cm.","notes":["writer, G. Willow Wilson
+        ; artists, Adrian Alphona, Elmo Bondoc, Takeshi Miyazawa ; color artist, Ian
+        Herring ; letterer, VC''s Joe Caramagna.","\"Collecting Ms. Marvel (2014)
+        # 1-5 and material from All-New Marvel Now! Point One # 1, written by G. Willow
+        Wilson and illustrated by Adrian Alpona\"--Page 4 of cover, volume 1.","\"Collecting
+        Ms. Marvel (2014) #12-15 and S.H.I.E.L.D. #2, written by G. Willow Wilson
+        with Mark Waid, and illustrated by Takeshi Miyazawa and Elmo Bondoc with Humberto
+        Ramos\"--Page 4 of cover, volume 3.","\"Collected editions\"--Inside front
+        cover, volume 1."],"contents":["v. 1. No normal -- v. 2. Generation Why --
+        v. 3. Crushed -- v. 4. Last Days -- v. 5. Super Famous"],"summary":["\"Kamala
+        Khan is an ordinary girl from Jersey City - until she''s suddenly empowered
+        with extraordinary gifts. But who truly is the new Ms. Marvel? Teenager? Muslim?
+        Inhuman? Find out as she takes the Marvel Universe by storm!\"--Page 4 of
+        cover, volume 1."],"literary_form":"fiction","related_items":[{"kind":"in
+        series","value":["Marvel now!"]}]}},{"_index":"timdex","_type":"marc","_id":"001471032","_score":5.6174426,"_source":{"identifier":"001471032","title":"The
+        deer hunter","contributors":[{"kind":"contributor added entry","value":["Washburn,
+        Deric.","Spikings, Barry.","Cimino, Michael.","De Niro, Robert.","Cazale,
+        John, 1936-1978.","Savage, John, 1949-","Streep, Meryl.","Walken, Christopher,
+        1943-"]},{"kind":"creator CB added entry","value":["Universal Pictures (Firm)","Universal
+        Studios Home Video (Firm)"]}],"subjects":["Vietnam War, 1961-1975 Drama.","Iron
+        and steel workers Drama.","Feature films.","Clairton (Pa.) Drama."],"isbns":["0783225997
+        :","9780783225999"],"dois":["025192017728"],"oclcs":["(OCoLC)49694631"],"country_of_publication":"cau","languages":["English","English","fre
+        spa","","","","","","","","","","In English with optional English, French,
+        or Spanish subtitles."],"publication_date":"2001","content_type":"Moving image","call_numbers":["PN1997.D39.A1
+        2001","791.43/72"],"edition":"Widescreen [ed.].","imprint":["Universal City,
+        Calif. : Universal Home Video, c2001."],"physical_description":"1 videodisc
+        (183 min.) : sd., col. ; 4 3/4 in. + 1 insert.","notes":["Universal ; screenplay
+        by Deric Washburn ; produced by Barry Spikings ... [et al.] ; directed by
+        Michael Cimino.","DVD release of the 1978 motion picture.","Region 1 encoding;
+        Dolby digital surround; widescreen format (2.35:1 aspect ratio).","Special
+        features include: production notes; cast and filmmaker biographical information;
+        film highlights; theatrical trailer.","Story, Michael Cimino ... et al. ;
+        director of photography, Vilmos Zsigmond ; editor, Peter Zinner ; music, Stanley
+        Myers.","Robert De Niro, John Cazale, John Savage, Meryl Streep, Christopher
+        Walken."],"summary":["Tracks a group of steelworker pals from a Pennsylvania
+        blast furnace to the cool hunting grounds of the Alleghenies to the lethal
+        cauldron of Vietnam. Shows what happens to friendship and courage under stress."],"format":["HUM"],"literary_form":"fiction"}},{"_index":"timdex","_type":"marc","_id":"002568907","_score":5.23525,"_source":{"identifier":"002568907","title":"The
+        lives and death-throes of massive stars : proceedings of the 329th symposium
+        of the International Astronomical Union held in Auckland, New Zealand November
+        28-December 2, 2016 /","alternate_titles":["IAU symposium 329","Proceedings
+        of the 329th symposium of the International Astronomical Union held in Auckland,
+        New Zealand November 28-December 2, 2016"],"creators":["International Astronomical
+        Union. Symposium 2016 : Auckland, N.Z.), author."],"contributors":[{"kind":"contributor
+        added entry","value":["Eldridge, J. J., editor.","Bray, John C. (John Christopher),
+        editor.","McClelland, Liam A. S. (Liam Arthur Stonex), editor.","Xiao, Lin,
+        editor."]}],"subjects":["Supergiant stars Congresses.","Supernovae Congresses.","Stars
+        Evolution Congresses.","Stars Populations Congresses."],"isbns":["9781107170063","1107170060"],"oclcs":["(OCoLC)1003215170"],"country_of_publication":"enk","languages":["English"],"publication_date":"2017","content_type":"Text","call_numbers":["QB1"],"imprint":["Cambridge
+        : Cambridge University Press, 2017.","\ufffd2017"],"physical_description":"xxii,
+        469 pages : illustrations ; 26 cm.","notes":["edited by J.J. Eldridge, John
+        C. Bray, Liam A.S. McClelland, and Lin Xiao.","Includes bibliographical references
+        and author index."],"contents":["Introduction -- Death throes: supernovae,
+        stellar deaths and progenitor -- Observations and surveys of massive stars:
+        hot stars, cool stars, transition objects and binaries -- Theory of stellar
+        evolution \u0026 atmospheres: beyond standard physics, rotation, duplicity,
+        mass loss and magnetic fields and instabilities -- Massive stars and their
+        supernovae as galactic building blocks and engines: Milky Way, nearby galaxies
+        and the early Universe -- Conference summary -- Splinter session: X-ray observations
+        of massive stars -- Posters."],"summary":["Research on massive stars is undergoing
+        a period of rapid progress with long-held convictions being shown to be incomplete.
+        While these stars are relatively few in numbers, they are the main driver
+        of chemical and dynamical evolution in galaxies through their stellar winds
+        and explosive deaths in core-collapse supernovae. Furthermore the impact of
+        massive stars is widely recognized in many areas, as they are often used as
+        tools to interpret the conditions and processes arising in different environments.
+        In parallel, the development of new instrumentation, analysis techniques and
+        dedicated surveys across all possible wavelengths have delivered large amounts
+        of exquisite new data. These data are now providing a harsh test for the current
+        state-of-the-art theoretical calculations of massive star birth, evolution
+        and death. Aspects of massive stars discussed include supernovae, stellar
+        evolution, stellar properties, and stellar populations."],"format":["SCI","NET"],"literary_form":"nonfiction","related_items":[{"kind":"in
+        series","value":["IAU symposium and colloquium proceedings series. 1743-9213"]}]}}]}}'
+    http_version: 
+  recorded_at: Mon, 29 Oct 2018 20:26:35 GMT
+recorded_with: VCR 4.0.0

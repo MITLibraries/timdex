@@ -1,0 +1,42 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:9200/timdex/_all/001714562
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v0.15.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json; charset=UTF-8
+      content-length:
+      - '845'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"_index":"timdex","_type":"marc","_id":"001714562","_version":1,"found":true,"_source":{"identifier":"001714562","title":"Marvel
+        zombies /","creators":["Kirkman, Robert."],"contributors":[{"kind":"contributor
+        added entry","value":["Phillips, Sean."]}],"subjects":["Zombies Comic books,
+        strips, etc.","Science fiction comic books, strips, etc.","Young adult fiction,
+        American."],"isbns":["0785126082 (hbk.)","9780785126089 (hbk.)","0785120149
+        (pbk.)","9780785120148 (pbk.)","078512277X (hbk.)","9780785122777 (hbk.)"],"oclcs":["(OCoLC)64961966","(OCoLC)144518185"],"country_of_publication":"nyu","languages":["English"],"publication_date":"2006","content_type":"Text","call_numbers":["PN6728.M367
+        K57 2006","741.5973"],"imprint":["New York : Marvel ; London : Diamond [distributor],
+        2006."],"physical_description":"1 v. (unpaged) : chiefly col. ill. ; 29 cm.","notes":["writer,
+        Robert Kirkman ; artist, Sean Phillips."],"summary":["Torn from the pages
+        of Ultimate Fantastic Four! On an Earth shockingly similar to the Marvel Universe''s,
+        an alien virus has mutated all of the world''s greatest super heroes into
+        flesh-eating monsters! It took them only hours to destroy life as we know
+        it - but what happens when they run out of humans to eat?! Follow their search
+        for more food, and witness the arrival of the Silver Surfer! Collects Marvel
+        Zombies #1-5."],"format":["HUM"],"literary_form":"fiction"}}'
+    http_version: 
+  recorded_at: Mon, 29 Oct 2018 20:32:59 GMT
+recorded_with: VCR 4.0.0

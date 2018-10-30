@@ -11,6 +11,12 @@ SimpleCov.start('rails')
 require_relative '../config/environment'
 require 'rails/test_help'
 
+VCR.configure do |config|
+  config.ignore_localhost = false
+  config.cassette_library_dir = 'test/vcr_cassettes'
+  config.hook_into :faraday
+end
+
 module ActiveSupport
   class TestCase
     # Setup fixtures in test/fixtures/*.yml for all tests in alphabetical order.

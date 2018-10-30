@@ -4,9 +4,15 @@ class SearchController < ApplicationController
   before_action :authenticate_user!, except: 'ping'
 
   def search
-    # do actual searching stuff here and return something useful
-    # for now just render a static json thing for testing
-    render json: '[{"id": "aleph001"}, {"id": "aleph002"}]'
+    client = Elasticsearch::Client.new log: false
+    @results = client.search(q: params[:q])
+  end
+
+  def record
+    client = Elasticsearch::Client.new log: false
+    @results = client.get(index: 'timdex', id: params[:id])
+  rescue Elasticsearch::Transport::Transport::Errors::NotFound
+    render json: 'record not found', status: :not_found
   end
 
   def ping
