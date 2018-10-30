@@ -4,13 +4,11 @@ class SearchController < ApplicationController
   before_action :authenticate_user!, except: 'ping'
 
   def search
-    client = Elasticsearch::Client.new log: false
-    @results = client.search(q: params[:q])
+    @results = Timdex::EsClient.search(q: params[:q])
   end
 
   def record
-    client = Elasticsearch::Client.new log: false
-    @results = client.get(index: 'timdex', id: params[:id])
+    @results = Timdex::EsClient.get(index: 'timdex', id: params[:id])
   rescue Elasticsearch::Transport::Transport::Errors::NotFound
     render json: 'record not found', status: :not_found
   end

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://localhost:9200/_search?q=super+cool+search
+    uri: http://localhost:9200/_search?q=super%20cool%20search
     body:
       encoding: US-ASCII
       string: ''
@@ -251,6 +251,6 @@ http_interactions:
         and death. Aspects of massive stars discussed include supernovae, stellar
         evolution, stellar properties, and stellar populations."],"format":["SCI","NET"],"literary_form":"nonfiction","related_items":[{"kind":"in
         series","value":["IAU symposium and colloquium proceedings series. 1743-9213"]}]}}]}}'
-    http_version: 
+    http_version:
   recorded_at: Mon, 29 Oct 2018 20:26:35 GMT
 recorded_with: VCR 4.0.0
