@@ -14,7 +14,7 @@ require 'rails/test_help'
 VCR.configure do |config|
   config.ignore_localhost = false
   config.cassette_library_dir = 'test/vcr_cassettes'
-  config.hook_into :faraday
+  config.hook_into :webmock
 end
 
 module ActiveSupport

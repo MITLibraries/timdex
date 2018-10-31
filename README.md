@@ -29,9 +29,17 @@ additional records with a standardized template.
   `yourapp.herokuapp.com`. However, if you use a custom domain in production,
   that should be the value you use in production.
 - `JWT_SECRET_KEY`: generate with `rails secret`
+- `ELASTICSEARCH_URL`: defaults to `http://localhost:9200`
 
 # Production required Environment Variables
+- `AWS_ACCESS_KEY`
+- `AWS_ELASTICSEARCH`: boolean. Set to true to enable AWSv4 Signing
+- `AWS_SECRET_ACCESS_KEY`
+- `AWS_REGION`
 - `SMTP_ADDRESS`
 - `SMTP_PASSWORD`
 - `SMTP_PORT`
 - `SMTP_USER`
+
+# Optional Environment Variables (all ENVs)
+- `ELASTICSEARCH_LOG` if `true`, verbosely logs ElasticSearch queries

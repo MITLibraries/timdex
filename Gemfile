@@ -3,9 +3,11 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.5.1'
 
+gem 'aws-sdk-elasticsearchservice'
 gem 'bootsnap', require: false
 gem 'devise'
 gem 'elasticsearch'
+gem 'faraday_middleware-aws-sigv4'
 gem 'jbuilder'
 gem 'jwt'
 gem 'lograge'
@@ -39,4 +41,5 @@ group :test do
   gem 'selenium-webdriver'
   gem 'timecop'
   gem 'vcr'
+  gem 'webmock'
 end
