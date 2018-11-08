@@ -35,6 +35,7 @@
     "LANG": {
       "required": true
     },
+    "LOGSTASH_LOGGING": "true",
     "PR_BUILD": "true",
     "RACK_ENV": {
       "required": true

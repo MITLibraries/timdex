@@ -3,6 +3,10 @@ Rails.application.configure do
     config.lograge.enabled = true
   end
 
+  if ENV['LOGSTASH_LOGGING'].present?
+    config.lograge.formatter = Lograge::Formatters::Logstash.new
+  end
+
   config.lograge.custom_options = lambda do |event|
     exceptions = %w(controller action format id)
     {
