@@ -1,8 +1,27 @@
-openapi: 3.0.1
+openapi: 3.0.2
 info:
-  version: 0.0.2
+  version: 0.0.3
   title: MIT Libraries Discovery API
+servers:
+  - url: 'https://timdex-prod.herokuapp.com'
+  - url: 'http://localhost:3000/api/v1'
 paths:
+  /ping:
+    get:
+      responses:
+        '200':
+          description: OK
+  /auth:
+    get:
+      responses:
+        '200':
+          description: JWT token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+      security:
+        - basicAuth: []
   /search:
     get:
       responses:
@@ -24,7 +43,9 @@ paths:
           schema:
             type: integer
             format: int32
-  /record/{id}:
+      security:
+        - jwtAuth: []
+  '/record/{id}':
     get:
       responses:
         '200':
@@ -39,13 +60,20 @@ paths:
           required: true
           schema:
             type: string
+      security:
+        - jwtAuth: []
 components:
   securitySchemes:
-    api_key:
-      type: apiKey
-      name: api_key
-      in: query
+    basicAuth:
+      type: http
+      scheme: basic
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
+    Token:
+      type: string
     Holding:
       description: location holdings information
       type: object
@@ -82,7 +110,9 @@ components:
         restrictions:
           type: string
         kind:
-          description: what kind of link this is, such as full_text, restricted_full_text, sfx, unknown
+          description: >-
+            what kind of link this is, such as full_text, restricted_full_text,
+            sfx, unknown
           type: string
     Record:
       description: An abbreviated representation of a record
@@ -94,11 +124,15 @@ components:
         id:
           type: string
         content_type:
-            description: High level categorization of the type of content, such as text, still image, audio, etc.
-            type: string
+          description: >-
+            High level categorization of the type of content, such as text,
+            still image, audio, etc.
+          type: string
         format:
-            description: High level categorization of the content format, such as online resource, CD, book, etc.
-            type: string
+          description: >-
+            High level categorization of the content format, such as online
+            resource, CD, book, etc.
+          type: string
         source_link:
           type: string
           format: uri
@@ -170,10 +204,7 @@ components:
               type: string
             publication_frequency:
               type: string
-
     Results:
       type: array
       items:
         $ref: '#/components/schemas/Record'
-security:
-  - api_key: []

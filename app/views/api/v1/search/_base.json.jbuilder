@@ -1,7 +1,7 @@
 json.id result['identifier']
 json.source result['source']
 json.source_link result['source_link']
-json.full_record_link record_url(result['identifier'])
+json.full_record_link api_v1_record_url(result['identifier'])
 json.content_type result['content_type']
 json.format result['format']
 json.realtime_holdings_link 'Not Yet Implemented'
