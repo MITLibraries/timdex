@@ -17,6 +17,9 @@
     "ELASTICSEARCH_LOG": {
       "required": true
     },
+    "ELASTICSEARCH_INDEX": {
+      "required": true
+    },
     "ELASTICSEARCH_URL": {
       "required": true
     },
