@@ -4,7 +4,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
   test 'valid token' do
     token = JWTWrapper.encode(user_id: users(:yo).id)
     VCR.use_cassette('q super cool search') do
-      get '/search?q=super+cool+search',
+      get '/api/v1/search?q=super+cool+search',
           headers: { 'Authorization': "Bearer #{token}" }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
@@ -14,7 +14,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
 
   test 'invalid token' do
     token = JWTWrapper.encode(user_id: 'fakeid')
-    get '/search?q=super+cool+search',
+    get '/api/v1/search?q=super+cool+search',
         headers: { 'Authorization': "Bearer #{token}" }
     assert_equal(401, response.status)
     assert_equal('{"error" : "invalid credentials"}', response.body)
@@ -24,29 +24,29 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
     token = Timecop.freeze(Time.zone.today - 1) do
       JWTWrapper.encode(user_id: users(:yo).id)
     end
-    get '/search?q=super+cool+search',
+    get '/api/v1/search?q=super+cool+search',
         headers: { 'Authorization': "Bearer #{token}" }
     assert_equal(401, response.status)
     assert_equal('{"error" : "invalid credentials"}', response.body)
   end
 
   test 'ping with no token' do
-    get '/ping'
+    get '/api/v1/ping'
     assert_equal(200, response.status)
-    assert_equal('pong', response.body)
+    assert_equal('pong', JSON.parse(response.body))
   end
 
   test 'ping with valid token' do
     token = JWTWrapper.encode(user_id: users(:yo).id)
-    get '/ping', headers: { 'Authorization': "Bearer #{token}" }
+    get '/api/v1/ping', headers: { 'Authorization': "Bearer #{token}" }
     assert_equal(200, response.status)
-    assert_equal('pong', response.body)
+    assert_equal('pong', JSON.parse(response.body))
   end
 
   test 'valid record' do
     token = JWTWrapper.encode(user_id: users(:yo).id)
     VCR.use_cassette('record 001714562') do
-      get '/record/001714562',
+      get '/api/v1/record/001714562',
           headers: { 'Authorization': "Bearer #{token}" }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
@@ -58,7 +58,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
   test 'invalid record' do
     token = JWTWrapper.encode(user_id: users(:yo).id)
     VCR.use_cassette('record asdf') do
-      get '/record/asdf',
+      get '/api/v1/record/asdf',
           headers: { 'Authorization': "Bearer #{token}" }
       assert_equal(404, response.status)
     end
