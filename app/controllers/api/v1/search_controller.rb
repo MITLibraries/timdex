@@ -6,11 +6,13 @@ module Api
       before_action :authenticate_user!, except: 'ping'
 
       def search
-        @results = Timdex::EsClient.search(q: params[:q])
+        @results = Timdex::EsClient.search(index: ENV['ELASTICSEARCH_INDEX'],
+                                           q: params[:q])
       end
 
       def record
-        @results = Timdex::EsClient.get(index: 'timdex', id: params[:id])
+        @results = Timdex::EsClient.get(index: ENV['ELASTICSEARCH_INDEX'],
+                                        id: params[:id])
       rescue Elasticsearch::Transport::Transport::Errors::NotFound
         render json: 'record not found', status: :not_found
       end

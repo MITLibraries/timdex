@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://localhost:9200/_search?q=super%20cool%20search
+    uri: http://localhost:9200/timdex/_search?q=super%20cool%20search
     body:
       encoding: US-ASCII
       string: ''
