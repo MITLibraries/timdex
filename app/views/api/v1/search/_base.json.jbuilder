@@ -7,8 +7,7 @@ json.format result['format']
 json.realtime_holdings_link 'Not Yet Implemented'
 json.publication_date result['publication_date']
 json.title result['title']
-json.links ['Not Yet Implemented']
+json.links result['links']
 json.authors result['creators']
 json.subjects result['subjects']
-json.thumbnail 'Not Yet Implemented'
 json.summary_holdings ['Not Yet Implemented']

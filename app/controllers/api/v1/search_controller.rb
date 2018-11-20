@@ -14,7 +14,7 @@ module Api
         @results = Timdex::EsClient.get(index: ENV['ELASTICSEARCH_INDEX'],
                                         id: params[:id])
       rescue Elasticsearch::Transport::Transport::Errors::NotFound
-        render json: 'record not found', status: :not_found
+        render json: 'record not found'.to_json, status: :not_found
       end
 
       def ping
