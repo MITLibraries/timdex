@@ -3,27 +3,46 @@ info:
   version: 0.0.3
   title: MIT Libraries Discovery API
 servers:
-  - url: 'https://timdex-prod.herokuapp.com'
-  - url: 'http://localhost:3000/api/v1'
+  - url: 'https://timdex-prod.herokuapp.com/api/v1'
+tags:
+  - name: Authenticate
+    description: Authenticate with username / password to retrieve JWT Token
+    externalDocs:
+      description: Register for an account
+      url: 'https://timdex-prod.herokuapp.com'
+  - name: Search
+    description: Query TIMDEX to identify records of interest.
+  - name: Retrieve
+  - name: Status
 paths:
   /ping:
     get:
+      operationId: ping
+      tags:
+        - Status
       responses:
         '200':
           description: OK
   /auth:
     get:
+      tags:
+        - Authenticate
+      operationId: authenticate
       responses:
         '200':
           description: JWT token
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Token'
+                type: string
+                example: "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMjM0NTY3ODkwLCJleHAiOjEwMDI3MjY3ODB9.EHQe7SfsmBQiow_x_NtPoXFXZM29oVxBo3DqDYURJ68"
       security:
         - basicAuth: []
   /search:
     get:
+      tags:
+        - Search
+      operationId: search
       responses:
         '200':
           description: A list of search results
@@ -31,6 +50,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Results'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
       parameters:
         - name: q
           in: query
@@ -47,6 +68,9 @@ paths:
         - jwtAuth: []
   '/record/{id}':
     get:
+      tags:
+        - Retrieve
+      operationId: getByRecordID
       responses:
         '200':
           description: A single record
@@ -54,6 +78,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FullRecord'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          description: A record with that supplied ID was not found.
       parameters:
         - name: id
           in: path
@@ -71,19 +99,22 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
   schemas:
-    Token:
-      type: string
     Holding:
-      description: location holdings information
+      description: Summary location holdings information. Call `realtime_holdings_link` for recent information if present.
       type: object
       properties:
         location:
           type: string
         call_number:
           type: string
-        status:
+        summary:
           type: string
+        notes:
+            type: string
     Identifiers:
       description: standardized identifiers
       type: object
@@ -123,6 +154,10 @@ components:
       properties:
         id:
           type: string
+        full_record_link:
+          description: link to the full record in this API
+          type: string
+          format: uri
         content_type:
           description: >-
             High level categorization of the type of content, such as text,
@@ -139,14 +174,11 @@ components:
         realtime_holdings_link:
           type: string
           format: uri
-        sfx_link:
-          type: string
-          format: uri
-        year:
+        publication_date:
           type: string
         title:
           type: string
-        full_text_links:
+        links:
           type: array
           items:
             $ref: '#/components/schemas/Link'
@@ -158,20 +190,11 @@ components:
           type: array
           items:
             type: string
-        thumbnail:
-          type: string
-          format: uri
         summary_holdings:
           type: array
           items:
             $ref: '#/components/schemas/Holding'
         source:
-          type: string
-        full_record_link:
-          description: link to the full record in this API
-          type: string
-          format: uri
-        citation:
           type: string
     FullRecord:
       description: A full representation of a record
@@ -182,29 +205,43 @@ components:
           properties:
             available:
               type: boolean
-            uniform_title:
-              type: string
             alternate_title:
-              type: string
+              type: array
+              items:
+                type: string
+            country_of_publication:
+                type: string
             summary:
               type: string
             imprint:
               type: string
-            language:
-              type: string
+            languages:
+              type: array
+              items:
+                type: string
+            call_numbers:
+              type: array
+              items:
+                type: string
             physical_description:
               type: string
             abstract:
               type: string
-            content_notes:
-              type: string
             notes:
-              type: string
+              type: array
+              items:
+                type: string
             edition:
               type: string
             publication_frequency:
               type: string
     Results:
-      type: array
-      items:
-        $ref: '#/components/schemas/Record'
+      type: object
+      properties:
+        hits:
+          type: integer
+          description: total search results for query
+        results:
+            items:
+              type: array
+              $ref: '#/components/schemas/Record'
