@@ -1,6 +1,6 @@
 openapi: 3.0.2
 info:
-  version: 0.0.3
+  version: 0.0.4
   title: MIT Libraries Discovery API
 servers:
   - url: 'https://timdex-prod.herokuapp.com/api/v1'
@@ -58,12 +58,58 @@ paths:
           required: true
           schema:
             type: string
-        - name: limit
+        - name: content_type
+          description: Must use exact terminology from index, such as from a previous search result.  Only single value is allowed like `?q=term&content_type=content_type`
+          in: query
+          schema:
+            type: string
+        - name: authors[]
+          description: Must use exact terminology from index, such as from a previous search result. Multiple values can be supplied like `?q=term&authors[]=author1&authors[]=author2`
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: format[]
+          description: Must use exact terminology from index, such as from a previous search result. Multiple values can be supplied like `?q=term&format[]=format1&format[]=format2`
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: language[]
+          description: Must use exact terminology from index, such as from a previous search result. Multiple values can be supplied like `?q=term&language[]=language1&language[]=language2`
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: literary_form
+          description: Must use exact terminology from index, such as from a previous search result. Only single value is allowed like `?q=term&literary_form=literary_form1`
+          in: query
+          schema:
+            type: string
+        - name: source
+          description: Must use exact terminology from index, such as from a previous search result. Only single value is allowed like `?q=term&source=source`
+          in: query
+          schema:
+            type: string
+        - name: subjects[]
+          description: Must use exact terminology from index, such as from a previous search result. Multiple values can be supplied like `?q=term&subjects[]=subjects1&subjects[]=subjects2`
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: page
+          description: Page of search to retrieve. Default is 1. Maxiumum is 20.
           in: query
           required: false
           schema:
             type: integer
-            format: int32
+            default: 1
+            minimum: 1
+            maximum: 20
       security:
         - jwtAuth: []
   '/record/{id}':
@@ -120,14 +166,17 @@ components:
       type: object
       properties:
         isbns:
+          description: <http://id.loc.gov/ontologies/bibframe.html#c_Isbn>
           type: array
           items:
             type: string
         issns:
+          description: <http://id.loc.gov/ontologies/bibframe.html#c_Issn>
           type: array
           items:
             type: string
         doi:
+          description: <http://id.loc.gov/ontologies/bibframe.html#c_Doi>
           type: string
     Link:
       description: a url related to this item
@@ -161,32 +210,37 @@ components:
         content_type:
           description: >-
             High level categorization of the type of content, such as text,
-            still image, audio, etc.
+            still image, audio, etc. <http://purl.org/dc/terms/type>
           type: string
         format:
           description: >-
             High level categorization of the content format, such as online
-            resource, CD, book, etc.
+            resource, CD, book, etc. <http://purl.org/dc/elements/1.1/format>
           type: string
         source_link:
+          description: <http://id.loc.gov/ontologies/bibframe.html#p_derivedFrom>
           type: string
           format: uri
         realtime_holdings_link:
           type: string
           format: uri
         publication_date:
+          description: <http://id.loc.gov/ontologies/bibframe.html#p_originDate>
           type: string
         title:
+          description: <http://id.loc.gov/ontologies/bibframe.html#c_Title>
           type: string
         links:
           type: array
           items:
             $ref: '#/components/schemas/Link'
         authors:
+          description: <http://purl.org/dc/terms/creator>
           type: array
           items:
             type: string
         subjects:
+          description: <http://purl.org/dc/elements/1.1/subject>
           type: array
           items:
             type: string
@@ -195,6 +249,7 @@ components:
           items:
             $ref: '#/components/schemas/Holding'
         source:
+          description: <https://id.loc.gov/ontologies/bibframe.html#p_source>
           type: string
     FullRecord:
       description: A full representation of a record
@@ -206,6 +261,7 @@ components:
             available:
               type: boolean
             alternate_title:
+              description: <http://id.loc.gov/ontologies/bibframe.html#c_VariantTitle>
               type: array
               items:
                 type: string
@@ -216,6 +272,7 @@ components:
             imprint:
               type: string
             languages:
+              description: <http://id.loc.gov/ontologies/bibframe.html#c_Language>
               type: array
               items:
                 type: string
@@ -224,16 +281,20 @@ components:
               items:
                 type: string
             physical_description:
+              description: <http://id.loc.gov/ontologies/bibframe.html#c_Extent>
               type: string
             abstract:
+              description: <http://purl.org/dc/terms/abstract>
               type: string
             notes:
               type: array
               items:
                 type: string
             edition:
+              description: <http://id.loc.gov/ontologies/bibframe.html#p_editionStatement>
               type: string
             publication_frequency:
+              description: <http://id.loc.gov/ontologies/bibframe.html#p_frequency>
               type: string
     Results:
       type: object
@@ -241,7 +302,68 @@ components:
         hits:
           type: integer
           description: total search results for query
+        aggregations:
+          $ref: '#/components/schemas/Aggregations'
         results:
             items:
               type: array
               $ref: '#/components/schemas/Record'
+    Aggregations:
+      type: object
+      properties:
+        languages:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                count: integer
+        content_type:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                count: integer
+        authors:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                count: integer
+        subjects:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                count: integer
+        format:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                count: integer
+        literary_form:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                count: integer
+        source:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                count: integer
