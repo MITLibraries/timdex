@@ -123,7 +123,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FullRecord'
+                $ref: '#/components/schemas/Record'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
         '404':
@@ -194,7 +194,7 @@ components:
             what kind of link this is, such as full_text, restricted_full_text,
             sfx, unknown
           type: string
-    Record:
+    BriefRecord:
       description: An abbreviated representation of a record
       type: object
       required:
@@ -251,10 +251,10 @@ components:
         source:
           description: <https://id.loc.gov/ontologies/bibframe.html#p_source>
           type: string
-    FullRecord:
+    Record:
       description: A full representation of a record
       allOf:
-        - $ref: '#/components/schemas/Record'
+        - $ref: '#/components/schemas/BriefRecord'
         - $ref: '#/components/schemas/Identifiers'
         - type: object
           properties:
@@ -307,7 +307,7 @@ components:
         results:
             items:
               type: array
-              $ref: '#/components/schemas/Record'
+              $ref: '#/components/schemas/BriefRecord'
     Aggregations:
       type: object
       properties:
