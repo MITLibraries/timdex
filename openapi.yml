@@ -155,6 +155,8 @@ components:
       properties:
         location:
           type: string
+        collection:
+          type: string
         call_number:
           type: string
         summary:
