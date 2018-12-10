@@ -270,7 +270,9 @@ components:
             summary:
               type: string
             imprint:
-              type: string
+              type: array
+              items:
+                type: string
             languages:
               description: <http://id.loc.gov/ontologies/bibframe.html#c_Language>
               type: array
@@ -295,7 +297,9 @@ components:
               type: string
             publication_frequency:
               description: <http://id.loc.gov/ontologies/bibframe.html#p_frequency>
-              type: string
+              type: array
+              items:
+                type: string
     Results:
       type: object
       properties:
