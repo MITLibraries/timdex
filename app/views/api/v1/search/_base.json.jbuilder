@@ -3,11 +3,11 @@ json.source result['source']
 json.source_link result['source_link']
 json.full_record_link api_v1_record_url(result['identifier'])
 json.content_type result['content_type']
-json.format result['format']
+json.format result['format'] if result['format']
 json.realtime_holdings_link 'Not Yet Implemented'
 json.publication_date result['publication_date']
 json.title result['title']
-json.links result['links']
+json.links result['links'] if result['links']
 json.authors result['creators']
 json.subjects result['subjects']
 json.summary_holdings ['Not Yet Implemented']
