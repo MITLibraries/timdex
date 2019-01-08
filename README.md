@@ -44,3 +44,6 @@ additional records with a standardized template.
 
 # Optional Environment Variables (all ENVs)
 - `ELASTICSEARCH_LOG` if `true`, verbosely logs ElasticSearch queries
+- `PREFERRED_DOMAIN` - set this to the domain you would like to to use. Any
+  other requests that come to the app will redirect to the root of this domain.
+  This is useful to prevent access to herokuapp.com domains.
