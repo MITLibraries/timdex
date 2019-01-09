@@ -81,6 +81,7 @@ GEM
     chromedriver-helper (2.1.0)
       archive-zip (~> 0.10)
       nokogiri (~> 1.8)
+    climate_control (0.2.0)
     concurrent-ruby (1.1.3)
     coveralls (0.7.1)
       multi_json (~> 1.3)
@@ -303,6 +304,7 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15)
   chromedriver-helper
+  climate_control
   coveralls
   devise
   dotenv-rails
