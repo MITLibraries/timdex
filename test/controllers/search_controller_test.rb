@@ -8,7 +8,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
           headers: { 'Authorization': "Bearer #{token}" }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert_equal(40, json['hits'])
+      assert_equal(21091, json['hits'])
     end
   end
 
@@ -61,6 +61,48 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       get '/api/v1/record/asdf',
           headers: { 'Authorization': "Bearer #{token}" }
       assert_equal(404, response.status)
+    end
+  end
+
+  test 'pagination' do
+    token = JWTWrapper.encode(user_id: users(:yo).id)
+    VCR.use_cassette('pagination') do
+      get '/api/v1/search?q=marvel',
+          headers: { 'Authorization': "Bearer #{token}" }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert_equal(365, json['hits'])
+      assert_equal('002312360', json['results'][0]['id'])
+
+      get '/api/v1/search?q=marvel&page=2',
+          headers: { 'Authorization': "Bearer #{token}" }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert_equal(365, json['hits'])
+      assert_equal('002249006', json['results'][0]['id'])
+
+      get '/api/v1/search?q=marvel&page=10',
+          headers: { 'Authorization': "Bearer #{token}" }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert_equal(365, json['hits'])
+      assert_equal('001250612', json['results'][0]['id'])
+
+      get '/api/v1/search?q=marvel&page=20',
+          headers: { 'Authorization': "Bearer #{token}" }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert_equal(365, json['hits'])
+      assert_equal('Invalid page parameter: requested page past last result',
+                   json['error'])
+
+      get '/api/v1/search?q=marvel&page=400',
+          headers: { 'Authorization': "Bearer #{token}" }
+      assert_equal(400, response.status)
+      json = JSON.parse(response.body)
+      assert_nil(json['hits'])
+      assert_equal('Invalid page: max 200',
+                   json['error'])
     end
   end
 end
