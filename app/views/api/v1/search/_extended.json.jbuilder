@@ -17,3 +17,4 @@ json.notes result['notes'] if result['notes']
 if result['publication_frequency']
   json.publication_frequency result['publication_frequency']
 end
+json.literary_form result['literary_form'] if result['literary_form']
