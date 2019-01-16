@@ -48,7 +48,49 @@ module Api
               must: {
                 multi_match: {
                   query: params[:q]
+        # We need to make an array of all of the filters here.
+        # The current attempt here was to create an array by looping over a
+        # list of all of the parameters that are potential filters.
+        # Complicating that is that sometimes we allow multiple values and
+        # others just a single value.
                 }
+              }
+            }
+          },
+          aggregations: {
+            creators: {
+              terms: {
+                field: 'creators.keyword'
+              }
+            },
+            content_type: {
+              terms: {
+                field: 'content_type.keyword'
+              }
+            },
+            content_format: {
+              terms: {
+                field: 'format.keyword'
+              }
+            },
+            languages: {
+              terms: {
+                field: 'languages.keyword'
+              }
+            },
+            literary_form: {
+              terms: {
+                field: 'literary_form.keyword'
+              }
+            },
+            source: {
+              terms: {
+                field: 'source.keyword'
+              }
+            },
+            subjects: {
+              terms: {
+                field: 'subjects.keyword'
               }
             }
           }
