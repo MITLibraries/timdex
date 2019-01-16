@@ -5,16 +5,28 @@ module Api
       before_action :ensure_json!
       before_action :authenticate_user!, except: 'ping'
 
+      SIZE = 20
+      MAX_PAGE = 200
+
       def search
+        page = params[:page].to_i
+        page = 1 if page.zero?
+        from = page * SIZE - SIZE
+
+        if page > MAX_PAGE
+          render json: { error: "Invalid page: max #{MAX_PAGE}" }.to_json,
+                 status: :bad_request
+        end
+
         @results = Timdex::EsClient.search(index: ENV['ELASTICSEARCH_INDEX'],
-                                           q: params[:q])
+                                           body: build_query(from))
       end
 
       def record
         @results = Timdex::EsClient.get(index: ENV['ELASTICSEARCH_INDEX'],
                                         id: params[:id])
       rescue Elasticsearch::Transport::Transport::Errors::NotFound
-        render json: 'record not found'.to_json, status: :not_found
+        render json: { error: 'record not found' }.to_json, status: :not_found
       end
 
       def ping
@@ -23,6 +35,24 @@ module Api
 
       def ensure_json!
         request.format = :json
+      end
+
+      private
+
+      def build_query(from)
+        {
+          from: from,
+          size: SIZE,
+          query: {
+            bool: {
+              must: {
+                multi_match: {
+                  query: params[:q]
+                }
+              }
+            }
+          }
+        }.to_json
       end
     end
   end
