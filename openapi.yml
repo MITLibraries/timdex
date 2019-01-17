@@ -3,13 +3,13 @@ info:
   version: 0.0.4
   title: MIT Libraries Discovery API
 servers:
-  - url: 'https://timdex-prod.herokuapp.com/api/v1'
+  - url: 'https://timdex.mit.edu/api/v1'
 tags:
   - name: Authenticate
     description: Authenticate with username / password to retrieve JWT Token
     externalDocs:
       description: Register for an account
-      url: 'https://timdex-prod.herokuapp.com'
+      url: 'https://timdex.mit.edu'
   - name: Search
     description: Query TIMDEX to identify records of interest.
   - name: Retrieve
@@ -70,8 +70,8 @@ paths:
             type: array
             items:
               type: string
-        - name: format[]
-          description: Must use exact terminology from index, such as from a previous search result. Multiple values can be supplied like `?q=term&format[]=format1&format[]=format2`
+        - name: content_format[]
+          description: Must use exact terminology from index, such as from a previous search result. Multiple values can be supplied like `?q=term&content_format[]=format1&content_format[]=format2`
           in: query
           schema:
             type: array
@@ -214,7 +214,7 @@ components:
             High level categorization of the type of content, such as text,
             still image, audio, etc. <http://purl.org/dc/terms/type>
           type: string
-        format:
+        content_format:
           description: >-
             High level categorization of the content format, such as online
             resource, CD, book, etc. <http://purl.org/dc/elements/1.1/format>
@@ -349,7 +349,7 @@ components:
               name:
                 type: string
                 count: integer
-        format:
+        content_format:
           type: array
           items:
             type: object
