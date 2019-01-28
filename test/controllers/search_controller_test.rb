@@ -8,7 +8,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
           headers: { 'Authorization': "Bearer #{token}" }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert_equal(21091, json['hits'])
+      assert_equal(21_091, json['hits'])
     end
   end
 
@@ -103,6 +103,51 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       assert_nil(json['hits'])
       assert_equal('Invalid page: max 200',
                    json['error'])
+    end
+  end
+
+  test 'filtering parameters that take multiple values' do
+    token = JWTWrapper.encode(user_id: users(:yo).id)
+    VCR.use_cassette('filtering multiple values') do
+      get '/api/v1/search?q=marvel',
+          headers: { 'Authorization': "Bearer #{token}" }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert_equal(365, json['hits'])
+      assert_equal('002312360', json['results'][0]['id'])
+
+      get '/api/v1/search?q=marvel&subject[]=Graphic%20Novels.',
+          headers: { 'Authorization': "Bearer #{token}" }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert_equal(19, json['hits'])
+      assert_equal('002295630', json['results'][0]['id'])
+
+      get '/api/v1/search?q=marvel&subject[]=Graphic%20Novels.&subject[]=science%20fiction%20comic%20books,%20strips,%20etc.',
+          headers: { 'Authorization': "Bearer #{token}" }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert_equal(10, json['hits'])
+      assert_equal('002612469', json['results'][0]['id'])
+    end
+  end
+
+  test 'filtering parameters that single a value' do
+    token = JWTWrapper.encode(user_id: users(:yo).id)
+    VCR.use_cassette('filtering single value') do
+      get '/api/v1/search?q=marvel',
+          headers: { 'Authorization': "Bearer #{token}" }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert_equal(365, json['hits'])
+      assert_equal('002312360', json['results'][0]['id'])
+
+      get '/api/v1/search?q=marvel&literary_form=fiction',
+          headers: { 'Authorization': "Bearer #{token}" }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert_equal(190, json['hits'])
+      assert_equal('002312360', json['results'][0]['id'])
     end
   end
 end

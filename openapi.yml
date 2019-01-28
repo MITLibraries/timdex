@@ -1,6 +1,6 @@
 openapi: 3.0.2
 info:
-  version: 0.0.4
+  version: 0.0.5
   title: MIT Libraries Discovery API
 servers:
   - url: 'https://timdex.mit.edu/api/v1'
@@ -63,8 +63,8 @@ paths:
           in: query
           schema:
             type: string
-        - name: authors[]
-          description: Must use exact terminology from index, such as from a previous search result. Multiple values can be supplied like `?q=term&authors[]=author1&authors[]=author2`
+        - name: author[]
+          description: Must use exact terminology from index, such as from a previous search result. Multiple values can be supplied like `?q=term&author[]=author1&author[]=author2`
           in: query
           schema:
             type: array
@@ -94,8 +94,8 @@ paths:
           in: query
           schema:
             type: string
-        - name: subjects[]
-          description: Must use exact terminology from index, such as from a previous search result. Multiple values can be supplied like `?q=term&subjects[]=subjects1&subjects[]=subjects2`
+        - name: subject[]
+          description: Must use exact terminology from index, such as from a previous search result. Multiple values can be supplied like `?q=term&subject[]=subject1&subject[]=subject2`
           in: query
           schema:
             type: array

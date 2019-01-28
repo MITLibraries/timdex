@@ -43,16 +43,106 @@ module Api
         {
           from: from,
           size: SIZE,
-          query: {
-            bool: {
-              must: {
-                multi_match: {
-                  query: params[:q]
-                }
+          query: query,
+          aggregations: aggregations
+        }.to_json
+      end
+
+      def query
+        {
+          bool: {
+            must: {
+              multi_match: {
+                query: params[:q]
               }
+            },
+            filter: filters
+          }
+        }
+      end
+
+      # https://www.elastic.co/guide/en/elasticsearch/reference/current/query-filter-context.html
+      def filters
+        f = []
+        f.push filter(params[:author], 'creators') if params[:author]
+
+        if params[:content_type]
+          f.push filter_single(params[:content_type], 'content_type')
+        end
+
+        if params[:content_format]
+          f.push filter(params[:content_format], 'format')
+        end
+
+        f.push filter(params[:language], 'languages') if params[:language]
+
+        if params[:literary_form]
+          f.push filter_single(params[:literary_form], 'literary_form')
+        end
+
+        f.push filter_single(params[:source], 'source') if params[:source]
+        f.push filter(params[:subject], 'subjects') if params[:subject]
+        f
+      end
+
+      # use `filter` when we accept multiple of the same parameter in our data
+      # model
+      def filter(param, field)
+        terms = []
+
+        param.each do |t|
+          terms.push('term': { "#{field}.keyword": t })
+        end
+
+        terms
+      end
+
+      # use `filter_single` when we only accept a single value in our data model
+      def filter_single(param, field)
+        {
+          'term': { "#{field}.keyword": param }
+        }
+      end
+
+      # https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html
+      def aggregations
+        {
+          creators: {
+            terms: {
+              field: 'creators.keyword'
+            }
+          },
+          content_type: {
+            terms: {
+              field: 'content_type.keyword'
+            }
+          },
+          content_format: {
+            terms: {
+              field: 'format.keyword'
+            }
+          },
+          languages: {
+            terms: {
+              field: 'languages.keyword'
+            }
+          },
+          literary_form: {
+            terms: {
+              field: 'literary_form.keyword'
+            }
+          },
+          source: {
+            terms: {
+              field: 'source.keyword'
+            }
+          },
+          subjects: {
+            terms: {
+              field: 'subjects.keyword'
             }
           }
-        }.to_json
+        }
       end
     end
   end
