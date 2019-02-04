@@ -267,7 +267,7 @@ components:
               type: array
               items:
                 type: string
-            country_of_publication:
+            place_of_publication:
                 type: string
             summary:
               type: string
