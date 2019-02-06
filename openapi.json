@@ -2,7 +2,13 @@
   "openapi": "3.0.2",
   "info": {
     "version": "0.0.5",
-    "title": "MIT Libraries Discovery API"
+    "title": "MIT Libraries Discovery API",
+    "description": "MIT Libraries Discovery API. Register for an account at [https://timdex.mit.edu](https://timdex.mit.edu)",
+    "contact": {
+      "name": "MIT Libraries Developers",
+      "email": "timdex@mit.edu",
+      "url": "https://github.com/MITLibraries/timdex/issues"
+    }
   },
   "servers": [
     {
@@ -12,7 +18,7 @@
   "tags": [
     {
       "name": "Authenticate",
-      "description": "Authenticate with username / password to retrieve JWT Token",
+      "description": "Authenticate with username / password to retrieve JWT Token.",
       "externalDocs": {
         "description": "Register for an account",
         "url": "https://timdex.mit.edu"
@@ -32,6 +38,7 @@
   "paths": {
     "/ping": {
       "get": {
+        "description": "Check the status of the API",
         "operationId": "ping",
         "tags": [
           "Status"
@@ -45,6 +52,7 @@
     },
     "/auth": {
       "get": {
+        "description": "Authenticate with username / password to retrieve JWT Token for use in Search and Retrieve endpoints. Register for an account at [https://timdex.mit.edu](https://timdex.mit.edu)",
         "tags": [
           "Authenticate"
         ],
@@ -74,6 +82,7 @@
         "tags": [
           "Search"
         ],
+        "description": "Search endpoint",
         "operationId": "search",
         "responses": {
           "200": {
@@ -192,6 +201,7 @@
         "tags": [
           "Retrieve"
         ],
+        "description": "Retrieve a single record endpoint",
         "operationId": "getByRecordID",
         "responses": {
           "200": {
@@ -472,8 +482,8 @@
             "$ref": "#/components/schemas/Aggregations"
           },
           "results": {
+            "type": "array",
             "items": {
-              "type": "array",
               "$ref": "#/components/schemas/BriefRecord"
             }
           }
