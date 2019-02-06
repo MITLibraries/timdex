@@ -54,7 +54,7 @@
     "SECRET_KEY_BASE": {
       "required": true
     },
-      "SMTP_ADDRESS": {
+    "SMTP_ADDRESS": {
       "required": true
     },
     "SMTP_PASSWORD": {
@@ -68,9 +68,6 @@
     }
   },
   "formation": {
-    "worker": {
-      "quantity": 1
-    },
     "web": {
       "quantity": 1
     }
