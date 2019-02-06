@@ -1,7 +1,27 @@
 <%= content_for(:title, "TIMDEX") %>
 
-<p>This is a splash page. It is amazing.</p>
+<div class="about-timdex box-content">
+  <h3 class="title">About TIMDEX Discovery API</h3>
+
+  <p>TIMDEX is a free discovery API into collections at MIT Libraries.</p>
+
+  <p>This initial release provides discovery of records in MIT Libraries Barton catalog. We intend to expand the scope of collections discoverable via this API.</p>
+
+  <p><a href="https://mitlibraries-timdex.docs.stoplight.io">End user documentation</a> is available with code samples and live interactive API calls against real production data.</p>
+
+  <p>Feedback is welcome via <a href="mailto:timdex@mit.edu?Subject=TIMDEX%20Feedback">timdex@mit.edu</a>.
+
+  Bug reports via the <a href="https://github.com/MITLibraries/timdex/issues">Github repository</a> would be great.</p>
+</div>
+
 
 <% if user_signed_in? %>
-  curl -X GET --header 'Authorization: Bearer <%= JWTWrapper.encode({ user_id: current_user.id }) %>' '<%= api_v1_search_url(q: 'whatever')%>'
+  <div class="panel panel-info">
+    <div class="panel-heading">Quick Example</div>
+    <div class="panel-body">
+      <p>You can do a very quick test of your account via this `curl` example. The documentation portal linked above has much more complete information.</p>
+
+      <code>curl -X GET --header 'Authorization: Bearer <%= JWTWrapper.encode({ user_id: current_user.id }) %>' '<%= api_v1_search_url(q: 'whatever')%>'</code>
+    </div>
+  </div>
 <% end %>
