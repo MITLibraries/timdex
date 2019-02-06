@@ -1,0 +1,597 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "version": "0.0.5",
+    "title": "MIT Libraries Discovery API",
+    "description": "MIT Libraries Discovery API. Register for an account at [https://timdex.mit.edu](https://timdex.mit.edu)",
+    "contact": {
+      "name": "MIT Libraries Developers",
+      "email": "timdex@mit.edu",
+      "url": "https://github.com/MITLibraries/timdex/issues"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://timdex.mit.edu/api/v1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Authenticate",
+      "description": "Authenticate with username / password to retrieve JWT Token.",
+      "externalDocs": {
+        "description": "Register for an account",
+        "url": "https://timdex.mit.edu"
+      }
+    },
+    {
+      "name": "Search",
+      "description": "Query TIMDEX to identify records of interest."
+    },
+    {
+      "name": "Retrieve"
+    },
+    {
+      "name": "Status"
+    }
+  ],
+  "paths": {
+    "/ping": {
+      "get": {
+        "description": "Check the status of the API",
+        "operationId": "ping",
+        "tags": [
+          "Status"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/auth": {
+      "get": {
+        "description": "Authenticate with username / password to retrieve JWT Token for use in Search and Retrieve endpoints. Register for an account at [https://timdex.mit.edu](https://timdex.mit.edu)",
+        "tags": [
+          "Authenticate"
+        ],
+        "operationId": "authenticate",
+        "responses": {
+          "200": {
+            "description": "JWT token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMjM0NTY3ODkwLCJleHAiOjEwMDI3MjY3ODB9.EHQe7SfsmBQiow_x_NtPoXFXZM29oVxBo3DqDYURJ68"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
+      }
+    },
+    "/search": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "description": "Search endpoint",
+        "operationId": "search",
+        "responses": {
+          "200": {
+            "description": "A list of search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Results"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        },
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "content_type",
+            "description": "Must use exact terminology from index, such as from a previous search result.  Only single value is allowed like `?q=term&content_type=content_type`",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "author[]",
+            "description": "Must use exact terminology from index, such as from a previous search result. Multiple values can be supplied like `?q=term&author[]=author1&author[]=author2`",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "content_format[]",
+            "description": "Must use exact terminology from index, such as from a previous search result. Multiple values can be supplied like `?q=term&content_format[]=format1&content_format[]=format2`",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "language[]",
+            "description": "Must use exact terminology from index, such as from a previous search result. Multiple values can be supplied like `?q=term&language[]=language1&language[]=language2`",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "literary_form",
+            "description": "Must use exact terminology from index, such as from a previous search result. Only single value is allowed like `?q=term&literary_form=literary_form1`",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "source",
+            "description": "Must use exact terminology from index, such as from a previous search result. Only single value is allowed like `?q=term&source=source`",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "subject[]",
+            "description": "Must use exact terminology from index, such as from a previous search result. Multiple values can be supplied like `?q=term&subject[]=subject1&subject[]=subject2`",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "page",
+            "description": "Page of search to retrieve. Default is 1. Maxiumum is 200.",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1,
+              "maximum": 200
+            }
+          }
+        ],
+        "security": [
+          {
+            "jwtAuth": []
+          }
+        ]
+      }
+    },
+    "/record/{id}": {
+      "get": {
+        "tags": [
+          "Retrieve"
+        ],
+        "description": "Retrieve a single record endpoint",
+        "operationId": "getByRecordID",
+        "responses": {
+          "200": {
+            "description": "A single record",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Record"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "description": "A record with that supplied ID was not found."
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "jwtAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic"
+      },
+      "jwtAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "responses": {
+      "UnauthorizedError": {
+        "description": "Access token is missing or invalid"
+      }
+    },
+    "schemas": {
+      "Holding": {
+        "description": "Summary location holdings information. Call `realtime_holdings_link` for recent information if present.",
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string"
+          },
+          "collection": {
+            "type": "string"
+          },
+          "call_number": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      },
+      "Identifiers": {
+        "description": "standardized identifiers",
+        "type": "object",
+        "properties": {
+          "isbns": {
+            "description": "<http://id.loc.gov/ontologies/bibframe.html#c_Isbn>",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "issns": {
+            "description": "<http://id.loc.gov/ontologies/bibframe.html#c_Issn>",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "doi": {
+            "description": "<http://id.loc.gov/ontologies/bibframe.html#c_Doi>",
+            "type": "string"
+          }
+        }
+      },
+      "Link": {
+        "description": "a url related to this item",
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "restrictions": {
+            "type": "string"
+          },
+          "kind": {
+            "description": "what kind of link this is, such as full_text, restricted_full_text, sfx, unknown",
+            "type": "string"
+          }
+        }
+      },
+      "BriefRecord": {
+        "description": "An abbreviated representation of a record",
+        "type": "object",
+        "required": [
+          "id",
+          "title"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "full_record_link": {
+            "description": "link to the full record in this API",
+            "type": "string",
+            "format": "uri"
+          },
+          "content_type": {
+            "description": "High level categorization of the type of content, such as text, still image, audio, etc. <http://purl.org/dc/terms/type>",
+            "type": "string"
+          },
+          "content_format": {
+            "description": "High level categorization of the content format, such as online resource, CD, book, etc. <http://purl.org/dc/elements/1.1/format>",
+            "type": "string"
+          },
+          "source_link": {
+            "description": "<http://id.loc.gov/ontologies/bibframe.html#p_derivedFrom>",
+            "type": "string",
+            "format": "uri"
+          },
+          "realtime_holdings_link": {
+            "type": "string",
+            "format": "uri"
+          },
+          "publication_date": {
+            "description": "<http://id.loc.gov/ontologies/bibframe.html#p_originDate>",
+            "type": "string"
+          },
+          "title": {
+            "description": "<http://id.loc.gov/ontologies/bibframe.html#c_Title>",
+            "type": "string"
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Link"
+            }
+          },
+          "authors": {
+            "description": "<http://purl.org/dc/terms/creator>",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "subjects": {
+            "description": "<http://purl.org/dc/elements/1.1/subject>",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "summary_holdings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Holding"
+            }
+          },
+          "source": {
+            "description": "<https://id.loc.gov/ontologies/bibframe.html#p_source>",
+            "type": "string"
+          }
+        }
+      },
+      "Record": {
+        "description": "A full representation of a record",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BriefRecord"
+          },
+          {
+            "$ref": "#/components/schemas/Identifiers"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "available": {
+                "type": "boolean"
+              },
+              "alternate_title": {
+                "description": "<http://id.loc.gov/ontologies/bibframe.html#c_VariantTitle>",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "place_of_publication": {
+                "type": "string"
+              },
+              "summary": {
+                "type": "string"
+              },
+              "imprint": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "languages": {
+                "description": "<http://id.loc.gov/ontologies/bibframe.html#c_Language>",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "call_numbers": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "physical_description": {
+                "description": "<http://id.loc.gov/ontologies/bibframe.html#c_Extent>",
+                "type": "string"
+              },
+              "abstract": {
+                "description": "<http://purl.org/dc/terms/abstract>",
+                "type": "string"
+              },
+              "notes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "edition": {
+                "description": "<http://id.loc.gov/ontologies/bibframe.html#p_editionStatement>",
+                "type": "string"
+              },
+              "publication_frequency": {
+                "description": "<http://id.loc.gov/ontologies/bibframe.html#p_frequency>",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "Results": {
+        "type": "object",
+        "properties": {
+          "hits": {
+            "type": "integer",
+            "description": "total search results for query"
+          },
+          "aggregations": {
+            "$ref": "#/components/schemas/Aggregations"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BriefRecord"
+            }
+          }
+        }
+      },
+      "Aggregations": {
+        "type": "object",
+        "properties": {
+          "languages": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "count": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "content_type": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "count": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "authors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "count": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "subjects": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "count": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "content_format": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "count": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "literary_form": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "count": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "source": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "count": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
