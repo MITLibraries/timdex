@@ -275,6 +275,9 @@
           },
           "notes": {
             "type": "string"
+          },
+          "format": {
+            "type": "string"
           }
         }
       },
