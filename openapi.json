@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.2",
   "info": {
-    "version": "0.0.5",
+    "version": "0.0.6",
     "title": "MIT Libraries Discovery API",
     "description": "MIT Libraries Discovery API. Register for an account at [https://timdex.mit.edu](https://timdex.mit.edu)",
     "contact": {
@@ -285,6 +285,17 @@
         "description": "standardized identifiers",
         "type": "object",
         "properties": {
+          "lccn": {
+            "description": "Library of Congress Control Number",
+            "type": "string"
+          },
+          "oclcs": {
+            "description": "OCLC numbers",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "isbns": {
             "description": "<http://id.loc.gov/ontologies/bibframe.html#c_Isbn>",
             "type": "array",
@@ -327,85 +338,95 @@
       },
       "BriefRecord": {
         "description": "An abbreviated representation of a record",
-        "type": "object",
-        "required": [
-          "id",
-          "title"
-        ],
-        "properties": {
-          "id": {
-            "type": "string"
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Identifiers"
           },
-          "full_record_link": {
-            "description": "link to the full record in this API",
-            "type": "string",
-            "format": "uri"
-          },
-          "content_type": {
-            "description": "High level categorization of the type of content, such as text, still image, audio, etc. <http://purl.org/dc/terms/type>",
-            "type": "string"
-          },
-          "content_format": {
-            "description": "High level categorization of the content format, such as online resource, CD, book, etc. <http://purl.org/dc/elements/1.1/format>",
-            "type": "string"
-          },
-          "source_link": {
-            "description": "<http://id.loc.gov/ontologies/bibframe.html#p_derivedFrom>",
-            "type": "string",
-            "format": "uri"
-          },
-          "realtime_holdings_link": {
-            "type": "string",
-            "format": "uri"
-          },
-          "publication_date": {
-            "description": "<http://id.loc.gov/ontologies/bibframe.html#p_originDate>",
-            "type": "string"
-          },
-          "title": {
-            "description": "<http://id.loc.gov/ontologies/bibframe.html#c_Title>",
-            "type": "string"
-          },
-          "links": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Link"
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "title"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "full_record_link": {
+                "description": "link to the full record in this API",
+                "type": "string",
+                "format": "uri"
+              },
+              "content_type": {
+                "description": "High level categorization of the type of content, such as text, still image, audio, etc. <http://purl.org/dc/terms/type>",
+                "type": "string"
+              },
+              "content_format": {
+                "description": "High level categorization of the content format, such as online resource, CD, book, etc. <http://purl.org/dc/elements/1.1/format>",
+                "type": "string"
+              },
+              "source_link": {
+                "description": "<http://id.loc.gov/ontologies/bibframe.html#p_derivedFrom>",
+                "type": "string",
+                "format": "uri"
+              },
+              "realtime_holdings_link": {
+                "type": "string",
+                "format": "uri"
+              },
+              "publication_date": {
+                "description": "<http://id.loc.gov/ontologies/bibframe.html#p_originDate>",
+                "type": "string"
+              },
+              "title": {
+                "description": "<http://id.loc.gov/ontologies/bibframe.html#c_Title>",
+                "type": "string"
+              },
+              "imprint": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "links": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Link"
+                }
+              },
+              "authors": {
+                "description": "<http://purl.org/dc/terms/creator>",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "subjects": {
+                "description": "<http://purl.org/dc/elements/1.1/subject>",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "summary_holdings": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Holding"
+                }
+              },
+              "source": {
+                "description": "<https://id.loc.gov/ontologies/bibframe.html#p_source>",
+                "type": "string"
+              }
             }
-          },
-          "authors": {
-            "description": "<http://purl.org/dc/terms/creator>",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "subjects": {
-            "description": "<http://purl.org/dc/elements/1.1/subject>",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "summary_holdings": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Holding"
-            }
-          },
-          "source": {
-            "description": "<https://id.loc.gov/ontologies/bibframe.html#p_source>",
-            "type": "string"
           }
-        }
+        ]
       },
       "Record": {
         "description": "A full representation of a record",
         "allOf": [
           {
             "$ref": "#/components/schemas/BriefRecord"
-          },
-          {
-            "$ref": "#/components/schemas/Identifiers"
           },
           {
             "type": "object",
@@ -425,12 +446,6 @@
               },
               "summary": {
                 "type": "string"
-              },
-              "imprint": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
               },
               "languages": {
                 "description": "<http://id.loc.gov/ontologies/bibframe.html#c_Language>",
@@ -481,14 +496,14 @@
             "type": "integer",
             "description": "total search results for query"
           },
-          "aggregations": {
-            "$ref": "#/components/schemas/Aggregations"
-          },
           "results": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/BriefRecord"
             }
+          },
+          "aggregations": {
+            "$ref": "#/components/schemas/Aggregations"
           }
         }
       },
