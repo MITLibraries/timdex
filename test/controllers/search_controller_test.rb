@@ -8,7 +8,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
           headers: { 'Authorization': "Bearer #{token}" }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert_equal(21_091, json['hits'])
+      assert_equal(21_502, json['hits'])
     end
   end
 
@@ -71,28 +71,28 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
           headers: { 'Authorization': "Bearer #{token}" }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert_equal(365, json['hits'])
+      assert_equal(394, json['hits'])
       assert_equal('002312360', json['results'][0]['id'])
 
       get '/api/v1/search?q=marvel&page=2',
           headers: { 'Authorization': "Bearer #{token}" }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert_equal(365, json['hits'])
-      assert_equal('002249006', json['results'][0]['id'])
+      assert_equal(394, json['hits'])
+      assert_equal('002611432', json['results'][0]['id'])
 
       get '/api/v1/search?q=marvel&page=10',
           headers: { 'Authorization': "Bearer #{token}" }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert_equal(365, json['hits'])
-      assert_equal('001250612', json['results'][0]['id'])
+      assert_equal(394, json['hits'])
+      assert_equal('002602394', json['results'][0]['id'])
 
-      get '/api/v1/search?q=marvel&page=20',
+      get '/api/v1/search?q=marvel&page=25',
           headers: { 'Authorization': "Bearer #{token}" }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert_equal(365, json['hits'])
+      assert_equal(394, json['hits'])
       assert_equal('Invalid page parameter: requested page past last result',
                    json['error'])
 
@@ -113,22 +113,22 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
           headers: { 'Authorization': "Bearer #{token}" }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert_equal(365, json['hits'])
+      assert_equal(394, json['hits'])
       assert_equal('002312360', json['results'][0]['id'])
 
       get '/api/v1/search?q=marvel&subject[]=Graphic%20Novels.',
           headers: { 'Authorization': "Bearer #{token}" }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert_equal(19, json['hits'])
+      assert_equal(20, json['hits'])
       assert_equal('002295630', json['results'][0]['id'])
 
       get '/api/v1/search?q=marvel&subject[]=Graphic%20Novels.&subject[]=science%20fiction%20comic%20books,%20strips,%20etc.',
           headers: { 'Authorization': "Bearer #{token}" }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert_equal(10, json['hits'])
-      assert_equal('002612469', json['results'][0]['id'])
+      assert_equal(11, json['hits'])
+      assert_equal('002759156', json['results'][0]['id'])
     end
   end
 
@@ -139,14 +139,14 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
           headers: { 'Authorization': "Bearer #{token}" }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert_equal(365, json['hits'])
+      assert_equal(394, json['hits'])
       assert_equal('002312360', json['results'][0]['id'])
 
       get '/api/v1/search?q=marvel&literary_form=fiction',
           headers: { 'Authorization': "Bearer #{token}" }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert_equal(190, json['hits'])
+      assert_equal(227, json['hits'])
       assert_equal('002312360', json['results'][0]['id'])
     end
   end
