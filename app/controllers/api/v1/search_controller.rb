@@ -95,17 +95,15 @@ module Api
         param.each do |t|
           if field == 'contributors'
             terms.push(
-              {
-                nested: {
-                  path: "contributors",
-                  query: {
-                    bool: {
-                      must: [{
-                        match: {
-                          "contributors.value.keyword": t
-                        }
-                      }]
-                    }
+              nested: {
+                path: 'contributors',
+                query: {
+                  bool: {
+                    must: [{
+                      match: {
+                        'contributors.value.keyword': t
+                      }
+                    }]
                   }
                 }
               }
