@@ -64,7 +64,9 @@ module Api
       # https://www.elastic.co/guide/en/elasticsearch/reference/current/query-filter-context.html
       def filters
         f = []
-        f.push filter(params[:author], 'creators') if params[:author]
+        if params[:contributors]
+          f.push filter(params[:contributors], 'contributors')
+        end
 
         if params[:content_type]
           f.push filter_single(params[:content_type], 'content_type')
@@ -91,7 +93,26 @@ module Api
         terms = []
 
         param.each do |t|
-          terms.push('term': { "#{field}.keyword": t })
+          if field == 'contributors'
+            terms.push(
+              {
+                nested: {
+                  path: "contributors",
+                  query: {
+                    bool: {
+                      must: [{
+                        match: {
+                          "contributors.value.keyword": t
+                        }
+                      }]
+                    }
+                  }
+                }
+              }
+            )
+          else
+            terms.push('term': { "#{field}.keyword": t })
+          end
         end
 
         terms
@@ -107,9 +128,16 @@ module Api
       # https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html
       def aggregations
         {
-          creators: {
-            terms: {
-              field: 'creators.keyword'
+          contributors: {
+            nested: {
+              path: 'contributors'
+            },
+            aggs: {
+              contributor_names: {
+                terms: {
+                  field: 'contributors.value.keyword'
+                }
+              }
             }
           },
           content_type: {
