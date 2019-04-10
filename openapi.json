@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.2",
   "info": {
-    "version": "0.0.6",
+    "version": "0.0.7",
     "title": "MIT Libraries Discovery API",
     "description": "MIT Libraries Discovery API. Register for an account at [https://timdex.mit.edu](https://timdex.mit.edu)",
     "contact": {
