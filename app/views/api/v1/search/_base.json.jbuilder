@@ -8,7 +8,7 @@ json.realtime_holdings_link 'Not Yet Implemented'
 json.publication_date result['publication_date']
 json.title result['title']
 json.links result['links'] if result['links']
-json.authors result['creators']
+json.contributors result['contributors']
 json.subjects result['subjects']
 json.summary_holdings result['holdings'] if result['holdings']
 json.lccn result['lccn'] if result['lccn']

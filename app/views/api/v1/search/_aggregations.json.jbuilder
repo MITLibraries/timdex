@@ -9,7 +9,7 @@ json.aggregations do
     json.count x['doc_count']
   end
 
-  json.author @results['aggregations']['creators']['buckets'] do |x|
+  json.contributor @results['aggregations']['contributors']['contributor_names']['buckets'] do |x|
     json.name x['key']
     json.count x['doc_count']
   end

@@ -117,8 +117,8 @@
             }
           },
           {
-            "name": "author[]",
-            "description": "Must use exact terminology from index, such as from a previous search result. Multiple values can be supplied like `?q=term&author[]=author1&author[]=author2`",
+            "name": "contributor[]",
+            "description": "Must use exact terminology from index, such as from a previous search result. Multiple values can be supplied like `?q=term&contributor[]=contributor1&contributor[]=contributor2`",
             "in": "query",
             "schema": {
               "type": "array",
@@ -336,6 +336,18 @@
           }
         }
       },
+      "Contributor": {
+        "description": "<http://purl.org/dc/terms/creator>",
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
       "BriefRecord": {
         "description": "An abbreviated representation of a record",
         "allOf": [
@@ -394,11 +406,10 @@
                   "$ref": "#/components/schemas/Link"
                 }
               },
-              "authors": {
-                "description": "<http://purl.org/dc/terms/creator>",
+              "contributors": {
                 "type": "array",
                 "items": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Contributor"
                 }
               },
               "subjects": {
@@ -538,7 +549,7 @@
               }
             }
           },
-          "authors": {
+          "contributors": {
             "type": "array",
             "items": {
               "type": "object",
