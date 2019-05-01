@@ -51,9 +51,40 @@ module Api
       def query
         {
           bool: {
+            should: [
+              {
+                prefix: {
+                  'title.exact_value': {
+                    value: params[:q].downcase,
+                    boost: 15.0
+                  }
+                }
+              },
+              {
+                term: {
+                  title: {
+                    value: params[:q].downcase,
+                    boost: 1.0
+                  }
+                }
+              },
+              {
+                nested: {
+                  path: 'contributors',
+                  query: {
+                    term: {
+                      'contributors.value': {
+                        value: params[:q].downcase,
+                        boost: 0.1
+                      }
+                    }
+                  }
+                }
+              }
+            ],
             must: {
               multi_match: {
-                query: params[:q]
+                query: params[:q].downcase
               }
             },
             filter: filters
