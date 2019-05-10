@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.2",
   "info": {
-    "version": "0.0.7",
+    "version": "0.0.8",
     "title": "MIT Libraries Discovery API",
-    "description": "MIT Libraries Discovery API. Register for an account at [https://timdex.mit.edu](https://timdex.mit.edu)",
+    "description": "MIT Libraries Discovery API. Register for an optional account at [https://timdex.mit.edu](https://timdex.mit.edu)\n\nAnonymous access is rate limited. Registering and using JWT tokens removes the rate limit. If you run into issues with tokens, we're happy to help!\n",
     "contact": {
       "name": "MIT Libraries Developers",
       "email": "timdex@mit.edu",
@@ -82,7 +82,8 @@
         "tags": [
           "Search"
         ],
-        "description": "Search endpoint",
+        "summary": "Search Endpoint",
+        "description": "Non authenticated access is throttled. Use JWT auth for unrestricted access.",
         "operationId": "search",
         "responses": {
           "200": {
@@ -201,7 +202,8 @@
         "tags": [
           "Retrieve"
         ],
-        "description": "Retrieve a single record endpoint",
+        "summary": "Retrieve a single record endpoint",
+        "description": "Non authenticated access is throttled. Use JWT auth for unrestricted access.",
         "operationId": "getByRecordID",
         "responses": {
           "200": {
