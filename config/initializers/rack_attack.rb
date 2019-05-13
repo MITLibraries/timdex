@@ -21,8 +21,8 @@ class Rack::Attack
   #
   # Key: "rack::attack:#{Time.now.to_i/:period}:req/ip:#{req.ip}"
   throttle('req/ip',
-           limit: (ENV['REQUESTS_PER_FIVE_MINUTES'] || 500).to_i,
-           period: 5.minutes) do |req|
+           limit: (ENV.fetch('REQUESTS_PER_PERIOD') { 100 }).to_i,
+           period: (ENV.fetch('REQUEST_PERIOD') { 1 }).to_i.minutes) do |req|
     req.ip unless req.path.start_with?('/assets')
   end
 

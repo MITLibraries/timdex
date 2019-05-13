@@ -19,7 +19,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
           headers: { 'Authorization': "Bearer #{token}" }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert_equal(500, json['request_limit'])
+      assert_equal(100, json['request_limit'])
     end
   end
 
@@ -32,7 +32,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
           headers: { 'Authorization': "Bearer #{token}" }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert_equal(500, json['request_limit'])
+      assert_equal(100, json['request_limit'])
     end
   end
 

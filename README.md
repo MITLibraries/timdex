@@ -55,3 +55,6 @@ additional records with a standardized template.
 - `PREFERRED_DOMAIN` - set this to the domain you would like to to use. Any
   other requests that come to the app will redirect to the root of this domain.
   This is useful to prevent access to herokuapp.com domains.
+- `REQUESTS_PER_PERIOD` - requests allowed before throttling. Default is 100.
+- `REQUEST_PERIOD` - number of minutes for the period in `REQUESTS_PER_PERIOD`.
+  Default is 1.
