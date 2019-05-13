@@ -1,4 +1,5 @@
 json.hits @results['hits']['total']
+json.partial! partial: 'throttle'
 
 if @results['hits']['total'].positive? && @results['hits']['hits'].count.zero?
   json.error 'Invalid page parameter: requested page past last result'

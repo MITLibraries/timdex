@@ -3,7 +3,6 @@ module Api
     class SearchController < ApplicationController
       respond_to :json
       before_action :ensure_json!
-      before_action :authenticate_user!, except: 'ping'
 
       SIZE = 20
       MAX_PAGE = 200

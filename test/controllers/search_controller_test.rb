@@ -12,22 +12,28 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'invalid token' do
+  test 'invalid token succeeds and includes throttle information' do
     token = JWTWrapper.encode(user_id: 'fakeid')
-    get '/api/v1/search?q=super+cool+search',
-        headers: { 'Authorization': "Bearer #{token}" }
-    assert_equal(401, response.status)
-    assert_equal('{"error" : "invalid credentials"}', response.body)
+    VCR.use_cassette('invalid token') do
+      get '/api/v1/search?q=super+cool+search',
+          headers: { 'Authorization': "Bearer #{token}" }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert_equal(100, json['request_limit'])
+    end
   end
 
-  test 'expired token' do
+  test 'expired token succeeds and includes throttle information' do
     token = Timecop.freeze(Time.zone.today - 1) do
       JWTWrapper.encode(user_id: users(:yo).id)
     end
-    get '/api/v1/search?q=super+cool+search',
-        headers: { 'Authorization': "Bearer #{token}" }
-    assert_equal(401, response.status)
-    assert_equal('{"error" : "invalid credentials"}', response.body)
+    VCR.use_cassette('expired token') do
+      get '/api/v1/search?q=super+cool+search',
+          headers: { 'Authorization': "Bearer #{token}" }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert_equal(100, json['request_limit'])
+    end
   end
 
   test 'ping with no token' do
