@@ -191,6 +191,7 @@
           }
         ],
         "security": [
+          {},
           {
             "jwtAuth": []
           }
@@ -234,6 +235,7 @@
           }
         ],
         "security": [
+          {},
           {
             "jwtAuth": []
           }
