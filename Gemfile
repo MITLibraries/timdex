@@ -35,6 +35,7 @@ group :development do
   gem 'annotate'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'rubocop'
+  gem 'rubocop-rails'
   gem 'web-console', '>= 3.3.0'
 end
 
