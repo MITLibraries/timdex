@@ -6,7 +6,7 @@ ruby '2.6.1'
 gem 'aws-sdk-elasticsearchservice'
 gem 'bootsnap', require: false
 gem 'devise'
-gem 'elasticsearch', '~>6.3'
+gem 'elasticsearch', '~>7.2'
 gem 'faraday_middleware-aws-sigv4'
 gem 'jbuilder'
 gem 'jwt'
