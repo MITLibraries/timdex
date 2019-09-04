@@ -34,7 +34,7 @@ module Types
       query = {}
       query[:q] = searchterm
 
-      results = Search.search(from, query)
+      results = Search.new.search(from, query)
 
       results['hits']['hits'].map { |x| x['_source'] }
     end
