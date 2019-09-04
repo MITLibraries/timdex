@@ -29,9 +29,8 @@ module Types
     field :literary_form, String, null: true
     field :related_place, String, null: true
     field :in_bibliography, [String], null: true
-  	# RelatedItems         []*RelatedItem `json:"related_items,omitempty"`
-  	# Links                []Link         `json:"links,omitempty"`
-  	# Holdings             []Holding      `json:"holdings,omitempty"`
-
+    # RelatedItems         []*RelatedItem `json:"related_items,omitempty"`
+    # Links                []Link         `json:"links,omitempty"`
+    # Holdings             []Holding      `json:"holdings,omitempty"`
   end
 end

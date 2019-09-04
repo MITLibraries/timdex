@@ -27,7 +27,7 @@ module Types
     field :search, [RecordType], null: false,
                                  description: 'Search for timdex records' do
       argument :searchterm, String, required: true
-      argument :from, String, required: false, default_value: "0"
+      argument :from, String, required: false, default_value: '0'
     end
 
     def search(searchterm:, from:)
