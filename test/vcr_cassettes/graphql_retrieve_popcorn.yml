@@ -1,0 +1,44 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:9200/production/_all/000346597
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v0.15.4
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Warning:
+      - 299 Elasticsearch-7.1.0-606a173 "[types removal] Specifying types in document
+        get requests is deprecated, use the /{index}/_doc/{id} endpoint instead."
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '578'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"_index":"tk3","_type":"Record","_id":"000346597","_version":1,"_seq_no":65507,"_primary_term":1,"found":true,"_source":{"identifier":"000346597","source":"MIT
+        Aleph","source_link":"https://library.mit.edu/item/000346597","title":"Popcorn
+        Venus /","contributors":[{"kind":"author","value":"Rosen, Marjorie."}],"subjects":["Women
+        in motion pictures."],"isbns":["0380001772"],"oclcs":["03816312"],"lccn":"73078740","place_of_publication":"New
+        York (State)","languages":["English"],"publication_date":"1974","content_type":"Text","imprint":["New
+        York : Avon, 1974, c1973."],"physical_description":"448 p., [16] p. of plates
+        : ports ; 18 cm.","notes":["Marjorie Rosen.","Includes index.","Bibliography:
+        p. 412-424."],"format":["Print volume"],"literary_form":"nonfiction","holdings":[{"location":"Hayden
+        Library","collection":"Stacks","call_number":"PN1995.9.W6.R6 1974","format":"Print
+        volume"}]}}'
+    http_version: 
+  recorded_at: Thu, 05 Sep 2019 17:36:15 GMT
+recorded_with: VCR 5.0.0
