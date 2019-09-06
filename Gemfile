@@ -8,6 +8,7 @@ gem 'bootsnap', require: false
 gem 'devise'
 gem 'elasticsearch', '~>6.3'
 gem 'faraday_middleware-aws-sigv4'
+gem 'graphql'
 gem 'jbuilder'
 gem 'jwt'
 gem 'lograge'
@@ -33,6 +34,7 @@ end
 
 group :development do
   gem 'annotate'
+  gem 'graphiql-rails'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'rubocop'
   gem 'rubocop-rails'
