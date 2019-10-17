@@ -9,7 +9,26 @@
 
       <p>This initial release provides discovery of records in MIT Libraries Barton catalog. We intend to expand the scope of collections discoverable via this API.</p>
 
-      <p><a href="https://mitlibraries-timdex.docs.stoplight.io">End user documentation</a> is available with code samples and live interactive API calls against real production data.</p>
+      <p>Interactive <a href="https://mitlibraries-timdex.docs.stoplight.io">end user documentation</a> is available for the REST API with selectable language code samples and live API calls against real production data.</p>
+
+      <p>There is also a <a href="https://graphql.org">GraphQL</a> endpoint by posting to <%= link_to(graphql_url) %> as well as an <a href="/playground">interactive GraphQL playground.</a> It's neat, check it out!.</p>
+
+      <div class="well">
+        <p>Example query to use in the playground or your own app:</p>
+
+<pre>
+{
+  search(searchterm: "kerbal") {
+    sourceLink
+    title
+    links {
+      text
+      url
+    }
+  }
+}
+</pre>
+      </div>
 
       <p>Feedback is welcome via <a href="mailto:timdex@mit.edu?Subject=TIMDEX%20Feedback">timdex@mit.edu</a>.
 
