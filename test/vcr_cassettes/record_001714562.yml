@@ -2,15 +2,15 @@
 http_interactions:
 - request:
     method: get
-    uri: http://localhost:9200/production/_all/001714562
+    uri: http://localhost:9200/timdex-prod/_search
     body:
-      encoding: US-ASCII
-      string: ''
+      encoding: UTF-8
+      string: '{"query":{"ids":{"values":["001714562"]}}}'
     headers:
       Content-Type:
       - application/json
       User-Agent:
-      - Faraday v0.15.3
+      - Faraday v0.15.4
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -23,10 +23,10 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
-      - '938'
+      - '1016'
     body:
       encoding: ASCII-8BIT
-      string: '{"_index":"test","_type":"Record","_id":"001714562","_version":1,"found":true,"_source":{"identifier":"001714562","source":"MIT
+      string: '{"took":142,"timed_out":false,"_shards":{"total":10,"successful":10,"skipped":0,"failed":0},"hits":{"total":1,"max_score":1.0,"hits":[{"_index":"aleph-2019-10-23t14:46:46z","_type":"Record","_id":"001714562","_score":1.0,"_source":{"identifier":"001714562","source":"MIT
         Aleph","source_link":"https://library.mit.edu/item/001714562","title":"Marvel
         zombies /","contributors":[{"kind":"author","value":"Kirkman, Robert."},{"kind":"contributor","value":"Phillips,
         Sean."}],"subjects":["Zombies Comic books, strips, etc.","Science fiction
@@ -44,7 +44,7 @@ http_interactions:
         for more food, and witness the arrival of the Silver Surfer! Collects Marvel
         Zombies #1-5."],"format":["Print volume"],"literary_form":"fiction","holdings":[{"location":"Hayden
         Library","collection":"Graphic Novel Collection","call_number":"PN6728.M367
-        K57 2006","format":"Print volume"}]}}'
+        K57 2006","format":"Print volume"}]}}]}}'
     http_version: 
-  recorded_at: Tue, 09 Apr 2019 15:33:06 GMT
-recorded_with: VCR 4.0.0
+  recorded_at: Wed, 23 Oct 2019 14:57:20 GMT
+recorded_with: VCR 5.0.0

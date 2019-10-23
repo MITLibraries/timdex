@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://localhost:9200/production/_search
+    uri: http://localhost:9200/timdex-prod/_search
     body:
       encoding: UTF-8
       string: '{"from":"0","size":20,"query":{"bool":{"should":[{"prefix":{"title.exact_value":{"value":"popcorn","boost":15.0}}},{"term":{"title":{"value":"popcorn","boost":1.0}}},{"nested":{"path":"contributors","query":{"term":{"contributors.value":{"value":"popcorn","boost":0.1}}}}}],"must":{"multi_match":{"query":"popcorn"}},"filter":[]}},"aggregations":{"contributors":{"nested":{"path":"contributors"},"aggs":{"contributor_names":{"terms":{"field":"contributors.value.keyword"}}}},"content_type":{"terms":{"field":"content_type.keyword"}},"content_format":{"terms":{"field":"format.keyword"}},"languages":{"terms":{"field":"languages.keyword"}},"literary_form":{"terms":{"field":"literary_form.keyword"}},"source":{"terms":{"field":"source.keyword"}},"subjects":{"terms":{"field":"subjects.keyword"}}}}'
