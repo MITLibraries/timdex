@@ -22,10 +22,11 @@ module Api
 
       def record
         f = to_filter(params[:id])
-        @results = Timdex::EsClient.search(index: ENV['ELASTICSEARCH_INDEX'], body: f)
-        if @results['hits']['total'] == 0
-          render json: { error: 'record not found' }.to_json, status: :not_found
-        end
+        @results = Timdex::EsClient.search(index: ENV['ELASTICSEARCH_INDEX'],
+                                           body: f)
+        return unless @results['hits']['total'].zero?
+
+        render json: { error: 'record not found' }.to_json, status: :not_found
       end
 
       def ping
@@ -42,8 +43,8 @@ module Api
             ids: {
               values: [id]
             }
-        }
-      }.to_json
+          }
+        }.to_json
       end
     end
   end
