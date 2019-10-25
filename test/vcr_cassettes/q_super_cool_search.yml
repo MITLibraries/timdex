@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://localhost:9200/production/_search
+    uri: http://localhost:9200/timdex-prod/_search
     body:
       encoding: UTF-8
       string: '{"from":0,"size":20,"query":{"bool":{"must":{"multi_match":{"query":"super

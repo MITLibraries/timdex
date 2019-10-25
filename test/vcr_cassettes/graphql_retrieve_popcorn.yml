@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://localhost:9200/production/_all/000346597
+    uri: http://localhost:9200/timdex-prod/_all/000346597
     body:
       encoding: US-ASCII
       string: ''

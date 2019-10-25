@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://localhost:9200/production/_search
+    uri: http://localhost:9200/timdex-prod/_search
     body:
       encoding: UTF-8
       string: '{"from":0,"size":20,"query":{"bool":{"must":{"multi_match":{"query":"marvel"}},"filter":[]}},"aggregations":{"contributors":{"nested":{"path":"contributors"},"aggs":{"contributor_names":{"terms":{"field":"contributors.value.keyword"}}}},"content_type":{"terms":{"field":"content_type.keyword"}},"content_format":{"terms":{"field":"format.keyword"}},"languages":{"terms":{"field":"languages.keyword"}},"literary_form":{"terms":{"field":"literary_form.keyword"}},"source":{"terms":{"field":"source.keyword"}},"subjects":{"terms":{"field":"subjects.keyword"}}}}'
@@ -32,7 +32,7 @@ http_interactions:
   recorded_at: Tue, 09 Apr 2019 15:33:05 GMT
 - request:
     method: get
-    uri: http://localhost:9200/production/_search
+    uri: http://localhost:9200/timdex-prod/_search
     body:
       encoding: UTF-8
       string: '{"from":0,"size":20,"query":{"bool":{"must":{"multi_match":{"query":"marvel"}},"filter":[{"term":{"literary_form.keyword":"fiction"}}]}},"aggregations":{"contributors":{"nested":{"path":"contributors"},"aggs":{"contributor_names":{"terms":{"field":"contributors.value.keyword"}}}},"content_type":{"terms":{"field":"content_type.keyword"}},"content_format":{"terms":{"field":"format.keyword"}},"languages":{"terms":{"field":"languages.keyword"}},"literary_form":{"terms":{"field":"literary_form.keyword"}},"source":{"terms":{"field":"source.keyword"}},"subjects":{"terms":{"field":"subjects.keyword"}}}}'
