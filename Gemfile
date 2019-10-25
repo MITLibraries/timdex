@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.1'
+ruby '2.6.5'
 
 gem 'aws-sdk-elasticsearchservice'
 gem 'bootsnap', require: false
@@ -29,7 +29,6 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails'
   gem 'sqlite3'
-  gem 'therubyracer', platforms: :ruby
 end
 
 group :development do
