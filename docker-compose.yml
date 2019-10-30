@@ -1,0 +1,38 @@
+version: '3.7'
+services:
+  web:
+    build: .
+    image: timdex
+    ports:
+      - 3000:3000
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_INDEX: timdex-prod
+    depends_on:
+    - elasticsearch
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    volumes:
+      - type: bind
+        source: .
+        target: /timdex
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.8.4
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - type: volume
+        source: esdata
+        target: /var/timdex/esdata
+    ports:
+      - 9200:9200
+
+volumes:
+  esdata:
