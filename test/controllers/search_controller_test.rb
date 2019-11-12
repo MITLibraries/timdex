@@ -70,6 +70,17 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'record with a period in the id' do
+    token = JWTWrapper.encode(user_id: users(:yo).id)
+    VCR.use_cassette('record period') do
+      get '/api/v1/record/MIT:archivespace:MC.0044',
+          headers: { 'Authorization': "Bearer #{token}" }
+          assert_equal(200, response.status)
+          json = JSON.parse(response.body)
+          assert_equal('MIT:archivespace:MC.0044', json['id'])
+    end
+  end
+
   test 'pagination' do
     token = JWTWrapper.encode(user_id: users(:yo).id)
     VCR.use_cassette('pagination') do
