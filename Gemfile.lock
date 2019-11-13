@@ -119,7 +119,7 @@ GEM
     faraday_middleware-aws-sigv4 (0.3.0)
       aws-sigv4 (~> 1.0)
       faraday (>= 0.15)
-    ffi (1.11.1)
+    ffi (1.11.2)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     graphiql-rails (1.7.0)
