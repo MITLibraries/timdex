@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       get 'auth', to: 'auth#auth'
       get 'search', to: 'search#search'
-      get 'record/:id', to: 'search#record', as: 'record'
+      get 'record/:id', to: 'search#record', as: 'record', constraints: { id: /[^\/]+/ }
       get 'ping', to: 'search#ping'
     end
   end
