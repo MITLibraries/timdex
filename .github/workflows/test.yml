@@ -2,15 +2,13 @@ name: Test
 
 on: [push]
 
-runs:
-  using: 'docker'
-  image: 'Dockerfile'
-
 jobs:
   build:
+
+    runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v1
     - name: Build and test with Rake
+    - uses: actions/build@v1
       run: |
         bundle exec rails test
-
