@@ -2,11 +2,12 @@ name: Test
 
 on: [push]
 
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+
 jobs:
   build:
-    runs:
-      using: 'docker'
-      image: 'Dockerfile'
     steps:
     - uses: actions/checkout@v1
     - name: Build and test with Rake
