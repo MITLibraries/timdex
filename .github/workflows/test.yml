@@ -15,4 +15,4 @@ jobs:
         bundle install --jobs 4 --retry 3
         bundle exec rails test
     container:
-      image: ruby:2.6.5-slim
+      image: ruby:2.6.5
