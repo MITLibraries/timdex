@@ -4,15 +4,12 @@ on: [push]
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
-
+    runs:
+      using: 'docker'
+      image: 'Dockerfile'
     steps:
     - uses: actions/checkout@v1
     - name: Build and test with Rake
       run: |
-        gem install bundler
-        bundle install --jobs 4 --retry 3
         bundle exec rails test
-    container:
-      image: ruby:2.6.5
+
