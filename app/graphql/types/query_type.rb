@@ -24,8 +24,8 @@ module Types
       result['_source']
     end
 
-    field :search, [RecordType], null: false,
-                                 description: 'Search for timdex records' do
+    field :search, SearchType, null: false,
+                               description: 'Search for timdex records' do
       argument :searchterm, String, required: true
       argument :from, String, required: false, default_value: '0'
     end
@@ -36,7 +36,23 @@ module Types
 
       results = Search.new.search(from, query)
 
-      results['hits']['hits'].map { |x| x['_source'] }
+      response = {}
+      response[:hits] = results['hits']['total']
+      response[:records] = results['hits']['hits'].map { |x| x['_source'] }
+      response[:aggregations] = collapse_buckets(results['aggregations'])
+      response
+    end
+
+    def collapse_buckets(es_aggs)
+      {
+        content_format: es_aggs['content_format']['buckets'],
+        content_type: es_aggs['content_type']['buckets'],
+        contributors: es_aggs['contributors']['contributor_names']['buckets'],
+        languages: es_aggs['languages']['buckets'],
+        literary_form: es_aggs['literary_form']['buckets'],
+        source: es_aggs['source']['buckets'],
+        subjects: es_aggs['subjects']['buckets']
+      }
     end
   end
 end

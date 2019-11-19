@@ -1,17 +1,17 @@
 module Types
-  class LinkType < BaseObject
+  class LinkType < Types::BaseObject
     field :kind, String, null: true
     field :text, String, null: true
     field :url, String, null: false
     field :restrictions, String, null: true
   end
 
-  class ContributorType < BaseObject
+  class ContributorType < Types::BaseObject
     field :kind, String, null: true
     field :value, String, null: false
   end
 
-  class HoldingType < BaseObject
+  class HoldingType < Types::BaseObject
     field :location, String, null: false
     field :collection, String, null: true
     field :callnumber, String, null: true
@@ -20,12 +20,12 @@ module Types
     field :format, String, null: true
   end
 
-  class RelatedItemType < BaseObject
+  class RelatedItemType < Types::BaseObject
     field :kind, String, null: true
     field :value, [String], null: false
   end
 
-  class RecordType < BaseObject
+  class RecordType < Types::BaseObject
     field :identifier, ID, null: false
     field :source, String, null: false
     field :source_link, String, null: false

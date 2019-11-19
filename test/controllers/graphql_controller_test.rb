@@ -17,15 +17,18 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
     VCR.use_cassette('graphql search popcorn') do
       post '/graphql', params: { query: '{
                                   search(searchterm: "popcorn") {
-                                    title
+                                    records {
+                                      title
+                                    }
                                   }
                                 }' }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert_equal('Popcorn Venus /', json['data']['search'].first['title'])
+      assert_equal('Popcorn Industry Profile: Belgium',
+                   json['data']['search']['records'].first['title'])
 
       # confirm non-requested fields don't return
-      assert_nil(json['data']['search'].first['contentType'])
+      assert_nil(json['data']['search']['records'].first['contentType'])
     end
   end
 
@@ -33,21 +36,27 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
     VCR.use_cassette('graphql search popcorn') do
       post '/graphql', params: { query: '{
                                   search(searchterm: "popcorn") {
-                                    title
-                                    contentType
+                                    records {
+                                      title
+                                      contentType
+                                    }
                                   }
                                 }' }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert_equal('Popcorn Venus /', json['data']['search'].first['title'])
-      assert_equal('Text', json['data']['search'].first['contentType'])
+      assert_equal('Popcorn Industry Profile: Belgium',
+                   json['data']['search']['records'].first['title'])
+      assert_equal('Text',
+                   json['data']['search']['records'].first['contentType'])
     end
   end
 
   test 'search with invalid parameters' do
     post '/graphql', params: { query: '{
                                 search(searchterm: "popcorn") {
-                                  yo
+                                  records {
+                                    yo
+                                  }
                                 }
                               }' }
     assert_equal(200, response.status)
@@ -62,6 +71,42 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
     json = JSON.parse(response.body)
     assert_equal('No query string was present',
                  json['errors'].first['message'])
+  end
+
+  test 'search hits' do
+    VCR.use_cassette('graphql search popcorn') do
+      post '/graphql', params: { query: '{
+                                  search(searchterm: "popcorn") {
+                                    hits
+                                  }
+                                }' }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert_equal(113, json['data']['search']['hits'])
+    end
+  end
+
+  test 'search aggregations' do
+    VCR.use_cassette('graphql search popcorn') do
+      post '/graphql', params: { query: '{
+                                  search(searchterm: "popcorn") {
+                                    aggregations {
+                                      source {
+                                        key
+                                        docCount
+                                      }
+                                    }
+                                  }
+                                }' }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert_equal('mit aleph',
+                   json['data']['search']['aggregations']['source']
+                   .first['key'])
+      assert_equal(113,
+                   json['data']['search']['aggregations']['source']
+                   .first['docCount'])
+    end
   end
 
   test 'retrieve' do
