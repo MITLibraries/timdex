@@ -110,17 +110,17 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'retrieve' do
-    VCR.use_cassette('graphql retrieve popcorn') do
+    VCR.use_cassette('graphql retrieve') do
       post '/graphql', params: { query: '{
-                                  recordId(id: "000346597") {
+                                  recordId(id: "001245816") {
                                     identifier
                                     title
                                   }
                                 }' }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert_equal('Popcorn Venus /', json['data']['recordId']['title'])
-      assert_equal('000346597', json['data']['recordId']['identifier'])
+      assert(json['data']['recordId']['title'].start_with?('Popcorn Moms'))
+      assert_equal('001245816', json['data']['recordId']['identifier'])
 
       # confirm non-requested fields don't return
       assert_nil(json['data']['recordId']['literaryForm'])
