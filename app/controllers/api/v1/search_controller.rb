@@ -21,11 +21,8 @@ module Api
       end
 
       def record
-        f = to_filter(params[:id])
-        @results = Timdex::EsClient.search(index: ENV['ELASTICSEARCH_INDEX'],
-                                           body: f)
-        return unless @results['hits']['total'].zero?
-
+        @results = Retrieve.new.fetch(params[:id])
+      rescue Elasticsearch::Transport::Transport::Errors::NotFound
         render json: { error: 'record not found' }.to_json, status: :not_found
       end
 
@@ -35,16 +32,6 @@ module Api
 
       def ensure_json!
         request.format = :json
-      end
-
-      def to_filter(id)
-        {
-          query: {
-            ids: {
-              values: [id]
-            }
-          }
-        }.to_json
       end
     end
   end

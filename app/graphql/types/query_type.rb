@@ -15,13 +15,10 @@ module Types
     end
 
     def record_id(id:)
-      begin
-        result = Timdex::EsClient.get(index: ENV['ELASTICSEARCH_INDEX'],
-                                      id: id)
-      rescue Elasticsearch::Transport::Transport::Errors::NotFound
-        render json: { error: 'record not found' }.to_json, status: :not_found
-      end
-      result['_source']
+      result = Retrieve.new.fetch(id)
+      result['hits']['hits'].first['_source']
+    rescue Elasticsearch::Transport::Transport::Errors::NotFound
+      raise GraphQL::ExecutionError, "Record '#{id}' not found"
     end
 
     field :search, SearchType, null: false,
