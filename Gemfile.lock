@@ -124,7 +124,7 @@ GEM
     graphiql-rails (1.7.0)
       railties
       sprockets-rails
-    graphql (1.9.15)
+    graphql (1.9.17)
     hashdiff (1.0.0)
     i18n (1.7.0)
       concurrent-ruby (~> 1.0)
