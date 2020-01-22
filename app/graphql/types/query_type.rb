@@ -25,11 +25,13 @@ module Types
                                description: 'Search for timdex records' do
       argument :searchterm, String, required: true
       argument :from, String, required: false, default_value: '0'
+      argument :source, String, required: false, default_value: 'All'
     end
 
-    def search(searchterm:, from:)
+    def search(searchterm:, from:, source:)
       query = {}
       query[:q] = searchterm
+      query[:source] = source if source != 'All'
 
       results = Search.new.search(from, query)
 
