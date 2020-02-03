@@ -19,6 +19,7 @@ gem 'rack-cors'
 gem 'rails', '~> 5.2'
 gem 'redis'
 gem 'sass-rails'
+gem 'sentry-raven'
 gem 'uglifier'
 
 group :production do
