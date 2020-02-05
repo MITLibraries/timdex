@@ -58,6 +58,7 @@ additional records with a standardized template.
 - `REQUESTS_PER_PERIOD` - requests allowed before throttling. Default is 100.
 - `REQUEST_PERIOD` - number of minutes for the period in `REQUESTS_PER_PERIOD`.
   Default is 1.
+- `SENTRY_DSN`: client key for Sentry exception logging
 
 ## Docker Compose Orchestrated Local Environment
 
