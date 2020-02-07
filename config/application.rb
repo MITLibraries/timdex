@@ -27,7 +27,8 @@ module Timdex
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins '*'
-        resource '*', headers: :any, methods: [:get]
+        resource '/api/v1/*', headers: :any, methods: [:get]
+        resource '/graphql', headers: :any, methods: [:post]
       end
     end
 
