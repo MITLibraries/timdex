@@ -45,8 +45,9 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'chromedriver-helper'
   gem 'climate_control'
-  gem 'coveralls', require: false
   gem 'selenium-webdriver'
+  gem 'simplecov', require: false
+  gem 'simplecov-lcov', require: false
   gem 'timecop'
   gem 'vcr'
   gem 'webmock'
