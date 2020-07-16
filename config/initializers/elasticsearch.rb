@@ -9,11 +9,11 @@ def configure_elasticsearch
 end
 
 def es_client
-  Elasticsearch::Client.new log: ENV['ELASTICSEARCH_LOG']
+  Elasticsearch::Client.new log: ENV.fetch('ELASTICSEARCH_LOG', false)
 end
 
 def aws_client
-  Elasticsearch::Client.new log: ENV['ELASTICSEARCH_LOG'],
+  Elasticsearch::Client.new log: ENV.fetch('ELASTICSEARCH_LOG', false),
                             url: ENV['ELASTICSEARCH_URL'] do |config|
     config.request :aws_sigv4,
                    credentials: Aws::Credentials.new(
@@ -26,3 +26,6 @@ def aws_client
 end
 
 Timdex::EsClient = configure_elasticsearch
+
+return unless ENV.fetch('ELASTICSEARCH_LOG', false)
+Timdex::EsClient.transport.logger.level = ENV.fetch('ES_LOG_LEVEL', 'INFO')
