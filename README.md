@@ -23,6 +23,7 @@ additional records with a standardized template.
 ## Publishing User Facing Documentation
 
 ### Automatic generation from openapi specification
+
 - Sign into stoplight.io with an account that has access to the MIT Libraries organization
 - copy the source of `openapi.json` file from this repository to the code tab in our [stoplight model](https://next.stoplight.io/mit-libraries/timdex/version%2F1.0/openapi.oas3.yml)
 - In [Stoplight's Publish](https://next.stoplight.io/mit-libraries/timdex/version%2F1.0/timdex.hub.yml?view=/&show=publish&domain=mitlibraries-timdex.docs.stoplight.io) section, Uncheck "set live" and then click "Build"
@@ -30,7 +31,7 @@ additional records with a standardized template.
 
 ## Required Environment Variables (all ENVs)
 
-- `EMAIL_FROM`:  email address to send message from, including the registration
+- `EMAIL_FROM`: email address to send message from, including the registration
   and forgot password messages.
 - `EMAIL_URL_HOST` - base url to use when sending emails that link back to the
   application. In development, often `localhost:3000`. On heroku, often
@@ -41,6 +42,7 @@ additional records with a standardized template.
 - `ELASTICSEARCH_URL`: defaults to `http://localhost:9200`
 
 ## Production required Environment Variables
+
 - `AWS_ACCESS_KEY`
 - `AWS_ELASTICSEARCH`: boolean. Set to true to enable AWSv4 Signing
 - `AWS_SECRET_ACCESS_KEY`
@@ -51,7 +53,21 @@ additional records with a standardized template.
 - `SMTP_USER`
 
 ## Optional Environment Variables (all ENVs)
-- `ELASTICSEARCH_LOG` if `true`, verbosely logs ElasticSearch queries
+
+- `ELASTICSEARCH_LOG` if `true`, verbosely logs ElasticSearch queries.
+
+  ```text
+  NOTE: do not set this ENV at all if you want ES logging fully disabled.
+  Setting it to `false` is still setting it and you will be annoyed and
+  confused.
+  ```
+
+- `ES_LOG_LEVEL` set elasticsearch transport log level. Defaults to `INFO`.
+
+```text
+NOTE: `ELASTICSEARCH_LOG` must also be set for logging to function.
+```
+
 - `PREFERRED_DOMAIN` - set this to the domain you would like to to use. Any
   other requests that come to the app will redirect to the root of this domain.
   This is useful to prevent access to herokuapp.com domains.
