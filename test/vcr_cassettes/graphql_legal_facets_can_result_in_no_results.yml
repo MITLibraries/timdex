@@ -1,0 +1,34 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:9200/timdex-prod/_search
+    body:
+      encoding: UTF-8
+      string: '{"from":"0","size":20,"query":{"bool":{"should":[{"prefix":{"title.exact_value":{"value":"wright","boost":15.0}}},{"term":{"title":{"value":"wright","boost":1.0}}},{"nested":{"path":"contributors","query":{"term":{"contributors.value":{"value":"wright","boost":0.1}}}}}],"must":{"multi_match":{"query":"wright"}},"filter":[[{"term":{"subjects.keyword":"fake
+        facet value"}}]]}},"aggregations":{"contributors":{"nested":{"path":"contributors"},"aggs":{"contributor_names":{"terms":{"field":"contributors.value.keyword"}}}},"content_type":{"terms":{"field":"content_type.keyword"}},"content_format":{"terms":{"field":"format.keyword"}},"languages":{"terms":{"field":"languages.keyword"}},"literary_form":{"terms":{"field":"literary_form.keyword"}},"source":{"terms":{"field":"source.keyword"}},"subjects":{"terms":{"field":"subjects.keyword"}}}}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v1.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '246'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"took":63,"timed_out":false,"_shards":{"total":10,"successful":10,"skipped":0,"failed":0},"hits":{"total":0,"max_score":null,"hits":[]},"aggregations":{"languages":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"content_type":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"subjects":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"content_format":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"literary_form":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"source":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"contributors":{"doc_count":0,"contributor_names":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]}}}}'
+  recorded_at: Wed, 23 Sep 2020 20:49:44 GMT
+recorded_with: VCR 6.0.0

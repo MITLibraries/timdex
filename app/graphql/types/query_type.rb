@@ -25,13 +25,19 @@ module Types
                                description: 'Search for timdex records' do
       argument :searchterm, String, required: true
       argument :from, String, required: false, default_value: '0'
+
+      # applied facets
+      argument :content_type, String, required: false, default_value: nil
+      argument :contributors, [String], required: false, default_value: nil
+      argument :format, [String], required: false, default_value: nil
+      argument :languages, [String], required: false, default_value: nil
+      argument :literary_form, String, required: false, default_value: nil
       argument :source, String, required: false, default_value: 'All'
+      argument :subjects, [String], required: false, default_value: nil
     end
 
-    def search(searchterm:, from:, source:)
-      query = {}
-      query[:q] = searchterm
-      query[:source] = source if source != 'All'
+    def search(searchterm:, from:, **facets)
+      query = construct_query(searchterm, facets)
 
       results = Search.new.search(from, query)
 
@@ -40,6 +46,19 @@ module Types
       response[:records] = results['hits']['hits'].map { |x| x['_source'] }
       response[:aggregations] = collapse_buckets(results['aggregations'])
       response
+    end
+
+    def construct_query(searchterm, facets)
+      query = {}
+      query[:q] = searchterm
+      query[:content_format] = facets[:format]
+      query[:content_type] = facets[:content_type]
+      query[:contributors] = facets[:contributors]
+      query[:language] = facets[:languages]
+      query[:literary_form] = facets[:literary_form]
+      query[:source] = facets[:source] if facets[:source] != 'All'
+      query[:subject] = facets[:subjects]
+      query
     end
 
     def collapse_buckets(es_aggs)

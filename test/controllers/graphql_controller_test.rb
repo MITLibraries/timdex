@@ -109,6 +109,88 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'search with source facet applied' do
+    VCR.use_cassette('graphql search wright only aspace') do
+      post '/graphql', params: { query: '{
+                                  search(searchterm: "wright",
+                                    source: "mit archivesspace") {
+                                    hits
+                                    aggregations {
+                                      source {
+                                        key
+                                        docCount
+                                      }
+                                    }
+                                  }
+                                }' }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert_equal('mit archivesspace',
+                   json['data']['search']['aggregations']['source']
+                   .first['key'])
+      assert_equal(1,
+                   json['data']['search']['aggregations']['source']
+                   .first['docCount'])
+    end
+  end
+
+  test 'search with multiple subjects applied' do
+    VCR.use_cassette('graphql search multiple subjects') do
+      post '/graphql', params: { query: '{
+                                  search(searchterm: "space", 
+                                        subjects: ["space and time.",
+                                                   "quantum theory."]) {
+                                    hits
+                                  }
+                                }' }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert_equal(36, json['data']['search']['hits'])
+    end
+  end
+
+  test 'search with invalid facet applied' do
+    VCR.use_cassette('graphql search wright fake facet') do
+      post '/graphql', params: { query: '{
+                                  search(searchterm: "wright",
+                                    fake: "mit archivesspace") {
+                                    hits
+                                    aggregations {
+                                      source {
+                                        key
+                                        docCount
+                                      }
+                                    }
+                                  }
+                                }' }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert(json['errors'].first['message'].present?)
+      assert_equal("Field 'search' doesn't accept argument 'fake'",
+                 json['errors'].first['message'])
+    end
+  end
+
+  test 'valid facets can result in no results' do
+    VCR.use_cassette('graphql legal facets can result in no results') do
+      post '/graphql', params: { query: '{
+                                  search(searchterm: "wright",
+                                    subjects: ["fake facet value"]) {
+                                    hits
+                                    aggregations {
+                                      source {
+                                        key
+                                        docCount
+                                      }
+                                    }
+                                  }
+                                }' }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert_equal(0, json['data']['search']['hits'])
+    end
+  end
+
   test 'retrieve' do
     VCR.use_cassette('graphql retrieve') do
       post '/graphql', params: { query: '{
