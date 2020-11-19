@@ -119,6 +119,17 @@
             }
           },
           {
+            "name": "collection[]",
+            "description": "Must use exact terminology from index, such as from a previous search result. Multiple values can be supplied like `?q=term&collection[]=collection1&collection[]=collection2`",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
             "name": "content_type",
             "description": "Must use exact terminology from index, such as from a previous search result.  Only single value is allowed like `?q=term&content_type=content_type`",
             "in": "query",
@@ -431,6 +442,13 @@
                 "items": {
                   "type": "string"
                 }
+              "collections": {
+                "description": "<http://purl.org/dc/dcmitype/Collection>",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               },
               "summary_holdings": {
                 "type": "array",
@@ -535,6 +553,20 @@
         "type": "object",
         "properties": {
           "languages": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "count": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "collections": {
             "type": "array",
             "items": {
               "type": "object",
