@@ -3,7 +3,9 @@ json.issns result['issns'] if result['issns']
 json.dois result['dois'] if result['dois']
 json.available 'Not Yet Implemented'
 json.alternate_titles result['alternate_titles'] if result['alternate_titles']
-json.place_of_publication result['place_of_publication']
+if json.place_of_publication result['place_of_publication']
+  result['place_of_publication']
+end
 json.languages result['languages'] if result['languages']
 json.call_numbers result['call_numbers'] if result['call_numbers']
 json.edition result['edition'] if result['edition']
