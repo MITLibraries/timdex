@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.2",
   "info": {
-    "version": "0.0.9",
+    "version": "0.0.10",
     "title": "MIT Libraries Discovery API",
     "description": "MIT Libraries Discovery API. Register for an optional account at [https://timdex.mit.edu](https://timdex.mit.edu)\n\nAnonymous access is rate limited. Registering and using JWT tokens removes the rate limit. If you run into issues with tokens, we're happy to help!\n",
     "contact": {
@@ -116,6 +116,17 @@
             "schema": {
               "type": "string",
               "default": "false"
+            }
+          },
+          {
+            "name": "collection[]",
+            "description": "Must use exact terminology from index, such as from a previous search result. Multiple values can be supplied like `?q=term&collection[]=collection1&collection[]=collection2`",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           },
           {
@@ -431,6 +442,13 @@
                 "items": {
                   "type": "string"
                 }
+              "collections": {
+                "description": "<http://purl.org/dc/dcmitype/Collection>",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               },
               "summary_holdings": {
                 "type": "array",
@@ -535,6 +553,20 @@
         "type": "object",
         "properties": {
           "languages": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "count": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "collections": {
             "type": "array",
             "items": {
               "type": "object",

@@ -4,6 +4,13 @@ json.aggregations do
     json.count x['doc_count']
   end
 
+  if @results['aggregations']['collections']
+    json.collection @results['aggregations']['collections']['buckets'] do |x|
+      json.name x['key']
+      json.count x['doc_count']
+    end
+  end
+
   json.content_type @results['aggregations']['content_type']['buckets'] do |x|
     json.name x['key']
     json.count x['doc_count']

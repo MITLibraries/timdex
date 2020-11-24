@@ -66,6 +66,7 @@ class Search
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/query-filter-context.html
   def filters
     f = []
+    f.push filter(@params[:collection], 'collections') if @params[:collection]
     if @params[:contributors]
       f.push filter(@params[:contributors], 'contributors')
     end
@@ -128,6 +129,11 @@ class Search
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html
   def aggregations
     {
+      collections: {
+        terms: {
+          field: 'collections.keyword'
+        }
+      },
       contributors: {
         nested: {
           path: 'contributors'
