@@ -20,6 +20,26 @@ additional records with a standardized template.
 - don't commit your .env or .env.development, but do commit .env.test after
   confirming your test values are not actual secrets that need protecting
 
+### Updating the data model
+Updating the data model is somewhat complicated because many files need to be
+edited across multiple repositories and deployment steps should happen in a
+particular order so as not to break production services.
+- Start by updating the data model in [Mario](https://github.com/MITLibraries/mario). Instructions for that can be found
+  in the [Mario README](https://github.com/MITLibraries/mario/blob/master/README.md). Then complete the following steps here in TIMDEX.
+- Update `app/models/search.rb` to build/update/remove queries for the added/
+  edited/deleted fields as appropriate. Make sure to update filters and
+  aggregations if relevant to the changed fields.
+- Update `app/views/api/[version]/search/_base_json_jbuilder` to
+  add/update/remove changed fields OR update
+  `views/api/[version]/search/_extended_json_jbuilder` if the changed fields
+  aren’t/shouldn’t be in the brief record result.
+- If changed fields should be aggregated, update
+  `views/api/[version]/search/_aggregations_json_jbuilder` as appropriate.
+- Update tests as necessary. Make sure to test with all current data
+  source samples ingested into a local ES instance.
+- Update `openapi.json` to make sure our spec matches any changes made
+  (including bumping the version number).
+
 ## Publishing User Facing Documentation
 
 ### Automatic generation from openapi specification
