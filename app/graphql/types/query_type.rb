@@ -53,7 +53,7 @@ module Types
       query[:q] = searchterm
       query[:content_format] = facets[:format]
       query[:content_type] = facets[:content_type]
-      query[:contributors] = facets[:contributors]
+      query[:contributor] = facets[:contributors]
       query[:language] = facets[:languages]
       query[:literary_form] = facets[:literary_form]
       query[:source] = facets[:source] if facets[:source] != 'All'

@@ -67,8 +67,8 @@ class Search
   def filters
     f = []
     f.push filter(@params[:collection], 'collections') if @params[:collection]
-    if @params[:contributors]
-      f.push filter(@params[:contributors], 'contributors')
+    if @params[:contributor]
+      f.push filter(@params[:contributor], 'contributors')
     end
 
     if @params[:content_type]
