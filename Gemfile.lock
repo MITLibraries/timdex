@@ -83,7 +83,8 @@ GEM
       nokogiri (~> 1.8)
     climate_control (0.2.0)
     concurrent-ruby (1.1.7)
-    crack (0.4.4)
+    crack (0.4.5)
+      rexml
     crass (1.0.6)
     devise (4.7.3)
       bcrypt (~> 3.0)
@@ -277,7 +278,7 @@ GEM
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
       railties (>= 5.0)
-    webmock (3.10.0)
+    webmock (3.12.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
