@@ -35,14 +35,14 @@ end
 group :development do
   gem 'annotate'
   gem 'graphiql-rails'
-  gem 'listen', '>= 3.0.5', '< 3.4'
+  gem 'listen'
   gem 'rubocop'
   gem 'rubocop-rails'
-  gem 'web-console', '>= 3.3.0'
+  gem 'web-console'
 end
 
 group :test do
-  gem 'capybara', '>= 2.15'
+  gem 'capybara'
   gem 'chromedriver-helper'
   gem 'climate_control'
   gem 'selenium-webdriver'
