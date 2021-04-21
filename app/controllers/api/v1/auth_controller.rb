@@ -6,7 +6,7 @@ module Api
       before_action :authenticate_user!
 
       def auth
-        render json: JWTWrapper.encode(user_id: current_user.id).to_json
+        render json: JwtWrapper.encode(user_id: current_user.id).to_json
       end
 
       def ensure_json!

@@ -6,7 +6,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     b = Base64.encode64(u.email + ':123greetings')
     get '/api/v1/auth', headers: { 'Authorization': "Basic #{b}" }
     assert_equal(200, response.status)
-    assert_equal(u.id, JWTWrapper.decode(JSON.parse(response.body))['user_id'])
+    assert_equal(u.id, JwtWrapper.decode(JSON.parse(response.body))['user_id'])
   end
 
   test 'invalid credentials' do

@@ -44,7 +44,7 @@
         <div class="panel-body">
           <p>You can do a very quick test of your account via this `curl` example. The documentation portal linked above has much more complete information.</p>
 
-          <code>curl -X GET --header 'Authorization: Bearer <%= JWTWrapper.encode({ user_id: current_user.id }) %>' '<%= api_v1_search_url(q: 'whatever')%>'</code>
+          <code>curl -X GET --header 'Authorization: Bearer <%= JwtWrapper.encode({ user_id: current_user.id }) %>' '<%= api_v1_search_url(q: 'whatever')%>'</code>
         </div>
       </div>
     <% end %>
