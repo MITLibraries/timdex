@@ -98,7 +98,7 @@ GEM
     chromedriver-helper (2.1.1)
       archive-zip (~> 0.10)
       nokogiri (~> 1.8)
-    climate_control (0.2.0)
+    climate_control (1.0.0)
     concurrent-ruby (1.1.8)
     crack (0.4.5)
       rexml
