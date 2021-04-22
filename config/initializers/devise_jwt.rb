@@ -28,7 +28,7 @@ module Devise
 
         return nil if (strategy || '').downcase != 'bearer'
 
-        JWTWrapper.decode(token) rescue nil
+        JwtWrapper.decode(token) rescue nil
       end
     end
   end

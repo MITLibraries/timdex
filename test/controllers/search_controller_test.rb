@@ -2,7 +2,7 @@ require 'test_helper'
 
 class SearchControllerTest < ActionDispatch::IntegrationTest
   test 'valid token' do
-    token = JWTWrapper.encode(user_id: users(:yo).id)
+    token = JwtWrapper.encode(user_id: users(:yo).id)
     VCR.use_cassette('q super cool search') do
       get '/api/v1/search?q=super+cool+search',
           headers: { 'Authorization': "Bearer #{token}" }
@@ -13,7 +13,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'invalid token succeeds and includes throttle information' do
-    token = JWTWrapper.encode(user_id: 'fakeid')
+    token = JwtWrapper.encode(user_id: 'fakeid')
     VCR.use_cassette('invalid token') do
       get '/api/v1/search?q=super+cool+search',
           headers: { 'Authorization': "Bearer #{token}" }
@@ -25,7 +25,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
 
   test 'expired token succeeds and includes throttle information' do
     token = Timecop.freeze(Time.zone.today - 1) do
-      JWTWrapper.encode(user_id: users(:yo).id)
+      JwtWrapper.encode(user_id: users(:yo).id)
     end
     VCR.use_cassette('expired token') do
       get '/api/v1/search?q=super+cool+search',
@@ -43,14 +43,14 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'ping with valid token' do
-    token = JWTWrapper.encode(user_id: users(:yo).id)
+    token = JwtWrapper.encode(user_id: users(:yo).id)
     get '/api/v1/ping', headers: { 'Authorization': "Bearer #{token}" }
     assert_equal(200, response.status)
     assert_equal('pong', JSON.parse(response.body))
   end
 
   test 'valid record' do
-    token = JWTWrapper.encode(user_id: users(:yo).id)
+    token = JwtWrapper.encode(user_id: users(:yo).id)
     VCR.use_cassette('record 001714562') do
       get '/api/v1/record/001714562',
           headers: { 'Authorization': "Bearer #{token}" }
@@ -62,7 +62,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'invalid record' do
-    token = JWTWrapper.encode(user_id: users(:yo).id)
+    token = JwtWrapper.encode(user_id: users(:yo).id)
     VCR.use_cassette('record asdf') do
       get '/api/v1/record/asdf',
           headers: { 'Authorization': "Bearer #{token}" }
@@ -71,7 +71,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'record with a period in the id' do
-    token = JWTWrapper.encode(user_id: users(:yo).id)
+    token = JwtWrapper.encode(user_id: users(:yo).id)
     VCR.use_cassette('record period') do
       get '/api/v1/record/MIT:archivespace:MC.0044',
           headers: { 'Authorization': "Bearer #{token}" }
@@ -82,7 +82,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'pagination' do
-    token = JWTWrapper.encode(user_id: users(:yo).id)
+    token = JwtWrapper.encode(user_id: users(:yo).id)
     VCR.use_cassette('pagination') do
       get '/api/v1/search?q=marvel',
           headers: { 'Authorization': "Bearer #{token}" }
@@ -124,7 +124,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'filtering parameters that take multiple values' do
-    token = JWTWrapper.encode(user_id: users(:yo).id)
+    token = JwtWrapper.encode(user_id: users(:yo).id)
     VCR.use_cassette('filtering multiple values') do
       get '/api/v1/search?q=marvel',
           headers: { 'Authorization': "Bearer #{token}" }
@@ -150,7 +150,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'filtering parameters that single a value' do
-    token = JWTWrapper.encode(user_id: users(:yo).id)
+    token = JwtWrapper.encode(user_id: users(:yo).id)
     VCR.use_cassette('filtering single value') do
       get '/api/v1/search?q=marvel',
           headers: { 'Authorization': "Bearer #{token}" }

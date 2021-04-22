@@ -59,7 +59,7 @@ class Rack::Attack
 
         # This rescue catches expired tokens and will result in
         # a non-truthy return in the next condition.
-        claims = JWTWrapper.decode(token) rescue nil
+        claims = JwtWrapper.decode(token) rescue nil
 
         # Expired token from above or somehow it doesn't have a user_id in it
         if !claims || !claims.has_key?('user_id')
