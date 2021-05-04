@@ -18,6 +18,14 @@ class Search
     }.to_json
   end
 
+  def percent_match
+    if @params[:percent].present?
+      "#{@params[:percent]}%"
+    else
+      "75%"
+    end
+  end
+
   # Build the query portion of the elasticsearch json
   def query
     {
@@ -35,27 +43,45 @@ class Search
             term: {
               title: {
                 value: @params[:q].downcase,
-                boost: 1.0
+                boost: 0.8
               }
             }
+          },
+          {
+            match: {
+              title: {
+                query: @params[:q].downcase,
+                operator: "or",
+                boost: 1
+              }
+            },
+          },
+
+          {
+            match: {
+              publication_date: {
+                query: @params[:q].downcase,
+                operator: "or",
+                boost: 2
+              }
+            },
           },
           {
             nested: {
               path: 'contributors',
               query: {
-                term: {
-                  'contributors.value': {
-                    value: @params[:q].downcase,
-                    boost: 0.1
-                  }
+                match: {
+                  'contributors.value': @params[:q].downcase,
                 }
-              }
+              },
+              boost: 0.1
             }
           }
         ],
         must: {
           multi_match: {
-            query: @params[:q].downcase
+            query: @params[:q].downcase,
+            minimum_should_match: percent_match
           }
         },
         filter: filters
