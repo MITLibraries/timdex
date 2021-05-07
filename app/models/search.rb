@@ -35,15 +35,7 @@ class Search
             prefix: {
               'title.exact_value': {
                 value: @params[:q].downcase,
-                boost: 15.0
-              }
-            }
-          },
-          {
-            term: {
-              title: {
-                value: @params[:q].downcase,
-                boost: 0.8
+                boost: @params[:boost_title_exact] || 15.0
               }
             }
           },
@@ -52,7 +44,7 @@ class Search
               title: {
                 query: @params[:q].downcase,
                 operator: "or",
-                boost: 1
+                boost: @params[:boost_title] || 1
               }
             },
           },
@@ -62,7 +54,7 @@ class Search
               publication_date: {
                 query: @params[:q].downcase,
                 operator: "or",
-                boost: 2
+                boost: @params[:boost_pub_date] || 2
               }
             },
           },
@@ -74,7 +66,7 @@ class Search
                   'contributors.value': @params[:q].downcase,
                 }
               },
-              boost: 0.1
+              boost: @params[:boost_contributors] || 0.1
             }
           }
         ],
