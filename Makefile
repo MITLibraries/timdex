@@ -24,5 +24,5 @@ down: ## Shutdown elasticsearch and timdex containers
 
 sampledata: ## Load sample Aleph and Aspace data. Run `up` first then wait for services.
 	docker pull mitlibraries/mario:latest
-	docker run --network timdex_default --mount type=bind,src=`pwd`/sample_data,dst=/sample_data mitlibraries/mario:latest --url http://elasticsearch:9200 ingest /sample_data/mit_test_records.mrc --auto --debug
-	docker run --network timdex_default --mount type=bind,src=`pwd`/sample_data,dst=/sample_data mitlibraries/mario:latest --url http://elasticsearch:9200 ingest /sample_data/aspace_samples.xml --auto --type archives --prefix aspace --debug
+	docker run --network timdex_default --mount type=bind,src=`pwd`/sample_data,dst=/sample_data mitlibraries/mario:latest --url http://elasticsearch:9200 ingest -s aleph --new --auto /sample_data/mit_test_records.mrc
+	docker run --network timdex_default --mount type=bind,src=`pwd`/sample_data,dst=/sample_data mitlibraries/mario:latest --url http://elasticsearch:9200 ingest -s aspace --new --auto /sample_data/aspace_samples.xml

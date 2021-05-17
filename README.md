@@ -124,7 +124,7 @@ Note: if you run this and it fails, try again in a few seconds as ES may still b
 
 You can also run arbitrary Mario commands using a syntax like this after first running `make up`.
 
-`docker run --network timdex_default mitlibraries/mario:aspace --url http://elasticsearch:9200 YOUR_MARIO_COMMAND_HERE`
+`docker run --network timdex_default mitlibraries/mario --url http://elasticsearch:9200 YOUR_MARIO_COMMAND_HERE [e.g. indexes]`
 
 Note: if you have no indexes loaded, many mario commands will fail. Try `make sampledata` or load the data you
 need before proceeding.
