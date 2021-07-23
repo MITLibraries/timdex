@@ -67,23 +67,15 @@ class Search
   def filters
     f = []
     f.push filter(@params[:collection], 'collections') if @params[:collection]
-    if @params[:contributor]
-      f.push filter(@params[:contributor], 'contributors')
-    end
+    f.push filter(@params[:contributor], 'contributors') if @params[:contributor]
 
-    if @params[:content_type]
-      f.push filter_single(@params[:content_type], 'content_type')
-    end
+    f.push filter_single(@params[:content_type], 'content_type') if @params[:content_type]
 
-    if @params[:content_format]
-      f.push filter(@params[:content_format], 'format')
-    end
+    f.push filter(@params[:content_format], 'format') if @params[:content_format]
 
     f.push filter(@params[:language], 'languages') if @params[:language]
 
-    if @params[:literary_form]
-      f.push filter_single(@params[:literary_form], 'literary_form')
-    end
+    f.push filter_single(@params[:literary_form], 'literary_form') if @params[:literary_form]
 
     f.push filter_single(@params[:source], 'source') if @params[:source]
     f.push filter(@params[:subject], 'subjects') if @params[:subject]
@@ -112,7 +104,7 @@ class Search
           }
         )
       else
-        terms.push('term': { "#{field}.keyword": t })
+        terms.push(term: { "#{field}.keyword": t })
       end
     end
 
@@ -122,7 +114,7 @@ class Search
   # use `filter_single` when we only accept a single value in our data model
   def filter_single(param, field)
     {
-      'term': { "#{field}.keyword": param }
+      term: { "#{field}.keyword": param }
     }
   end
 

@@ -3,9 +3,7 @@ class Retrieve
     f = to_filter(id)
     record = Timdex::EsClient.search(index: ENV['ELASTICSEARCH_INDEX'], body: f)
 
-    if record['hits']['total'].zero?
-      raise Elasticsearch::Transport::Transport::Errors::NotFound
-    end
+    raise Elasticsearch::Transport::Transport::Errors::NotFound if record['hits']['total'].zero?
 
     record
   end
