@@ -1,30 +1,30 @@
-require: rubocop-rails
-
-Documentation:
-  Enabled: false
-
-Rails:
-  Enabled: true
-
 AllCops:
-  TargetRubyVersion: 2.6
+  TargetRubyVersion: 2.7
+  NewCops: enable
   Exclude:
-    - db/**/*
-    - config/**/*
-    - bin/**
+    - "db/**/*"
+    - "config/**/*"
+    - "bin/**"
 
-ClassLength:
+Metrics/BlockLength:
+  CountComments: false # count full line comments?
+  Max: 25
   Exclude:
-    - test/**/*
+    - "Rakefile"
+    - "**/*.rake"
+    - "test/**/*.rb"
+    - "test/test_helper.rb"
+
+Metrics/ClassLength:
+  Exclude:
+    - "test/**/*"
+
+Metrics/MethodLength:
+  Exclude:
+    - "test/**/*.rb"
+
+Style/Documentation:
+  Enabled: false
 
 Style/FrozenStringLiteralComment:
   Enabled: false
-
-Metrics/BlockLength:
-  CountComments: false  # count full line comments?
-  Max: 25
-  Exclude:
-    - 'Rakefile'
-    - '**/*.rake'
-    - 'spec/**/*.rb'
-    - 'test/test_helper.rb'
