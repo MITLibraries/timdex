@@ -137,7 +137,7 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
   test 'search with multiple subjects applied' do
     VCR.use_cassette('graphql search multiple subjects') do
       post '/graphql', params: { query: '{
-                                  search(searchterm: "space", 
+                                  search(searchterm: "space",
                                         subjects: ["space and time.",
                                                    "quantum theory."]) {
                                     hits
@@ -167,7 +167,7 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
       json = JSON.parse(response.body)
       assert(json['errors'].first['message'].present?)
       assert_equal("Field 'search' doesn't accept argument 'fake'",
-                 json['errors'].first['message'])
+                   json['errors'].first['message'])
     end
   end
 
