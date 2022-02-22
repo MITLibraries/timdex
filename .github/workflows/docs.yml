@@ -1,0 +1,24 @@
+name: Docs
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  generate-angular-client:
+    runs-on: ubuntu-latest
+    name: Example
+    steps:
+
+      # Checkout your code
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Generate Docs
+      - name: Generate HTML Docs
+        uses: openapi-generators/openapitools-generator-action@v1
+        with:
+          generator: html2
+
+      # Push to Pages
+      # tbd
