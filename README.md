@@ -44,11 +44,8 @@ particular order so as not to break production services.
 
 ### Automatic generation from openapi specification
 
-- Sign into stoplight.io with an account that has access to the MIT Libraries organization
-- copy the source of `openapi.json` file from this repository to the code tab in our [stoplight model](https://next.stoplight.io/mit-libraries/timdex/version%2F1.0/openapi.oas3.yml)
-- In [Stoplight's Publish](https://next.stoplight.io/mit-libraries/timdex/version%2F1.0/timdex.hub.yml?view=/&show=publish&domain=mitlibraries-timdex.docs.stoplight.io) section, Uncheck "set live" and then click "Build"
-- Once docs are built, check they are sane with the preview feature then click "set live"
-
+We are using Swagger UI to automatically generate documentation from the `openapi.json` file in GitHub Pages. The HTML
+file is in `docs/index.html` and the `openapi.json` file always pulls from the `main` branch.
 ## Required Environment Variables (all ENVs)
 
 - `EMAIL_FROM`: email address to send message from, including the registration
