@@ -1,3 +1,5 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/5af08033c5f1257a1fd1/maintainability)](https://codeclimate.com/github/MITLibraries/timdex/maintainability)
+
 # TIMDEX Is Making Discovery EXcellent @ MIT
 
 This application interfaces with an ElasticSearch backend and exposes a set of
