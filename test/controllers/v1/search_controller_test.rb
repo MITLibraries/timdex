@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SearchControllerTest < ActionDispatch::IntegrationTest
+class SearchControllerV1Test < ActionDispatch::IntegrationTest
   test 'valid token' do
     token = JwtWrapper.encode(user_id: users(:yo).id)
     VCR.use_cassette('q super cool search') do

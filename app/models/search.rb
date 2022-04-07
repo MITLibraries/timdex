@@ -2,10 +2,10 @@ class Search
   SIZE = 20
   MAX_PAGE = 200
 
-  def search(from, params)
+  def search(from, params, client)
     @params = params
-    Timdex::EsClient.search(index: ENV['ELASTICSEARCH_INDEX'],
-                            body: build_query(from))
+    client.search(index: ENV['ELASTICSEARCH_INDEX'],
+                  body: build_query(from))
   end
 
   # Construct the json query to send to elasticsearch

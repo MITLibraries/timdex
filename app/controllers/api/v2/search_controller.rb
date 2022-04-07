@@ -1,5 +1,5 @@
 module Api
-  module V1
+  module V2
     class SearchController < ApplicationController
       respond_to :json
       before_action :ensure_json!
@@ -10,19 +10,19 @@ module Api
       def search
         page = params[:page].to_i
         page = 1 if page.zero?
-        from = page * SIZE - SIZE
+        from = (page * SIZE) - SIZE
 
         if page > MAX_PAGE
           render json: { error: "Invalid page: max #{MAX_PAGE}" }.to_json,
                  status: :bad_request
         end
 
-        @results = Search.new.search(from, params, Timdex::EsClient)
+        @results = Search.new.search(from, params, Timdex::OSClient)
       end
 
       def record
-        @results = Retrieve.new.fetch(params[:id], Timdex::EsClient)
-      rescue Elasticsearch::Transport::Transport::Errors::NotFound
+        @results = Retrieve.new.fetch(params[:id], Timdex::OSClient)
+      rescue OpenSearch::Transport::Transport::Errors::NotFound
         render json: { error: 'record not found' }.to_json, status: :not_found
       end
 
@@ -31,7 +31,7 @@ module Api
       end
 
       def info
-        @results = Timdex::EsClient.info
+        @results = Timdex::OSClient.info
       end
 
       def ensure_json!
