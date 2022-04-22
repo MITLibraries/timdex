@@ -178,4 +178,22 @@ class SearchControllerV2Test < ActionDispatch::IntegrationTest
       assert_equal('002312360', json['results'][0]['id'])
     end
   end
+
+  test 'core fields are returned' do
+    token = JwtWrapper.encode(user_id: users(:yo).id)
+    VCR.use_cassette('v2 q Glass') do
+      get '/api/v2/search?q=Glass',
+          headers: { Authorization: "Bearer #{token}" }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      
+      assert(json['results'].first['id'].present?)
+      assert(json['results'].first['identifiers'].present?)
+      assert(json['results'].first['source'].present?)
+      assert(json['results'].first['title'].present?)
+      assert(json['results'].first['dates'].present?)
+      assert(json['results'].first['notes'].present?)
+      assert(json['results'].first['content_type'].present?)
+    end
+  end
 end

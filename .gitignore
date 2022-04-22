@@ -31,3 +31,4 @@
 .env
 .env.development
 .DS_Store
+.solargraph.yml
