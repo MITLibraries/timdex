@@ -12,8 +12,19 @@ Rails.application.routes.draw do
     namespace :v1 do
       get 'auth', to: 'auth#auth'
       get 'search', to: 'search#search'
+      get 'info', to: 'search#info'
       get 'record/:id', to: 'search#record', as: 'record', constraints: { id: /[^\/]+/ }
       get 'ping', to: 'search#ping'
+    end
+
+    if ENV.fetch('V2', false)
+      namespace :v2 do
+        get 'auth', to: 'auth#auth'
+        get 'search', to: 'search#search'
+        get 'info', to: 'search#info'
+        get 'record/:id', to: 'search#record', as: 'record', constraints: { id: /[^\/]+/ }
+        get 'ping', to: 'search#ping'
+      end
     end
   end
 end

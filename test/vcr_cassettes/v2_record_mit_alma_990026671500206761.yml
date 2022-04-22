@@ -1,0 +1,77 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:9200/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - 'opensearch-ruby/1.0.0 (RUBY_VERSION: 2.7.5; darwin x86_64; Faraday v1.10.0)'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '350'
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "name" : "a91f667c1f5c",
+          "cluster_name" : "docker-cluster",
+          "cluster_uuid" : "lC4FHFGMQqKtv7F3RSOk_g",
+          "version" : {
+            "distribution" : "opensearch",
+            "number" : "1.2.4",
+            "build_type" : "tar",
+            "build_hash" : "e505b10357c03ae8d26d675172402f2f2144ef0f",
+            "build_date" : "2022-01-14T03:38:06.881862Z",
+            "build_snapshot" : false,
+            "lucene_version" : "8.10.1",
+            "minimum_wire_compatibility_version" : "6.8.0",
+            "minimum_index_compatibility_version" : "6.0.0-beta1"
+          },
+          "tagline" : "The OpenSearch Project: https://opensearch.org/"
+        }
+  recorded_at: Wed, 06 Apr 2022 21:15:17 GMT
+- request:
+    method: post
+    uri: http://localhost:9200/timdex-prod/_search
+    body:
+      encoding: UTF-8
+      string: '{"query":{"ids":{"values":["mit:alma:990026671500206761"]}}}'
+    headers:
+      User-Agent:
+      - 'opensearch-ruby/1.0.0 (RUBY_VERSION: 2.7.5; darwin x86_64; Faraday v1.10.0)'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '1203'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJ0b29rIjoyNywidGltZWRfb3V0IjpmYWxzZSwiX3NoYXJkcyI6eyJ0b3RhbCI6MSwic3VjY2Vzc2Z1bCI6MSwic2tpcHBlZCI6MCwiZmFpbGVkIjowfSwiaGl0cyI6eyJ0b3RhbCI6eyJ2YWx1ZSI6MSwicmVsYXRpb24iOiJlcSJ9LCJtYXhfc2NvcmUiOjEuMCwiaGl0cyI6W3siX2luZGV4IjoibWFyaW8tMjAyMi0wNC0wNnQyMS0xNC0yNXoiLCJfdHlwZSI6Il9kb2MiLCJfaWQiOiJtaXQ6YWxtYTo5OTAwMjY2NzE1MDAyMDY3NjEiLCJfc2NvcmUiOjEuMCwiX3NvdXJjZSI6eyJhbHRlcm5hdGVfdGl0bGVzIjpbeyJraW5kIjoiQWx0ZXJuYXRlIHRpdGxlIiwidmFsdWUiOiJCZXN0IG9mIFBhcXVpdG8gRCdSaXZlcmEifV0sImNhbGxfbnVtYmVycyI6WyI3ODEuNjU3Il0sImNpdGF0aW9uIjoiRCdSaXZlcmEsIFBhcXVpdG8gZXQgYWwuIDIwMDguIFBvcnRyYWl0cyBvZiBDdWJhIiwiY29udGVudF90eXBlIjpbIlNvdW5kIHJlY29yZGluZyJdLCJjb250ZW50cyI6WyJDaHVjaG8gLS0gSGF2YW5hIGNhZmUgLS0gVGhlIHBlYW51dCB2ZW5kb3IgLS0gQSBuaWdodCBpbiBUdW5pc2lhIC0tIE1hbWJvIGEgbGEgS2VudG9uIC0tIEVjaGFsZSBzYWxzaXRhIC0tIERydW1lIG5lZ3JpdGEgLS0gVHJvcGljYW5hIG5pZ2h0cyAtLSBXaG8ncyBzbW9raW5nIC0tIFRpY28gdGljbyAtLSBQb3J0cmFpdHMgb2YgQ3ViYSAtLSBFeGNlcnB0IGZyb20gQWlyZXMgdHJvcGljYWxlcyAtLSBXaGF0IGFyZSB5b3UgZG9pbmcgdG9tb3Jyb3cgbmlnaHQgLS0gQSBtaSBxdWUvRWwgbWFuaXNlcm8uIl0sImNvbnRyaWJ1dG9ycyI6W3sia2luZCI6ImF1dGhvciIsInZhbHVlIjoiRCdSaXZlcmEsIFBhcXVpdG8sIDE5NDgtIn0seyJraW5kIjoiY29udHJpYnV0b3IiLCJ2YWx1ZSI6IkQnUml2ZXJhLCBQYXF1aXRvLCAxOTQ4LSJ9LHsia2luZCI6ImNvbnRyaWJ1dG9yIiwidmFsdWUiOiJQw6lyZXosIERhbmlsby4ifSx7ImtpbmQiOiJjb250cmlidXRvciIsInZhbHVlIjoiR2lsYmVydCwgV29sZmUuIn0seyJraW5kIjoiY29udHJpYnV0b3IiLCJ2YWx1ZSI6IkdpbGxlc3BpZSwgRGl6enksIDE5MTctMTk5My4ifSx7ImtpbmQiOiJjb250cmlidXRvciIsInZhbHVlIjoiUMOpcmV6IFByYWRvLCAxOTE2LTE5ODkuIn0seyJraW5kIjoiY29udHJpYnV0b3IiLCJ2YWx1ZSI6IlBpw7FlaXJvLCBJZ25hY2lvLCAxODg4LTE5NjkuIn0seyJraW5kIjoiY29udHJpYnV0b3IiLCJ2YWx1ZSI6IkdyZW5ldCwgRXJuZXN0byBXb29kLiJ9LHsia2luZCI6ImNvbnRyaWJ1dG9yIiwidmFsdWUiOiJSb2RpdGksIENsYXVkaW8uIn0seyJraW5kIjoiY29udHJpYnV0b3IiLCJ2YWx1ZSI6IkFicmV1LCBaZXF1aW5oYSBkZSwgMTg4MC0xOTM1LiJ9LHsia2luZCI6ImNvbnRyaWJ1dG9yIiwidmFsdWUiOiJHb2RveSwgTHVjaW8uIn0seyJraW5kIjoiY29udHJpYnV0b3IiLCJ2YWx1ZSI6Ikhlcm7DoW5kZXosIFJhZmFlbC4ifV0sImRhdGVzIjpbeyJraW5kIjoiRGF0ZSBvZiBwdWJsaWNhdGlvbiIsInZhbHVlIjoiMjAwOCJ9XSwiaWRlbnRpZmllcnMiOlt7ImtpbmQiOiJvY2xjIiwidmFsdWUiOiI4MTE1NDk1NjIifV0sImxhbmd1YWdlcyI6WyJObyBsaW5ndWlzdGljIGNvbnRlbnQiXSwibGlua3MiOlt7ImtpbmQiOiJEaWdpdGFsIG9iamVjdCBsaW5rIiwidGV4dCI6Ik5heG9zIE11c2ljIExpYnJhcnkiLCJ1cmwiOiJodHRwOi8vQkxDTUlULk5heG9zTXVzaWNMaWJyYXJ5LmNvbS9jYXRhbG9ndWUvaXRlbS5hc3A/Y2lkPUpELTM0MiJ9XSwibG9jYXRpb25zIjpbeyJraW5kIjoiUGxhY2Ugb2YgcHVibGljYXRpb24iLCJ2YWx1ZSI6Ik5ldyBZb3JrIChTdGF0ZSkifV0sIm5vdGVzIjpbeyJ2YWx1ZSI6WyJQYXF1aXRvIGQnIFJpdmVyYSwgc2F4b3Bob25lIDsgUGFxdWl0byBkJyBSaXZlcmEsIHNvcHJhbm8gc2F4b3Bob25lLiIsIkRlc2NyaXB0aW9uIGJhc2VkIG9uIGhhcmQgY29weSB2ZXJzaW9uIHJlY29yZC4iXX1dLCJwaHlzaWNhbF9kZXNjcmlwdGlvbiI6IjEgb25saW5lIHJlc291cmNlICgxIHNvdW5kIGZpbGUpIiwicHVibGljYXRpb25faW5mb3JtYXRpb24iOlsiW05ldyBZb3JrLCBOLlkuXSA6IENoZXNreSBSZWNvcmRzLCBwMjAwOC4iXSwic291cmNlIjoiTUlUIEFsbWEiLCJzb3VyY2VfbGluayI6Imh0dHBzOi8vbWl0LnByaW1vLmV4bGlicmlzZ3JvdXAuY29tL2Rpc2NvdmVyeS9mdWxsZGlzcGxheT92aWQ9MDFNSVRfSU5TVDpNSVRcdTAwMjZkb2NpZD1hbG1hOTkwMDI2NjcxNTAwMjA2NzYxIiwic3ViamVjdHMiOlt7InZhbHVlIjpbIkphenouIiwiTGF0aW4gamF6ei4iLCJDbGFyaW5ldCBtdXNpYyAoSmF6eikiLCJTYXhvcGhvbmUgbXVzaWMgKEphenopIl19XSwidGltZGV4X3JlY29yZF9pZCI6Im1pdDphbG1hOjk5MDAyNjY3MTUwMDIwNjc2MSIsInRpdGxlIjoiU3BpY2UgaXQgdXAhIHRoZSBiZXN0IG9mIFBhcXVpdG8gRCdSaXZlcmEuIn19XX19
+  recorded_at: Wed, 06 Apr 2022 21:15:17 GMT
+recorded_with: VCR 6.1.0

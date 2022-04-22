@@ -1,9 +1,13 @@
 class Retrieve
-  def fetch(id)
+  def fetch(id, client)
     f = to_filter(id)
-    record = Timdex::EsClient.search(index: ENV['ELASTICSEARCH_INDEX'], body: f)
+    record = client.search(index: ENV['ELASTICSEARCH_INDEX'], body: f)
 
-    raise Elasticsearch::Transport::Transport::Errors::NotFound if record['hits']['total'].zero?
+    if client.instance_of?(OpenSearch::Client)
+      raise OpenSearch::Transport::Transport::Errors::NotFound if record['hits']['total']['value'].zero?
+    else
+      raise Elasticsearch::Transport::Transport::Errors::NotFound if record['hits']['total'].zero?
+    end
 
     record
   end

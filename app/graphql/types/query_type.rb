@@ -15,7 +15,7 @@ module Types
     end
 
     def record_id(id:)
-      result = Retrieve.new.fetch(id)
+      result = Retrieve.new.fetch(id, Timdex::EsClient)
       result['hits']['hits'].first['_source']
     rescue Elasticsearch::Transport::Transport::Errors::NotFound
       raise GraphQL::ExecutionError, "Record '#{id}' not found"
@@ -39,7 +39,7 @@ module Types
     def search(searchterm:, from:, **facets)
       query = construct_query(searchterm, facets)
 
-      results = Search.new.search(from, query)
+      results = Search.new.search(from, query, Timdex::EsClient)
 
       response = {}
       response[:hits] = results['hits']['total']
