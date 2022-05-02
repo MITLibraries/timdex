@@ -23,14 +23,14 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
-      - '350'
+      - '349'
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "name" : "7ffbea04f56a",
+          "name" : "8fa7deb19b36",
           "cluster_name" : "docker-cluster",
-          "cluster_uuid" : "J5Ay80HrR0KNBShvAxEgTw",
+          "cluster_uuid" : "HIwmyPg1T126293eDbQXLA",
           "version" : {
             "distribution" : "opensearch",
             "number" : "1.2.4",
@@ -44,7 +44,7 @@ http_interactions:
           },
           "tagline" : "The OpenSearch Project: https://opensearch.org/"
         }
-  recorded_at: Thu, 07 Apr 2022 13:55:16 GMT
+  recorded_at: Tue, 03 May 2022 13:41:22 GMT
 - request:
     method: get
     uri: http://localhost:9200/
@@ -68,14 +68,14 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
-      - '352'
+      - '349'
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "name" : "30c0206cd8cb",
+          "name" : "8fa7deb19b36",
           "cluster_name" : "docker-cluster",
-          "cluster_uuid" : "FAPPJVwgRM67CyHWwTjZzA",
+          "cluster_uuid" : "HIwmyPg1T126293eDbQXLA",
           "version" : {
             "distribution" : "opensearch",
             "number" : "1.2.4",
@@ -89,5 +89,5 @@ http_interactions:
           },
           "tagline" : "The OpenSearch Project: https://opensearch.org/"
         }
-  recorded_at: Thu, 07 Apr 2022 14:22:32 GMT
+  recorded_at: Tue, 03 May 2022 13:41:22 GMT
 recorded_with: VCR 6.1.0

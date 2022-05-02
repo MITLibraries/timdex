@@ -1,34 +1,6 @@
 ---
 http_interactions:
 - request:
-    method: post
-    uri: http://localhost:9200/timdex-prod/_search
-    body:
-      encoding: UTF-8
-      string: '{"query":{"ids":{"values":["asdf"]}}}'
-    headers:
-      User-Agent:
-      - 'opensearch-ruby/1.0.0 (RUBY_VERSION: 2.7.5; darwin x86_64; Faraday v1.10.0)'
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - application/json; charset=UTF-8
-      Content-Length:
-      - '140'
-    body:
-      encoding: ASCII-8BIT
-      string: '{"took":2,"timed_out":false,"_shards":{"total":1,"successful":1,"skipped":0,"failed":0},"hits":{"total":{"value":0,"relation":"eq"},"max_score":null,"hits":[]}}'
-  recorded_at: Wed, 06 Apr 2022 21:19:05 GMT
-- request:
     method: get
     uri: http://localhost:9200/
     body:
@@ -51,14 +23,14 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
-      - '352'
+      - '349'
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "name" : "30c0206cd8cb",
+          "name" : "8fa7deb19b36",
           "cluster_name" : "docker-cluster",
-          "cluster_uuid" : "FAPPJVwgRM67CyHWwTjZzA",
+          "cluster_uuid" : "HIwmyPg1T126293eDbQXLA",
           "version" : {
             "distribution" : "opensearch",
             "number" : "1.2.4",
@@ -72,5 +44,33 @@ http_interactions:
           },
           "tagline" : "The OpenSearch Project: https://opensearch.org/"
         }
-  recorded_at: Thu, 07 Apr 2022 14:26:08 GMT
+  recorded_at: Tue, 03 May 2022 13:42:24 GMT
+- request:
+    method: post
+    uri: http://localhost:9200/timdex-prod/_search
+    body:
+      encoding: UTF-8
+      string: '{"query":{"ids":{"values":["asdf"]}}}'
+    headers:
+      User-Agent:
+      - 'opensearch-ruby/1.0.0 (RUBY_VERSION: 2.7.5; darwin x86_64; Faraday v1.10.0)'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '139'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"took":1,"timed_out":false,"_shards":{"total":1,"successful":1,"skipped":0,"failed":0},"hits":{"total":{"value":0,"relation":"eq"},"max_score":null,"hits":[]}}'
+  recorded_at: Tue, 03 May 2022 13:42:24 GMT
 recorded_with: VCR 6.1.0
