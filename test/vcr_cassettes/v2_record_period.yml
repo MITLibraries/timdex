@@ -23,14 +23,14 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
-      - '350'
+      - '349'
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "name" : "a91f667c1f5c",
+          "name" : "8fa7deb19b36",
           "cluster_name" : "docker-cluster",
-          "cluster_uuid" : "lC4FHFGMQqKtv7F3RSOk_g",
+          "cluster_uuid" : "HIwmyPg1T126293eDbQXLA",
           "version" : {
             "distribution" : "opensearch",
             "number" : "1.2.4",
@@ -44,7 +44,7 @@ http_interactions:
           },
           "tagline" : "The OpenSearch Project: https://opensearch.org/"
         }
-  recorded_at: Wed, 06 Apr 2022 21:28:46 GMT
+  recorded_at: Tue, 03 May 2022 13:42:46 GMT
 - request:
     method: post
     uri: http://localhost:9200/timdex-prod/_search
@@ -68,10 +68,10 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
-      - '2140'
+      - '2139'
     body:
       encoding: ASCII-8BIT
-      string: '{"took":2,"timed_out":false,"_shards":{"total":1,"successful":1,"skipped":0,"failed":0},"hits":{"total":{"value":1,"relation":"eq"},"max_score":1.0,"hits":[{"_index":"mario-2022-04-06t21-14-25z","_type":"_doc","_id":"mit:archivesspace:VC.0002","_score":1.0,"_source":{"citation":"Charles
+      string: '{"took":2,"timed_out":false,"_shards":{"total":1,"successful":1,"skipped":0,"failed":0},"hits":{"total":{"value":1,"relation":"eq"},"max_score":1.0,"hits":[{"_index":"mario-2022-05-02t19-43-00z","_type":"_doc","_id":"mit:archivesspace:VC.0002","_score":1.0,"_source":{"citation":"Charles
         J. Connick Stained Glass Foundation Collection, VC-0002, box X. Massachusetts
         Institute of Technology, Department of Distinctive Collections, Cambridge,
         Massachusetts.","content_type":["Archival collection"],"contents":["This collection
@@ -128,5 +128,5 @@ http_interactions:
         painting and staining"]},{"kind":"NAF","value":["Connick, Charles J. (Charles
         Jay)"]}],"timdex_record_id":"mit:archivesspace:VC.0002","title":"Charles J.
         Connick Stained Glass Foundation Collection"}}]}}'
-  recorded_at: Wed, 06 Apr 2022 21:28:46 GMT
+  recorded_at: Tue, 03 May 2022 13:42:46 GMT
 recorded_with: VCR 6.1.0

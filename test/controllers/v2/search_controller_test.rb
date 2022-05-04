@@ -180,20 +180,44 @@ class SearchControllerV2Test < ActionDispatch::IntegrationTest
   end
 
   test 'core fields are returned' do
+    skip 'We need more fixture data to test all of these fields, and we need to determine which will be core in V2'
     token = JwtWrapper.encode(user_id: users(:yo).id)
     VCR.use_cassette('v2 q Glass') do
       get '/api/v2/search?q=Glass',
           headers: { Authorization: "Bearer #{token}" }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      
+
       assert(json['results'].first['id'].present?)
       assert(json['results'].first['identifiers'].present?)
       assert(json['results'].first['source'].present?)
+      assert(json['results'].first['source_link'].present?)
       assert(json['results'].first['title'].present?)
+      assert(json['results'].first['alternate_titles'].present?)
+      assert(json['results'].first['contributors'].present?)
+      assert(json['results'].first['publication_information'].present?)
       assert(json['results'].first['dates'].present?)
       assert(json['results'].first['notes'].present?)
+      assert(json['results'].first['contents'].present?)
       assert(json['results'].first['content_type'].present?)
+      assert(json['results'].first['call_numbers'].present?)
+      assert(json['results'].first['citation'].present?)
+      assert(json['results'].first['edition'].present?)
+      assert(json['results'].first['file_formats'].present?)
+      assert(json['results'].first['format'].present?)
+      assert(json['results'].first['funding_information'].present?)
+      assert(json['results'].first['holdings'].present?)
+      assert(json['results'].first['languages'].present?)
+      assert(json['results'].first['links'].present?)
+      assert(json['results'].first['literary_form'].present?)
+      assert(json['results'].first['locations'].present?)
+      assert(json['results'].first['numbering'].present?)
+      assert(json['results'].first['physical_description'].present?)
+      assert(json['results'].first['publication_frequency'].present?)
+      assert(json['results'].first['related_items'].present?)
+      assert(json['results'].first['rights'].present?)
+      assert(json['results'].first['subjects'].present?)
+      assert(json['results'].first['summary'].present?)
     end
   end
 end
