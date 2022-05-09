@@ -22,45 +22,65 @@ class Opensearch
   def query
     {
       bool: {
-        should: [
-          {
-            prefix: {
-              'title.exact_value': {
-                value: @params[:q].downcase,
-                boost: 15.0
-              }
-            }
-          },
-          {
-            term: {
-              title: {
-                value: @params[:q].downcase,
-                boost: 1.0
-              }
-            }
-          },
-          {
-            nested: {
-              path: 'contributors',
-              query: {
-                term: {
-                  'contributors.value': {
-                    value: @params[:q].downcase,
-                    boost: 0.1
-                  }
-                }
-              }
-            }
-          }
-        ],
-        must: {
-          multi_match: {
-            query: @params[:q].downcase
-          }
-        },
-        filter: filters
+        should: multisearch,
+        must: matches
       }
     }
+  end
+
+  def multisearch
+    return unless @params[:q].present?
+    [
+      {
+        prefix: {
+          'title.exact_value': {
+            value: @params[:q].downcase,
+            boost: 15.0
+          }
+        }
+      },
+      {
+        term: {
+          title: {
+            value: @params[:q].downcase,
+            boost: 1.0
+          }
+        }
+      },
+      {
+        nested: {
+          path: 'contributors',
+          query: {
+            term: {
+              'contributors.value': {
+                value: @params[:q].downcase,
+                boost: 0.1
+              }
+            }
+          }
+        }
+      }
+    ]
+  end
+
+  def matches
+    m = []
+    if @params[:q].present?
+      m << {
+      multi_match: {
+        query: @params[:q].downcase
+        }
+      }
+    end
+
+    if @params[:title].present?
+      m << {
+        match: {
+          title: @params[:title].downcase
+        }
+      }
+    end
+    m
   end
 
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/query-filter-context.html
