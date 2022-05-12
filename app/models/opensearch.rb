@@ -23,7 +23,8 @@ class Opensearch
     {
       bool: {
         should: multisearch,
-        must: matches
+        must: matches,
+        filter: filters
       }
     }
   end
@@ -134,7 +135,7 @@ class Opensearch
   # use `filter_single` when we only accept a single value in our data model
   def filter_single(param, field)
     {
-      term: { "#{field}.keyword": param }
+      term: { "#{field}": param }
     }
   end
 
@@ -160,12 +161,12 @@ class Opensearch
       },
       content_type: {
         terms: {
-          field: 'content_type.keyword'
+          field: 'content_type'
         }
       },
       content_format: {
         terms: {
-          field: 'format.keyword'
+          field: 'format'
         }
       },
       languages: {
@@ -175,17 +176,24 @@ class Opensearch
       },
       literary_form: {
         terms: {
-          field: 'literary_form.keyword'
+          field: 'literary_form'
         }
       },
       source: {
         terms: {
-          field: 'source.keyword'
+          field: 'source'
         }
       },
       subjects: {
-        terms: {
-          field: 'subjects.keyword'
+        nested: {
+          path: 'subjects'
+        },
+        aggs: {
+          subject_names: {
+            terms: {
+              field: 'subjects.value.keyword'
+            }
+          }
         }
       }
     }
