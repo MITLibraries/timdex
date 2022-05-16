@@ -17,7 +17,7 @@ module Api
                  status: :bad_request
         end
 
-        @results = Search.new.search(from, params, Timdex::OSClient)
+        @results = Opensearch.new.search(from, params, Timdex::OSClient)
       end
 
       def record
