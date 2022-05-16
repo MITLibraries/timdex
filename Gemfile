@@ -8,6 +8,7 @@ gem 'bootsnap', require: false
 gem 'devise'
 gem 'elasticsearch', '~>6.8'
 gem 'faraday_middleware-aws-sigv4'
+gem 'flipflop'
 gem 'graphql'
 gem 'jbuilder'
 gem 'jwt'

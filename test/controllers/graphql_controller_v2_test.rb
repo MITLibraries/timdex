@@ -1,48 +1,46 @@
 require 'test_helper'
 
-class GraphqlControllerTest < ActionDispatch::IntegrationTest
+class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
   def setup
     test_strategy = Flipflop::FeatureSet.current.test!
-    test_strategy.switch!(:v2, false)
+    test_strategy.switch!(:v2, true)
   end
-  
-  test 'graphqlv1 playground' do
+
+  test 'graphqlv2 playground' do
     get '/playground'
     assert_equal(200, response.status)
   end
 
-  test 'graphqlv1 ping' do
+  test 'graphqlv2 ping' do
     post '/graphql', params: { query: '{ ping }' }
     assert_equal(200, response.status)
     json = JSON.parse(response.body)
     assert_equal('Pong!', json['data']['ping'])
   end
 
-  test 'graphqlv1 search' do
-    ClimateControl.modify(V2: nil) do
-      VCR.use_cassette('graphql search popcorn') do
-        post '/graphql', params: { query: '{
-                                    search(searchterm: "popcorn") {
-                                      records {
-                                        title
-                                      }
+  test 'graphqlv2 search' do
+    VCR.use_cassette('graphql v2 search data') do
+      post '/graphql', params: { query: '{
+                                  search(searchterm: "data") {
+                                    records {
+                                      title
                                     }
-                                  }' }
-        assert_equal(200, response.status)
-        json = JSON.parse(response.body)
-        assert_equal('Popcorn Industry Profile: Belgium',
-                    json['data']['search']['records'].first['title'])
+                                  }
+                                }' }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert_equal('Data for Haqdarshak: Leveraging Technology and Entrepreneurship to Increase Access to Welfare Programs',
+                   json['data']['search']['records'].first['title'])
 
-        # confirm non-requested fields don't return
-        assert_nil(json['data']['search']['records'].first['contentType'])
-      end
+      # confirm non-requested fields don't return
+      assert_nil(json['data']['search']['records'].first['contentType'])
     end
   end
 
-  test 'graphqlv1 search with more returned' do
-    VCR.use_cassette('graphql search popcorn') do
+  test 'graphqlv2 search with more returned' do
+    VCR.use_cassette('graphql v2 search data') do
       post '/graphql', params: { query: '{
-                                  search(searchterm: "popcorn") {
+                                  search(searchterm: "data") {
                                     records {
                                       title
                                       contentType
@@ -51,14 +49,14 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
                                 }' }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert_equal('Popcorn Industry Profile: Belgium',
+      assert_equal('Data for Haqdarshak: Leveraging Technology and Entrepreneurship to Increase Access to Welfare Programs',
                    json['data']['search']['records'].first['title'])
-      assert_equal('Text',
-                   json['data']['search']['records'].first['contentType'])
+      assert_equal('Dataset',
+                   json['data']['search']['records'].first['contentType'].first)
     end
   end
 
-  test 'graphqlv1 search with invalid parameters' do
+  test 'graphqlv2 search with invalid parameters' do
     post '/graphql', params: { query: '{
                                 search(searchterm: "popcorn") {
                                   records {
@@ -72,7 +70,7 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
                  json['errors'].first['message'])
   end
 
-  test 'graphqlv1 with no query' do
+  test 'graphqlv2 with no query' do
     post '/graphql'
     assert_equal(200, response.status)
     json = JSON.parse(response.body)
@@ -80,23 +78,23 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
                  json['errors'].first['message'])
   end
 
-  test 'graphqlv1 search hits' do
-    VCR.use_cassette('graphql search popcorn') do
+  test 'graphqlv2 search hits' do
+    VCR.use_cassette('graphql v2 search data') do
       post '/graphql', params: { query: '{
-                                  search(searchterm: "popcorn") {
+                                  search(searchterm: "data") {
                                     hits
                                   }
                                 }' }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert_equal(113, json['data']['search']['hits'])
+      assert_equal(73, json['data']['search']['hits'])
     end
   end
 
-  test 'graphqlv1 search aggregations' do
-    VCR.use_cassette('graphql search popcorn') do
+  test 'graphqlv2 search aggregations' do
+    VCR.use_cassette('graphql v2 search data') do
       post '/graphql', params: { query: '{
-                                  search(searchterm: "popcorn") {
+                                  search(searchterm: "data") {
                                     aggregations {
                                       source {
                                         key
@@ -107,20 +105,20 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
                                 }' }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert_equal('mit aleph',
+      assert_equal('abdul latif jameel poverty action lab dataverse',
                    json['data']['search']['aggregations']['source']
                    .first['key'])
-      assert_equal(113,
+      assert_equal(73,
                    json['data']['search']['aggregations']['source']
                    .first['docCount'])
     end
   end
 
-  test 'graphqlv1 search with source facet applied' do
-    VCR.use_cassette('graphql search wright only aspace') do
+  test 'graphqlv2 search with source facet applied' do
+    VCR.use_cassette('graphql v2 search a only alma') do
       post '/graphql', params: { query: '{
-                                  search(searchterm: "wright",
-                                    source: "mit archivesspace") {
+                                  search(searchterm: "a",
+                                    source: "MIT Alma") {
                                     hits
                                     aggregations {
                                       source {
@@ -132,17 +130,18 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
                                 }' }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert_equal('mit archivesspace',
+      assert_equal('mit alma',
                    json['data']['search']['aggregations']['source']
                    .first['key'])
-      assert_equal(1,
+      assert_equal(3,
                    json['data']['search']['aggregations']['source']
                    .first['docCount'])
     end
   end
 
-  test 'graphqlv1 search with multiple subjects applied' do
-    VCR.use_cassette('graphql search multiple subjects') do
+  test 'graphqlv2 search with multiple subjects applied' do
+    skip 'opensearch model is not updated to allow this yet'
+    VCR.use_cassette('graphql v2 search multiple subjects') do
       post '/graphql', params: { query: '{
                                   search(searchterm: "space",
                                         subjects: ["space and time.",
@@ -156,30 +155,29 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'graphqlv1 search with invalid facet applied' do
-    VCR.use_cassette('graphql search wright fake facet') do
-      post '/graphql', params: { query: '{
-                                  search(searchterm: "wright",
-                                    fake: "mit archivesspace") {
-                                    hits
-                                    aggregations {
-                                      source {
-                                        key
-                                        docCount
-                                      }
+  test 'graphqlv2 search with invalid facet applied' do
+    post '/graphql', params: { query: '{
+                                search(searchterm: "wright",
+                                  fake: "mit archivesspace") {
+                                  hits
+                                  aggregations {
+                                    source {
+                                      key
+                                      docCount
                                     }
                                   }
-                                }' }
-      assert_equal(200, response.status)
-      json = JSON.parse(response.body)
-      assert(json['errors'].first['message'].present?)
-      assert_equal("Field 'search' doesn't accept argument 'fake'",
-                   json['errors'].first['message'])
-    end
+                                }
+                              }' }
+    assert_equal(200, response.status)
+    json = JSON.parse(response.body)
+    assert(json['errors'].first['message'].present?)
+    assert_equal("Field 'search' doesn't accept argument 'fake'",
+                  json['errors'].first['message'])
   end
 
-  test 'graphqlv1 valid facets can result in no results' do
-    VCR.use_cassette('graphql legal facets can result in no results') do
+  test 'graphqlv2 valid facets can result in no results' do
+    skip 'opensearch model is not updated to allow this yet'
+    VCR.use_cassette('graphql v2 legal facets can result in no results') do
       post '/graphql', params: { query: '{
                                   search(searchterm: "wright",
                                     subjects: ["fake facet value"]) {
@@ -198,34 +196,30 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'graphqlv1 retrieve' do
-    ClimateControl.modify(V2: nil) do
-      VCR.use_cassette('graphql retrieve') do
-        post '/graphql', params: { query: '{
-                                    recordId(id: "001245816") {
-                                      identifier
-                                      title
-                                    }
-                                  }' }
-        assert_equal(200, response.status)
-        json = JSON.parse(response.body)
-        assert(json['data']['recordId']['title'].start_with?('Popcorn Moms'))
-        assert_equal('001245816', json['data']['recordId']['identifier'])
-
-        # confirm non-requested fields don't return
-        assert_nil(json['data']['recordId']['literaryForm'])
-      end
-    end
-  end
-
-  test 'graphqlv1 retrieve invalid field' do
-    VCR.use_cassette('graphql retrieve error') do
-      post '/graphql', params: { query: 'recordId(id: "stuff") {
-                                  stuff
+  test 'graphqlv2 retrieve' do
+    VCR.use_cassette('graphql v2 retrieve') do
+      post '/graphql', params: { query: '{
+                                  recordId(id: "mit:alma:990026671500206761") {
+                                    timdexRecordId
+                                    title
+                                  }
                                 }' }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert(json['errors'].first['message'].present?)
+      assert(json['data']['recordId']['title'].start_with?('Spice'))
+      assert_equal('mit:alma:990026671500206761', json['data']['recordId']['timdexRecordId'])
+
+      # confirm non-requested fields don't return
+      assert_nil(json['data']['recordId']['literaryForm'])
     end
+  end
+
+  test 'graphqlv2 retrieve invalid field' do
+    post '/graphql', params: { query: 'recordId(id: "stuff") {
+                                stuff
+                              }' }
+    assert_equal(200, response.status)
+    json = JSON.parse(response.body)
+    assert(json['errors'].first['message'].present?)
   end
 end

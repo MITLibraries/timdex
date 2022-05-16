@@ -25,9 +25,12 @@ jobs:
         run: |
           bundle config path vendor/bundle
           bundle install --jobs 4 --retry 3
-      - name: run tests
+      - name: run tests graphql elasticsearch
         run: |
-          bundle exec rails test
+          bundle exec rails test --exclude /graphqlv2/
+      - name: run tests graphql opensearch
+        run: |
+          bundle exec rails test --exclude /graphqlv1/
       - name: Coveralls
         uses: coverallsapp/github-action@v1.0.1
         with:

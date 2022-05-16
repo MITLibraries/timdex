@@ -152,6 +152,8 @@ GEM
       aws-sigv4 (~> 1.0)
       faraday (>= 1.8, < 2)
     ffi (1.15.5)
+    flipflop (2.6.0)
+      activesupport (>= 4.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
     graphiql-rails (1.8.0)
@@ -350,6 +352,7 @@ DEPENDENCIES
   dotenv-rails
   elasticsearch (~> 6.8)
   faraday_middleware-aws-sigv4
+  flipflop
   graphiql-rails
   graphql
   jbuilder
