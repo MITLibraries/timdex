@@ -31,6 +31,7 @@ class Opensearch
 
   def multisearch
     return unless @params[:q].present?
+
     [
       {
         prefix: {
@@ -73,14 +74,14 @@ class Opensearch
         }
       }
     end
+    match_single_field(:citation, m)
+    match_single_field(:title, m)
 
-    if @params[:title].present?
-      m << {
-        match: {
-          title: @params[:title].downcase
-        }
-      }
-    end
+    match_single_field_nested(:contributors, m)
+    match_single_field_nested(:funding_information, m)
+    match_single_field_nested(:identifiers, m)
+    match_single_field_nested(:locations, m)
+    match_single_field_nested(:subjects, m)
     m
   end
 
@@ -197,5 +198,43 @@ class Opensearch
         }
       }
     }
+  end
+
+  private
+
+  def match_single_field(field, match_array)
+    return unless @params[field]
+
+    match_array << {
+      match: {
+        field => @params[field].downcase
+      }
+    }
+  end
+
+  def match_single_field_nested(field, match_array)
+    return unless @params[field]
+
+    match_array << {
+      nested: {
+        path: field.to_s,
+        query: {
+          bool: {
+            must: [
+              { match: { "#{field}.#{nested_field(field)}": @params[field].downcase } }
+            ]
+          }
+        }
+      }
+    }
+  end
+
+  # For most nested fields, we only care about 'value'; this handles the exceptions to that rule.
+  def nested_field(field)
+    if field == :funding_information
+      'funder_name'
+    else
+      'value'
+    end
   end
 end
