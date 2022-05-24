@@ -69,8 +69,8 @@ class Opensearch
     m = []
     if @params[:q].present?
       m << {
-      multi_match: {
-        query: @params[:q].downcase
+        multi_match: {
+          query: @params[:q].downcase
         }
       }
     end
@@ -88,19 +88,19 @@ class Opensearch
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/query-filter-context.html
   def filters
     f = []
-    f.push filter(@params[:collection], 'collections') if @params[:collection]
-    f.push filter(@params[:contributor], 'contributors') if @params[:contributor]
+    f.push filter(@params[:collection_facet], 'collections') if @params[:collection_facet]
+    f.push filter(@params[:contributors_facet], 'contributors') if @params[:contributors_facet]
 
-    f.push filter_single(@params[:content_type], 'content_type') if @params[:content_type]
+    f.push filter_single(@params[:content_type_facet], 'content_type') if @params[:content_type_facet]
 
-    f.push filter(@params[:content_format], 'format') if @params[:content_format]
+    f.push filter(@params[:content_format_type], 'format') if @params[:content_format_type]
 
-    f.push filter(@params[:language], 'languages') if @params[:language]
+    f.push filter(@params[:languages_facet], 'languages') if @params[:languages_facet]
 
-    f.push filter_single(@params[:literary_form], 'literary_form') if @params[:literary_form]
+    f.push filter_single(@params[:literary_form_facet], 'literary_form') if @params[:literary_form_facet]
 
-    f.push filter_single(@params[:source], 'source') if @params[:source]
-    f.push filter(@params[:subject], 'subjects') if @params[:subject]
+    f.push filter_single(@params[:source_facet], 'source') if @params[:source_facet]
+    f.push filter(@params[:subjects_facet], 'subjects') if @params[:subjects_facet]
     f
   end
 

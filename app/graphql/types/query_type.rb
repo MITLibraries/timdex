@@ -36,17 +36,23 @@ module Types
       field :search, SearchType, null: false,
                                  description: 'Search for timdex records' do
         argument :searchterm, String, required: false, default_value: nil
+        argument :citation, String, required: false, default_value: nil
+        argument :contributors, String, required: false, default_value: nil
+        argument :funding_information, String, required: false, default_value: nil
+        argument :identifiers, String, required: false, default_value: nil
+        argument :locations, String, required: false, default_value: nil
+        argument :subjects, String, required: false, default_value: nil
         argument :title, String, required: false, default_value: nil
         argument :from, String, required: false, default_value: '0'
 
         # applied facets
-        argument :content_type, String, required: false, default_value: nil
-        argument :contributors, [String], required: false, default_value: nil
-        argument :format, [String], required: false, default_value: nil
-        argument :languages, [String], required: false, default_value: nil
-        argument :literary_form, String, required: false, default_value: nil
-        argument :source, String, required: false, default_value: 'All'
-        argument :subjects, [String], required: false, default_value: nil
+        argument :content_type_facet, String, required: false, default_value: nil
+        argument :contributors_facet, [String], required: false, default_value: nil
+        argument :format_facet, [String], required: false, default_value: nil
+        argument :languages_facet, [String], required: false, default_value: nil
+        argument :literary_form_facet, String, required: false, default_value: nil
+        argument :source_facet, String, required: false, default_value: 'All'
+        argument :subjects_facet, [String], required: false, default_value: nil
       end
     else
       def record_id(id:)
@@ -73,8 +79,10 @@ module Types
     end
 
     if Flipflop.v2?
-      def search(searchterm:, title:, from:, **facets)
-        query = construct_query(searchterm, title, facets)
+      def search(searchterm:, citation:, contributors:, funding_information:, identifiers:, locations:, subjects:,
+                 title:, from:, **facets)
+        query = construct_query(searchterm, citation, contributors, funding_information, identifiers, locations,
+                                subjects, title, facets)
 
         results = Opensearch.new.search(from, query, Timdex::OSClient)
 
@@ -99,17 +107,24 @@ module Types
     end
 
     if Flipflop.v2?
-      def construct_query(searchterm, title, facets)
+      def construct_query(searchterm, citation, contributors, funding_information, identifiers, location, subjects,
+                          title, facets)
         query = {}
         query[:q] = searchterm
+        query[:citation] = citation
+        query[:contributors] = contributors
+        query[:funding_information] = funding_information
+        query[:identifiers] = identifiers
+        query[:location] = location
+        query[:subjects] = subjects
         query[:title] = title
-        query[:content_format] = facets[:format]
-        query[:content_type] = facets[:content_type]
-        query[:contributor] = facets[:contributors]
-        query[:language] = facets[:languages]
-        query[:literary_form] = facets[:literary_form]
-        query[:source] = facets[:source] if facets[:source] != 'All'
-        query[:subject] = facets[:subjects]
+        query[:content_format_facet] = facets[:format_facet]
+        query[:content_type_facet] = facets[:content_type_facet]
+        query[:contributors_facet] = facets[:contributors_facet]
+        query[:languages_facet] = facets[:languages_facet]
+        query[:literary_form_facet] = facets[:literary_form_facet]
+        query[:source_facet] = facets[:source_facet] if facets[:source_facet] != 'All'
+        query[:subjects_facet] = facets[:subjects_facet]
         query
       end
     else
@@ -122,7 +137,7 @@ module Types
         query[:language] = facets[:languages]
         query[:literary_form] = facets[:literary_form]
         query[:source] = facets[:source] if facets[:source] != 'All'
-        query[:subject] = facets[:subjects]
+        query[:subjects_facet] = facets[:subjects]
         query
       end
     end
