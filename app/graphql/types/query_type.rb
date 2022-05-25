@@ -46,6 +46,7 @@ module Types
         argument :from, String, required: false, default_value: '0'
 
         # applied facets
+        argument :collection_facet, [String], required: false, default_value: nil
         argument :content_type_facet, String, required: false, default_value: nil
         argument :contributors_facet, [String], required: false, default_value: nil
         argument :format_facet, [String], required: false, default_value: nil
@@ -118,6 +119,7 @@ module Types
         query[:location] = location
         query[:subjects] = subjects
         query[:title] = title
+        query[:collection_facet] = facets[:collection_facet]
         query[:content_format_facet] = facets[:format_facet]
         query[:content_type_facet] = facets[:content_type_facet]
         query[:contributors_facet] = facets[:contributors_facet]
@@ -137,7 +139,7 @@ module Types
         query[:language] = facets[:languages]
         query[:literary_form] = facets[:literary_form]
         query[:source] = facets[:source] if facets[:source] != 'All'
-        query[:subjects_facet] = facets[:subjects]
+        query[:subjects] = facets[:subjects]
         query
       end
     end
