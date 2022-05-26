@@ -91,6 +91,64 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'graphqlv2 targeted search on simple field' do
+    VCR.use_cassette('graphql v2 search title') do
+      post '/graphql', params: { query: '{
+                                  search(title: "spice") {
+                                    records {
+                                      title
+                                    }
+                                  }
+                                }' }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert_equal "Spice it up! the best of Paquito D'Rivera.", json['data']['search']['records'].first['title']
+    end
+  end
+
+  test 'graphqlv2 targeted search on nested field' do
+    VCR.use_cassette('graphqlv2 search contributors') do
+      post '/graphql', params: { query: '{
+                                  search(contributors: "moon") {
+                                    records {
+                                      contributors {
+                                        value
+                                      }
+                                    }
+                                  }
+                                }' }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert json['data']['search']['records'].first['contributors'].any? { |c| c.has_value? 'Moon, Intae' }
+    end
+  end
+
+  test 'graphqlv2 targeted search on multiple fields' do
+    VCR.use_cassette('graphqlv2 search multiple fields') do
+      post '/graphql', params: { query: '{
+                                  search(title: "common", contributors: "mcternan", identifiers: "163565002X") {
+                                    records {
+                                      title
+                                      contributors {
+                                        value
+                                      }
+                                      identifiers {
+                                        value
+                                      }
+                                    }
+                                  }
+                                }' }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert_equal 'A common table : 80 recipes and stories from my shared cultures /',
+                   json['data']['search']['records'].first['title']
+      assert json['data']['search']['records'].first['contributors'].any? { |c|
+               c.has_value? 'McTernan, Cynthia Chen, author.'
+             }
+      assert json['data']['search']['records'].first['identifiers'].any? { |i| i.has_value? '163565002X (hardback)' }
+    end
+  end
+
   test 'graphqlv2 search aggregations' do
     VCR.use_cassette('graphql v2 search data') do
       post '/graphql', params: { query: '{
@@ -118,7 +176,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
     VCR.use_cassette('graphql v2 search a only alma') do
       post '/graphql', params: { query: '{
                                   search(searchterm: "a",
-                                    source: "MIT Alma") {
+                                    sourceFacet: "MIT Alma") {
                                     hits
                                     aggregations {
                                       source {
@@ -144,7 +202,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
     VCR.use_cassette('graphql v2 search multiple subjects') do
       post '/graphql', params: { query: '{
                                   search(searchterm: "space",
-                                        subjects: ["space and time.",
+                                        subjectsFacet: ["space and time.",
                                                    "quantum theory."]) {
                                     hits
                                   }
@@ -172,7 +230,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
     json = JSON.parse(response.body)
     assert(json['errors'].first['message'].present?)
     assert_equal("Field 'search' doesn't accept argument 'fake'",
-                  json['errors'].first['message'])
+                 json['errors'].first['message'])
   end
 
   test 'graphqlv2 valid facets can result in no results' do
@@ -180,7 +238,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
     VCR.use_cassette('graphql v2 legal facets can result in no results') do
       post '/graphql', params: { query: '{
                                   search(searchterm: "wright",
-                                    subjects: ["fake facet value"]) {
+                                    subjectsFacet: ["fake facet value"]) {
                                     hits
                                     aggregations {
                                       source {
