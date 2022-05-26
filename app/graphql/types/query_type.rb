@@ -108,7 +108,7 @@ module Types
     end
 
     if Flipflop.v2?
-      def construct_query(searchterm, citation, contributors, funding_information, identifiers, location, subjects,
+      def construct_query(searchterm, citation, contributors, funding_information, identifiers, locations, subjects,
                           title, facets)
         query = {}
         query[:q] = searchterm
@@ -116,7 +116,7 @@ module Types
         query[:contributors] = contributors
         query[:funding_information] = funding_information
         query[:identifiers] = identifiers
-        query[:location] = location
+        query[:locations] = locations
         query[:subjects] = subjects
         query[:title] = title
         query[:collection_facet] = facets[:collection_facet]
@@ -139,7 +139,7 @@ module Types
         query[:language] = facets[:languages]
         query[:literary_form] = facets[:literary_form]
         query[:source] = facets[:source] if facets[:source] != 'All'
-        query[:subjects] = facets[:subjects]
+        query[:subject] = facets[:subjects]
         query
       end
     end

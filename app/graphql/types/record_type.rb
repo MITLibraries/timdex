@@ -151,6 +151,7 @@ module Types
       field :publication_date, String, null: true, deprecation_reason: 'Use `dates`'
       field :content_type, [String], null: true
       field :call_numbers, [String], null: true
+      field :citation, String, null: true
       field :edition, String, null: true
       field :imprint, [String], null: true, deprecation_reason: 'Use `publicationInformation`'
       field :publication_information, [String]
