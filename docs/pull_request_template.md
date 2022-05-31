@@ -1,31 +1,26 @@
-#### What does this PR do?
-A few sentences describing the overall goals of the pull request's commits.
-Why are we making these changes? Is there more work to be done to fully
-achieve these goals?
+#### Developer
 
-#### Helpful background context
+- [ ] All new ENV is documented in README
+- [ ] All new ENV has been added to Heroku Pipeline, Staging and Prod
+- [ ] ANDI or Wave has been run in accordance to
+      [our guide](https://mitlibraries.github.io/guides/basics/a11y.html) and
+      all issues introduced by these changes have been resolved or opened as new
+      issues (link to those issues in the Pull Request details above)
+- [ ] Stakeholder approval has been confirmed (or is not needed)
 
-Describe any additional context beyond what the PR accomplishes if it is likely
-to be useful to a reviewer.
+#### Code Reviewer
 
-Delete this section if it isn't applicable to the PR.
+- [ ] The commit message is clear and follows our guidelines
+      (not just this pull request message)
+- [ ] There are appropriate tests covering any new functionality
+- [ ] The documentation has been updated or is unnecessary
+- [ ] The changes have been verified
+- [ ] New dependencies are appropriate or there were no changes
 
-#### How can a reviewer manually see the effects of these changes?
+#### Requires database migrations?
 
-Explain how to see the proposed changes in the application if possible.
-
-Delete this section if it isn't applicable to the PR.
-
-#### What are the relevant tickets?
-
-- https://mitlibraries.atlassian.net/browse/DIP-
-
-#### Screenshots (if appropriate)
-
-Delete this section if it isn't applicable to the PR.
-
-#### Requires Database Migrations?
 YES | NO
 
 #### Includes new or updated dependencies?
+
 YES | NO

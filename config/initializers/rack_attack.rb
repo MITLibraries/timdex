@@ -43,9 +43,6 @@ class Rack::Attack
     if req.path == '/api/v1/auth'
       req.ip
     end
-    if req.path == '/api/v2/auth'
-      req.ip
-    end
   end
 
   # If the reqeust includes a valid JWT token, ignore all other throttle
