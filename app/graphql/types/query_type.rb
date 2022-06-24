@@ -89,9 +89,23 @@ module Types
 
         response = {}
         response[:hits] = results['hits']['total']['value']
-        response[:records] = results['hits']['hits'].map { |x| x['_source'] }
+        response[:records] = inject_hits_fields_into_source(results['hits']['hits'])
         response[:aggregations] = collapse_buckets(results['aggregations'])
         response
+      end
+
+      # Long-term, we will probably want to define these fields discretely in RecordType. However, this might end up
+      # adding confusion while we are maintaining deprecated fields in that class. We should refactor this either soon
+      # after removing GraphQL V1 or as part of that work.
+      def inject_hits_fields_into_source(hits)
+        modded_sources = []
+        hits.each do |hit|
+          source = hit['_source']
+          source['highlight'] = hit['highlight']
+          source['score'] = hit['_score']
+          modded_sources << source
+        end
+        modded_sources
       end
     else
       def search(searchterm:, from:, **facets)

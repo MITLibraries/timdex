@@ -126,6 +126,19 @@ module Types
       field :kind, String
       field :value, String
     end
+
+    class HighlightType < Types::BaseObject
+      field :matched_field, String
+      field :matched_phrases, [String]
+
+      def matched_field
+        @object.first
+      end
+
+      def matched_phrases
+        @object.drop(1).flatten!
+      end
+    end
   end
 
   if Flipflop.v2?
@@ -173,6 +186,8 @@ module Types
       field :file_formats, [String], null: true
       field :funding_information, [Types::FundingType], null: true
       field :locations, [Types::LocationType], null: true
+      field :highlight, [Types::HighlightType], null: true
+      field :score, String, null: true
 
       def in_bibliography
         @object['related_items']&.map { |i| i['uri'] if i['relationship'] == 'IsCitedBy' }&.compact
