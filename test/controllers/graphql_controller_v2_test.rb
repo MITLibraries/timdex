@@ -29,7 +29,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
                                 }' }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert_equal('Data for Haqdarshak: Leveraging Technology and Entrepreneurship to Increase Access to Welfare Programs',
+      assert_equal('Data for time series tutorial',
                    json['data']['search']['records'].first['title'])
 
       # confirm non-requested fields don't return
@@ -49,7 +49,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
                                 }' }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert_equal('Data for Haqdarshak: Leveraging Technology and Entrepreneurship to Increase Access to Welfare Programs',
+      assert_equal('Data for time series tutorial',
                    json['data']['search']['records'].first['title'])
       assert_equal('Dataset',
                    json['data']['search']['records'].first['contentType'].first)
@@ -87,7 +87,41 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
                                 }' }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert_equal(73, json['data']['search']['hits'])
+      assert_equal(557, json['data']['search']['hits'])
+    end
+  end
+
+  test 'graphqlv2 search score' do
+    VCR.use_cassette('graphql v2 search data') do
+      post '/graphql', params: { query: '{
+                                  search(searchterm: "data") {
+                                    records {
+                                      score
+                                    }
+                                  }
+                                }' }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert_equal('20.448364', json['data']['search']['records'].first['score'])
+    end
+  end
+
+  test 'graphqlv2 search highlighted query terms' do
+    VCR.use_cassette('graphql v2 search data') do
+      post '/graphql', params: { query: '{
+                                  search(searchterm: "data") {
+                                    records {
+                                      highlight {
+                                        matchedField
+                                        matchedPhrases
+                                      }
+                                    }
+                                  }
+                                }' }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert_equal [{ 'matchedField' => 'summary', 'matchedPhrases' => ['<p>These are sample <span class="highlight">data</span> files to be used in the time series tutorial found here: <a href="https://github.com'] }, { 'matchedField' => 'citation', 'matchedPhrases' => ['Stevens, Abigail (2021): <span class="highlight">Data</span> for time series tutorial. Zenodo.'] }, { 'matchedField' => 'title.exact_value', 'matchedPhrases' => ['<span class="highlight">Data for time series tutorial</span>'] }, { 'matchedField' => 'title', 'matchedPhrases' => ['<span class="highlight">Data</span> for time series tutorial'] }],
+                   json['data']['search']['records'].first['highlight']
     end
   end
 
@@ -163,10 +197,10 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
                                 }' }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert_equal('abdul latif jameel poverty action lab dataverse',
+      assert_equal('zenodo',
                    json['data']['search']['aggregations']['source']
                    .first['key'])
-      assert_equal(73,
+      assert_equal(242,
                    json['data']['search']['aggregations']['source']
                    .first['docCount'])
     end

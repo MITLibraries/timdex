@@ -14,6 +14,7 @@ class Opensearch
       from: from,
       size: SIZE,
       query: query,
+      highlight: highlight,
       aggregations: aggregations
     }.to_json
   end
@@ -25,6 +26,20 @@ class Opensearch
         should: multisearch,
         must: matches,
         filter: filters
+      }
+    }
+  end
+
+  def highlight
+    {
+      pre_tags: [
+        '<span class="highlight">'
+      ],
+      post_tags: [
+        '</span>'
+      ],
+      fields: {
+        '*': {}
       }
     }
   end
