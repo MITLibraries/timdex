@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.5'
+ruby '2.7.6'
 
 gem 'aws-sdk-elasticsearchservice'
 gem 'bootsnap', require: false
@@ -45,7 +45,6 @@ end
 
 group :test do
   gem 'capybara'
-  gem 'chromedriver-helper'
   gem 'climate_control'
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
