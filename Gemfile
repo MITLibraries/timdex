@@ -45,7 +45,6 @@ end
 
 group :test do
   gem 'capybara'
-  gem 'chromedriver-helper'
   gem 'climate_control'
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
