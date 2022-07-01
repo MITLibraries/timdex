@@ -192,10 +192,10 @@ GEM
     nokogiri (1.13.6)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
-    opensearch-api (2.0.0)
+    opensearch-api (2.0.2)
       multi_json
-    opensearch-ruby (2.0.0)
-      opensearch-api (= 2.0.0)
+    opensearch-ruby (2.0.2)
+      opensearch-api (= 2.0.2)
       opensearch-transport (= 2.0.0)
     opensearch-transport (2.0.0)
       faraday (~> 1)
