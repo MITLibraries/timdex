@@ -52,7 +52,7 @@ module Types
         argument :format_facet, [String], required: false, default_value: nil
         argument :languages_facet, [String], required: false, default_value: nil
         argument :literary_form_facet, String, required: false, default_value: nil
-        argument :source_facet, String, required: false, default_value: 'All'
+        argument :source_facet, [String], required: false, default_value: nil
         argument :subjects_facet, [String], required: false, default_value: nil
       end
     else
