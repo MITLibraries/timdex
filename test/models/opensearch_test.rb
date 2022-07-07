@@ -72,17 +72,32 @@ class OpensearchTest < ActiveSupport::TestCase
     VCR.use_cassette('opensearch single field nested') do
       params = { contributors: 'mcternan' }
       results = Opensearch.new.search(0, params, Timdex::OSClient)
-      assert_equal "A common table : 80 recipes and stories from my shared cultures /",
+      assert_equal 'A common table : 80 recipes and stories from my shared cultures /',
                    results['hits']['hits'].first['_source']['title']
     end
   end
 
   test 'searches multiple fields' do
     VCR.use_cassette('opensearch multiple fields') do
-      params = { q: 'chinese', title: 'common', contributors: 'mcternan'}
+      params = { q: 'chinese', title: 'common', contributors: 'mcternan' }
       results = Opensearch.new.search(0, params, Timdex::OSClient)
-      assert_equal "A common table : 80 recipes and stories from my shared cultures /",
+      assert_equal 'A common table : 80 recipes and stories from my shared cultures /',
                    results['hits']['hits'].first['_source']['title']
     end
+  end
+
+  test 'source_array creates correct query structure' do
+    sources = ['Zenodo', 'DSpace@MIT']
+    expected = [{ term: { source: 'Zenodo' } }, { term: { source: 'DSpace@MIT' } }]
+
+    assert_equal(expected, Opensearch.new.source_array(sources))
+  end
+
+  test 'filter_sources creates correct query structure' do
+    sources = ['Zenodo', 'DSpace@MIT']
+    expected = { bool: { should: [{ term: { source: 'Zenodo' } },
+                                  { term: { source: 'DSpace@MIT' } }] } }
+
+    assert_equal(expected, Opensearch.new.filter_sources(sources))
   end
 end

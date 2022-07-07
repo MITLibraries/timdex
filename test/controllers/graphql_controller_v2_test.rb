@@ -314,4 +314,102 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
     json = JSON.parse(response.body)
     assert(json['errors'].first['message'].present?)
   end
+
+  test 'graphqlv2 filter multiple sources' do
+    VCR.use_cassette('graphql v2 filter multiple sources') do
+
+      # no filters to return all sources. used later to test filters return less than the total.
+      post '/graphql', params: { query:
+        '{
+          search(searchterm: "data") {
+            hits
+            aggregations {
+              source {
+                key
+                docCount
+              }
+            }
+          }
+        }'
+      }
+
+      json = JSON.parse(response.body)
+      initial_source_array = json['data']['search']['aggregations']['source']
+
+      # filtering to 2 sources returns 2 sources
+      post '/graphql', params: { query:
+        '{
+          search(searchterm: "data", sourceFacet: ["Zenodo", "DSpace@MIT"]) {
+            hits
+            aggregations {
+              source {
+                key
+                docCount
+              }
+            }
+          }
+        }'
+      }
+      assert_equal(200, response.status)
+
+      json = JSON.parse(response.body)
+      filtered_source_array = json['data']['search']['aggregations']['source']
+
+      assert(initial_source_array.count > filtered_source_array.count)
+      assert_equal(2, filtered_source_array.count)
+
+      expected_sources = ['zenodo', 'dspace@mit']
+      actual_sources = filtered_source_array.map{|source| source["key"]}
+      assert_equal(expected_sources, actual_sources)
+    end
+  end
+
+  test 'graphqlv2 filter single source' do
+    VCR.use_cassette('graphql v2 filter single source') do
+
+      # no filters to return all sources. used later to test filters return less than the total.
+      post '/graphql', params: { query:
+        '{
+          search(searchterm: "data") {
+            hits
+            aggregations {
+              source {
+                key
+                docCount
+              }
+            }
+          }
+        }'
+      }
+
+      json = JSON.parse(response.body)
+      initial_source_array = json['data']['search']['aggregations']['source']
+
+      # filtering to 1 sources returns 1 source
+      post '/graphql', params: { query:
+        '{
+          search(searchterm: "data", sourceFacet: ["DSpace@MIT"]) {
+            hits
+            aggregations {
+              source {
+                key
+                docCount
+              }
+            }
+          }
+        }'
+      }
+      assert_equal(200, response.status)
+
+      json = JSON.parse(response.body)
+      filtered_source_array = json['data']['search']['aggregations']['source']
+
+      assert(initial_source_array.count > filtered_source_array.count)
+      assert_equal(1, filtered_source_array.count)
+
+      expected_sources = ['dspace@mit']
+      actual_sources = filtered_source_array.map{|source| source["key"]}
+      assert_equal(expected_sources, actual_sources)
+    end
+  end
 end

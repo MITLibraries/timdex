@@ -4,7 +4,7 @@ class Opensearch
 
   def search(from, params, client)
     @params = params
-    client.search(index: ENV['ELASTICSEARCH_INDEX'],
+    client.search(index: ENV.fetch('ELASTICSEARCH_INDEX', nil),
                   body: build_query(from))
   end
 
@@ -114,7 +114,8 @@ class Opensearch
 
     f.push filter_single(@params[:literary_form_facet], 'literary_form') if @params[:literary_form_facet]
 
-    f.push filter_single(@params[:source_facet], 'source') if @params[:source_facet]
+    f.push filter_sources(@params[:source_facet]) if @params[:source_facet]
+
     f.push filter(@params[:subjects_facet], 'subjects') if @params[:subjects_facet]
     f
   end
@@ -153,6 +154,26 @@ class Opensearch
     {
       term: { "#{field}": param }
     }
+  end
+
+  def filter_sources(param)
+    {
+      bool: {
+        should: source_array(param)
+      }
+    }
+  end
+
+  def source_array(param)
+    sources = []
+    param.each do |source|
+      sources << {
+        term: {
+          source: source
+        }
+      }
+    end
+    sources
   end
 
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html
