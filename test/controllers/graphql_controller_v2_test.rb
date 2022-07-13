@@ -153,7 +153,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
                                 }' }
       assert_equal(200, response.status)
       json = JSON.parse(response.body)
-      assert json['data']['search']['records'].first['contributors'].any? { |c| c.has_value? 'Moon, Intae' }
+      assert json['data']['search']['records'].first['contributors'].any? { |c| c.value? 'Moon, Intae' }
     end
   end
 
@@ -177,9 +177,9 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
       assert_equal 'A common table : 80 recipes and stories from my shared cultures /',
                    json['data']['search']['records'].first['title']
       assert json['data']['search']['records'].first['contributors'].any? { |c|
-               c.has_value? 'McTernan, Cynthia Chen, author.'
+               c.value? 'McTernan, Cynthia Chen, author.'
              }
-      assert json['data']['search']['records'].first['identifiers'].any? { |i| i.has_value? '163565002X (hardback)' }
+      assert json['data']['search']['records'].first['identifiers'].any? { |i| i.value? '163565002X (hardback)' }
     end
   end
 
@@ -317,7 +317,6 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
 
   test 'graphqlv2 filter multiple sources' do
     VCR.use_cassette('graphql v2 filter multiple sources') do
-
       # no filters to return all sources. used later to test filters return less than the total.
       post '/graphql', params: { query:
         '{
@@ -330,8 +329,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
               }
             }
           }
-        }'
-      }
+        }' }
 
       json = JSON.parse(response.body)
       initial_source_array = json['data']['search']['aggregations']['source']
@@ -348,8 +346,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
               }
             }
           }
-        }'
-      }
+        }' }
       assert_equal(200, response.status)
 
       json = JSON.parse(response.body)
@@ -359,14 +356,13 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
       assert_equal(2, filtered_source_array.count)
 
       expected_sources = ['zenodo', 'dspace@mit']
-      actual_sources = filtered_source_array.map{|source| source["key"]}
+      actual_sources = filtered_source_array.map { |source| source['key'] }
       assert_equal(expected_sources, actual_sources)
     end
   end
 
   test 'graphqlv2 filter single source' do
     VCR.use_cassette('graphql v2 filter single source') do
-
       # no filters to return all sources. used later to test filters return less than the total.
       post '/graphql', params: { query:
         '{
@@ -379,8 +375,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
               }
             }
           }
-        }'
-      }
+        }' }
 
       json = JSON.parse(response.body)
       initial_source_array = json['data']['search']['aggregations']['source']
@@ -397,8 +392,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
               }
             }
           }
-        }'
-      }
+        }' }
       assert_equal(200, response.status)
 
       json = JSON.parse(response.body)
@@ -408,8 +402,40 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
       assert_equal(1, filtered_source_array.count)
 
       expected_sources = ['dspace@mit']
-      actual_sources = filtered_source_array.map{|source| source["key"]}
+      actual_sources = filtered_source_array.map { |source| source['key'] }
       assert_equal(expected_sources, actual_sources)
+    end
+  end
+
+  test 'graphqlv2 can retrieve a record from a default index' do
+    # fragile test: specific item expected in default index
+    VCR.use_cassette('graphql v2 retrieve from default index') do
+      post '/graphql', params: { query:
+        '{
+          recordId(id: "dspace:1721.1-44968") {
+            timdexRecordId
+            title
+          }
+        }' }
+
+      json = JSON.parse(response.body)
+      assert_equal('dspace:1721.1-44968', json['data']['recordId']['timdexRecordId'])
+    end
+  end
+
+  test 'graphqlv2 can retrive a record from a specified index' do
+    # fragile test: specific item expected in specified index
+    VCR.use_cassette('graphql v2 retrieve from rdi* index') do
+      post '/graphql', params: { query:
+        '{
+          recordId(id: "zenodo:5728409", index: "rdi*") {
+            timdexRecordId
+            title
+          }
+        }' }
+
+      json = JSON.parse(response.body)
+      assert_equal('zenodo:5728409', json['data']['recordId']['timdexRecordId'])
     end
   end
 end
