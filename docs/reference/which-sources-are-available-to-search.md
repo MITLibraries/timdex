@@ -2,7 +2,7 @@
 
 ## Default sources
 
-These sources are all searched by default. You can also [choose which sources to search](../howto/limiting-your-search-to-specified-sources).
+These sources are all searched by default. You can also [choose which sources to search](../howto/limiting-your-search-to-specified-sources.md).
 
 ---
 
