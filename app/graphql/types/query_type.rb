@@ -9,9 +9,18 @@ module Types
       'Pong!'
     end
 
-    field :record_id, RecordType, null: false,
-                                  description: 'Retrieve one timdex record' do
-      argument :id, String, required: true
+    if Flipflop.v2?
+      field :record_id, RecordType, null: false,
+                                    description: 'Retrieve one timdex record' do
+        argument :id, String, required: true
+        argument :index, String, required: false, default_value: nil,
+                                 description: 'It is not recommended to provide an index value unless we have provided you with one for your specific use case'
+      end
+    else
+      field :record_id, RecordType, null: false,
+                                    description: 'Retrieve one timdex record' do
+        argument :id, String, required: true
+      end
     end
 
     if Flipflop.v2?
@@ -26,8 +35,8 @@ module Types
     end
 
     if Flipflop.v2?
-      def record_id(id:)
-        result = Retrieve.new.fetch(id, Timdex::OSClient)
+      def record_id(id:, index:)
+        result = Retrieve.new.fetch(id, Timdex::OSClient, index)
         result['hits']['hits'].first['_source']
       rescue Elasticsearch::Transport::Transport::Errors::NotFound
         raise GraphQL::ExecutionError, "Record '#{id}' not found"
@@ -44,6 +53,8 @@ module Types
         argument :subjects, String, required: false, default_value: nil
         argument :title, String, required: false, default_value: nil
         argument :from, String, required: false, default_value: '0'
+        argument :index, String, required: false, default_value: nil,
+                                 description: 'It is not recommended to provide an index value unless we have provided you with one for your specific use case'
 
         # applied facets
         argument :collection_facet, [String], required: false, default_value: nil
@@ -81,11 +92,11 @@ module Types
 
     if Flipflop.v2?
       def search(searchterm:, citation:, contributors:, funding_information:, identifiers:, locations:, subjects:,
-                 title:, from:, **facets)
+                 title:, index:, from:, **facets)
         query = construct_query(searchterm, citation, contributors, funding_information, identifiers, locations,
                                 subjects, title, facets)
 
-        results = Opensearch.new.search(from, query, Timdex::OSClient)
+        results = Opensearch.new.search(from, query, Timdex::OSClient, index)
 
         response = {}
         response[:hits] = results['hits']['total']['value']

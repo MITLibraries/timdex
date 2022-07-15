@@ -2,10 +2,15 @@ class Opensearch
   SIZE = 20
   MAX_PAGE = 200
 
-  def search(from, params, client)
+  def search(from, params, client, index = nil)
     @params = params
-    client.search(index: ENV.fetch('ELASTICSEARCH_INDEX', nil),
+    index = default_index unless index.present?
+    client.search(index: index,
                   body: build_query(from))
+  end
+
+  def default_index
+    ENV.fetch('ELASTICSEARCH_INDEX', nil)
   end
 
   # Construct the json query to send to elasticsearch

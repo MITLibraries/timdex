@@ -59,6 +59,26 @@ class OpensearchTest < ActiveSupport::TestCase
     assert matches.select { |m| m['subjects.value'] == 'assured' }
   end
 
+  test 'can override index' do
+    # fragile test: assumes opensearch instance with at least one index prefixed with `rdi`
+    VCR.use_cassette('opensearch non-default index') do
+      params = { title: 'data' }
+      results = Opensearch.new.search(0, params, Timdex::OSClient, 'rdi*')
+      assert results['hits']['hits'].map { |hit| hit['_index'] }.uniq.map { |index| index.start_with?('rdi') }.any?
+    end
+  end
+
+  test 'default index' do
+    # fragile test: assumes opensearch instance with at least one index promoted to timdex-prod and no promoted indexes
+    # that start with rdi*
+    VCR.use_cassette('opensearch default index') do
+      params = { title: 'data' }
+      results = Opensearch.new.search(0, params, Timdex::OSClient)
+      refute results['hits']['hits'].map { |hit| hit['_index'] }.uniq.map { |index| index.start_with?('rdi') }.any?
+      assert results['hits']['hits'].map { |hit| hit['_index'] }.uniq.any?
+    end
+  end
+
   test 'searches a single field' do
     VCR.use_cassette('opensearch single field') do
       params = { title: 'spice' }

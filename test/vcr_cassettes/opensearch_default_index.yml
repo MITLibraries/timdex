@@ -1,0 +1,152 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:9200/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - 'opensearch-ruby/2.0.0 (RUBY_VERSION: 2.7.6; darwin x86_64; Faraday v1.10.0)'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '350'
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "name" : "e03207b01655",
+          "cluster_name" : "docker-cluster",
+          "cluster_uuid" : "9OY_6pKWQKWHQbxorP7qaw",
+          "version" : {
+            "distribution" : "opensearch",
+            "number" : "1.3.0",
+            "build_type" : "tar",
+            "build_hash" : "e45991597c86ba1bbcc36ee1dfdc165197a913af",
+            "build_date" : "2022-03-15T19:07:30.455415Z",
+            "build_snapshot" : false,
+            "lucene_version" : "8.10.1",
+            "minimum_wire_compatibility_version" : "6.8.0",
+            "minimum_index_compatibility_version" : "6.0.0-beta1"
+          },
+          "tagline" : "The OpenSearch Project: https://opensearch.org/"
+        }
+  recorded_at: Wed, 13 Jul 2022 19:47:35 GMT
+- request:
+    method: post
+    uri: http://localhost:9200/timdex-prod/_search
+    body:
+      encoding: UTF-8
+      string: '{"from":0,"size":20,"query":{"bool":{"should":null,"must":[{"match":{"title":"data"}}],"filter":[]}},"highlight":{"pre_tags":["\u003cspan
+        class=\"highlight\"\u003e"],"post_tags":["\u003c/span\u003e"],"fields":{"*":{}}},"aggregations":{"collections":{"terms":{"field":"collections.keyword"}},"contributors":{"nested":{"path":"contributors"},"aggs":{"contributor_names":{"terms":{"field":"contributors.value.keyword"}}}},"content_type":{"terms":{"field":"content_type"}},"content_format":{"terms":{"field":"format"}},"languages":{"terms":{"field":"languages.keyword"}},"literary_form":{"terms":{"field":"literary_form"}},"source":{"terms":{"field":"source"}},"subjects":{"nested":{"path":"subjects"},"aggs":{"subject_names":{"terms":{"field":"subjects.value.keyword"}}}}}}'
+    headers:
+      User-Agent:
+      - 'opensearch-ruby/2.0.0 (RUBY_VERSION: 2.7.6; darwin x86_64; Faraday v1.10.0)'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '2381'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"took":8,"timed_out":false,"_shards":{"total":1,"successful":1,"skipped":0,"failed":0},"hits":{"total":{"value":3,"relation":"eq"},"max_score":5.2164545,"hits":[{"_index":"dspace-2022-07-13t19-23-43z","_type":"_doc","_id":"dspace:1721.1-44968","_score":5.2164545,"_source":{"citation":"Stoker,
+        Thomas M. (2000): Panel data analysis of U.S. coal productivity. MIT Center
+        for Energy and Environmental Policy Research. Working Paper. https://dspace.mit.edu/handle/1721.1/44968","content_type":["Working
+        Paper"],"contributors":[{"kind":"author","value":"Stoker, Thomas M."},{"kind":"other","value":"Massachusetts
+        Institute of Technology. Center for Energy and Environmental Policy Research."}],"dates":[{"kind":"Publication
+        date","value":"2000"}],"file_formats":["application/pdf"],"format":"electronic
+        resource","identifiers":[{"kind":"uri","value":"http://hdl.handle.net/1721.1/44968"},{"kind":"oclc","value":"52315985"}],"links":[{"kind":"Digital
+        object URL","text":"Digital object URL","url":"http://hdl.handle.net/1721.1/44968"}],"numbering":"MIT-CEEPR
+        (Series) ; 00-004WP.","publication_information":["MIT Center for Energy and
+        Environmental Policy Research"],"source":"DSpace@MIT","source_link":"https://dspace.mit.edu/handle/1721.1/44968","summary":["We
+        analyze labor productivity in coal mining in the United States using indices
+        of productivity change associated with the concepts of panel data modeling.
+        This approach is valuable when there is extensive heterogeneity in production
+        units, as with coal mines. We find substantial returns to scale for coal mining
+        in all geographical regions, and find that smooth technical progress is exhibited
+        by estimates of the fixed effects for coal mining. We carry out a variety
+        of diagnostic analyses of our basic model and primary modeling assumptions,
+        using recently proposed methods for addressing ''errors-in-variable'' and
+        ''weak instrument bias'' problems, as well a new method for studying errors-in-variables
+        in nonlinear contexts."],"timdex_record_id":"dspace:1721.1-44968","title":"Panel
+        data analysis of U.S. coal productivity"},"highlight":{"title":["Panel <span
+        class=\"highlight\">data</span> analysis of U.S. coal productivity"]}},{"_index":"dspace-2022-07-13t19-23-43z","_type":"_doc","_id":"dspace:1721.1-45062","_score":3.5745273,"_source":{"citation":"Ellerman,
+        A. Denny, Buchner, Barbara (2006): Over-allocation or abatement? : a preliminary
+        analysis of the EU ETS based on the 2005 emission data. MIT Center for Energy
+        and Environmental Policy Research. Working Paper. https://dspace.mit.edu/handle/1721.1/45062","content_type":["Working
+        Paper"],"contributors":[{"kind":"author","value":"Ellerman, A. Denny"},{"kind":"author","value":"Buchner,
+        Barbara"},{"kind":"other","value":"Massachusetts Institute of Technology.
+        Center for Energy and Environmental Policy Research."}],"dates":[{"kind":"Publication
+        date","value":"2006"}],"file_formats":["application/pdf"],"format":"electronic
+        resource","identifiers":[{"kind":"uri","value":"http://hdl.handle.net/1721.1/45062"},{"kind":"oclc","value":"159935161"}],"links":[{"kind":"Digital
+        object URL","text":"Digital object URL","url":"http://hdl.handle.net/1721.1/45062"}],"numbering":"MIT-CEEPR
+        (Series) ; 06-016WP.","publication_information":["MIT Center for Energy and
+        Environmental Policy Research"],"source":"DSpace@MIT","source_link":"https://dspace.mit.edu/handle/1721.1/45062","summary":["This
+        paper provides an initial analysis of the EU ETS based on the installation-level
+        data for verified emissions and allowance allocations in the first trading
+        year. Those data, released on May 15, 2006, and subsequent updates revealed
+        that CO2 emissions were about 4% lower than the allocated allowances. The
+        main objective of the paper is to shed light on the extent to which over-allocation
+        and abatement have taken place in 2005. We propose a measure by which over-allocation
+        can be judged and provide estimates of abatement based on emissions data and
+        indicators of economic activity as well as trends in energy and carbon intensity.
+        Finally, we discuss the insights and implications that emerge from this tentative
+        assessment."],"timdex_record_id":"dspace:1721.1-45062","title":"Over-allocation
+        or abatement? : a preliminary analysis of the EU ETS based on the 2005 emission
+        data"},"highlight":{"title":[": a preliminary analysis of the EU ETS based
+        on the 2005 emission <span class=\"highlight\">data</span>"]}},{"_index":"dspace-2022-07-13t19-23-43z","_type":"_doc","_id":"dspace:1721.1-44986","_score":3.5745273,"_source":{"citation":"Gupta,
+        Shreekant (2002): Environmental benefits and cost savings through market-based
+        instruments : an application using state-level data from India. MIT Center
+        for Energy and Environmental Policy Research. Working Paper. https://dspace.mit.edu/handle/1721.1/44986","content_type":["Working
+        Paper"],"contributors":[{"kind":"author","value":"Gupta, Shreekant"},{"kind":"other","value":"Massachusetts
+        Institute of Technology. Center for Energy and Environmental Policy Research."}],"dates":[{"kind":"Publication
+        date","value":"2002"}],"file_formats":["application/pdf"],"format":"electronic
+        resource","identifiers":[{"kind":"uri","value":"http://hdl.handle.net/1721.1/44986"},{"kind":"oclc","value":"52305223"}],"links":[{"kind":"Digital
+        object URL","text":"Digital object URL","url":"http://hdl.handle.net/1721.1/44986"}],"numbering":"MIT-CEEPR
+        (Series) ; 02-005WP.","publication_information":["MIT Center for Energy and
+        Environmental Policy Research"],"source":"DSpace@MIT","source_link":"https://dspace.mit.edu/handle/1721.1/44986","summary":["This
+        paper develops a methodology for estimating potential cost savings from the
+        use of market-based instruments (MBIs) when local emissions and abatement
+        cost data are not available. The paper provides estimates of the cost savings
+        for a 50% reduction of particulate emissions in India''s five main industrial
+        states, as well as estimates of the benefits from doing so. The estimates
+        are developed by applying World Bank particulate intensity and abatement cost
+        factors to sectoral output data. The estimated costs savings range from 26%
+        to 169% and the benefits are many times greater than the costs even without
+        the use of MBIs. The paper concludes by commenting on the relative difficulty
+        of implementing reductions by market-based instruments and conventional command-and-control
+        regulations."],"timdex_record_id":"dspace:1721.1-44986","title":"Environmental
+        benefits and cost savings through market-based instruments : an application
+        using state-level data from India"},"highlight":{"title":["Environmental benefits
+        and cost savings through market-based instruments : an application using state-level
+        <span class=\"highlight\">data</span>"]}}]},"aggregations":{"languages":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"content_type":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"working
+        paper","doc_count":3}]},"collections":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"subjects":{"doc_count":0,"subject_names":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]}},"content_format":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"electronic
+        resource","doc_count":3}]},"literary_form":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"source":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"dspace@mit","doc_count":3}]},"contributors":{"doc_count":7,"contributor_names":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"massachusetts
+        institute of technology. center for energy and environmental policy research.","doc_count":3},{"key":"buchner,
+        barbara","doc_count":1},{"key":"ellerman, a. denny","doc_count":1},{"key":"gupta,
+        shreekant","doc_count":1},{"key":"stoker, thomas m.","doc_count":1}]}}}}'
+  recorded_at: Wed, 13 Jul 2022 19:47:35 GMT
+recorded_with: VCR 6.1.0

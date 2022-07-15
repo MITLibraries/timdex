@@ -1,15 +1,22 @@
 class Retrieve
-  def fetch(id, client)
+  def fetch(id, client, index = nil)
     f = to_filter(id)
-    record = client.search(index: ENV['ELASTICSEARCH_INDEX'], body: f)
+
+    index = default_index unless index.present?
+
+    record = client.search(index: index, body: f)
 
     if client.instance_of?(OpenSearch::Client)
       raise OpenSearch::Transport::Transport::Errors::NotFound if record['hits']['total']['value'].zero?
-    else
-      raise Elasticsearch::Transport::Transport::Errors::NotFound if record['hits']['total'].zero?
+    elsif record['hits']['total'].zero?
+      raise Elasticsearch::Transport::Transport::Errors::NotFound
     end
 
     record
+  end
+
+  def default_index
+    ENV.fetch('ELASTICSEARCH_INDEX', nil)
   end
 
   def to_filter(id)
