@@ -423,7 +423,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'graphqlv2 can retrive a record from a specified index' do
+  test 'graphqlv2 can retrieve a record from a specified index' do
     # fragile test: specific item expected in specified index
     VCR.use_cassette('graphql v2 retrieve from rdi* index') do
       post '/graphql', params: { query:
@@ -436,6 +436,50 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
 
       json = JSON.parse(response.body)
       assert_equal('zenodo:5728409', json['data']['recordId']['timdexRecordId'])
+    end
+  end
+
+  test 'graphqlv2 can apply multi-value facets' do
+    # fragile test: facet data required to have at least 2 records with both
+    # `dataset` and `still image` contentTypes
+    VCR.use_cassette('graphql v2 apply multiple content types facets') do
+      post '/graphql', params: { query:
+        '{
+          search(index: "rdi*", contentTypeFacet:["dataset"]) {
+            hits
+            aggregations {
+              contentType {
+                key
+                docCount
+              }
+            }
+          }
+        }' }
+
+      json_dataset = JSON.parse(response.body)
+      initial_hits_count = json_dataset['data']['search']['hits']
+      initial_still_images_count = json_dataset['data']['search']['aggregations']['contentType'].find do |x|
+                                     x['key'] == 'still image'
+                                   end ['docCount']
+
+      post '/graphql', params: { query:
+        '{
+          search(index: "rdi*", contentTypeFacet:["dataset", "still image"]) {
+            hits
+            aggregations {
+              contentType {
+                key
+                docCount
+              }
+            }
+          }
+        }' }
+
+      json_dataset_still_image = JSON.parse(response.body)
+      final_hits_count = json_dataset_still_image['data']['search']['hits']
+
+      assert(initial_hits_count > final_hits_count)
+      assert_equal(final_hits_count, initial_still_images_count)
     end
   end
 end

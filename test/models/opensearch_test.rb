@@ -120,4 +120,135 @@ class OpensearchTest < ActiveSupport::TestCase
 
     assert_equal(expected, Opensearch.new.filter_sources(sources))
   end
+
+  test 'filter_field_by_value query structure' do
+    expected = {
+      term: { fakefield: 'i am a fake value' }
+    }
+
+    assert_equal(expected, Opensearch.new.filter_field_by_value('fakefield', 'i am a fake value'))
+  end
+
+  test 'filters query structure when no filters passed' do
+    expected_filters = []
+    params = {}
+
+    assert_equal(expected_filters, Opensearch.new.filters(params))
+  end
+
+  test 'filters query structure for single contributors_facet' do
+    expected_filters =
+      [
+        { term: { 'contributors.value.keyword': 'Lastname, Firstname' } }
+      ]
+    params = { contributors_facet: ['Lastname, Firstname'] }
+
+    assert_equal(expected_filters, Opensearch.new.filters(params))
+  end
+
+  test 'filters query structure for multiple contributors_facet' do
+    expected_filters =
+      [
+        { term: { 'contributors.value.keyword': 'Lastname, Firstname' } },
+        { term: { 'contributors.value.keyword': 'Another name' } }
+      ]
+    params = { contributors_facet: ['Lastname, Firstname', 'Another name'] }
+
+    assert_equal(expected_filters, Opensearch.new.filters(params))
+  end
+
+  test 'filters query structure for single content_type_facet' do
+    expected_filters =
+      [
+        { term: { content_type: 'cheese' } }
+      ]
+    params = { content_type_facet: ['cheese'] }
+
+    assert_equal(expected_filters, Opensearch.new.filters(params))
+  end
+
+  test 'filters query structure for multiple content_type_facet' do
+    expected_filters =
+      [
+        { term: { content_type: 'cheese' } },
+        { term: { content_type: 'ice cream' } }
+      ]
+    params = { content_type_facet: ['cheese', 'ice cream'] }
+
+    assert_equal(expected_filters, Opensearch.new.filters(params))
+  end
+
+  test 'filters query structure for single content_format_facet' do
+    expected_filters =
+      [
+        { term: { format: 'cheese' } }
+      ]
+    params = { content_format_facet: ['cheese'] }
+
+    assert_equal(expected_filters, Opensearch.new.filters(params))
+  end
+
+  test 'filters query structure for multiple content_format_facet' do
+    expected_filters =
+      [
+        { term: { format: 'cheese' } },
+        { term: { format: 'ice cream' } }
+      ]
+    params = { content_format_facet: ['cheese', 'ice cream'] }
+
+    assert_equal(expected_filters, Opensearch.new.filters(params))
+  end
+
+  test 'filters query structure for single languages_facet' do
+    expected_filters =
+      [
+        { term: { languages: 'cheese' } }
+      ]
+    params = { languages_facet: ['cheese'] }
+
+    assert_equal(expected_filters, Opensearch.new.filters(params))
+  end
+
+  test 'filters query structure for multiple languages_facet' do
+    expected_filters =
+      [
+        { term: { languages: 'cheese' } },
+        { term: { languages: 'ice cream' } }
+      ]
+    params = { languages_facet: ['cheese', 'ice cream'] }
+
+    assert_equal(expected_filters, Opensearch.new.filters(params))
+  end
+
+  # literary form is only single value
+  test 'filters query structure for literary_form_facet' do
+    expected_filters =
+      [
+        { term: { literary_form: 'cheese' } }
+      ]
+    params = { literary_form_facet: 'cheese' }
+
+    assert_equal(expected_filters, Opensearch.new.filters(params))
+  end
+
+  test 'filters query structure for single subjects_facet' do
+    expected_filters =
+      [
+        { term: { 'subjects.value.keyword': 'cheese' } }
+      ]
+    params = { subjects_facet: ['cheese'] }
+
+    assert_equal(expected_filters, Opensearch.new.filters(params))
+  end
+
+  test 'filters query structure for multiple subjects_facet' do
+    expected_filters =
+      [
+        { term: { 'subjects.value.keyword': 'cheese' } },
+        { term: { 'subjects.value.keyword': 'ice cream' } }
+      ]
+    params = { subjects_facet: ['cheese', 'ice cream'] }
+
+    assert_equal(expected_filters, Opensearch.new.filters(params))
+  end
 end

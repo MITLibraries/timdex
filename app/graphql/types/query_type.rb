@@ -57,8 +57,7 @@ module Types
                                  description: 'It is not recommended to provide an index value unless we have provided you with one for your specific use case'
 
         # applied facets
-        argument :collection_facet, [String], required: false, default_value: nil
-        argument :content_type_facet, String, required: false, default_value: nil
+        argument :content_type_facet, [String], required: false, default_value: nil
         argument :contributors_facet, [String], required: false, default_value: nil
         argument :format_facet, [String], required: false, default_value: nil
         argument :languages_facet, [String], required: false, default_value: nil
@@ -177,10 +176,8 @@ module Types
           subjects: es_aggs['subjects']['subject_names']['buckets'],
           languages: es_aggs['languages']['buckets'],
           literary_form: es_aggs['literary_form']['buckets'],
-
-          content_format: es_aggs['content_format']['buckets'],
+          format: es_aggs['content_format']['buckets'],
           content_type: es_aggs['content_type']['buckets']
-
         }
       end
     else
