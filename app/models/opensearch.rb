@@ -30,7 +30,7 @@ class Opensearch
       bool: {
         should: multisearch,
         must: matches,
-        filter: filters
+        filter: filters(@params)
       }
     }
   end
@@ -106,58 +106,51 @@ class Opensearch
   end
 
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/query-filter-context.html
-  def filters
+  def filters(params)
     f = []
-    f.push filter(@params[:collection_facet], 'collections') if @params[:collection_facet]
-    f.push filter(@params[:contributors_facet], 'contributors') if @params[:contributors_facet]
 
-    f.push filter_single(@params[:content_type_facet], 'content_type') if @params[:content_type_facet]
-
-    f.push filter(@params[:content_format_type], 'format') if @params[:content_format_type]
-
-    f.push filter(@params[:languages_facet], 'languages') if @params[:languages_facet]
-
-    f.push filter_single(@params[:literary_form_facet], 'literary_form') if @params[:literary_form_facet]
-
-    f.push filter_sources(@params[:source_facet]) if @params[:source_facet]
-
-    f.push filter(@params[:subjects_facet], 'subjects') if @params[:subjects_facet]
-    f
-  end
-
-  # use `filter` when we accept multiple of the same parameter in our data
-  # model
-  def filter(param, field)
-    terms = []
-
-    param.each do |t|
-      if field == 'contributors'
-        terms.push(
-          nested: {
-            path: 'contributors',
-            query: {
-              bool: {
-                must: [{
-                  match: {
-                    'contributors.value.keyword': t
-                  }
-                }]
-              }
-            }
-          }
-        )
-      else
-        terms.push(term: { "#{field}.keyword": t })
+    if params[:contributors_facet].present?
+      params[:contributors_facet].each do |p|
+        f.push filter_field_by_value('contributors.value.keyword', p)
       end
     end
 
-    terms
+    if params[:content_type_facet].present?
+      params[:content_type_facet].each do |p|
+        f.push filter_field_by_value('content_type', p)
+      end
+    end
+
+    if params[:content_format_facet].present?
+      params[:content_format_facet].each do |p|
+        f.push filter_field_by_value('format', p)
+      end
+    end
+
+    if params[:languages_facet].present?
+      params[:languages_facet].each do |p|
+        f.push filter_field_by_value('languages', p)
+      end
+    end
+
+    # literary_form is a single value aggregation
+    f.push filter_field_by_value('literary_form', params[:literary_form_facet]) if params[:literary_form_facet].present?
+
+    # source aggregation is "OR" and not "AND" so it does not use the filter_field_by_value method
+    f.push filter_sources(params[:source_facet]) if params[:source_facet]
+
+    if params[:subjects_facet].present?
+      params[:subjects_facet].each do |p|
+        f.push filter_field_by_value('subjects.value.keyword', p)
+      end
+    end
+
+    f
   end
 
-  # use `filter_single` when we only accept a single value in our data model
-  def filter_single(param, field)
+  def filter_field_by_value(field, value)
     {
-      term: { "#{field}": param }
+      term: { "#{field}": value }
     }
   end
 
@@ -184,11 +177,6 @@ class Opensearch
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html
   def aggregations
     {
-      collections: {
-        terms: {
-          field: 'collections.keyword'
-        }
-      },
       contributors: {
         nested: {
           path: 'contributors'

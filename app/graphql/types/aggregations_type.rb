@@ -5,7 +5,7 @@ module Types
   end
 
   class AggregationsType < Types::BaseObject
-    field :content_format, [Types::AggregationCountType], null: true
+    field :format, [Types::AggregationCountType], null: true
     field :content_type, [Types::AggregationCountType], null: true
     field :contributors, [Types::AggregationCountType], null: true
     field :languages, [Types::AggregationCountType], null: true
