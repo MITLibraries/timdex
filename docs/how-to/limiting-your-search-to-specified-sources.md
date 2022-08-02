@@ -1,6 +1,7 @@
 # Limiting your search to specified source(s)
 
-In this example, demonstrates a query that searches for the term "data" in the two sources `dspace@mit` and `zenodo`. We are requesting the fields`source`,`sourceLink` and `title` be returned for each found record.
+This example demonstrates a query that searches for the term "data" in the two sources `dspace@mit` and `zenodo`. We are
+requesting the fields `source`, `sourceLink` and `title` be returned for each found record.
 
 You can copy this query into our GraphQL playground or your preferred GraphQL client to see it in action!
 
@@ -16,7 +17,7 @@ You can copy this query into our GraphQL playground or your preferred GraphQL cl
 }
 ```
 
-see also:
+## See also
 
 - [Keyword searching](keyword-searching)
 - [Which sources are available to search](../reference/which-sources-are-available-to-search)

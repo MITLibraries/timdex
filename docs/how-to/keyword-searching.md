@@ -19,7 +19,7 @@ If you use our [GraphQL Playground](../tutorials/using-the-graphql-playground.md
 }
 ```
 
-## See Also
+## See also
 
 - [Limiting your search to specified sources](limiting-your-search-to-specified-sources.md)
 - [Which sources are available to search](../reference/which-sources-are-available-to-search.md)
