@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.6'
+ruby '3.1.2'
 
 gem 'aws-sdk-elasticsearchservice'
 gem 'bootsnap', require: false
@@ -14,6 +14,9 @@ gem 'jbuilder'
 gem 'jwt'
 gem 'lograge'
 gem 'mitlibraries-theme'
+gem 'net-imap', require: false
+gem 'net-pop', require: false
+gem 'net-smtp', require: false
 gem 'opensearch-ruby'
 gem 'puma'
 gem 'rack-attack'
