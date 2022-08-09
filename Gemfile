@@ -24,7 +24,8 @@ gem 'rack-cors'
 gem 'rails', '~> 6.1.0'
 gem 'redis'
 gem 'sass-rails'
-gem 'sentry-raven'
+gem 'sentry-rails'
+gem 'sentry-ruby'
 gem 'uglifier'
 
 group :production do

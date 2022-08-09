@@ -306,8 +306,11 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    sentry-raven (3.1.2)
-      faraday (>= 1.0)
+    sentry-rails (5.4.1)
+      railties (>= 5.0)
+      sentry-ruby (~> 5.4.1)
+    sentry-ruby (5.4.1)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
     simplecov (0.21.2)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -391,7 +394,8 @@ DEPENDENCIES
   rubocop-rails
   sass-rails
   selenium-webdriver
-  sentry-raven
+  sentry-rails
+  sentry-ruby
   simplecov
   simplecov-lcov
   sqlite3
