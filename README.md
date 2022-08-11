@@ -94,6 +94,7 @@ NOTE: `ELASTICSEARCH_LOG` must also be set for logging to function.
 - `REQUEST_PERIOD` - number of minutes for the period in `REQUESTS_PER_PERIOD`.
   Default is 1.
 - `SENTRY_DSN`: client key for Sentry exception logging
+- `SENTRY_ENV`: Sentry environment for the application. Defaults to 'unknown' if unset.
 
 ## Docker Compose Orchestrated Local Environment
 
