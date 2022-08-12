@@ -1,5 +1,6 @@
 {
   "name": "timdex",
+  "stack": "heroku-22",
   "scripts": {},
   "env": {
     "AWS_ACCESS_KEY": {
