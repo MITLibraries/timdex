@@ -13,7 +13,6 @@ gem 'graphql'
 gem 'jbuilder'
 gem 'jwt'
 gem 'lograge'
-gem 'mitlibraries-theme'
 gem 'net-imap', require: false
 gem 'net-pop', require: false
 gem 'net-smtp', require: false
@@ -26,6 +25,7 @@ gem 'redis'
 gem 'sass-rails'
 gem 'sentry-rails'
 gem 'sentry-ruby'
+gem 'tesseract', tag: '0.4.0', git: 'https://github.com/matt-bernhardt/tesseract.git'
 gem 'uglifier'
 
 group :production do
