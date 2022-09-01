@@ -25,7 +25,7 @@ gem 'redis'
 gem 'sass-rails'
 gem 'sentry-rails'
 gem 'sentry-ruby'
-gem 'tesseract', tag: '0.4.0', git: 'https://github.com/matt-bernhardt/tesseract.git'
+gem 'tesseract', tag: '0.5.0', git: 'https://github.com/matt-bernhardt/tesseract.git'
 gem 'uglifier'
 
 group :production do
