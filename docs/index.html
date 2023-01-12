@@ -5,11 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="MIT Libraries TIMDEX API Documentation" />
     <title>MIT Libraries TIMDEX API Documentation</title>
-    <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@4.5.2/swagger-ui.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@4.5.2/swagger-ui.css" />
   </head>
   <body>
+    <div id="deprecation" style="border: red solid; padding: 1em">
+      <h1>This REST API will be removed in early 2023.</h1>
+
+      <h2>
+        We recommend using our <a href="https://timdex.mit.edu/playground">GraphQL endpoint</a> which will remain and
+        will be soon gaining additional features including the ability to search additional sources.
+      </h2>
+
+      <p>Updated documentation coming soon. Please contact timdex@mit.edu with any questions.</p>
+    </div>
     <div id="swagger-ui"></div>
-    <script src="https://unpkg.com/swagger-ui-dist@4.5.2/swagger-ui-bundle.js" crossorigin></script>
+    <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@4.5.2/swagger-ui-bundle.js" crossorigin></script>
     <script>
       window.onload = () => {
         window.ui = SwaggerUIBundle({
