@@ -71,6 +71,16 @@ file is in `docs/index.html` and the `openapi.json` file always pulls from the `
 - `SMTP_PORT`
 - `SMTP_USER`
 
+### Additional required Environment Variables when Opensearch is enabled (aka v2=true)
+
+- `v2`: set to `true`
+- `OPENSEARCH_INDEX`: Opensearch index or alias to query
+- `OPENSEARCH_URL`: Opensearch URL
+- `OPENSEARCH_LOG` set to `true`
+
+- `AWS_OPENSEARCH`
+- `AWS_OPENSEARCH_ACCESS_KEY_ID`
+- `AWS_OPENSEARCH_SECRET_ACCESS_KEY`
 ## Optional Environment Variables (all ENVs)
 
 - `ELASTICSEARCH_LOG` if `true`, verbosely logs ElasticSearch queries.

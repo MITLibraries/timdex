@@ -39,6 +39,9 @@
     "LANG": {
       "required": true
     },
+    "OPENSEARCH_INDEX": {
+      "required": true
+    },
     "PR_BUILD": "true",
     "RACK_ENV": {
       "required": true

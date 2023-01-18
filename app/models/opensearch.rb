@@ -10,7 +10,7 @@ class Opensearch
   end
 
   def default_index
-    ENV.fetch('ELASTICSEARCH_INDEX', nil)
+    ENV.fetch('OPENSEARCH_INDEX', nil)
   end
 
   # Construct the json query to send to elasticsearch
