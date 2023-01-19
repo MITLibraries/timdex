@@ -41,6 +41,9 @@ end
 group :development do
   gem 'annotate'
   gem 'graphiql-rails'
+  gem 'jekyll'
+  gem 'jekyll-remote-theme'
+  gem 'jekyll-seo-tag'
   gem 'listen'
   gem 'rubocop'
   gem 'rubocop-rails'

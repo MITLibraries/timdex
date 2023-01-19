@@ -44,6 +44,17 @@ particular order so as not to break production services.
 
 ## Publishing User Facing Documentation
 
+### Running jekyll documentation locally
+
+Documentation is built and deployed via Github Actions. You can run the documentation locally before pushing to Github
+to ensure everything looks as expected.
+
+```shell
+bundle exec jekyll serve --incremental --source ./docs
+```
+
+Once the jekyll server is running, you can access the local docs at http://localhost:4000
+
 ### Automatic generation from openapi specification
 
 We are using Swagger UI to automatically generate documentation from the `openapi.json` file in GitHub Pages. The HTML
