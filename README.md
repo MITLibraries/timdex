@@ -55,10 +55,21 @@ bundle exec jekyll serve --incremental --source ./docs
 
 Once the jekyll server is running, you can access the local docs at http://localhost:4000
 
-### Automatic generation from openapi specification
+### Automatic generation of technical specifications from GraphQL
 
-We are using Swagger UI to automatically generate documentation from the `openapi.json` file in GitHub Pages. The HTML
-file is in `docs/index.html` and the `openapi.json` file always pulls from the `main` branch.
+Our GitHub Actions documentation build includes a step that uses [SpectaQL](https://github.com/anvilco/spectaql) to
+generate technical documentation from our GraphQL spec.
+
+You can generate this locally by installing SpectaQL and generating the html. See `Install SpectaQL` and
+`Build reference docs` in `./.github/workflows/pages.yml` for details on this process.
+
+Note: These files are intentionally excluded from version control to ensure the output generated via the Actions step is
+considered authoritative.
+
+The config file `./docs/reference/_spectaql_config.yml` controls the build process for this portion of our documentation
+and making changes to this file (which is included in version control) would be the main reason to run the process
+locally.
+
 ## Required Environment Variables (all ENVs)
 
 - `EMAIL_FROM`: email address to send message from, including the registration
