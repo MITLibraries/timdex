@@ -150,7 +150,7 @@ GEM
     graphiql-rails (1.8.0)
       railties
       sprockets-rails
-    graphql (2.0.15)
+    graphql (2.0.16)
     hashdiff (1.0.1)
     http_parser.rb (0.8.0)
     i18n (1.12.0)
