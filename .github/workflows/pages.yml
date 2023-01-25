@@ -29,6 +29,11 @@ jobs:
         uses: actions/checkout@v3
       - name: Setup Pages
         uses: actions/configure-pages@v2
+      - name: Install SpectaQL
+        run: npm install -g spectaql@v2
+      - name: Build reference docs
+        run: |
+          spectaql --introspection-url https://timdex-api-prod-v2.herokuapp.com/graphql -e -t ./docs/reference docs/reference/_spectaql_config.yml
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:

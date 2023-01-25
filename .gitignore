@@ -34,6 +34,12 @@
 .solargraph.yml
 .vscode
 
+# Docs site ignores
 _site
 .jekyll-cache
 .jekyll-metadata
+
+# Docs site reference docs ignores
+/docs/reference/javascripts/
+/docs/reference/stylesheets/
+/docs/reference/index.html
