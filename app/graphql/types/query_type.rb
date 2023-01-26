@@ -44,26 +44,37 @@ module Types
 
       field :search, SearchType, null: false,
                                  description: 'Search for timdex records' do
-        argument :searchterm, String, required: false, default_value: nil
-        argument :citation, String, required: false, default_value: nil
-        argument :contributors, String, required: false, default_value: nil
-        argument :funding_information, String, required: false, default_value: nil
-        argument :identifiers, String, required: false, default_value: nil
-        argument :locations, String, required: false, default_value: nil
-        argument :subjects, String, required: false, default_value: nil
-        argument :title, String, required: false, default_value: nil
-        argument :from, String, required: false, default_value: '0'
+        argument :searchterm, String, required: false, default_value: nil, description: 'Query all searchable fields'
+        argument :citation, String, required: false, default_value: nil, description: 'Search by citation information'
+        argument :contributors, String, required: false, default_value: nil,
+                                        description: 'Search by contributor name; e.g., author, editor, etc.'
+        argument :funding_information, String, required: false, default_value: nil,
+                                               description: 'Search by funding information; e.g., funding source, award name, etc.'
+        argument :identifiers, String, required: false, default_value: nil,
+                                       description: 'Search by unique indentifier; e.g., ISBN, DOI, etc.'
+        argument :locations, String, required: false, default_value: nil, description: 'Search by locations'
+        argument :subjects, String, required: false, default_value: nil, description: 'Search by subject terms'
+        argument :title, String, required: false, default_value: nil, description: 'Search by title'
+        argument :from, String, required: false, default_value: '0',
+                                description: 'Search result number to begin with (the first result is 0)'
         argument :index, String, required: false, default_value: nil,
                                  description: 'It is not recommended to provide an index value unless we have provided you with one for your specific use case'
 
         # applied facets
-        argument :content_type_facet, [String], required: false, default_value: nil
-        argument :contributors_facet, [String], required: false, default_value: nil
-        argument :format_facet, [String], required: false, default_value: nil
-        argument :languages_facet, [String], required: false, default_value: nil
-        argument :literary_form_facet, String, required: false, default_value: nil
-        argument :source_facet, [String], required: false, default_value: nil
-        argument :subjects_facet, [String], required: false, default_value: nil
+        argument :content_type_facet, [String], required: false, default_value: nil,
+                                                description: 'Filter results by content type. Use the `contentType` aggregation for a list of possible values'
+        argument :contributors_facet, [String], required: false, default_value: nil,
+                                                description: 'Filter results by contributor. Use the `contributors` aggregation for a list of possible values'
+        argument :format_facet, [String], required: false, default_value: nil,
+                                          description: 'Filter results by format. Use the `format` aggregation for a list of possible values'
+        argument :languages_facet, [String], required: false, default_value: nil,
+                                             description: 'Filter results by language. Use the `languages` aggregation for a list of possible values'
+        argument :literary_form_facet, String, required: false, default_value: nil,
+                                               description: 'Filter results by fiction or nonfiction'
+        argument :source_facet, [String], required: false, default_value: nil,
+                                          description: 'Filter by source record system. Use the `sources` aggregation for a list of possible values'
+        argument :subjects_facet, [String], required: false, default_value: nil,
+                                            description: 'Filter by subject terms. Use the `contentType` aggregation for a list of possible values'
       end
     else
       def record_id(id:)
