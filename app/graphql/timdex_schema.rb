@@ -1,4 +1,5 @@
 class TimdexSchema < GraphQL::Schema
-  # mutation(Types::MutationType)
+  query_analyzer TimdexFieldUsageAnalyzer
+
   query(Types::QueryType)
 end
