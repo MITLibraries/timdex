@@ -60,6 +60,8 @@ module Types
         argument :index, String, required: false, default_value: nil,
                                  description: 'It is not recommended to provide an index value unless we have provided you with one for your specific use case'
 
+        argument :source, String, required: false, default_value: 'All', deprecation_reason: 'Use `sourceFacet`'
+
         # applied facets
         argument :content_type_facet, [String], required: false, default_value: nil,
                                                 description: 'Filter results by content type. Use the `contentType` aggregation for a list of possible values'
@@ -102,9 +104,9 @@ module Types
 
     if Flipflop.v2?
       def search(searchterm:, citation:, contributors:, funding_information:, identifiers:, locations:, subjects:,
-                 title:, index:, from:, **facets)
+                 title:, index:, source:, from:, **facets)
         query = construct_query(searchterm, citation, contributors, funding_information, identifiers, locations,
-                                subjects, title, facets)
+                                subjects, title, source, facets)
 
         results = Opensearch.new.search(from, query, Timdex::OSClient, index)
 
@@ -144,7 +146,7 @@ module Types
 
     if Flipflop.v2?
       def construct_query(searchterm, citation, contributors, funding_information, identifiers, locations, subjects,
-                          title, facets)
+                          title, source, facets)
         query = {}
         query[:q] = searchterm
         query[:citation] = citation
@@ -160,8 +162,16 @@ module Types
         query[:contributors_facet] = facets[:contributors_facet]
         query[:languages_facet] = facets[:languages_facet]
         query[:literary_form_facet] = facets[:literary_form_facet]
-        query[:source_facet] = facets[:source_facet] if facets[:source_facet] != 'All'
+        query = source_deprecation_handler(query, facets[:source_facet], source)
         query[:subjects_facet] = facets[:subjects_facet]
+        query
+      end
+
+      # source_deprecation_handler prefers our new `sourceFacet` array but will fall back on the
+      # depreacted `source` String if it is present and the new version is not
+      def source_deprecation_handler(query, new_source, old_source)
+        query[:source_facet] = [old_source] if old_source != 'All' && old_source.present?
+        query[:source_facet] = new_source if new_source != 'All' && new_source.present?
         query
       end
     else

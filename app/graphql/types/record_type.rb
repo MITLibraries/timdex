@@ -146,7 +146,7 @@ module Types
     # Warning: cannot deprecate old content_type properly without renaming (was string, now is [string])
 
     class RecordType < Types::BaseObject
-      field :identifier, String, null: false, deprecation_reason: 'Use `timdex_record_id`'
+      field :identifier, ID, null: false, deprecation_reason: 'Use `timdex_record_id`'
       field :timdex_record_id, ID, null: false, description: 'TIMDEX unique identifier for the item'
       field :source, String, null: false,
                              description: 'Name of source record system'
