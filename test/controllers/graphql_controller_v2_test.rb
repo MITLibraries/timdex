@@ -225,7 +225,32 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
       assert_equal('mit alma',
                    json['data']['search']['aggregations']['source']
                    .first['key'])
-      assert_equal(3,
+      assert_equal(1429210,
+                   json['data']['search']['aggregations']['source']
+                   .first['docCount'])
+    end
+  end
+
+  test 'graphqlv2 search with deprecated source string applied' do
+    VCR.use_cassette('graphql v2 search a only alma deprecated') do
+      post '/graphql', params: { query: '{
+                                  search(searchterm: "a",
+                                    source: "MIT Alma") {
+                                    hits
+                                    aggregations {
+                                      source {
+                                        key
+                                        docCount
+                                      }
+                                    }
+                                  }
+                                }' }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert_equal('mit alma',
+                   json['data']['search']['aggregations']['source']
+                   .first['key'])
+      assert_equal(1429210,
                    json['data']['search']['aggregations']['source']
                    .first['docCount'])
     end
