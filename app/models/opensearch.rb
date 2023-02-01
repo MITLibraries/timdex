@@ -2,8 +2,9 @@ class Opensearch
   SIZE = 20
   MAX_PAGE = 200
 
-  def search(from, params, client, index = nil)
+  def search(from, params, client, highlight = false, index = nil)
     @params = params
+    @highlight = highlight
     index = default_index unless index.present?
     client.search(index: index,
                   body: build_query(from))
@@ -15,13 +16,16 @@ class Opensearch
 
   # Construct the json query to send to elasticsearch
   def build_query(from)
-    {
+    query_hash = {
       from: from,
       size: SIZE,
       query: query,
-      highlight: highlight,
       aggregations: aggregations
-    }.to_json
+    }
+
+    query_hash[:highlight] = highlight if @highlight
+
+    query_hash.to_json
   end
 
   # Build the query portion of the elasticsearch json

@@ -108,13 +108,17 @@ module Types
         query = construct_query(searchterm, citation, contributors, funding_information, identifiers, locations,
                                 subjects, title, source, facets)
 
-        results = Opensearch.new.search(from, query, Timdex::OSClient, index)
+        results = Opensearch.new.search(from, query, Timdex::OSClient, highlight_requested?, index)
 
         response = {}
         response[:hits] = results['hits']['total']['value']
         response[:records] = inject_hits_fields_into_source(results['hits']['hits'])
         response[:aggregations] = collapse_buckets(results['aggregations'])
         response
+      end
+
+      def highlight_requested?
+        context[:tracers].first.log_data[:used_fields].include?('Record.highlight')
       end
 
       # Long-term, we will probably want to define these fields discretely in RecordType. However, this might end up

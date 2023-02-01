@@ -8,6 +8,7 @@ class GraphqlController < ApplicationController
     context = {
       # Query context goes here, for example:
       # current_user: current_user,
+      tracers: [request_tracer]
     }
     result = TimdexSchema.execute(query, variables: variables,
                                          context: context,
@@ -45,5 +46,9 @@ class GraphqlController < ApplicationController
 
     render json: { error: { message: err.message, backtrace: err.backtrace },
                    data: {} }, status: :internal_server_error
+  end
+
+  def request_tracer
+    @request_tracer ||= TimdexRequestTracer.new
   end
 end
