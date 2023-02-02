@@ -26,3 +26,11 @@ sampledata: ## Load sample Aleph and Aspace data. Run `up` first then wait for s
 	docker pull mitlibraries/mario:latest
 	docker run --network timdex_default --mount type=bind,src=`pwd`/sample_data,dst=/sample_data mitlibraries/mario:latest --url http://elasticsearch:9200 ingest -s aleph --new --auto /sample_data/mit_test_records.mrc
 	docker run --network timdex_default --mount type=bind,src=`pwd`/sample_data,dst=/sample_data mitlibraries/mario:latest --url http://elasticsearch:9200 ingest -s aspace --new --auto /sample_data/aspace_samples.xml
+
+refresh_graphiql_deps: ## Updates dependencies for GraphiQL playground
+	wget --directory-prefix=./public -N --remote-encoding=UTF-8 --local-encoding=UTF-8 https://unpkg.com/react@17/umd/react.development.js
+	wget --directory-prefix=./public -N --remote-encoding=UTF-8 --local-encoding=UTF-8 https://unpkg.com/react-dom@17/umd/react-dom.development.js
+	wget --directory-prefix=./public -N --remote-encoding=UTF-8 --local-encoding=UTF-8 https://unpkg.com/graphiql/graphiql.min.css
+	wget --directory-prefix=./public -N --remote-encoding=UTF-8 --local-encoding=UTF-8 https://unpkg.com/graphiql/graphiql.min.css.map
+	wget --directory-prefix=./public -N --remote-encoding=UTF-8 --local-encoding=UTF-8 https://unpkg.com/graphiql/graphiql.min.js
+	wget --directory-prefix=./public -N --remote-encoding=UTF-8 --local-encoding=UTF-8 https://unpkg.com/graphiql/graphiql.min.js.map
