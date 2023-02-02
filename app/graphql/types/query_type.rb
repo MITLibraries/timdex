@@ -60,23 +60,23 @@ module Types
         argument :index, String, required: false, default_value: nil,
                                  description: 'It is not recommended to provide an index value unless we have provided you with one for your specific use case'
 
-        argument :source, String, required: false, default_value: 'All', deprecation_reason: 'Use `sourceFacet`'
+        argument :source, String, required: false, default_value: 'All', deprecation_reason: 'Use `sourceFilter`'
 
-        # applied facets
-        argument :content_type_facet, [String], required: false, default_value: nil,
-                                                description: 'Filter results by content type. Use the `contentType` aggregation for a list of possible values'
-        argument :contributors_facet, [String], required: false, default_value: nil,
-                                                description: 'Filter results by contributor. Use the `contributors` aggregation for a list of possible values'
-        argument :format_facet, [String], required: false, default_value: nil,
-                                          description: 'Filter results by format. Use the `format` aggregation for a list of possible values'
-        argument :languages_facet, [String], required: false, default_value: nil,
-                                             description: 'Filter results by language. Use the `languages` aggregation for a list of possible values'
-        argument :literary_form_facet, String, required: false, default_value: nil,
-                                               description: 'Filter results by fiction or nonfiction'
-        argument :source_facet, [String], required: false, default_value: nil,
-                                          description: 'Filter by source record system. Use the `sources` aggregation for a list of possible values'
-        argument :subjects_facet, [String], required: false, default_value: nil,
-                                            description: 'Filter by subject terms. Use the `contentType` aggregation for a list of possible values'
+        # applied filters
+        argument :content_type_filter, [String], required: false, default_value: nil,
+                                                 description: 'Filter results by content type. Use the `contentType` aggregation for a list of possible values'
+        argument :contributors_filter, [String], required: false, default_value: nil,
+                                                 description: 'Filter results by contributor. Use the `contributors` aggregation for a list of possible values'
+        argument :format_filter, [String], required: false, default_value: nil,
+                                           description: 'Filter results by format. Use the `format` aggregation for a list of possible values'
+        argument :languages_filter, [String], required: false, default_value: nil,
+                                              description: 'Filter results by language. Use the `languages` aggregation for a list of possible values'
+        argument :literary_form_filter, String, required: false, default_value: nil,
+                                                description: 'Filter results by fiction or nonfiction'
+        argument :source_filter, [String], required: false, default_value: nil,
+                                           description: 'Filter by source record system. Use the `sources` aggregation for a list of possible values'
+        argument :subjects_filter, [String], required: false, default_value: nil,
+                                             description: 'Filter by subject terms. Use the `contentType` aggregation for a list of possible values'
       end
     else
       def record_id(id:)
@@ -104,9 +104,9 @@ module Types
 
     if Flipflop.v2?
       def search(searchterm:, citation:, contributors:, funding_information:, identifiers:, locations:, subjects:,
-                 title:, index:, source:, from:, **facets)
+                 title:, index:, source:, from:, **filters)
         query = construct_query(searchterm, citation, contributors, funding_information, identifiers, locations,
-                                subjects, title, source, facets)
+                                subjects, title, source, filters)
 
         results = Opensearch.new.search(from, query, Timdex::OSClient, highlight_requested?, index)
 
@@ -150,7 +150,7 @@ module Types
 
     if Flipflop.v2?
       def construct_query(searchterm, citation, contributors, funding_information, identifiers, locations, subjects,
-                          title, source, facets)
+                          title, source, filters)
         query = {}
         query[:q] = searchterm
         query[:citation] = citation
@@ -160,22 +160,22 @@ module Types
         query[:locations] = locations
         query[:subjects] = subjects
         query[:title] = title
-        query[:collection_facet] = facets[:collection_facet]
-        query[:content_format_facet] = facets[:format_facet]
-        query[:content_type_facet] = facets[:content_type_facet]
-        query[:contributors_facet] = facets[:contributors_facet]
-        query[:languages_facet] = facets[:languages_facet]
-        query[:literary_form_facet] = facets[:literary_form_facet]
-        query = source_deprecation_handler(query, facets[:source_facet], source)
-        query[:subjects_facet] = facets[:subjects_facet]
+        query[:collection_filter] = filters[:collection_filter]
+        query[:content_format_filter] = filters[:format_filter]
+        query[:content_type_filter] = filters[:content_type_filter]
+        query[:contributors_filter] = filters[:contributors_filter]
+        query[:languages_filter] = filters[:languages_filter]
+        query[:literary_form_filter] = filters[:literary_form_filter]
+        query = source_deprecation_handler(query, filters[:source_filter], source)
+        query[:subjects_filter] = filters[:subjects_filter]
         query
       end
 
-      # source_deprecation_handler prefers our new `sourceFacet` array but will fall back on the
+      # source_deprecation_handler prefers our new `sourceFilter` array but will fall back on the
       # depreacted `source` String if it is present and the new version is not
       def source_deprecation_handler(query, new_source, old_source)
-        query[:source_facet] = [old_source] if old_source != 'All' && old_source.present?
-        query[:source_facet] = new_source if new_source != 'All' && new_source.present?
+        query[:source_filter] = [old_source] if old_source != 'All' && old_source.present?
+        query[:source_filter] = new_source if new_source != 'All' && new_source.present?
         query
       end
     else

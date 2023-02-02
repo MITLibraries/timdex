@@ -113,38 +113,41 @@ class Opensearch
   def filters(params)
     f = []
 
-    if params[:contributors_facet].present?
-      params[:contributors_facet].each do |p|
+    if params[:contributors_filter].present?
+      params[:contributors_filter].each do |p|
         f.push filter_field_by_value('contributors.value.keyword', p)
       end
     end
 
-    if params[:content_type_facet].present?
-      params[:content_type_facet].each do |p|
+    if params[:content_type_filter].present?
+      params[:content_type_filter].each do |p|
         f.push filter_field_by_value('content_type', p)
       end
     end
 
-    if params[:content_format_facet].present?
-      params[:content_format_facet].each do |p|
+    if params[:content_format_filter].present?
+      params[:content_format_filter].each do |p|
         f.push filter_field_by_value('format', p)
       end
     end
 
-    if params[:languages_facet].present?
-      params[:languages_facet].each do |p|
+    if params[:languages_filter].present?
+      params[:languages_filter].each do |p|
         f.push filter_field_by_value('languages', p)
       end
     end
 
     # literary_form is a single value aggregation
-    f.push filter_field_by_value('literary_form', params[:literary_form_facet]) if params[:literary_form_facet].present?
+    if params[:literary_form_filter].present?
+      f.push filter_field_by_value('literary_form',
+                                   params[:literary_form_filter])
+    end
 
     # source aggregation is "OR" and not "AND" so it does not use the filter_field_by_value method
-    f.push filter_sources(params[:source_facet]) if params[:source_facet]
+    f.push filter_sources(params[:source_filter]) if params[:source_filter]
 
-    if params[:subjects_facet].present?
-      params[:subjects_facet].each do |p|
+    if params[:subjects_filter].present?
+      params[:subjects_filter].each do |p|
         f.push filter_field_by_value('subjects.value.keyword', p)
       end
     end
