@@ -63,7 +63,7 @@ class OpensearchTest < ActiveSupport::TestCase
     # fragile test: assumes opensearch instance with at least one index prefixed with `rdi`
     VCR.use_cassette('opensearch non-default index') do
       params = { title: 'data' }
-      results = Opensearch.new.search(0, params, Timdex::OSClient, 'rdi*')
+      results = Opensearch.new.search(0, params, Timdex::OSClient, false, 'rdi*')
       assert results['hits']['hits'].map { |hit| hit['_index'] }.uniq.map { |index| index.start_with?('rdi') }.any?
     end
   end
@@ -250,5 +250,20 @@ class OpensearchTest < ActiveSupport::TestCase
     params = { subjects_facet: ['cheese', 'ice cream'] }
 
     assert_equal(expected_filters, Opensearch.new.filters(params))
+  end
+
+  test 'highlights included if requested' do
+    os = Opensearch.new
+    os.instance_variable_set(:@params, { q: 'this' })
+    os.instance_variable_set(:@highlight, true)
+
+    assert(os.build_query(0).include?('highlight'))
+  end
+
+  test 'highlights not included by default' do
+    os = Opensearch.new
+    os.instance_variable_set(:@params, { q: 'this' })
+
+    refute(os.build_query(0).include?('highlight'))
   end
 end
