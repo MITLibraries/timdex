@@ -128,11 +128,13 @@
       // use fetch, and could instead implement graphQLFetcher however you like,
       // as long as it returns a Promise or Observable.
       function graphQLFetcher(graphQLParams) {
-        // When working locally, the example expects a GraphQL server at the path /graphql.
-        // In a PR preview, it connects to the Star Wars API externally.
-        // Change this to point wherever you host your GraphQL server.
-        const isDev = window.location.hostname.match(/localhost$/);
-        const api = isDev ? "/graphql" : "https://swapi-graphql.netlify.com/.netlify/functions/index";
+        // This should allow for the playground to use the local GraphQL endpoint in all of our environments,
+        // including localhost, pr builds, staging environments, and production.
+        // For this to work, we must host the static playground.html on the same server that runs the graphql endpoint.
+        // In other words, even those this is a static page, we can't host it in our documentation server or we'd need
+        // to rework how the graphql endpoint is calculated.
+        const api = location.origin + "/graphql";
+        console.log(api);
         return fetch(api, {
           method: "post",
           headers: {
