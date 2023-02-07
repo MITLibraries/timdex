@@ -136,118 +136,118 @@ class OpensearchTest < ActiveSupport::TestCase
     assert_equal(expected_filters, Opensearch.new.filters(params))
   end
 
-  test 'filters query structure for single contributors_facet' do
+  test 'filters query structure for single contributors_filter' do
     expected_filters =
       [
         { term: { 'contributors.value.keyword': 'Lastname, Firstname' } }
       ]
-    params = { contributors_facet: ['Lastname, Firstname'] }
+    params = { contributors_filter: ['Lastname, Firstname'] }
 
     assert_equal(expected_filters, Opensearch.new.filters(params))
   end
 
-  test 'filters query structure for multiple contributors_facet' do
+  test 'filters query structure for multiple contributors_filter' do
     expected_filters =
       [
         { term: { 'contributors.value.keyword': 'Lastname, Firstname' } },
         { term: { 'contributors.value.keyword': 'Another name' } }
       ]
-    params = { contributors_facet: ['Lastname, Firstname', 'Another name'] }
+    params = { contributors_filter: ['Lastname, Firstname', 'Another name'] }
 
     assert_equal(expected_filters, Opensearch.new.filters(params))
   end
 
-  test 'filters query structure for single content_type_facet' do
+  test 'filters query structure for single content_type_filter' do
     expected_filters =
       [
         { term: { content_type: 'cheese' } }
       ]
-    params = { content_type_facet: ['cheese'] }
+    params = { content_type_filter: ['cheese'] }
 
     assert_equal(expected_filters, Opensearch.new.filters(params))
   end
 
-  test 'filters query structure for multiple content_type_facet' do
+  test 'filters query structure for multiple content_type_filter' do
     expected_filters =
       [
         { term: { content_type: 'cheese' } },
         { term: { content_type: 'ice cream' } }
       ]
-    params = { content_type_facet: ['cheese', 'ice cream'] }
+    params = { content_type_filter: ['cheese', 'ice cream'] }
 
     assert_equal(expected_filters, Opensearch.new.filters(params))
   end
 
-  test 'filters query structure for single content_format_facet' do
+  test 'filters query structure for single content_format_filter' do
     expected_filters =
       [
         { term: { format: 'cheese' } }
       ]
-    params = { content_format_facet: ['cheese'] }
+    params = { content_format_filter: ['cheese'] }
 
     assert_equal(expected_filters, Opensearch.new.filters(params))
   end
 
-  test 'filters query structure for multiple content_format_facet' do
+  test 'filters query structure for multiple content_format_filter' do
     expected_filters =
       [
         { term: { format: 'cheese' } },
         { term: { format: 'ice cream' } }
       ]
-    params = { content_format_facet: ['cheese', 'ice cream'] }
+    params = { content_format_filter: ['cheese', 'ice cream'] }
 
     assert_equal(expected_filters, Opensearch.new.filters(params))
   end
 
-  test 'filters query structure for single languages_facet' do
+  test 'filters query structure for single languages_filter' do
     expected_filters =
       [
         { term: { languages: 'cheese' } }
       ]
-    params = { languages_facet: ['cheese'] }
+    params = { languages_filter: ['cheese'] }
 
     assert_equal(expected_filters, Opensearch.new.filters(params))
   end
 
-  test 'filters query structure for multiple languages_facet' do
+  test 'filters query structure for multiple languages_filter' do
     expected_filters =
       [
         { term: { languages: 'cheese' } },
         { term: { languages: 'ice cream' } }
       ]
-    params = { languages_facet: ['cheese', 'ice cream'] }
+    params = { languages_filter: ['cheese', 'ice cream'] }
 
     assert_equal(expected_filters, Opensearch.new.filters(params))
   end
 
   # literary form is only single value
-  test 'filters query structure for literary_form_facet' do
+  test 'filters query structure for literary_form_filter' do
     expected_filters =
       [
         { term: { literary_form: 'cheese' } }
       ]
-    params = { literary_form_facet: 'cheese' }
+    params = { literary_form_filter: 'cheese' }
 
     assert_equal(expected_filters, Opensearch.new.filters(params))
   end
 
-  test 'filters query structure for single subjects_facet' do
+  test 'filters query structure for single subjects_filter' do
     expected_filters =
       [
         { term: { 'subjects.value.keyword': 'cheese' } }
       ]
-    params = { subjects_facet: ['cheese'] }
+    params = { subjects_filter: ['cheese'] }
 
     assert_equal(expected_filters, Opensearch.new.filters(params))
   end
 
-  test 'filters query structure for multiple subjects_facet' do
+  test 'filters query structure for multiple subjects_filter' do
     expected_filters =
       [
         { term: { 'subjects.value.keyword': 'cheese' } },
         { term: { 'subjects.value.keyword': 'ice cream' } }
       ]
-    params = { subjects_facet: ['cheese', 'ice cream'] }
+    params = { subjects_filter: ['cheese', 'ice cream'] }
 
     assert_equal(expected_filters, Opensearch.new.filters(params))
   end

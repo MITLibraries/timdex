@@ -206,11 +206,11 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'graphqlv2 search with source facet applied' do
+  test 'graphqlv2 search with source filter applied' do
     VCR.use_cassette('graphql v2 search a only alma') do
       post '/graphql', params: { query: '{
                                   search(searchterm: "a",
-                                    sourceFacet: "MIT Alma") {
+                                    sourceFilter: "MIT Alma") {
                                     hits
                                     aggregations {
                                       source {
@@ -261,7 +261,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
     VCR.use_cassette('graphql v2 search multiple subjects') do
       post '/graphql', params: { query: '{
                                   search(searchterm: "space",
-                                        subjectsFacet: ["space and time.",
+                                        subjectsFilter: ["space and time.",
                                                    "quantum theory."]) {
                                     hits
                                   }
@@ -272,7 +272,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'graphqlv2 search with invalid facet applied' do
+  test 'graphqlv2 search with invalid filter applied' do
     post '/graphql', params: { query: '{
                                 search(searchterm: "wright",
                                   fake: "mit archivesspace") {
@@ -292,12 +292,12 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
                  json['errors'].first['message'])
   end
 
-  test 'graphqlv2 valid facets can result in no results' do
+  test 'graphqlv2 valid filters can result in no results' do
     skip 'opensearch model is not updated to allow this yet'
-    VCR.use_cassette('graphql v2 legal facets can result in no results') do
+    VCR.use_cassette('graphql v2 legal filters can result in no results') do
       post '/graphql', params: { query: '{
                                   search(searchterm: "wright",
-                                    subjectsFacet: ["fake facet value"]) {
+                                    subjectsFilter: ["fake filter value"]) {
                                     hits
                                     aggregations {
                                       source {
@@ -362,7 +362,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
       # filtering to 2 sources returns 2 sources
       post '/graphql', params: { query:
         '{
-          search(searchterm: "data", sourceFacet: ["Zenodo", "DSpace@MIT"]) {
+          search(searchterm: "data", sourceFilter: ["Zenodo", "DSpace@MIT"]) {
             hits
             aggregations {
               source {
@@ -408,7 +408,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
       # filtering to 1 sources returns 1 source
       post '/graphql', params: { query:
         '{
-          search(searchterm: "data", sourceFacet: ["DSpace@MIT"]) {
+          search(searchterm: "data", sourceFilter: ["DSpace@MIT"]) {
             hits
             aggregations {
               source {
@@ -464,13 +464,13 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'graphqlv2 can apply multi-value facets' do
-    # fragile test: facet data required to have at least 2 records with both
+  test 'graphqlv2 can apply multi-value filters' do
+    # fragile test: filter data required to have at least 2 records with both
     # `dataset` and `still image` contentTypes
-    VCR.use_cassette('graphql v2 apply multiple content types facets') do
+    VCR.use_cassette('graphql v2 apply multiple content types filters') do
       post '/graphql', params: { query:
         '{
-          search(index: "rdi*", contentTypeFacet:["dataset"]) {
+          search(index: "rdi*", contentTypeFilter:["dataset"]) {
             hits
             aggregations {
               contentType {
@@ -489,7 +489,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
 
       post '/graphql', params: { query:
         '{
-          search(index: "rdi*", contentTypeFacet:["dataset", "still image"]) {
+          search(index: "rdi*", contentTypeFilter:["dataset", "still image"]) {
             hits
             aggregations {
               contentType {
