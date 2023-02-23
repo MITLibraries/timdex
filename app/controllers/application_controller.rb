@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   before_action :ensure_domain
 
+  helper Mitlibraries::Theme::Engine.helpers
+
   private
 
   # redirects herokuapp domains and old domains to preferred domains
