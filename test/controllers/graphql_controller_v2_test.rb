@@ -331,6 +331,28 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'graphqlv2 holding location is not required' do
+    VCR.use_cassette('graphql v2 location') do
+      post '/graphql', params: { query: '{
+                                  search(searchterm: "data") {
+                                    records {
+                                      holdings {
+                                        location
+                                      }
+                                      title
+                                    }
+                                  }
+                                }' }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+
+      # TIMDEX will throw an error for non-nullable subfields if the parent field is null, so we only need to find null
+      # values of 'holdings' to test this.
+      assert json['data']['search']['records'].map { |record| record['holdings'].nil? }.any?
+      assert_not json['errors'].present?
+    end
+  end
+
   test 'graphqlv2 retrieve invalid field' do
     post '/graphql', params: { query: 'recordId(id: "stuff") {
                                 stuff
