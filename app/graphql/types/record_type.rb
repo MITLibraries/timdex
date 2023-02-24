@@ -22,7 +22,7 @@ module Types
   end
 
   class HoldingType < Types::BaseObject
-    field :location, String, null: false, description: 'Physical location of the holding'
+    field :location, String, null: true, description: 'Physical location of the holding'
     field :collection, String, null: true, description: 'Collection in which the item is held'
     field :callnumber, String, null: true, description: 'Call number of the holding'
     field :summary, String, null: true, description: 'Summary holdings information'
