@@ -196,7 +196,7 @@ GEM
       listen (~> 3.0)
     jmespath (1.6.1)
     json (2.6.3)
-    jwt (2.5.0)
+    jwt (2.7.0)
     kramdown (2.4.0)
       rexml
     kramdown-parser-gfm (1.1.0)
