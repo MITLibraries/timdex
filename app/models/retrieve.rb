@@ -16,7 +16,7 @@ class Retrieve
   end
 
   def default_index
-    ENV.fetch('ELASTICSEARCH_INDEX', nil)
+    Flipflop.v2? ? ENV.fetch('OPENSEARCH_INDEX', nil) : ENV.fetch('ELASTICSEARCH_INDEX', nil)
   end
 
   def to_filter(id)
