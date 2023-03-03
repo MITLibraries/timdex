@@ -7,30 +7,33 @@
 
       <p>TIMDEX is a free discovery API into collections at MIT Libraries.</p>
 
-      <p>This release provides discovery of records in MIT Libraries catalog and ArchivesSpace. We intend to expand the scope of collections discoverable via this API.</p>
+      <p>We currently provide searching of records in MIT Libraries catalog, DSpace@MIT, and MIT ArchivesSpace.</p>
 
-      <p>Interactive <a href="https://mitlibraries.github.io/timdex/">end user documentation</a> is available for the REST API with Curl examples and live API calls against real production data.</p>
-
-      <p>There is also a <a href="https://graphql.org">GraphQL</a> endpoint by posting to <%= link_to(graphql_url) %> as well as an <a href="/playground">interactive GraphQL playground.</a> It's neat, check it out!.</p>
+      <p>Access is via a <a href="https://graphql.org">GraphQL</a> endpoint by posting to <%= link_to(graphql_url) %>. We recommend starting by exploring our <a href="/playground">interactive GraphQL playground.</a> It's neat, check it out!.</p>
 
       <div class="well">
         <p>Example query to use in the playground or your own app:</p>
 
 <pre>
 {
-  search(searchterm: "spaceflight") {
+  search(searchterm: "learn graphql") {
     records {
-      sourceLink
       title
-      links {
-        text
-        url
-      }
+      sourceLink
+      summary
     }
   }
 }
 </pre>
+
+      <p><a href="/playground?query=%7B%0A%20%20search(searchterm%3A%20%22learn%20graphql%22)%20%7B%0A%20%20%20%20records%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20sourceLink%0A%20%20%20%20%20%20summary%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D">Jumpstart this example query in the Playground</a></p>
       </div>
+
+      <p>Additional examples and a tutorial on how to use this GraphQL API will be available soon.</p>
+
+      <h3>REST API deprecated</h3>
+
+      <p><strong>Our deprecated REST API <a href="https://mitlibraries.github.io/timdex/">documentation</a> is still available, but the REST endpoint will be going away entirely very soon (early 2023) and we highly recommend moving to GraphQL. If you need help migrating from REST to GraphQL please <a href="mailto:timdex@mit.edu?Subject=TIMDEX%20GraphQL%20transition">let us know</a></strong></p>
 
       <p>Feedback is welcome via <a href="mailto:timdex@mit.edu?Subject=TIMDEX%20Feedback">timdex@mit.edu</a>.
 
