@@ -1,0 +1,29 @@
+@import 'global/variables';
+
+$body-background-color: $black;
+$body-text-color: $white;
+$body-heading-color: $gray-warm;
+
+$sidebar-color: $black;
+
+$border-color: $gray-d2;
+$nav-child-link-color: $gray-warm;
+$nav-link-color: $gray-warm;
+$search-result-preview-color: $grey-dk-000;
+$link-color: $blue-bright;
+$btn-primary-color: $blue;
+$base-button-color: $gray-d1;
+$search-background-color: $gray-d1;
+$table-background-color: $gray-d1;
+$feedback-color: darken($sidebar-color, 3%);
+
+$site-logo-color: $white;
+
+$code-background-color: $gray-d2;
+
+$footer-text-color: $gray-warm;
+
+.site-title,
+.site-title:hover {
+  background-image: url(../../assets/images/logo-cc616f47-6732-4cea-b061-887a9f971038.svg) !important;
+}
