@@ -14,3 +14,5 @@ TIMDEX is a free discovery API into collections at MIT Libraries.
 This documentation site provides tutorials, guides, reference documentation, and technical overviews.
 
 If you have any questions, please reach out via timdex@mit.edu!
+
+![TIMDEX mascot: a variant of the MIT mascot with the words TIMDEX in a speech bubble!](/assets/images/timdex-beaver.png)

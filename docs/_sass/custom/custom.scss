@@ -1,0 +1,92 @@
+.site-header, .site-header:hover {
+  background-color: transparent;
+}
+
+.logo-mit {
+  fill: $body-text-color;
+}
+
+.site-logo {
+  fill: $site-logo-color;
+}
+
+.site-logo:hover {
+  fill: $link-color;
+}
+
+.site-title, .site-title:hover {
+  background-repeat: no-repeat;
+  background-position: 0 10%;
+  background-size: cover;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 18px;
+}
+
+.nav-list .nav-list-item {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 20px !important;
+}
+
+.sr {
+  border: 0 none;
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  word-wrap: normal;
+}
+
+@mixin sr-focusable {
+  &:focus {
+    position: static;
+    display: block;
+    height: auto;
+    width: auto;
+  }
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5em;
+}
+
+footer {
+  color: $footer-text-color;
+  border-top: solid thin;
+  margin-top: auto;
+  padding-bottom: 1em;
+  position: fixed;
+  bottom: 0;
+  background-color: $body-background-color;
+  font-size: 12pt;
+}
+
+.side-bar {
+  color: $nav-link-color;
+}
+
+.side-bar a {
+  color: $nav-link-color;
+}
+
+.nav-footer {
+  padding-right: 1em;
+}

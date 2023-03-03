@@ -28,7 +28,7 @@ returned for each found record.
 }
 ```
 
-https://timdex.mit.edu/playground?query=%7B%0A%20%20search(searchterm%3A%20%22data%22%2C%20sourceFilter%3A%20%5B%22dspace%40mit%22%2C%20%22mit%20alma%22%5D)%20%7B%0A%20%20%20%20records%20%7B%0A%20%20%20%20%20%20source%0A%20%20%20%20%20%20sourceLink%0A%20%20%20%20%20%20title%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D
+[Run this query in the GraphQL playground.](https://timdex.mit.edu/playground?query=%7B%0A%20%20search(searchterm%3A%20%22data%22%2C%20sourceFilter%3A%20%5B%22dspace%40mit%22%2C%20%22mit%20alma%22%5D)%20%7B%0A%20%20%20%20records%20%7B%0A%20%20%20%20%20%20source%0A%20%20%20%20%20%20sourceLink%0A%20%20%20%20%20%20title%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D)
 
 ## See also
 

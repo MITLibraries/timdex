@@ -1,7 +1,7 @@
 title: TIMDEX API Documentation
 description: MIT Libraries TIMDEX API Documentation
 
-remote_theme: just-the-docs/just-the-docs@v0.4.0.rc4
+remote_theme: just-the-docs/just-the-docs@v0.4.1
 plugins:
   - "jekyll-remote-theme"
   - "jekyll-seo-tag"
