@@ -16,3 +16,9 @@ This documentation site provides tutorials, guides, reference documentation, and
 If you have any questions, please reach out via timdex@mit.edu!
 
 ![TIMDEX mascot: a variant of the MIT mascot with the words TIMDEX in a speech bubble!](/assets/images/timdex-beaver.png)
+
+## Deprecated REST documentation
+
+Our REST API will be retired by the end of March 2023. However, the [REST documentation](deprecated_rest.html)
+does remain available until then. Please don't use it though and instead reach out to us
+if you are having issues transitioning to the GraphQL endpoint!
