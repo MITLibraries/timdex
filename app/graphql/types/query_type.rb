@@ -38,7 +38,7 @@ module Types
       def record_id(id:, index:)
         result = Retrieve.new.fetch(id, Timdex::OSClient, index)
         result['hits']['hits'].first['_source']
-      rescue Elasticsearch::Transport::Transport::Errors::NotFound
+      rescue OpenSearch::Transport::Transport::Errors::NotFound
         raise GraphQL::ExecutionError, "Record '#{id}' not found"
       end
 

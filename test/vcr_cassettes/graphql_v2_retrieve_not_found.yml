@@ -1,0 +1,76 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:9200/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - 'opensearch-ruby/2.1.0 (RUBY_VERSION: 3.1.2; darwin x86_64; Faraday v2.7.4)'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '347'
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "name" : "abb77df940c2",
+          "cluster_name" : "docker-cluster",
+          "cluster_uuid" : "c-VRJvUhQEC0sXa8uIdOQw",
+          "version" : {
+            "distribution" : "opensearch",
+            "number" : "2.3.0",
+            "build_type" : "tar",
+            "build_hash" : "6f6e84ebc54af31a976f53af36a5c69d474a5140",
+            "build_date" : "2022-09-09T00:07:12.137133581Z",
+            "build_snapshot" : false,
+            "lucene_version" : "9.3.0",
+            "minimum_wire_compatibility_version" : "7.10.0",
+            "minimum_index_compatibility_version" : "7.0.0"
+          },
+          "tagline" : "The OpenSearch Project: https://opensearch.org/"
+        }
+  recorded_at: Wed, 15 Mar 2023 15:20:12 GMT
+- request:
+    method: post
+    uri: http://localhost:9200/timdex-prod/_search
+    body:
+      encoding: UTF-8
+      string: '{"query":{"ids":{"values":["totallylegitrecordid"]}}}'
+    headers:
+      User-Agent:
+      - 'opensearch-ruby/2.1.0 (RUBY_VERSION: 3.1.2; darwin x86_64; Faraday v2.7.4)'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '142'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"took":47,"timed_out":false,"_shards":{"total":1,"successful":1,"skipped":0,"failed":0},"hits":{"total":{"value":0,"relation":"eq"},"max_score":null,"hits":[]}}'
+  recorded_at: Wed, 15 Mar 2023 15:20:12 GMT
+recorded_with: VCR 6.1.0

@@ -331,6 +331,22 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
     end
   end
 
+    test 'graphqlv2 retrieve with not found recordid' do
+    VCR.use_cassette('graphql v2 retrieve not found') do
+      post '/graphql', params: { query: '{
+                                  recordId(id: "totallylegitrecordid") {
+                                    timdexRecordId
+                                    title
+                                  }
+                                }' }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert_nil(json['data'])
+      assert_equal("Record 'totallylegitrecordid' not found", json['errors'].first['message'])
+    end
+  end
+
+
   test 'graphqlv2 holding location is not required' do
     VCR.use_cassette('graphql v2 location') do
       post '/graphql', params: { query: '{
