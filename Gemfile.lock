@@ -156,7 +156,7 @@ GEM
     globalid (1.1.0)
       activesupport (>= 5.0)
     google-protobuf (3.22.0)
-    graphiql-rails (1.8.0)
+    graphiql-rails (1.9.0)
       railties
       sprockets-rails
     graphql (2.0.17)
@@ -259,12 +259,12 @@ GEM
     puma (6.1.1)
       nio4r (~> 2.0)
     racc (1.6.2)
-    rack (2.2.6.3)
+    rack (2.2.6.4)
     rack-attack (6.6.1)
       rack (>= 1.0, < 3)
     rack-cors (2.0.0)
       rack (>= 2.0.0)
-    rack-test (2.0.2)
+    rack-test (2.1.0)
       rack (>= 1.3)
     rails (7.0.4.2)
       actioncable (= 7.0.4.2)
