@@ -94,7 +94,10 @@ class Opensearch
     if @params[:q].present?
       m << {
         multi_match: {
-          query: @params[:q].downcase
+          query: @params[:q].downcase,
+          fields: ['alternate_titles', 'call_numbers', 'citation', 'contents', 'contributors.value', 'dates.value',
+                   'edition', 'funding_information.*', 'identifiers.value', 'languages', 'locations.value',
+                   'notes.value', 'numbering', 'publication_information', 'subjects.value', 'summary', 'title']
         }
       }
     end
