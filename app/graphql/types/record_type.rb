@@ -211,7 +211,7 @@ module Types
       end
 
       def publication_date
-        @object['dates'].map { |date| date['value'] if date['kind'] == 'Publication date' }.compact&.first
+        @object['dates']&.map { |date| date['value'] if date['kind'] == 'Publication date' }&.compact&.first
       end
 
       def file_formats

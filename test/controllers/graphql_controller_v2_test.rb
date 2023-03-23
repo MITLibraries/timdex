@@ -225,7 +225,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
       assert_equal('mit alma',
                    json['data']['search']['aggregations']['source']
                    .first['key'])
-      assert_equal(1429210,
+      assert_equal(1_429_210,
                    json['data']['search']['aggregations']['source']
                    .first['docCount'])
     end
@@ -250,9 +250,26 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
       assert_equal('mit alma',
                    json['data']['search']['aggregations']['source']
                    .first['key'])
-      assert_equal(1429210,
+      assert_equal(1_429_210,
                    json['data']['search']['aggregations']['source']
                    .first['docCount'])
+    end
+  end
+
+  test 'graphqlv2 deprecated datePublished does not error when no dates returned' do
+    VCR.use_cassette('graphql v2 datePublished does not error when no dates returned') do
+      post '/graphql', params: { query: '{
+                                  recordId(id: "dspace:1721.1-2789") {
+                                    publicationDate
+                                    source
+                                    sourceLink
+                                    title
+                                  }
+                                }' }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+      assert_equal('DSpace@MIT', json['data']['recordId']['source'])
+      assert_nil(json['data']['recordId']['dates'])
     end
   end
 
@@ -331,7 +348,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
     end
   end
 
-    test 'graphqlv2 retrieve with not found recordid' do
+  test 'graphqlv2 retrieve with not found recordid' do
     VCR.use_cassette('graphql v2 retrieve not found') do
       post '/graphql', params: { query: '{
                                   recordId(id: "totallylegitrecordid") {
@@ -345,7 +362,6 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
       assert_equal("Record 'totallylegitrecordid' not found", json['errors'].first['message'])
     end
   end
-
 
   test 'graphqlv2 holding location is not required' do
     VCR.use_cassette('graphql v2 location') do
