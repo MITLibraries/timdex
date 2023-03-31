@@ -3,14 +3,11 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.1.2'
 
-gem 'aws-sdk-elasticsearchservice'
 gem 'bootsnap', require: false
 gem 'devise'
-gem 'elasticsearch', '~>6.8'
 gem 'faraday_middleware-aws-sigv4'
 gem 'flipflop'
 gem 'graphql'
-gem 'jbuilder'
 gem 'jwt'
 gem 'lograge'
 gem 'mitlibraries-theme', git: 'https://github.com/mitlibraries/mitlibraries-theme', tag: 'v1.0.2'
@@ -40,7 +37,6 @@ end
 
 group :development do
   gem 'annotate'
-  gem 'graphiql-rails'
   gem 'jekyll'
   gem 'jekyll-remote-theme'
   gem 'jekyll-seo-tag'

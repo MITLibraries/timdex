@@ -82,15 +82,6 @@ GEM
       rake (>= 10.4, < 14.0)
     ast (2.4.2)
     aws-eventstream (1.2.0)
-    aws-partitions (1.730.0)
-    aws-sdk-core (3.170.1)
-      aws-eventstream (~> 1, >= 1.0.2)
-      aws-partitions (~> 1, >= 1.651.0)
-      aws-sigv4 (~> 1.5)
-      jmespath (~> 1, >= 1.6.1)
-    aws-sdk-elasticsearchservice (1.69.0)
-      aws-sdk-core (~> 3, >= 3.165.0)
-      aws-sigv4 (~> 1.1)
     aws-sigv4 (1.5.2)
       aws-eventstream (~> 1, >= 1.0.2)
     bcrypt (3.1.18)
@@ -127,14 +118,6 @@ GEM
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
       railties (>= 3.2)
-    elasticsearch (6.8.0)
-      elasticsearch-api (= 6.8.0)
-      elasticsearch-transport (= 6.8.0)
-    elasticsearch-api (6.8.0)
-      multi_json
-    elasticsearch-transport (6.8.0)
-      faraday
-      multi_json
     em-websocket (0.5.3)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0)
@@ -156,17 +139,11 @@ GEM
     globalid (1.1.0)
       activesupport (>= 5.0)
     google-protobuf (3.22.2)
-    graphiql-rails (1.9.0)
-      railties
-      sprockets-rails
     graphql (2.0.19)
     hashdiff (1.0.1)
     http_parser.rb (0.8.0)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
-    jbuilder (2.11.5)
-      actionview (>= 5.0.0)
-      activesupport (>= 5.0.0)
     jekyll (4.3.2)
       addressable (~> 2.4)
       colorator (~> 1.0)
@@ -194,7 +171,6 @@ GEM
       jekyll (>= 3.8, < 5.0)
     jekyll-watch (2.2.1)
       listen (~> 3.0)
-    jmespath (1.6.2)
     json (2.6.3)
     jwt (2.7.0)
     kramdown (2.4.0)
@@ -404,19 +380,15 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
-  aws-sdk-elasticsearchservice
   bootsnap
   byebug
   capybara
   climate_control
   devise
   dotenv-rails
-  elasticsearch (~> 6.8)
   faraday_middleware-aws-sigv4
   flipflop
-  graphiql-rails
   graphql
-  jbuilder
   jekyll
   jekyll-remote-theme
   jekyll-seo-tag
@@ -424,9 +396,6 @@ DEPENDENCIES
   listen
   lograge
   mitlibraries-theme!
-  net-imap
-  net-pop
-  net-smtp
   opensearch-ruby
   pg
   puma
