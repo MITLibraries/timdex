@@ -33,27 +33,21 @@
       </div>
 
       <p>Additional examples and a tutorial on how to use this GraphQL API will be available soon.</p>
-
-      <h3>REST API deprecated</h3>
-
-      <p><strong>Our deprecated REST API <a href="https://mitlibraries.github.io/timdex/deprecated_rest/">documentation</a> is still available, but the REST endpoint will be going away entirely very soon (early 2023) and we highly recommend moving to GraphQL. If you need help migrating from REST to GraphQL please <a href="mailto:timdex@mit.edu?Subject=TIMDEX%20GraphQL%20transition">let us know</a></strong></p>
-
-      <p>Feedback is welcome via <a href="mailto:timdex@mit.edu?Subject=TIMDEX%20Feedback">timdex@mit.edu</a>.
-
-      Bug reports via the <a href="https://github.com/MITLibraries/timdex/issues">Github repository</a> would be great.</p>
     </div>
 
+    <div class="retired-rest box-content well">
+      <h3>Talk to us!</h3>
 
-    <% if user_signed_in? %>
-      <div class="panel panel-info">
-        <div class="panel-heading">Quick Example</div>
-        <div class="panel-body">
-          <p>You can do a very quick test of your account via this `curl` example. The documentation portal linked above has much more complete information.</p>
+      <p>Feedback is welcome via <a href="mailto:timdex@mit.edu?Subject=TIMDEX%20Feedback">timdex@mit.edu</a>.</p>
 
-          <code>curl -X GET --header 'Authorization: Bearer <%= JwtWrapper.encode({ user_id: current_user.id }) %>' '<%= api_v1_search_url(q: 'whatever')%>'</code>
-        </div>
-      </div>
-    <% end %>
+      <p>Bug reports via the <a href="https://github.com/MITLibraries/timdex/issues">Github repository</a> would be great.</p>
+    </div>
+
+    <div class="retired-rest box-content">
+      <h3>REST API retired</h3>
+
+      <p>Our original REST API was deprecated and then retired in early 2023. The replacement GraphQL API can search more data and has features not found in the origial API. If you need help migrating from REST to GraphQL please <a href="mailto:timdex@mit.edu?Subject=TIMDEX%20GraphQL%20transition">let us know</a>.</p>
+    </div>
   </div>
 
   <aside class="col1q-r">

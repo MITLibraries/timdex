@@ -17,8 +17,6 @@ If you have any questions, please reach out via timdex@mit.edu!
 
 ![TIMDEX mascot: a variant of the MIT mascot with the words TIMDEX in a speech bubble!](/assets/images/timdex-beaver.png)
 
-## Deprecated REST documentation
+## REST API retired
 
-Our REST API will be retired by the end of March 2023. However, the [REST documentation](deprecated_rest.html)
-does remain available until then. Please don't use it though and instead reach out to us
-if you are having issues transitioning to the GraphQL endpoint!
+Our REST API was deprecated and removed in early 2023 as this GraphQL endpoint has additional data sources and features. If you are having issues transitioning to the GraphQL endpoint, please contact us at timdex@mit.edu and we'd be happy to help!

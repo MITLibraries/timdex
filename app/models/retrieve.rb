@@ -6,17 +6,13 @@ class Retrieve
 
     record = client.search(index: index, body: f)
 
-    if client.instance_of?(OpenSearch::Client)
-      raise OpenSearch::Transport::Transport::Errors::NotFound if record['hits']['total']['value'].zero?
-    elsif record['hits']['total'].zero?
-      raise Elasticsearch::Transport::Transport::Errors::NotFound
-    end
+    raise OpenSearch::Transport::Transport::Errors::NotFound if record['hits']['total']['value'].zero?
 
     record
   end
 
   def default_index
-    Flipflop.v2? ? ENV.fetch('OPENSEARCH_INDEX', nil) : ENV.fetch('ELASTICSEARCH_INDEX', nil)
+    ENV.fetch('OPENSEARCH_INDEX', nil)
   end
 
   def to_filter(id)
