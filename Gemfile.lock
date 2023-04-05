@@ -132,7 +132,7 @@ GEM
       aws-sigv4 (~> 1.0)
       faraday (>= 2.0, < 3)
     ffi (1.15.5)
-    flipflop (2.7.0)
+    flipflop (2.7.1)
       activesupport (>= 4.0)
       terminal-table (>= 1.8)
     forwardable-extended (2.6.0)
@@ -396,6 +396,9 @@ DEPENDENCIES
   listen
   lograge
   mitlibraries-theme!
+  net-imap
+  net-pop
+  net-smtp
   opensearch-ruby
   pg
   puma
