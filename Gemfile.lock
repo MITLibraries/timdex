@@ -90,7 +90,7 @@ GEM
       msgpack (~> 1.2)
     builder (3.2.4)
     byebug (11.1.3)
-    capybara (3.39.0)
+    capybara (3.39.1)
       addressable
       matrix
       mini_mime (>= 0.1.3)
@@ -139,7 +139,7 @@ GEM
     globalid (1.1.0)
       activesupport (>= 5.0)
     google-protobuf (3.22.3)
-    graphql (2.0.21)
+    graphql (2.0.22)
     hashdiff (1.0.1)
     http_parser.rb (0.8.0)
     i18n (1.13.0)
@@ -199,7 +199,7 @@ GEM
     mercenary (0.4.0)
     method_source (1.0.0)
     mini_mime (1.1.2)
-    mini_portile2 (2.8.1)
+    mini_portile2 (2.8.2)
     minitest (5.18.0)
     msgpack (1.7.0)
     multi_json (1.15.0)
@@ -213,8 +213,8 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.9)
-    nokogiri (1.14.3)
-      mini_portile2 (~> 2.8.0)
+    nokogiri (1.15.1)
+      mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     opensearch-api (2.2.0)
       multi_json
@@ -285,7 +285,7 @@ GEM
       railties (>= 5.2)
     rexml (3.2.5)
     rouge (4.1.0)
-    rubocop (1.50.2)
+    rubocop (1.51.0)
       json (~> 2.3)
       parallel (~> 1.10)
       parser (>= 3.2.0.0)
@@ -295,7 +295,7 @@ GEM
       rubocop-ast (>= 1.28.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 3.0)
-    rubocop-ast (1.28.0)
+    rubocop-ast (1.28.1)
       parser (>= 3.2.1.0)
     rubocop-rails (2.19.1)
       activesupport (>= 4.2.0)
@@ -318,7 +318,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    selenium-webdriver (4.9.0)
+    selenium-webdriver (4.9.1)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
@@ -341,7 +341,7 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    sqlite3 (1.6.2)
+    sqlite3 (1.6.3)
       mini_portile2 (~> 2.8.0)
     terminal-table (3.0.2)
       unicode-display_width (>= 1.1.1, < 3)
