@@ -33,7 +33,7 @@ jobs:
         run: npm install -g spectaql@v2
       - name: Build reference docs
         run: |
-          spectaql --introspection-url https://timdex-api-prod-v2.herokuapp.com/graphql -e -t ./docs/reference docs/reference/_spectaql_config.yml
+          spectaql --introspection-url https://timdex.mit.edu/graphql -e -t ./docs/reference docs/reference/_spectaql_config.yml
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
