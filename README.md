@@ -76,7 +76,9 @@ to ensure everything looks as expected.
 bundle exec jekyll serve --incremental --source ./docs
 ```
 
-Once the jekyll server is running, you can access the local docs at http://localhost:4000
+Once the jekyll server is running, you can access the local docs at http://localhost:4000/timdex/
+
+Note: it is important to load the documentation from the `/timdex/` path locally as that is how it works when built and deployed to GitHub Pages so testing locally the same way will ensure our asset paths will work when deployed.
 
 ### Automatic generation of technical specifications from GraphQL
 
