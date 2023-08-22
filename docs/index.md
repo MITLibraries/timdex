@@ -15,7 +15,7 @@ This documentation site provides tutorials, guides, reference documentation, and
 
 If you have any questions, please reach out via timdex@mit.edu!
 
-![TIMDEX mascot: a variant of the MIT mascot with the words TIMDEX in a speech bubble!](/assets/images/timdex-beaver.png)
+![TIMDEX mascot: a variant of the MIT mascot with the words TIMDEX in a speech bubble!](/timdex/assets/images/timdex-beaver.png)
 
 ## REST API retired
 
