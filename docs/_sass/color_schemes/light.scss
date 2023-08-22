@@ -1,17 +1,22 @@
 @import 'global/variables';
 
 $body-background-color: $white;
+
 $sidebar-color: $gray-l4;
+
 $border-color: $grey-dk-200;
 $body-text-color: $black;
 $body-heading-color: $black;
+
 $nav-child-link-color: $blue;
 $nav-link-color: $blue;
-$search-result-preview-color: $grey-dk-000;
 $link-color: $blue;
 $btn-primary-color: $blue-200;
 $base-button-color: $grey-dk-250;
-$search-background-color: $grey-dk-250;
+
+$search-background-color: $gray-l4;
+$search-result-preview-color: $black;
+
 $table-background-color: $grey-dk-250;
 $feedback-color: darken($sidebar-color, 3%);
 
