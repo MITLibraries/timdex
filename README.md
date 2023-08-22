@@ -19,6 +19,52 @@ additional records with a standardized template.
 - don't commit your .env or .env.development, but do commit .env.test after
   confirming your test values are not actual secrets that need protecting
 
+## Confirming functionality after updating dependencies
+
+This application has good code coverage, so most issues are detected by just running tests normally:
+
+```shell
+bin/rails test
+```
+
+The following additional manual testing should be performed in the PR build on Heroku.
+
+- Use the PR builds GraphiQL playground to run a keyword search such as:
+
+```graphql
+{
+  search(searchterm: "thesis") {
+    hits
+    records {
+      title
+      source
+      summary
+      identifiers {
+        kind
+        value
+      }
+    }
+  }
+}
+```
+
+- Use the PR builds GraphiQL playground to retrieve a single record
+
+```graphql
+{
+  recordId(id: "alma:990000959610106761") {
+    title
+    timdexRecordId
+    source
+  }
+}
+```
+
+The following additional manual check should be performed after the application is deployed to production.
+
+- confirm the [main documentation site](https://mitlibraries.github.io/timdex/) is working by loading one or two pages
+- confirm the [technical documentation site](https://mitlibraries.github.io/timdex/reference/) is working by loading it
+
 ## Publishing User Facing Documentation
 
 ### Running jekyll documentation locally
