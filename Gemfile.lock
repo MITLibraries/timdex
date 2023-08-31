@@ -140,7 +140,7 @@ GEM
     globalid (1.1.0)
       activesupport (>= 5.0)
     google-protobuf (3.23.3)
-    graphql (2.0.26)
+    graphql (2.1.0)
     hashdiff (1.0.1)
     http_parser.rb (0.8.0)
     i18n (1.14.1)
