@@ -77,6 +77,8 @@ module Types
       argument :subjects_filter, [String], required: false, default_value: nil,
                                            description: 'Filter by subject terms. Use the `contentType` aggregation ' \
                                                         'for a list of possible values'
+      argument :years_filter, [String], required: false, default_value: nil,
+                                        description: 'Filter by years.'
     end
 
     def search(searchterm:, citation:, contributors:, funding_information:, geodistance:, identifiers:, locations:,

@@ -15,5 +15,6 @@ module Types
     field :source, [Types::AggregationCountType], null: true,
                                                   description: 'Total search results by source record system'
     field :subjects, [Types::AggregationCountType], null: true, description: 'Total search results by subject term'
+    field :year, [Types::AggregationCountType], null: true, description: 'Total search results by year'
   end
 end
