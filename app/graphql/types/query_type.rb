@@ -35,6 +35,7 @@ module Types
     field :search, SearchType, null: false,
                                description: 'Search for timdex records' do
       argument :searchterm, String, required: false, default_value: nil, description: 'Query all searchable fields'
+      argument :geopoint, GeopointType, required: false, default_value: nil, description: 'long, lat'
       argument :citation, String, required: false, default_value: nil, description: 'Search by citation information'
       argument :contributors, String, required: false, default_value: nil,
                                       description: 'Search by contributor name; e.g., author, editor, etc.'

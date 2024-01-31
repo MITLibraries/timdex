@@ -108,7 +108,7 @@ module Types
 
   # Warning: related_place was supposed to be an array but was incorrectly a string in graphql for v1
   class LocationType < Types::BaseObject
-    field :geopoint, String, description: 'GeoPoint data for the location, if applicable'
+    field :geoshape, String, description: 'GeoShape data for the location, if applicable'
     field :kind, String, description: 'Type of location'
     field :value, String, description: 'Name of location'
   end
