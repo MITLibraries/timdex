@@ -280,6 +280,11 @@ class Opensearch
           field: 'literary_form'
         }
       },
+      publication_information: {
+        terms: {
+          field: 'publication_information'
+        }
+      },
       source: {
         terms: {
           field: 'source'

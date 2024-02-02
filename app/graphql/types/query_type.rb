@@ -152,6 +152,7 @@ module Types
         subjects: es_aggs['subjects']['subject_names']['buckets'],
         languages: es_aggs['languages']['buckets'],
         literary_form: es_aggs['literary_form']['buckets'],
+        publication_information: es_aggs['publication_information']['buckets'],
         format: es_aggs['content_format']['buckets'],
         content_type: es_aggs['content_type']['buckets']
       }
