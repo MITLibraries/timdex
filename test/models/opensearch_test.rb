@@ -4,43 +4,50 @@ class OpensearchTest < ActiveSupport::TestCase
   test 'matches citation' do
     os = Opensearch.new
     os.instance_variable_set(:@params, { citation: 'foo' })
-    assert os.matches.select { |m| m[:citation] == 'foo' }
+
+    assert(os.matches.to_json.include?('{"match":{"citation":"foo"}}'))
   end
 
   test 'matches title' do
     os = Opensearch.new
     os.instance_variable_set(:@params, { title: 'foo' })
-    assert os.matches.select { |m| m[:title] == 'foo' }
+
+    assert(os.matches.to_json.include?('{"match":{"title":"foo"}}'))
   end
 
   test 'matches contributors' do
     os = Opensearch.new
     os.instance_variable_set(:@params, { contributors: 'foo' })
-    assert os.matches.select { |m| m['contributors.value'] == 'foo' }
+
+    assert(os.matches.to_json.include?('{"match":{"contributors.value":"foo"}}'))
   end
 
   test 'matches funding_information' do
     os = Opensearch.new
     os.instance_variable_set(:@params, { funding_information: 'foo' })
-    assert os.matches.select { |m| m['funding_information.funder_name'] == 'foo' }
+
+    assert(os.matches.to_json.include?('{"match":{"funding_information.funder_name":"foo"}}'))
   end
 
   test 'matches identifiers' do
     os = Opensearch.new
     os.instance_variable_set(:@params, { identifiers: 'foo' })
-    assert os.matches.select { |m| m['identifiers.value'] == 'foo' }
+
+    assert(os.matches.to_json.include?('{"match":{"identifiers.value":"foo"}}'))
   end
 
   test 'matches locations' do
     os = Opensearch.new
     os.instance_variable_set(:@params, { locations: 'foo' })
-    assert os.matches.select { |m| m['locations.value'] == 'foo' }
+
+    assert(os.matches.to_json.include?('{"match":{"locations.value":"foo"}}'))
   end
 
   test 'matches subjects' do
     os = Opensearch.new
     os.instance_variable_set(:@params, { subjects: 'foo' })
-    assert os.matches.select { |m| m['subjects.value'] == 'foo' }
+
+    assert(os.matches.to_json.include?('{"match":{"subjects.value":"foo"}}'))
   end
 
   test 'matches everything' do
@@ -48,15 +55,15 @@ class OpensearchTest < ActiveSupport::TestCase
     os.instance_variable_set(:@params, { q: 'this', citation: 'here', title: 'is', contributors: 'a',
                                          funding_information: 'real', identifiers: 'search', locations: 'rest',
                                          subjects: 'assured,' })
-    matches = os.matches
-    assert matches.select { |m| m[:q] == 'this' }
-    assert matches.select { |m| m[:citation] == 'here' }
-    assert matches.select { |m| m[:title] == 'is' }
-    assert matches.select { |m| m['contributors.value'] == 'a' }
-    assert matches.select { |m| m['funding_information.funder_name'] == 'real' }
-    assert matches.select { |m| m['identifiers.value'] == 'search' }
-    assert matches.select { |m| m['locations.value'] == 'rest' }
-    assert matches.select { |m| m['subjects.value'] == 'assured' }
+
+    assert(os.matches.to_json.include?('{"multi_match":{"query":"this","fields":'))
+    assert(os.matches.to_json.include?('{"match":{"citation":"here"}}'))
+    assert(os.matches.to_json.include?('{"match":{"title":"is"}}'))
+    assert(os.matches.to_json.include?('{"match":{"contributors.value":"a"}}'))
+    assert(os.matches.to_json.include?('{"match":{"funding_information.funder_name":"real"}}'))
+    assert(os.matches.to_json.include?('{"match":{"identifiers.value":"search"}}'))
+    assert(os.matches.to_json.include?('{"match":{"locations.value":"rest"}}'))
+    assert(os.matches.to_json.include?('{"match":{"subjects.value":"assured,"}}'))
   end
 
   test 'can override index' do
@@ -265,5 +272,28 @@ class OpensearchTest < ActiveSupport::TestCase
     os.instance_variable_set(:@params, { q: 'this' })
 
     refute(os.build_query(0).include?('highlight'))
+  end
+
+  test 'can search by geopoint' do
+    os = Opensearch.new
+    os.instance_variable_set(:@params,
+                             { geodistance: { latitude: '42.361145', longitude: '-71.057083', distance: '50mi' } })
+
+    assert(
+      os.query.to_json.include?('{"distance":"50mi","locations.geoshape":{"lat":"42.361145","lon":"-71.057083"}}')
+    )
+  end
+
+  test 'can search for combination of geopoint and keyword' do
+    os = Opensearch.new
+    os.instance_variable_set(:@params,
+                             { geodistance: { latitude: '42.361145', longitude: '-71.057083', distance: '50mi' },
+                               q: 'rail stations' })
+
+    assert(os.matches.to_json.include?('{"multi_match":{"query":"rail stations","fields":'))
+
+    assert(
+      os.query.to_json.include?('{"distance":"50mi","locations.geoshape":{"lat":"42.361145","lon":"-71.057083"}}')
+    )
   end
 end
