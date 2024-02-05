@@ -454,6 +454,30 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'graphqlv2 can retrieve geolocation information' do
+    VCR.use_cassette('graphql v2 geolocation') do
+      post '/graphql', params: { query: '{
+                                  search(searchterm: "train stations") {
+                                    records {
+                                      locations {
+                                        geoshape
+                                        kind
+                                        value
+                                      }
+                                    }
+                                  }
+                                }' }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+
+      assert_not json['errors'].present?
+      assert_equal(
+        json['data']['search']['records'].first['locations'][0].keys.sort,
+        ["geoshape", "value", "kind"].sort
+      )
+    end
+  end
+
   test 'graphqlv2 retrieve invalid field' do
     post '/graphql', params: { query: 'recordId(id: "stuff") {
                                 stuff
