@@ -6,7 +6,7 @@ class Opensearch
     @params = params
     @highlight = highlight
     index = default_index unless index.present?
-    client.search(index: index,
+    client.search(index:,
                   body: build_query(from))
   end
 
@@ -17,10 +17,10 @@ class Opensearch
   # Construct the json query to send to elasticsearch
   def build_query(from)
     query_hash = {
-      from: from,
+      from:,
       size: SIZE,
-      query: query,
-      aggregations: aggregations
+      query:,
+      aggregations:
     }
 
     query_hash[:highlight] = highlight if @highlight
@@ -109,7 +109,28 @@ class Opensearch
     match_single_field_nested(:identifiers, m)
     match_single_field_nested(:locations, m)
     match_single_field_nested(:subjects, m)
+
+    match_geodistance(m) if @params[:geodistance].present?
     m
+  end
+
+  def match_geodistance(match_array)
+    match_array << {
+      bool: {
+        must: {
+          match_all: {}
+        },
+        filter: {
+          geo_distance: {
+            distance: @params[:geodistance][:distance],
+            'locations.geoshape': {
+              lat: @params[:geodistance][:latitude],
+              lon: @params[:geodistance][:longitude]
+            }
+          }
+        }
+      }
+    }
   end
 
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/query-filter-context.html
@@ -177,7 +198,7 @@ class Opensearch
     param.each do |source|
       sources << {
         term: {
-          source: source
+          source:
         }
       }
     end
