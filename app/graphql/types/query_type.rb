@@ -41,6 +41,8 @@ module Types
       argument :funding_information, String, required: false, default_value: nil,
                                              description: 'Search by funding information; e.g., funding source, ' \
                                                           'award name, etc.'
+      argument :geodistance, GeodistanceType, required: false, default_value: nil,
+                                              description: 'Search within a certain distance of a specific location'
       argument :identifiers, String, required: false, default_value: nil,
                                      description: 'Search by unique indentifier; e.g., ISBN, DOI, etc.'
       argument :locations, String, required: false, default_value: nil, description: 'Search by locations'
@@ -77,10 +79,10 @@ module Types
                                                         'for a list of possible values'
     end
 
-    def search(searchterm:, citation:, contributors:, funding_information:, identifiers:, locations:, subjects:,
-               title:, index:, source:, from:, **filters)
-      query = construct_query(searchterm, citation, contributors, funding_information, identifiers, locations,
-                              subjects, title, source, filters)
+    def search(searchterm:, citation:, contributors:, funding_information:, geodistance:, identifiers:, locations:,
+               subjects:, title:, index:, source:, from:, **filters)
+      query = construct_query(searchterm, citation, contributors, funding_information, geodistance, identifiers,
+                              locations, subjects, title, source, filters)
 
       results = Opensearch.new.search(from, query, Timdex::OSClient, highlight_requested?, index)
 
@@ -109,13 +111,14 @@ module Types
       modded_sources
     end
 
-    def construct_query(searchterm, citation, contributors, funding_information, identifiers, locations, subjects,
-                        title, source, filters)
+    def construct_query(searchterm, citation, contributors, funding_information, geodistance, identifiers, locations,
+                        subjects, title, source, filters)
       query = {}
       query[:q] = searchterm
       query[:citation] = citation
       query[:contributors] = contributors
       query[:funding_information] = funding_information
+      query[:geodistance] = geodistance
       query[:identifiers] = identifiers
       query[:locations] = locations
       query[:subjects] = subjects
