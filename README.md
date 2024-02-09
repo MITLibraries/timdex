@@ -130,6 +130,7 @@ locally.
   confused.
   ```
 
+- `PLATFORM_NAME`: The value set is added to the header after the MIT Libraries logo. The logic and CSS for this comes from our theme gem.
 - `PREFERRED_DOMAIN` - set this to the domain you would like to to use. Any
   other requests that come to the app will redirect to the root of this domain.
   This is useful to prevent access to herokuapp.com domains.
