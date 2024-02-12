@@ -111,9 +111,34 @@ class Opensearch
     match_single_field_nested(:subjects, m)
 
     match_geodistance(m) if @params[:geodistance].present?
+    match_geobox(m) if @params[:geobox].present?
     m
   end
 
+  # https://opensearch.org/docs/latest/query-dsl/geo-and-xy/geo-bounding-box/
+  def match_geobox(match_array)
+    match_array << {
+      bool: {
+        must: {
+          match_all: {}
+        },
+        filter: {
+          geo_bounding_box: {
+            'locations.geoshape': {
+              top: @params[:geobox][:max_latitude],
+              bottom: @params[:geobox][:min_latitude],
+              left: @params[:geobox][:min_longitude],
+              right: @params[:geobox][:max_longitude]
+            }
+          }
+        }
+      }
+    }
+  end
+
+  # https://www.elastic.co/guide/en/elasticsearch/reference/7.17/query-dsl-geo-distance-query.html
+  # Note: at the time of this implementation, opensearch does not have documentation on
+  # this features hence the link to the prefork elasticsearch docs
   def match_geodistance(match_array)
     match_array << {
       bool: {
