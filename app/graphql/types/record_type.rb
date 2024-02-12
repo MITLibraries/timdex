@@ -163,7 +163,7 @@ module Types
     field :contents, [String], null: true, description: 'Table of contents for item'
     field :summary, [String], null: true,
                               description: 'Summary of contents of item (also where abstract goes if applicable)'
-    field :format, [String], null: true, description: 'Format of item e.g. "Print Volume", "DVD", etc.'
+    field :format, String, null: true, description: 'Format of item e.g. "Print Volume", "DVD", etc.'
     field :literary_form, String, null: true, description: 'Identifies the item as fiction or nonfiction'
     field :related_place, [String], null: true, deprecation_reason: 'Use `locations`'
     field :in_bibliography, [String], null: true, deprecation_reason: 'Use `related_items`'
