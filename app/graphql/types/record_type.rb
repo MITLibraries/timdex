@@ -108,9 +108,14 @@ module Types
 
   # Warning: related_place was supposed to be an array but was incorrectly a string in graphql for v1
   class LocationType < Types::BaseObject
+    field :geopoint, String, deprecation_reason: 'Use `geoshape`'
     field :geoshape, String, description: 'GeoShape data for the location, if applicable'
     field :kind, String, description: 'Type of location'
     field :value, String, description: 'Name of location'
+
+    def geopoint
+      @object['geoshape']
+    end
   end
 
   class HighlightType < Types::BaseObject

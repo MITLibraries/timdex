@@ -460,6 +460,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
                                   search(searchterm: "train stations") {
                                     records {
                                       locations {
+                                        geopoint
                                         geoshape
                                         kind
                                         value
@@ -473,7 +474,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
       assert_not json['errors'].present?
       assert_equal(
         json['data']['search']['records'].first['locations'][0].keys.sort,
-        ["geoshape", "value", "kind"].sort
+        ["geopoint", "geoshape", "value", "kind"].sort
       )
     end
   end
