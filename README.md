@@ -122,6 +122,7 @@ locally.
 
 ## Optional Environment Variables (all ENVs)
 
+- `GEOSPATIAL_SEARCH` toggles the feature flag to enable spatial search.
 - `OPENSEARCH_LOG` if `true`, verbosely logs OpenSearch queries.
 
   ```text
