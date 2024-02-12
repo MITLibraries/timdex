@@ -1,6 +1,51 @@
 ---
 http_interactions:
 - request:
+    method: get
+    uri: http://localhost:9200/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - 'opensearch-ruby/3.1.0 (RUBY_VERSION: 3.2.2; darwin arm64; Faraday v2.9.0)'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '567'
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "name" : "57e0dc0fc53d",
+          "cluster_name" : "docker-cluster",
+          "cluster_uuid" : "DoZb5LNrT7eUN8gEh-aLJg",
+          "version" : {
+            "distribution" : "opensearch",
+            "number" : "2.11.1",
+            "build_type" : "tar",
+            "build_hash" : "6b1986e964d440be9137eba1413015c31c5a7752",
+            "build_date" : "2023-11-29T21:45:35.524809067Z",
+            "build_snapshot" : false,
+            "lucene_version" : "9.7.0",
+            "minimum_wire_compatibility_version" : "7.10.0",
+            "minimum_index_compatibility_version" : "7.0.0"
+          },
+          "tagline" : "The OpenSearch Project: https://opensearch.org/"
+        }
+  recorded_at: Mon, 12 Feb 2024 21:43:53 GMT
+- request:
     method: post
     uri: http://localhost:9200/timdex-prod/_search
     body:
@@ -23,10 +68,10 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
-      - '53991'
+      - '53992'
     body:
       encoding: ASCII-8BIT
-      string: '{"took":45,"timed_out":false,"_shards":{"total":1,"successful":1,"skipped":0,"failed":0},"hits":{"total":{"value":2042,"relation":"eq"},"max_score":1.0,"hits":[{"_index":"gismit-2024-02-02t11-36-57","_id":"gismit:SDE_DATA_US_MA_G3OPNSPPOLY_2007","_score":1.0,"_source":{"source":"MIT
+      string: '{"took":347,"timed_out":false,"_shards":{"total":1,"successful":1,"skipped":0,"failed":0},"hits":{"total":{"value":2042,"relation":"eq"},"max_score":1.0,"hits":[{"_index":"gismit-2024-02-02t11-36-57","_id":"gismit:SDE_DATA_US_MA_G3OPNSPPOLY_2007","_score":1.0,"_source":{"source":"MIT
         GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:SDE_DATA_US_MA_G3OPNSPPOLY_2007","timdex_record_id":"gismit:SDE_DATA_US_MA_G3OPNSPPOLY_2007","title":"Massachusetts
         (Open Space, 2007)","citation":"MassGIS (Office : Mass.). Massachusetts (Open
         Space, 2007). MassGIS (Office : Mass.). Geospatial data. https://search.libraries.mit.edu/record/gismit:SDE_DATA_US_MA_G3OPNSPPOLY_2007","content_type":["Geospatial
@@ -483,5 +528,5 @@ http_interactions:
         force group llc","doc_count":114},{"key":"esri","doc_count":94},{"key":"national
         imagery and mapping agency","doc_count":84},{"key":"city of cambridge gis","doc_count":82},{"key":"platts","doc_count":80},{"key":"tele
         atlas b.v.","doc_count":66}]}}}}'
-  recorded_at: Fri, 09 Feb 2024 21:56:38 GMT
+  recorded_at: Mon, 12 Feb 2024 21:43:54 GMT
 recorded_with: VCR 6.2.0

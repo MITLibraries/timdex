@@ -1,6 +1,11 @@
 require 'test_helper'
 
 class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
+  def enable_geospatial
+    test_strategy = Flipflop::FeatureSet.current.test!
+    test_strategy.switch!(:geospatial_search, true)
+  end
+
   def setup
     test_strategy = Flipflop::FeatureSet.current.test!
     test_strategy.switch!(:v2, true)
@@ -184,6 +189,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
   end
 
   test 'graphqlv2 geodistance search returns results' do
+    enable_geospatial
     VCR.use_cassette('graphqlv2 geodistance') do
       post '/graphql', params: { query: '{
                                   search(geodistance: {
@@ -206,6 +212,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
   end
 
   test 'graphqlv2 geodistance search fails without three required arguments' do
+    enable_geospatial
     post '/graphql', params: { query: '{
                                 search(geodistance: {
                                   latitude: 42.3596653,
@@ -228,6 +235,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
   end
 
   test 'graphqlv2 geodistance search with another argument' do
+    enable_geospatial
     VCR.use_cassette('graphqlv2 geodistance with searchterm') do
       post '/graphql', params: { query: '{
                                   search(
