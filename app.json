@@ -3,25 +3,7 @@
   "stack": "heroku-22",
   "scripts": {},
   "env": {
-    "AWS_ACCESS_KEY": {
-      "required": true
-    },
-    "AWS_ELASTICSEARCH": {
-      "required": true
-    },
-    "AWS_SECRET_ACCESS_KEY": {
-      "required": true
-    },
     "AWS_REGION": {
-      "required": true
-    },
-    "ELASTICSEARCH_LOG": {
-      "required": true
-    },
-    "ELASTICSEARCH_INDEX": {
-      "required": true
-    },
-    "ELASTICSEARCH_URL": {
       "required": true
     },
     "EMAIL_FROM": {
