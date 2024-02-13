@@ -20,7 +20,8 @@ class Opensearch
       from:,
       size: SIZE,
       query:,
-      aggregations:
+      aggregations:,
+      sort:
     }
 
     query_hash[:highlight] = highlight if @highlight
@@ -37,6 +38,20 @@ class Opensearch
         filter: filters(@params)
       }
     }
+  end
+
+  def sort
+    [
+      { _score: { order: 'desc' } },
+      {
+        'dates.value.as_date': {
+          order: 'desc',
+          nested: {
+            path: 'dates'
+          }
+        }
+      }
+    ]
   end
 
   def highlight
