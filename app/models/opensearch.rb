@@ -20,7 +20,7 @@ class Opensearch
       from:,
       size: SIZE,
       query:,
-      aggregations:,
+      aggregations: Aggregations.all,
       sort:
     }
 
@@ -243,61 +243,6 @@ class Opensearch
       }
     end
     sources
-  end
-
-  # https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html
-  def aggregations
-    {
-      contributors: {
-        nested: {
-          path: 'contributors'
-        },
-        aggs: {
-          contributor_names: {
-            terms: {
-              field: 'contributors.value.keyword'
-            }
-          }
-        }
-      },
-      content_type: {
-        terms: {
-          field: 'content_type'
-        }
-      },
-      content_format: {
-        terms: {
-          field: 'format'
-        }
-      },
-      languages: {
-        terms: {
-          field: 'languages.keyword'
-        }
-      },
-      literary_form: {
-        terms: {
-          field: 'literary_form'
-        }
-      },
-      source: {
-        terms: {
-          field: 'source'
-        }
-      },
-      subjects: {
-        nested: {
-          path: 'subjects'
-        },
-        aggs: {
-          subject_names: {
-            terms: {
-              field: 'subjects.value.keyword'
-            }
-          }
-        }
-      }
-    }
   end
 
   private
