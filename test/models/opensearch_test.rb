@@ -279,6 +279,8 @@ class OpensearchTest < ActiveSupport::TestCase
     os.instance_variable_set(:@params,
                              { geodistance: { latitude: '42.361145', longitude: '-71.057083', distance: '50mi' } })
 
+    refute(os.matches.to_json.include?('{"multi_match":{"query":'))
+
     assert(
       os.query.to_json.include?('{"distance":"50mi","locations.geoshape":{"lat":"42.361145","lon":"-71.057083"}}')
     )
@@ -294,6 +296,33 @@ class OpensearchTest < ActiveSupport::TestCase
 
     assert(
       os.query.to_json.include?('{"distance":"50mi","locations.geoshape":{"lat":"42.361145","lon":"-71.057083"}}')
+    )
+  end
+
+  test 'can search by bounding box' do
+    os = Opensearch.new
+    os.instance_variable_set(:@params,
+                             { geobox: { max_latitude: '42.886', min_latitude: '41.239',
+                                         max_longitude: '-73.928', min_longitude: '-69.507' } })
+
+    refute(os.matches.to_json.include?('{"multi_match":{"query"'))
+
+    assert(
+      os.query.to_json.include?('{"locations.geoshape":{"top":"42.886","bottom":"41.239","left":"-69.507","right":"-73.928"}}')
+    )
+  end
+
+  test 'can search by bounding box and keyword' do
+    os = Opensearch.new
+    os.instance_variable_set(:@params,
+                             { geobox: { max_latitude: '42.886', min_latitude: '41.239',
+                                         max_longitude: '-73.928', min_longitude: '-69.507' },
+                               q: 'rail stations' })
+
+    assert(os.matches.to_json.include?('{"multi_match":{"query":"rail stations","fields":'))
+
+    assert(
+      os.query.to_json.include?('{"locations.geoshape":{"top":"42.886","bottom":"41.239","left":"-69.507","right":"-73.928"}}')
     )
   end
 end
