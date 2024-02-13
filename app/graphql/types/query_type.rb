@@ -71,6 +71,8 @@ module Types
                                                          'aggregation for a list of possible values'
       argument :literary_form_filter, String, required: false, default_value: nil,
                                               description: 'Filter results by fiction or nonfiction'
+      argument :publication_information_filter, [String], required: false, default_value: nil,
+                                                          description: 'Filter results by publication information'
       argument :source_filter, [String], required: false, default_value: nil,
                                          description: 'Filter by source record system. Use the `sources` aggregation ' \
                                                       'for a list of possible values'
@@ -129,6 +131,7 @@ module Types
       query[:contributors_filter] = filters[:contributors_filter]
       query[:languages_filter] = filters[:languages_filter]
       query[:literary_form_filter] = filters[:literary_form_filter]
+      query[:publication_information_filter] = filters[:publication_information_filter]
       query = source_deprecation_handler(query, filters[:source_filter], source)
       query[:subjects_filter] = filters[:subjects_filter]
       query
@@ -149,6 +152,7 @@ module Types
         subjects: es_aggs['subjects']['subject_names']['buckets'],
         languages: es_aggs['languages']['buckets'],
         literary_form: es_aggs['literary_form']['buckets'],
+        publication_information: es_aggs['publication_information']['buckets'],
         format: es_aggs['content_format']['buckets'],
         content_type: es_aggs['content_type']['buckets']
       }

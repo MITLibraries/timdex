@@ -12,6 +12,7 @@ module Types
     field :languages, [Types::AggregationCountType], null: true, description: 'Total search results by language'
     field :literary_form, [Types::AggregationCountType], null: true,
                                                          description: 'Total search results by fiction or nonfiction'
+    field :publication_information, [Types::AggregationCountType], null: true, description: 'Total search results by publisher'
     field :source, [Types::AggregationCountType], null: true,
                                                   description: 'Total search results by source record system'
     field :subjects, [Types::AggregationCountType], null: true, description: 'Total search results by subject term'
