@@ -1,0 +1,436 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:9200/timdex-prod/_search
+    body:
+      encoding: UTF-8
+      string: '{"from":"0","size":20,"query":{"bool":{"should":null,"must":[{"bool":{"must":{"match_all":{}},"filter":{"geo_bounding_box":{"locations.geoshape":{"top":90.0,"bottom":-90.0,"left":180.0,"right":0.0}}}}}],"filter":[]}},"aggregations":{"contributors":{"nested":{"path":"contributors"},"aggs":{"contributor_names":{"terms":{"field":"contributors.value.keyword"}}}},"content_type":{"terms":{"field":"content_type"}},"content_format":{"terms":{"field":"format"}},"languages":{"terms":{"field":"languages.keyword"}},"literary_form":{"terms":{"field":"literary_form"}},"source":{"terms":{"field":"source"}},"subjects":{"nested":{"path":"subjects"},"aggs":{"subject_names":{"terms":{"field":"subjects.value.keyword"}}}}},"sort":[{"_score":{"order":"desc"}},{"dates.value.as_date":{"order":"desc","nested":{"path":"dates"}}}]}'
+    headers:
+      User-Agent:
+      - 'opensearch-ruby/3.1.0 (RUBY_VERSION: 3.2.2; darwin arm64; Faraday v2.9.0)'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '48052'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"took":10,"timed_out":false,"_shards":{"total":1,"successful":1,"skipped":0,"failed":0},"hits":{"total":{"value":1449,"relation":"eq"},"max_score":null,"hits":[{"_index":"gismit-2024-02-02t11-36-57","_id":"gismit:us_ma_boston_g47parcels_2018","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:us_ma_boston_g47parcels_2018","timdex_record_id":"gismit:us_ma_boston_g47parcels_2018","title":"Boston,
+        MA (Land parcels, 2018)","citation":"City of Boston Assessing Department.
+        Boston, MA (Land parcels, 2018). GIS Lab, MIT Libraries. Geospatial data.
+        https://search.libraries.mit.edu/record/gismit:us_ma_boston_g47parcels_2018","content_type":["Geospatial
+        data"],"contributors":[{"value":"City of Boston Assessing Department","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2018-01-01"},{"kind":"Coverage","value":"2015-01-01"},{"kind":"Coverage","value":"2015"}],"format":"Vector","identifiers":[{"value":"us_ma_boston_g47parcels_2018","kind":"Not
+        specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/us_ma_boston_g47parcels_2018.source.fgdc.xml","kind":"Download","text":"Source
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/us_ma_boston_g47parcels_2018.normalized.aardvark.json","kind":"Download","text":"Normalized
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/us_ma_boston_g47parcels_2018.zip","kind":"Download","text":"Data
+        Zipfile"}],"locations":[{"kind":"Bounding Box","geoshape":"BBOX (-71.190913,
+        -70.868654, 42.397012, 42.227864)"},{"kind":"Geometry","geoshape":"BBOX (-71.190913,
+        -70.868654, 42.397012, 42.227864)"}],"publication_information":["GIS Lab,
+        MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"N/A"}],"subjects":[{"value":["Economy"],"kind":"DCAT;
+        Theme"},{"value":["Boundaries"],"kind":"DCAT; Theme"},{"value":["Location"],"kind":"DCAT;
+        Theme"},{"value":["Massachusetts--Boston"],"kind":"Dublin Core; Spatial"},{"value":["Land
+        use"],"kind":"Dublin Core; Subject"},{"value":["Neighborhoods"],"kind":"Dublin
+        Core; Subject"},{"value":["Administrative and political divisions"],"kind":"Dublin
+        Core; Subject"},{"value":["Land value taxation"],"kind":"Dublin Core; Subject"},{"value":["Land
+        tenure"],"kind":"Dublin Core; Subject"},{"value":["economy"],"kind":"Dublin
+        Core; Subject"},{"value":["planningCadastre"],"kind":"Dublin Core; Subject"},{"value":["boundaries"],"kind":"Dublin
+        Core; Subject"},{"value":["location"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
+        scheme not provided"},{"value":["G-polygon"],"kind":"Subject scheme not provided"}],"summary":["City
+        of Boston property parcel data from FY 2018 was joined with parcel boundaries
+        from FY 2018. All data is from the City of Boston Assessor''s office and represents
+        data from 2017."]},"sort":[1.0,1514764800000]},{"_index":"gismit-2024-02-02t11-36-57","_id":"gismit:us_ma_boston_g47parcels_2017","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:us_ma_boston_g47parcels_2017","timdex_record_id":"gismit:us_ma_boston_g47parcels_2017","title":"Boston,
+        MA (Land parcels, 2017)","citation":"City of Boston Assessing Department.
+        Boston, MA (Land parcels, 2017). GIS Lab, MIT Libraries. Geospatial data.
+        https://search.libraries.mit.edu/record/gismit:us_ma_boston_g47parcels_2017","content_type":["Geospatial
+        data"],"contributors":[{"value":"City of Boston Assessing Department","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2017-01-01"},{"kind":"Coverage","value":"2017-01-01"},{"kind":"Coverage","value":"2017"}],"format":"Vector","identifiers":[{"value":"us_ma_boston_g47parcels_2017","kind":"Not
+        specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/us_ma_boston_g47parcels_2017.source.fgdc.xml","kind":"Download","text":"Source
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/us_ma_boston_g47parcels_2017.normalized.aardvark.json","kind":"Download","text":"Normalized
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/us_ma_boston_g47parcels_2017.zip","kind":"Download","text":"Data
+        Zipfile"}],"locations":[{"kind":"Bounding Box","geoshape":"BBOX (-71.190913,
+        -70.923055, 42.397004, 42.227856)"},{"kind":"Geometry","geoshape":"BBOX (-71.190913,
+        -70.923055, 42.397004, 42.227856)"}],"publication_information":["GIS Lab,
+        MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"N/A"}],"subjects":[{"value":["Economy"],"kind":"DCAT;
+        Theme"},{"value":["Boundaries"],"kind":"DCAT; Theme"},{"value":["Location"],"kind":"DCAT;
+        Theme"},{"value":["Massachusetts--Boston"],"kind":"Dublin Core; Spatial"},{"value":["Land
+        use"],"kind":"Dublin Core; Subject"},{"value":["Neighborhoods"],"kind":"Dublin
+        Core; Subject"},{"value":["Administrative and political divisions"],"kind":"Dublin
+        Core; Subject"},{"value":["Land value taxation"],"kind":"Dublin Core; Subject"},{"value":["Land
+        tenure"],"kind":"Dublin Core; Subject"},{"value":["economy"],"kind":"Dublin
+        Core; Subject"},{"value":["planningCadastre"],"kind":"Dublin Core; Subject"},{"value":["boundaries"],"kind":"Dublin
+        Core; Subject"},{"value":["location"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
+        scheme not provided"},{"value":["G-polygon"],"kind":"Subject scheme not provided"}],"summary":["City
+        of Boston property parcel data from FY 2017 was joined with parcel boundaries
+        from FY 2017. All data is from the City of Boston Assessor''s office and represents
+        data from 2016."]},"sort":[1.0,1483228800000]},{"_index":"gismit-2024-02-02t11-36-57","_id":"gismit:US_MA_BOSTON_G47PARCELS_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:US_MA_BOSTON_G47PARCELS_2016","timdex_record_id":"gismit:US_MA_BOSTON_G47PARCELS_2016","title":"Boston,
+        MA (Land parcels, 2016)","citation":"City of Boston Assessing Department.
+        Boston, MA (Land parcels, 2016). GIS Lab, MIT Libraries. Geospatial data.
+        https://search.libraries.mit.edu/record/gismit:US_MA_BOSTON_G47PARCELS_2016","content_type":["Geospatial
+        data"],"contributors":[{"value":"City of Boston Assessing Department","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2017-01-01"},{"kind":"Coverage","value":"2016-01-01"},{"kind":"Coverage","value":"2016"}],"format":"Vector","identifiers":[{"value":"us_ma_boston_g47parcels_2016","kind":"Not
+        specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/US_MA_BOSTON_G47PARCELS_2016.source.fgdc.xml","kind":"Download","text":"Source
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/US_MA_BOSTON_G47PARCELS_2016.normalized.aardvark.json","kind":"Download","text":"Normalized
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/US_MA_BOSTON_G47PARCELS_2016.zip","kind":"Download","text":"Data
+        Zipfile"}],"locations":[{"kind":"Bounding Box","geoshape":"BBOX (-71.190913,
+        -70.923055, 42.397004, 42.227856)"},{"kind":"Geometry","geoshape":"BBOX (-71.190913,
+        -70.923055, 42.397004, 42.227856)"}],"publication_information":["GIS Lab,
+        MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"N/A"}],"subjects":[{"value":["Economy"],"kind":"DCAT;
+        Theme"},{"value":["Boundaries"],"kind":"DCAT; Theme"},{"value":["Location"],"kind":"DCAT;
+        Theme"},{"value":["Boston"],"kind":"Dublin Core; Spatial"},{"value":["USA"],"kind":"Dublin
+        Core; Spatial"},{"value":["Massachusetts"],"kind":"Dublin Core; Spatial"},{"value":["MA"],"kind":"Dublin
+        Core; Spatial"},{"value":["parcels"],"kind":"Dublin Core; Subject"},{"value":["land
+        parcels"],"kind":"Dublin Core; Subject"},{"value":["land use"],"kind":"Dublin
+        Core; Subject"},{"value":["wards"],"kind":"Dublin Core; Subject"},{"value":["polygon"],"kind":"Dublin
+        Core; Subject"},{"value":["tax"],"kind":"Dublin Core; Subject"},{"value":["land
+        ownership"],"kind":"Dublin Core; Subject"},{"value":["improvements"],"kind":"Dublin
+        Core; Subject"},{"value":["neighborhoods"],"kind":"Dublin Core; Subject"},{"value":["lot
+        size"],"kind":"Dublin Core; Subject"},{"value":["economy"],"kind":"Dublin
+        Core; Subject"},{"value":["planningCadastre"],"kind":"Dublin Core; Subject"},{"value":["boundaries"],"kind":"Dublin
+        Core; Subject"},{"value":["location"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
+        scheme not provided"},{"value":["G-polygon"],"kind":"Subject scheme not provided"}],"summary":["City
+        of Boston property parcel data from FY 2016 was joined with parcel boundaries
+        from FY 2016. All data is from the City of Boston Assessor''s office and represents
+        data from 2015."]},"sort":[1.0,1483228800000]},{"_index":"gismit-2024-02-02t11-36-57","_id":"gismit:dz_a1cities_10k20k_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_a1cities_10k20k_2016","timdex_record_id":"gismit:dz_a1cities_10k20k_2016","title":"Algeria
+        (Cities (10k-20k), 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Cities
+        (10k-20k), 2016). GIS Lab, MIT Libraries. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_a1cities_10k20k_2016","content_type":["Geospatial
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_a1cities_10k20k_2016","kind":"Not
+        specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_10k20k_2016.source.fgdc.xml","kind":"Download","text":"Source
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_10k20k_2016.normalized.aardvark.json","kind":"Download","text":"Normalized
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_a1cities_10k20k_2016.zip","kind":"Download","text":"Data
+        Zipfile"}],"locations":[{"kind":"Bounding Box","geoshape":"BBOX (-1.423186,
+        8.313771, 36.917160, 29.388636)"},{"kind":"Geometry","geoshape":"BBOX (-1.423186,
+        8.313771, 36.917160, 29.388636)"}],"publication_information":["GIS Lab, MIT
+        Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"License
+        required"}],"subjects":[{"value":["Location"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
+        Core; Spatial"},{"value":["Cities and towns"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Entity
+        point"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-02t11-36-57","_id":"gismit:dz_a1cities_20k50k_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_a1cities_20k50k_2016","timdex_record_id":"gismit:dz_a1cities_20k50k_2016","title":"Algeria
+        (Cities (20k-50k), 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Cities
+        (20k-50k), 2016). GIS Lab, MIT Libraries. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_a1cities_20k50k_2016","content_type":["Geospatial
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_a1cities_20k50k_2016","kind":"Not
+        specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_20k50k_2016.source.fgdc.xml","kind":"Download","text":"Source
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_20k50k_2016.normalized.aardvark.json","kind":"Download","text":"Normalized
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_a1cities_20k50k_2016.zip","kind":"Download","text":"Data
+        Zipfile"}],"locations":[{"kind":"Bounding Box","geoshape":"BBOX (-1.856799,
+        8.443333, 37.007167, 19.573696)"},{"kind":"Geometry","geoshape":"BBOX (-1.856799,
+        8.443333, 37.007167, 19.573696)"}],"publication_information":["GIS Lab, MIT
+        Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"License
+        required"}],"subjects":[{"value":["Location"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
+        Core; Spatial"},{"value":["Cities and towns"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Entity
+        point"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-02t11-36-57","_id":"gismit:dz_a1cities_50k100k_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_a1cities_50k100k_2016","timdex_record_id":"gismit:dz_a1cities_50k100k_2016","title":"Algeria
+        (Cities (50k-100k), 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Cities
+        (50k-100k), 2016). GIS Lab, MIT Libraries. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_a1cities_50k100k_2016","content_type":["Geospatial
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_a1cities_50k100k_2016","kind":"Not
+        specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_50k100k_2016.source.fgdc.xml","kind":"Download","text":"Source
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_50k100k_2016.normalized.aardvark.json","kind":"Download","text":"Normalized
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_a1cities_50k100k_2016.zip","kind":"Download","text":"Data
+        Zipfile"}],"locations":[{"kind":"Bounding Box","geoshape":"BBOX (-8.147435,
+        8.129167, 36.823460, 22.785000)"},{"kind":"Geometry","geoshape":"BBOX (-8.147435,
+        8.129167, 36.823460, 22.785000)"}],"publication_information":["GIS Lab, MIT
+        Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"License
+        required"}],"subjects":[{"value":["Location"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
+        Core; Spatial"},{"value":["Cities and towns"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Entity
+        point"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-02t11-36-57","_id":"gismit:dz_p2hig_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_p2hig_2016","timdex_record_id":"gismit:dz_p2hig_2016","title":"Algeria
+        (Cities (100k-500k), 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Cities
+        (100k-500k), 2016). GIS Lab, MIT Libraries. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_p2hig_2016","content_type":["Geospatial
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_a1cities_100k500k_2016","kind":"Not
+        specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_p2hig_2016.source.fgdc.xml","kind":"Download","text":"Source
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_p2hig_2016.normalized.aardvark.json","kind":"Download","text":"Normalized
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_p2hig_2016.zip","kind":"Download","text":"Data
+        Zipfile"}],"locations":[{"kind":"Bounding Box","geoshape":"BBOX (-2.216667,
+        8.124167, 36.900000, 31.616667)"},{"kind":"Geometry","geoshape":"BBOX (-2.216667,
+        8.124167, 36.900000, 31.616667)"}],"publication_information":["GIS Lab, MIT
+        Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"License
+        required"}],"subjects":[{"value":["Transportation"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
+        Core; Spatial"},{"value":["Roads"],"kind":"Dublin Core; Subject"},{"value":["transportation"],"kind":"Dublin
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Entity
+        point"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-02t11-36-57","_id":"gismit:dz_c28hydpoly_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_c28hydpoly_2016","timdex_record_id":"gismit:dz_c28hydpoly_2016","title":"Algeria
+        (Cities (10k-20k), 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Cities
+        (10k-20k), 2016). GIS Lab, MIT Libraries. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_c28hydpoly_2016","content_type":["Geospatial
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_a1cities_10k20k_2016","kind":"Not
+        specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_c28hydpoly_2016.source.fgdc.xml","kind":"Download","text":"Source
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_c28hydpoly_2016.normalized.aardvark.json","kind":"Download","text":"Normalized
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_c28hydpoly_2016.zip","kind":"Download","text":"Data
+        Zipfile"}],"locations":[{"kind":"Bounding Box","geoshape":"BBOX (-1.423186,
+        8.313771, 36.917160, 29.388636)"},{"kind":"Geometry","geoshape":"BBOX (-1.423186,
+        8.313771, 36.917160, 29.388636)"}],"publication_information":["GIS Lab, MIT
+        Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"License
+        required"}],"subjects":[{"value":["Algeria"],"kind":"Dublin Core; Spatial"},{"value":["Hydrology"],"kind":"Dublin
+        Core; Subject"},{"value":["inlandWaters"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
+        scheme not provided"},{"value":["Entity point"],"kind":"Subject scheme not
+        provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-02t11-36-57","_id":"gismit:dz_p2roads_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_p2roads_2016","timdex_record_id":"gismit:dz_p2roads_2016","title":"Algeria
+        (Roads, 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Roads, 2016). GIS
+        Lab, MIT Libraries. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_p2roads_2016","content_type":["Geospatial
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_p2roads_2016","kind":"Not
+        specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_p2roads_2016.source.fgdc.xml","kind":"Download","text":"Source
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_p2roads_2016.normalized.aardvark.json","kind":"Download","text":"Normalized
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_p2roads_2016.zip","kind":"Download","text":"Data
+        Zipfile"}],"locations":[{"kind":"Bounding Box","geoshape":"BBOX (-8.154491,
+        10.548201, 36.919383, 19.442285)"},{"kind":"Geometry","geoshape":"BBOX (-8.154491,
+        10.548201, 36.919383, 19.442285)"}],"publication_information":["GIS Lab, MIT
+        Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"License
+        required"}],"subjects":[{"value":["Transportation"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
+        Core; Spatial"},{"value":["Roads"],"kind":"Dublin Core; Subject"},{"value":["transportation"],"kind":"Dublin
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["String"],"kind":"Subject
+        scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-02t11-36-57","_id":"gismit:dz_a1cities_100k500k_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_a1cities_100k500k_2016","timdex_record_id":"gismit:dz_a1cities_100k500k_2016","title":"Algeria
+        (Cities (100k-500k), 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Cities
+        (100k-500k), 2016). GIS Lab, MIT Libraries. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_a1cities_100k500k_2016","content_type":["Geospatial
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_a1cities_100k500k_2016","kind":"Not
+        specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_100k500k_2016.source.fgdc.xml","kind":"Download","text":"Source
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_100k500k_2016.normalized.aardvark.json","kind":"Download","text":"Normalized
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_a1cities_100k500k_2016.zip","kind":"Download","text":"Data
+        Zipfile"}],"locations":[{"kind":"Bounding Box","geoshape":"BBOX (-2.216667,
+        8.124167, 36.900000, 31.616667)"},{"kind":"Geometry","geoshape":"BBOX (-2.216667,
+        8.124167, 36.900000, 31.616667)"}],"publication_information":["GIS Lab, MIT
+        Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"License
+        required"}],"subjects":[{"value":["Location"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
+        Core; Spatial"},{"value":["Cities and towns"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Entity
+        point"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-02t11-36-57","_id":"gismit:dz_p61airports_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_p61airports_2016","timdex_record_id":"gismit:dz_p61airports_2016","title":"Algeria
+        (Airports, 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Airports, 2016).
+        GfK GeoMarketing GmbH. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_p61airports_2016","content_type":["Geospatial
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_p61airports_2016","kind":"Not
+        specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_p61airports_2016.source.fgdc.xml","kind":"Download","text":"Source
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_p61airports_2016.normalized.aardvark.json","kind":"Download","text":"Normalized
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_p61airports_2016.zip","kind":"Download","text":"Data
+        Zipfile"}],"locations":[{"kind":"Bounding Box","geoshape":"BBOX (-8.166223,
+        9.638056, 29.236944, 22.816967)"},{"kind":"Geometry","geoshape":"BBOX (-8.166223,
+        9.638056, 29.236944, 22.816967)"}],"publication_information":["GfK GeoMarketing
+        GmbH","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"Access
+        is limited to members of the MIT community only -- maps may not be given to
+        anyone not officially and currently affiliated with MIT. Maps may be used
+        only for research, educational, and other scholarly purposes; it is permissible
+        to use images created from the software and data in scholarly publications
+        and dissertations. Any other use, unless it falls within the Fair Use provisions
+        of U.S. copyright law, is not permitted.The copyright of GfK GeoMarketing
+        must be placed on the maps.The data can be published as a Bitmap or comparable
+        format."}],"subjects":[{"value":["Transportation"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
+        Core; Spatial"},{"value":["Airports"],"kind":"Dublin Core; Subject"},{"value":["transportation"],"kind":"Dublin
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Entity
+        point"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-02t11-36-57","_id":"gismit:dz_a1cities_0k10k_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_a1cities_0k10k_2016","timdex_record_id":"gismit:dz_a1cities_0k10k_2016","title":"Algeria
+        (Cities (<10k), 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Cities
+        (<10k), 2016). GIS Lab, MIT Libraries. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_a1cities_0k10k_2016","content_type":["Geospatial
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_a1cities_0k10k_2016","kind":"Not
+        specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_0k10k_2016.source.fgdc.xml","kind":"Download","text":"Source
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_0k10k_2016.normalized.aardvark.json","kind":"Download","text":"Normalized
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_a1cities_0k10k_2016.zip","kind":"Download","text":"Data
+        Zipfile"}],"locations":[{"kind":"Bounding Box","geoshape":"BBOX (-7.843005,
+        11.241667, 37.075000, 19.166667)"},{"kind":"Geometry","geoshape":"BBOX (-7.843005,
+        11.241667, 37.075000, 19.166667)"}],"publication_information":["GIS Lab, MIT
+        Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"License
+        required"}],"subjects":[{"value":["Location"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
+        Core; Spatial"},{"value":["Cities and towns"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Entity
+        point"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-02t11-36-57","_id":"gismit:dz_f7regions_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_f7regions_2016","timdex_record_id":"gismit:dz_f7regions_2016","title":"Algeria
+        (2-Digit Postal Code Areas, 2016)","citation":"GfK GeoMarketing GmbH. Algeria
+        (2-Digit Postal Code Areas, 2016). GfK GeoMarketing GmbH. Geospatial data.
+        https://search.libraries.mit.edu/record/gismit:dz_f7regions_2016","content_type":["Geospatial
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-01-01"}],"format":"Vector","identifiers":[{"value":"Algeria
+        2-digit postcode areas 2016Copy","kind":"Not specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_f7regions_2016.source.fgdc.xml","kind":"Download","text":"Source
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_f7regions_2016.normalized.aardvark.json","kind":"Download","text":"Normalized
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_f7regions_2016.zip","kind":"Download","text":"Data
+        Zipfile"}],"locations":[{"kind":"Bounding Box","geoshape":"BBOX (-8.667992,
+        11.994246, 37.089704, 18.956237)"},{"kind":"Geometry","geoshape":"BBOX (-8.667992,
+        11.994246, 37.089704, 18.956237)"}],"publication_information":["GfK GeoMarketing
+        GmbH","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"Access
+        is limited to members of the MIT community only -- maps may not be given to
+        anyone not officially and currently affiliated with MIT. Maps may be used
+        only for research, educational, and other scholarly purposes; it is permissible
+        to use images created from the software and data in scholarly publications
+        and dissertations. Any other use, unless it falls within the Fair Use provisions
+        of U.S. copyright law, is not permitted.The copyright of GfK GeoMarketing
+        must be placed on the maps.The data can be published as a Bitmap or comparable
+        format."}],"subjects":[{"value":["Location"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
+        Core; Spatial"},{"value":["Postal codes"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["G-polygon"],"kind":"Subject
+        scheme not provided"}]},"sort":[1.0,1451606400000]},{"_index":"gismit-2024-02-02t11-36-57","_id":"gismit:dz_p8postcode2dig_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_p8postcode2dig_2016","timdex_record_id":"gismit:dz_p8postcode2dig_2016","title":"Algeria
+        (2-Digit Postal Code Areas, 2016)","citation":"GfK GeoMarketing GmbH. Algeria
+        (2-Digit Postal Code Areas, 2016). GfK GeoMarketing GmbH. Geospatial data.
+        https://search.libraries.mit.edu/record/gismit:dz_p8postcode2dig_2016","content_type":["Geospatial
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-01-01"}],"format":"Vector","identifiers":[{"value":"Algeria
+        2-digit postcode areas 2016Copy","kind":"Not specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_p8postcode2dig_2016.source.fgdc.xml","kind":"Download","text":"Source
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_p8postcode2dig_2016.normalized.aardvark.json","kind":"Download","text":"Normalized
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_p8postcode2dig_2016.zip","kind":"Download","text":"Data
+        Zipfile"}],"locations":[{"kind":"Bounding Box","geoshape":"BBOX (-8.667992,
+        11.994246, 37.089704, 18.956237)"},{"kind":"Geometry","geoshape":"BBOX (-8.667992,
+        11.994246, 37.089704, 18.956237)"}],"publication_information":["GfK GeoMarketing
+        GmbH","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"Access
+        is limited to members of the MIT community only -- maps may not be given to
+        anyone not officially and currently affiliated with MIT. Maps may be used
+        only for research, educational, and other scholarly purposes; it is permissible
+        to use images created from the software and data in scholarly publications
+        and dissertations. Any other use, unless it falls within the Fair Use provisions
+        of U.S. copyright law, is not permitted.The copyright of GfK GeoMarketing
+        must be placed on the maps.The data can be published as a Bitmap or comparable
+        format."}],"subjects":[{"value":["Location"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
+        Core; Spatial"},{"value":["Postal codes"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["G-polygon"],"kind":"Subject
+        scheme not provided"}]},"sort":[1.0,1451606400000]},{"_index":"gismit-2024-02-02t11-36-57","_id":"gismit:US_MA_BOSTON_G47PARCELS_2015","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:US_MA_BOSTON_G47PARCELS_2015","timdex_record_id":"gismit:US_MA_BOSTON_G47PARCELS_2015","title":"Boston,
+        MA (Land parcels, 2015)","citation":"City of Boston Assessing Department.
+        Boston, MA (Land parcels, 2015). City of Boston Assessing Department. Geospatial
+        data. https://search.libraries.mit.edu/record/gismit:US_MA_BOSTON_G47PARCELS_2015","content_type":["Geospatial
+        data"],"contributors":[{"value":"City of Boston Assessing Department","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2015-01-01"},{"kind":"Coverage","value":"2015-01-01"},{"kind":"Coverage","value":"2015"}],"format":"Vector","identifiers":[{"value":"us_ma_boston_g47parcels_2015","kind":"Not
+        specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/US_MA_BOSTON_G47PARCELS_2015.source.fgdc.xml","kind":"Download","text":"Source
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/US_MA_BOSTON_G47PARCELS_2015.normalized.aardvark.json","kind":"Download","text":"Normalized
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/US_MA_BOSTON_G47PARCELS_2015.zip","kind":"Download","text":"Data
+        Zipfile"}],"locations":[{"kind":"Bounding Box","geoshape":"BBOX (-71.190913,
+        -70.953184, 42.397012, 42.227864)"},{"kind":"Geometry","geoshape":"BBOX (-71.190913,
+        -70.953184, 42.397012, 42.227864)"}],"publication_information":["City of Boston
+        Assessing Department","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"N/A"}],"subjects":[{"value":["Economy"],"kind":"DCAT;
+        Theme"},{"value":["Boundaries"],"kind":"DCAT; Theme"},{"value":["Location"],"kind":"DCAT;
+        Theme"},{"value":["Boston"],"kind":"Dublin Core; Spatial"},{"value":["USA"],"kind":"Dublin
+        Core; Spatial"},{"value":["Massachusetts"],"kind":"Dublin Core; Spatial"},{"value":["MA"],"kind":"Dublin
+        Core; Spatial"},{"value":["parcels"],"kind":"Dublin Core; Subject"},{"value":["land
+        parcels"],"kind":"Dublin Core; Subject"},{"value":["land use"],"kind":"Dublin
+        Core; Subject"},{"value":["wards"],"kind":"Dublin Core; Subject"},{"value":["polygon"],"kind":"Dublin
+        Core; Subject"},{"value":["tax"],"kind":"Dublin Core; Subject"},{"value":["land
+        ownership"],"kind":"Dublin Core; Subject"},{"value":["improvements"],"kind":"Dublin
+        Core; Subject"},{"value":["neighborhoods"],"kind":"Dublin Core; Subject"},{"value":["lot
+        size"],"kind":"Dublin Core; Subject"},{"value":["economy"],"kind":"Dublin
+        Core; Subject"},{"value":["planningCadastre"],"kind":"Dublin Core; Subject"},{"value":["boundaries"],"kind":"Dublin
+        Core; Subject"},{"value":["location"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
+        scheme not provided"},{"value":["G-polygon"],"kind":"Subject scheme not provided"}],"summary":["City
+        of Boston property parcel data from FY 2015 was joined with parcel boundaries
+        from FY 2015. All data is from the City of Boston Assessor''s office and represents
+        data from 2014."]},"sort":[1.0,1420070400000]},{"_index":"gismit-2024-02-02t11-36-57","_id":"gismit:SDE_DATA_INT_P94INCLUSIONS3G_2014","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:SDE_DATA_INT_P94INCLUSIONS3G_2014","timdex_record_id":"gismit:SDE_DATA_INT_P94INCLUSIONS3G_2014","title":"World
+        (3G Mobile Phone Coverage Inclusion, 2014)","citation":"Collins Bartholomew.
+        World (3G Mobile Phone Coverage Inclusion, 2014). Collins Bartholomew. Geospatial
+        data. https://search.libraries.mit.edu/record/gismit:SDE_DATA_INT_P94INCLUSIONS3G_2014","content_type":["Geospatial
+        data"],"contributors":[{"value":"Collins Bartholomew","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2014-12-01"},{"kind":"Coverage","value":"2014-12-01"},{"kind":"Coverage","value":"2014"}],"format":"Vector","identifiers":[{"value":"INT_P94INCLUSIONS3G_2014","kind":"Not
+        specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/SDE_DATA_INT_P94INCLUSIONS3G_2014.source.fgdc.xml","kind":"Download","text":"Source
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/SDE_DATA_INT_P94INCLUSIONS3G_2014.normalized.aardvark.json","kind":"Download","text":"Normalized
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/SDE_DATA_INT_P94INCLUSIONS3G_2014.zip","kind":"Download","text":"Data
+        Zipfile"}],"locations":[{"kind":"Bounding Box","geoshape":"BBOX (-150.000000,
+        177.972000, 64.793404, -40.000000)"},{"kind":"Geometry","geoshape":"BBOX (-150.000000,
+        177.972000, 64.793404, -40.000000)"}],"publication_information":["Collins
+        Bartholomew","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Earth
+        (Planet)"],"kind":"Dublin Core; Spatial"},{"value":["utilitiesCommunication"],"kind":"Dublin
+        Core; Subject"},{"value":["Public utilities"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
+        scheme not provided"},{"value":["Entity point"],"kind":"Subject scheme not
+        provided"}],"summary":["These inclusion metadata files for GSM, 3G, and 4G
+        mobile coverage are an attempt at listing all the networks which are included
+        in the separate world mobile phone coverage datasets. Unfortunately the lists
+        cannot be comprehensive because legacy datasets did not maintain the information
+        required to make them complete."]},"sort":[1.0,1417392000000]},{"_index":"gismit-2024-02-02t11-36-57","_id":"gismit:SDE_DATA_INT_P94INCLUSIONS4G_2014","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:SDE_DATA_INT_P94INCLUSIONS4G_2014","timdex_record_id":"gismit:SDE_DATA_INT_P94INCLUSIONS4G_2014","title":"World
+        (4G Mobile Phone Coverage Inclusion, 2014)","citation":"Collins Bartholomew.
+        World (4G Mobile Phone Coverage Inclusion, 2014). Collins Bartholomew. Geospatial
+        data. https://search.libraries.mit.edu/record/gismit:SDE_DATA_INT_P94INCLUSIONS4G_2014","content_type":["Geospatial
+        data"],"contributors":[{"value":"Collins Bartholomew","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2014-12-01"},{"kind":"Coverage","value":"2014-12-01"},{"kind":"Coverage","value":"2014"}],"format":"Vector","identifiers":[{"value":"INT_P94INCLUSIONS4G_2014","kind":"Not
+        specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/SDE_DATA_INT_P94INCLUSIONS4G_2014.source.fgdc.xml","kind":"Download","text":"Source
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/SDE_DATA_INT_P94INCLUSIONS4G_2014.normalized.aardvark.json","kind":"Download","text":"Normalized
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/SDE_DATA_INT_P94INCLUSIONS4G_2014.zip","kind":"Download","text":"Data
+        Zipfile"}],"locations":[{"kind":"Bounding Box","geoshape":"BBOX (-100.000000,
+        170.481070, 64.518784, -40.000000)"},{"kind":"Geometry","geoshape":"BBOX (-100.000000,
+        170.481070, 64.518784, -40.000000)"}],"publication_information":["Collins
+        Bartholomew","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Earth
+        (Planet)"],"kind":"Dublin Core; Spatial"},{"value":["utilitiesCommunication"],"kind":"Dublin
+        Core; Subject"},{"value":["Public utilities"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
+        scheme not provided"},{"value":["Entity point"],"kind":"Subject scheme not
+        provided"}],"summary":["These inclusion metadata files for GSM, 3G, and 4G
+        mobile coverage are an attempt at listing all the networks which are included
+        in the separate world mobile phone coverage datasets. Unfortunately the lists
+        cannot be comprehensive because legacy datasets did not maintain the information
+        required to make them complete."]},"sort":[1.0,1417392000000]},{"_index":"gismit-2024-02-02t11-36-57","_id":"gismit:SDE_DATA_INT_P944G_2014","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:SDE_DATA_INT_P944G_2014","timdex_record_id":"gismit:SDE_DATA_INT_P944G_2014","title":"World
+        (4G Mobile Phone Coverage, 2014)","citation":"Collins Bartholomew. World (4G
+        Mobile Phone Coverage, 2014). Collins Bartholomew. Geospatial data. https://search.libraries.mit.edu/record/gismit:SDE_DATA_INT_P944G_2014","content_type":["Geospatial
+        data"],"contributors":[{"value":"Collins Bartholomew","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2014-12-01"},{"kind":"Coverage","value":"2014-12-01"},{"kind":"Coverage","value":"2014"}],"format":"Vector","identifiers":[{"value":"INT_P944G_2014","kind":"Not
+        specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/SDE_DATA_INT_P944G_2014.source.fgdc.xml","kind":"Download","text":"Source
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/SDE_DATA_INT_P944G_2014.normalized.aardvark.json","kind":"Download","text":"Normalized
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/SDE_DATA_INT_P944G_2014.zip","kind":"Download","text":"Data
+        Zipfile"}],"locations":[{"kind":"Bounding Box","geoshape":"BBOX (-135.373169,
+        178.145985, 68.532066, -46.186684)"},{"kind":"Geometry","geoshape":"BBOX (-135.373169,
+        178.145985, 68.532066, -46.186684)"}],"publication_information":["Collins
+        Bartholomew","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Earth
+        (Planet)"],"kind":"Dublin Core; Spatial"},{"value":["utilitiesCommunication"],"kind":"Dublin
+        Core; Subject"},{"value":["Public utilities"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
+        scheme not provided"},{"value":["G-polygon"],"kind":"Subject scheme not provided"}],"summary":["Collins
+        Mobile Coverage Explorer is a representation of the area covered by mobile
+        communications around the world. The data is created from submissions, made
+        directly to Collins Bartholomew or the GSMA from mobile operators, which provide
+        roaming detail for inclusion in the online mapping application known as Collins
+        Mobile Coverage Web."]},"sort":[1.0,1417392000000]},{"_index":"gismit-2024-02-02t11-36-57","_id":"gismit:SDE_DATA_INT_P94INCLUSIONSGSM_2014","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:SDE_DATA_INT_P94INCLUSIONSGSM_2014","timdex_record_id":"gismit:SDE_DATA_INT_P94INCLUSIONSGSM_2014","title":"World
+        (GSM Mobile Phone Coverage Inclusion, 2014)","citation":"Collins Bartholomew.
+        World (GSM Mobile Phone Coverage Inclusion, 2014). Collins Bartholomew. Geospatial
+        data. https://search.libraries.mit.edu/record/gismit:SDE_DATA_INT_P94INCLUSIONSGSM_2014","content_type":["Geospatial
+        data"],"contributors":[{"value":"Collins Bartholomew","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2014-12-01"},{"kind":"Coverage","value":"2014-12-01"},{"kind":"Coverage","value":"2014"}],"format":"Vector","identifiers":[{"value":"INT_P94INCLUSIONSGSM_2014","kind":"Not
+        specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/SDE_DATA_INT_P94INCLUSIONSGSM_2014.source.fgdc.xml","kind":"Download","text":"Source
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/SDE_DATA_INT_P94INCLUSIONSGSM_2014.normalized.aardvark.json","kind":"Download","text":"Normalized
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/SDE_DATA_INT_P94INCLUSIONSGSM_2014.zip","kind":"Download","text":"Data
+        Zipfile"}],"locations":[{"kind":"Bounding Box","geoshape":"BBOX (-180.000000,
+        177.972000, 74.786049, -50.000000)"},{"kind":"Geometry","geoshape":"BBOX (-180.000000,
+        177.972000, 74.786049, -50.000000)"}],"publication_information":["Collins
+        Bartholomew","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Earth
+        (Planet)"],"kind":"Dublin Core; Spatial"},{"value":["utilitiesCommunication"],"kind":"Dublin
+        Core; Subject"},{"value":["Cell phones"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
+        scheme not provided"},{"value":["Entity point"],"kind":"Subject scheme not
+        provided"}],"summary":["These inclusion metadata files for GSM, 3G, and 4G
+        mobile coverage are an attempt at listing all the networks which are included
+        in the separate world mobile phone coverage datasets. Unfortunately the lists
+        cannot be comprehensive because legacy datasets did not maintain the information
+        required to make them complete."]},"sort":[1.0,1417392000000]},{"_index":"gismit-2024-02-02t11-36-57","_id":"gismit:SDE_DATA_US_MA_BOSTON_G47PARCELS_2014","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:SDE_DATA_US_MA_BOSTON_G47PARCELS_2014","timdex_record_id":"gismit:SDE_DATA_US_MA_BOSTON_G47PARCELS_2014","title":"Boston,
+        MA (Land Parcels, 2014)","citation":"Boston (Mass.) Assessing Department.
+        Boston, MA (Land Parcels, 2014). Boston (Mass.) Assessing Department. Geospatial
+        data. https://search.libraries.mit.edu/record/gismit:SDE_DATA_US_MA_BOSTON_G47PARCELS_2014","content_type":["Geospatial
+        data"],"contributors":[{"value":"Boston (Mass.) Assessing Department","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2014-01-01"},{"kind":"Coverage","value":"2014-01-01"},{"kind":"Coverage","value":"2014"}],"format":"Vector","identifiers":[{"value":"US_MA_BOSTON_G47PARCELS_2014","kind":"Not
+        specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/SDE_DATA_US_MA_BOSTON_G47PARCELS_2014.source.fgdc.xml","kind":"Download","text":"Source
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/SDE_DATA_US_MA_BOSTON_G47PARCELS_2014.normalized.aardvark.json","kind":"Download","text":"Normalized
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/SDE_DATA_US_MA_BOSTON_G47PARCELS_2014.zip","kind":"Download","text":"Data
+        Zipfile"}],"locations":[{"kind":"Bounding Box","geoshape":"BBOX (-71.191182,
+        -70.922635, 42.397678, 42.227005)"},{"kind":"Geometry","geoshape":"BBOX (-71.191182,
+        -70.922635, 42.397678, 42.227005)"}],"publication_information":["Boston (Mass.)
+        Assessing Department","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"N/A"}],"subjects":[{"value":["Economy"],"kind":"DCAT;
+        Theme"},{"value":["Boundaries"],"kind":"DCAT; Theme"},{"value":["Location"],"kind":"DCAT;
+        Theme"},{"value":["Massachusetts--Boston"],"kind":"Dublin Core; Spatial"},{"value":["Land
+        use"],"kind":"Dublin Core; Subject"},{"value":["Neighborhoods"],"kind":"Dublin
+        Core; Subject"},{"value":["Administrative and political divisions"],"kind":"Dublin
+        Core; Subject"},{"value":["Land value taxation"],"kind":"Dublin Core; Subject"},{"value":["Land
+        tenure"],"kind":"Dublin Core; Subject"},{"value":["economy"],"kind":"Dublin
+        Core; Subject"},{"value":["planningCadastre"],"kind":"Dublin Core; Subject"},{"value":["boundaries"],"kind":"Dublin
+        Core; Subject"},{"value":["location"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
+        scheme not provided"},{"value":["G-polygon"],"kind":"Subject scheme not provided"}],"summary":["City
+        of Boston property parcel data from FY 2014 was joined with parcel boundaries
+        from FY 2014. All data is from the City of Boston Assessor''s office and represents
+        data from 2013."]},"sort":[1.0,1388534400000]}]},"aggregations":{"languages":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"eng","doc_count":1431}]},"content_type":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"geospatial
+        data","doc_count":1449}]},"subjects":{"doc_count":12404,"subject_names":{"doc_count_error_upper_bound":0,"sum_other_doc_count":6798,"buckets":[{"key":"datasets","doc_count":1449},{"key":"boundaries","doc_count":880},{"key":"g-polygon","doc_count":772},{"key":"transportation","doc_count":530},{"key":"entity
+        point","doc_count":418},{"key":"location","doc_count":410},{"key":"society","doc_count":376},{"key":"united
+        states","doc_count":278},{"key":"structure","doc_count":252},{"key":"string","doc_count":241}]}},"content_format":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"vector","doc_count":1427},{"key":"point","doc_count":18},{"key":"raster","doc_count":4}]},"literary_form":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"source":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"mit
+        gis resources","doc_count":1449}]},"contributors":{"doc_count":1745,"contributor_names":{"doc_count_error_upper_bound":0,"sum_other_doc_count":849,"buckets":[{"key":"environmental
+        systems research institute (redlands, calif.)","doc_count":163},{"key":"massgis
+        (office : mass.)","doc_count":134},{"key":"latin force group llc","doc_count":112},{"key":"esri","doc_count":91},{"key":"city
+        of cambridge gis","doc_count":82},{"key":"platts","doc_count":80},{"key":"gfk
+        geomarketing gmbh","doc_count":66},{"key":"tele atlas b.v.","doc_count":61},{"key":"new
+        york (n.y.). department of city planning","doc_count":55},{"key":"snohomish
+        county geographic information system (gis), dept. of information services","doc_count":52}]}}}}'
+  recorded_at: Wed, 14 Feb 2024 16:37:54 GMT
+recorded_with: VCR 6.2.0
