@@ -399,7 +399,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
   end
 
   test 'graphqlv2 geobox search with geodistance search' do
-    # Should this work? It does.
+    # This is not a recommended way to work, but it does function.
     VCR.use_cassette('graphqlv2 geobox with geodistance') do
       post '/graphql', params: { query: '{
                                   search(
