@@ -252,6 +252,188 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'graphqlv2 geobox search alone' do
+    VCR.use_cassette('graphqlv2 geobox') do
+      post '/graphql', params: { query: '{
+                                  search(geobox: {
+                                    minLongitude: -73.507,
+                                    minLatitude: 41.239,
+                                    maxLongitude: -69.928,
+                                    maxLatitude: 42.886
+                                  }) {
+                                    hits
+                                    records {
+                                      title
+                                      locations {
+                                        geoshape
+                                        kind
+                                        value
+                                      }
+                                    }
+                                  }
+                                }' }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+
+      assert_nil(json['errors'])
+      assert(json['data']['search']['hits'].positive?)
+    end
+  end
+
+  test 'graphqlv2 geobox search required arguments' do
+    post '/graphql', params: { query: '{
+                                search(geobox: {
+                                  minLongitude: -73.507,
+                                  minLatitude: 41.239,
+                                  maxLongitude: -69.928,
+                                }) {
+                                  hits
+                                  records {
+                                    title
+                                    locations {
+                                      geoshape
+                                      kind
+                                      value
+                                    }
+                                  }
+                                }
+                              }' }
+    assert_equal(200, response.status)
+    json = JSON.parse(response.body)
+
+    assert(json['errors'].length.positive?)
+    assert_equal(
+      "Argument 'maxLatitude' on InputObject 'Geobox' is required. Expected type Float!",
+      json['errors'].first['message']
+    )
+  end
+
+  test 'graphqlv2 geobox search longitude order matters' do
+    # This is fragile to our collection having an equal number of records in both hemispheres.
+    eastern_hits = 0
+    western_hits = 0
+    VCR.use_cassette('graphqlv2 geobox eastern hemisphere') do
+      post '/graphql', params: { query: '{
+                                  search(geobox: {
+                                    minLongitude: 0,
+                                    minLatitude: -90,
+                                    maxLongitude: 180,
+                                    maxLatitude: 90
+                                  }) {
+                                    hits
+                                    records {
+                                      title
+                                      locations {
+                                        geoshape
+                                        kind
+                                        value
+                                      }
+                                    }
+                                  }
+                                }' }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+
+      assert_nil(json['errors'])
+      eastern_hits = json['data']['search']['hits']
+      assert(eastern_hits.positive?)
+    end
+    VCR.use_cassette('graphqlv2 geobox western hemisphere') do
+      post '/graphql', params: { query: '{
+                                  search(geobox: {
+                                    minLongitude: 180,
+                                    minLatitude: -90,
+                                    maxLongitude: 0,
+                                    maxLatitude: 90
+                                  }) {
+                                    hits
+                                    records {
+                                      title
+                                      locations {
+                                        geoshape
+                                        kind
+                                        value
+                                      }
+                                    }
+                                  }
+                                }' }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+
+      assert_nil(json['errors'])
+      western_hits = json['data']['search']['hits']
+      assert(western_hits.positive?)
+    end
+    refute_equal(eastern_hits, western_hits)
+  end
+
+  test 'graphqlv2 geobox search with keyword search' do
+    VCR.use_cassette('graphqlv2 geobox with keyword') do
+      post '/graphql', params: { query: '{
+                                  search(
+                                    searchterm: "train stations",
+                                    geobox: {
+                                      minLongitude: -73.507,
+                                      minLatitude: 41.239,
+                                      maxLongitude: -69.928,
+                                      maxLatitude: 42.886
+                                    }
+                                  ) {
+                                    hits
+                                    records {
+                                      title
+                                      locations {
+                                        geoshape
+                                        kind
+                                        value
+                                      }
+                                    }
+                                  }
+                                }' }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+
+      assert_nil(json['errors'])
+      assert(json['data']['search']['hits'].positive?)
+    end
+  end
+
+  test 'graphqlv2 geobox search with geodistance search' do
+    # This is not a recommended way to work, but it does function.
+    VCR.use_cassette('graphqlv2 geobox with geodistance') do
+      post '/graphql', params: { query: '{
+                                  search(
+                                    geodistance: {
+                                      distance: "1km",
+                                      latitude: 0,
+                                      longitude: 0
+                                    },
+                                    geobox: {
+                                      minLongitude: -73.507,
+                                      minLatitude: 41.239,
+                                      maxLongitude: -69.928,
+                                      maxLatitude: 42.886
+                                    }
+                                  ) {
+                                    hits
+                                    records {
+                                      title
+                                      locations {
+                                        geoshape
+                                        kind
+                                        value
+                                      }
+                                    }
+                                  }
+                                }' }
+      assert_equal(200, response.status)
+      json = JSON.parse(response.body)
+
+      assert_nil(json['errors'])
+      assert(json['data']['search']['hits'].positive?)
+    end
+  end
+
   test 'graphqlv2 search aggregations' do
     VCR.use_cassette('graphql v2 search data') do
       post '/graphql', params: { query: '{
