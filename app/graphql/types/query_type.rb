@@ -1,3 +1,5 @@
+# rubocop:disable Metrics/ClassLength
+# rubocop:disable Metrics/MethodLength
 module Types
   class QueryType < Types::BaseObject
     # Add root-level fields here.
@@ -61,24 +63,30 @@ module Types
       # applied filters
       argument :content_type_filter, [String], required: false, default_value: nil,
                                                description: 'Filter results by content type. Use the `contentType` ' \
-                                                            'aggregation for a list of possible values'
+                                                            'aggregation for a list of possible values. Multiple ' \
+                                                            'values are ANDed.'
       argument :contributors_filter, [String], required: false, default_value: nil,
                                                description: 'Filter results by contributor. Use the `contributors` ' \
-                                                            'aggregation for a list of possible values'
+                                                            'aggregation for a list of possible values. Multiple ' \
+                                                            'values are ANDed.'
       argument :format_filter, [String], required: false, default_value: nil,
                                          description: 'Filter results by format. Use the `format` aggregation for a ' \
-                                                      'list of possible values'
+                                                      'list of possible values. Multiple values are ANDed.'
       argument :languages_filter, [String], required: false, default_value: nil,
                                             description: 'Filter results by language. Use the `languages` ' \
-                                                         'aggregation for a list of possible values'
+                                                         'aggregation for a list of possible values. Multiple values ' \
+                                                         'are ANDed.'
       argument :literary_form_filter, String, required: false, default_value: nil,
                                               description: 'Filter results by fiction or nonfiction'
+      argument :places_filter, [String], required: false, default_value: nil,
+                                         description: 'Filter by places. Use the `places` aggregation ' \
+                                                      'for a list of possible values. Multiple values are ANDed.'
       argument :source_filter, [String], required: false, default_value: nil,
                                          description: 'Filter by source record system. Use the `sources` aggregation ' \
-                                                      'for a list of possible values'
+                                                      'for a list of possible values. Multiple values are ORed.'
       argument :subjects_filter, [String], required: false, default_value: nil,
                                            description: 'Filter by subject terms. Use the `contentType` aggregation ' \
-                                                        'for a list of possible values'
+                                                        'for a list of possible values. Multiple values are ANDed.'
     end
 
     def search(searchterm:, citation:, contributors:, funding_information:, geodistance:, geobox:, identifiers:,
@@ -132,6 +140,7 @@ module Types
       query[:contributors_filter] = filters[:contributors_filter]
       query[:languages_filter] = filters[:languages_filter]
       query[:literary_form_filter] = filters[:literary_form_filter]
+      query[:places_filter] = filters[:places_filter]
       query = source_deprecation_handler(query, filters[:source_filter], source)
       query[:subjects_filter] = filters[:subjects_filter]
       query
@@ -150,6 +159,7 @@ module Types
         contributors: es_aggs['contributors']['contributor_names']['buckets'],
         source: es_aggs['source']['buckets'],
         subjects: es_aggs['subjects']['subject_names']['buckets'],
+        places: es_aggs['places']['only_spatial']['place_names']['buckets'],
         languages: es_aggs['languages']['buckets'],
         literary_form: es_aggs['literary_form']['buckets'],
         format: es_aggs['content_format']['buckets'],
@@ -158,3 +168,5 @@ module Types
     end
   end
 end
+# rubocop:enable Metrics/ClassLength
+# rubocop:enable Metrics/MethodLength

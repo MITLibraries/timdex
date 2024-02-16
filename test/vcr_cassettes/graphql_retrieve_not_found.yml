@@ -1,0 +1,45 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:9200/all-current/_search
+    body:
+      encoding: UTF-8
+      string: '{"query":{"ids":{"values":["totallylegitrecordid"]}}}'
+    headers:
+      User-Agent:
+      - 'opensearch-ruby/3.1.0 (RUBY_VERSION: 3.2.2; darwin x86_64; Faraday v2.9.0)'
+      Content-Type:
+      - application/json
+      Host:
+      - localhost:9200
+      X-Amz-Date:
+      - 20240221T141929Z
+      X-Amz-Content-Sha256:
+      - "<REDACTED_SHA>"
+      Authorization:
+      - "<REDACTED_AUTHORIZATION>"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 21 Feb 2024 14:19:29 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '163'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: UTF-8
+      string: '{"took":10,"timed_out":false,"_shards":{"total":22,"successful":22,"skipped":0,"failed":0},"hits":{"total":{"value":0,"relation":"eq"},"max_score":null,"hits":[]}}'
+  recorded_at: Wed, 21 Feb 2024 14:19:29 GMT
+recorded_with: VCR 6.2.0

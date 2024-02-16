@@ -1,3 +1,5 @@
+# rubocop:disable Metrics/ClassLength
+# rubocop:disable Metrics/MethodLength
 class Opensearch
   SIZE = 20
   MAX_PAGE = 200
@@ -25,7 +27,6 @@ class Opensearch
     }
 
     query_hash[:highlight] = highlight if @highlight
-
     query_hash.to_json
   end
 
@@ -207,6 +208,13 @@ class Opensearch
                                    params[:literary_form_filter])
     end
 
+    # places are really just a subset of subjects so the filter uses the subject field
+    if params[:places_filter].present?
+      params[:places_filter].each do |p|
+        f.push filter_field_by_value('subjects.value.keyword', p)
+      end
+    end
+
     # source aggregation is "OR" and not "AND" so it does not use the filter_field_by_value method
     f.push filter_sources(params[:source_filter]) if params[:source_filter]
 
@@ -283,3 +291,5 @@ class Opensearch
     end
   end
 end
+# rubocop:enable Metrics/ClassLength
+# rubocop:enable Metrics/MethodLength
