@@ -1,0 +1,63 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:9200/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - 'opensearch-ruby/3.1.0 (RUBY_VERSION: 3.2.2; darwin x86_64; Faraday v2.9.0)'
+      Content-Type:
+      - application/json
+      Host:
+      - localhost:9200
+      X-Amz-Date:
+      - 20240215T222200Z
+      X-Amz-Content-Sha256:
+      - "<REDACTED_SHA>"
+      Authorization:
+      - "<REDACTED_AUTHORIZATION>"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 15 Feb 2024 22:22:01 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - Accept-Encoding, User-Agent
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "name" : "ac5a1605b0383c2ce693d60779e66c62",
+          "cluster_name" : "222053980223:timdex-dev",
+          "cluster_uuid" : "JifTIhfORr6Uz2wpJ9QsSw",
+          "version" : {
+            "number" : "7.10.2",
+            "build_type" : "tar",
+            "build_hash" : "unknown",
+            "build_date" : "2023-12-08T16:01:39.080417158Z",
+            "build_snapshot" : false,
+            "lucene_version" : "9.7.0",
+            "minimum_wire_compatibility_version" : "7.10.0",
+            "minimum_index_compatibility_version" : "7.0.0"
+          },
+          "tagline" : "The OpenSearch Project: https://opensearch.org/"
+        }
+  recorded_at: Thu, 15 Feb 2024 22:22:01 GMT
+recorded_with: VCR 6.2.0

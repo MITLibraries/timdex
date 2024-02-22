@@ -67,11 +67,11 @@ class OpensearchTest < ActiveSupport::TestCase
   end
 
   test 'can override index' do
-    # fragile test: assumes opensearch instance with at least one index prefixed with `rdi`
+    # fragile test: assumes opensearch instance with at least one index in the `geo` alias
     VCR.use_cassette('opensearch non-default index') do
-      params = { title: 'data' }
-      results = Opensearch.new.search(0, params, Timdex::OSClient, false, 'rdi*')
-      assert results['hits']['hits'].map { |hit| hit['_index'] }.uniq.map { |index| index.start_with?('rdi') }.any?
+      params = { title: 'bermuda' }
+      results = Opensearch.new.search(0, params, Timdex::OSClient, false, 'geo')
+      assert results['hits']['hits'].map { |hit| hit['_index'] }.uniq.map { |index| index.start_with?('gis') }.any?
     end
   end
 
@@ -88,9 +88,9 @@ class OpensearchTest < ActiveSupport::TestCase
 
   test 'searches a single field' do
     VCR.use_cassette('opensearch single field') do
-      params = { title: 'spice' }
+      params = { title: 'spice it up' }
       results = Opensearch.new.search(0, params, Timdex::OSClient)
-      assert_equal "Spice it up! the best of Paquito D'Rivera.",
+      assert_equal 'Spice it up!',
                    results['hits']['hits'].first['_source']['title']
     end
   end
@@ -99,7 +99,7 @@ class OpensearchTest < ActiveSupport::TestCase
     VCR.use_cassette('opensearch single field nested') do
       params = { contributors: 'mcternan' }
       results = Opensearch.new.search(0, params, Timdex::OSClient)
-      assert_equal 'A common table : 80 recipes and stories from my shared cultures /',
+      assert_equal 'A common table : 80 recipes and stories from my shared cultures',
                    results['hits']['hits'].first['_source']['title']
     end
   end
@@ -108,7 +108,7 @@ class OpensearchTest < ActiveSupport::TestCase
     VCR.use_cassette('opensearch multiple fields') do
       params = { q: 'chinese', title: 'common', contributors: 'mcternan' }
       results = Opensearch.new.search(0, params, Timdex::OSClient)
-      assert_equal 'A common table : 80 recipes and stories from my shared cultures /',
+      assert_equal 'A common table : 80 recipes and stories from my shared cultures',
                    results['hits']['hits'].first['_source']['title']
     end
   end

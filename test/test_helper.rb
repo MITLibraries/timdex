@@ -17,6 +17,27 @@ VCR.configure do |config|
   config.ignore_localhost = false
   config.cassette_library_dir = 'test/vcr_cassettes'
   config.hook_into :webmock
+
+  config.before_record do |interaction|
+    auth_header = interaction.request.headers['Authorization']
+    auth_header.each do |redacted_text|
+      interaction.filter!(redacted_text, '<REDACTED_AUTHORIZATION>')
+    end
+
+    host = "#{URI(interaction.request.uri).scheme}://#{URI(interaction.request.uri).host}"
+
+    interaction.filter!(host, 'http://localhost:9200')
+
+    host_header = interaction.request.headers['Host']
+    host_header.each do |redacted_text|
+      interaction.filter!(redacted_text, 'localhost:9200')
+    end
+
+    content_sha = interaction.request.headers['X-Amz-Content-Sha256']
+    content_sha.each do |redacted_text|
+      interaction.filter!(redacted_text, '<REDACTED_SHA>')
+    end
+  end
 end
 
 module ActiveSupport

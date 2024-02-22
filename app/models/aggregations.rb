@@ -1,3 +1,5 @@
+# rubocop:disable Metrics/ClassLength
+# rubocop:disable Metrics/MethodLength
 class Aggregations
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html
   def self.all
@@ -7,6 +9,7 @@ class Aggregations
       content_format:,
       languages:,
       literary_form:,
+      places:,
       source:,
       subjects:
     }
@@ -81,4 +84,32 @@ class Aggregations
       }
     }
   end
+
+  def self.places
+    {
+      nested: {
+        path: 'subjects'
+      },
+      aggs: {
+        only_spatial: {
+          filter: {
+            terms: {
+              'subjects.kind': [
+                'Dublin Core; Spatial'
+              ]
+            }
+          },
+          aggs: {
+            place_names: {
+              terms: {
+                field: 'subjects.value.keyword'
+              }
+            }
+          }
+        }
+      }
+    }
+  end
 end
+# rubocop:enable Metrics/ClassLength
+# rubocop:enable Metrics/MethodLength

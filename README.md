@@ -19,6 +19,57 @@ additional records with a standardized template.
 - don't commit your .env or .env.development, but do commit .env.test after
   confirming your test values are not actual secrets that need protecting
 
+## Generating cassettes for tests
+
+We use [VCR](https://github.com/vcr/vcr) to record transactions with OpenSearch so we will not need to load
+data for testing during each test run.
+
+We must take care to not record our credentials to any secure OpenSearch clusters we use _and_ we must make sure all cassettes look like the same
+endpoint.
+
+One option would be to force us to load data locally and only generate cassettes from localhost OpenSearch. This is secure, but is not always convenient to ensure we have test data that looks like production.
+
+The other option is to use deployed OpenSearch and scrub the data using VCRs [filter_sensitive_data](https://benoittgt.github.io/vcr/#/configuration/filter_sensitive_data) feature.
+
+The scrubbing has been configured in `test/test_helper.rb`.
+
+The test recording process is as follows:
+
+- If you want to use localhost:9200
+  - load the data you want and ensure it is accessible via the `all-current` alias. No other changes are necessary
+- If you want to use an AWS OpenSearch instance
+
+> [!CAUTION]
+> Use `.env` and _not_ `.env.test` to override these values to ensure you do not inadvertantly commit secrets!
+
+- Set the following values to whatever cluster you want to connect to in `.env` (Note: `.env` is preferred over `.env.test` because it is already in our `.gitignore` and will work together with `.env.test`.)
+  - OPENSEARCH_URL
+  - AWS_OPENSEARCH=true
+  - AWS_OPENSEARCH_ACCESS_KEY_ID
+  - AWS_OPENSEARCH_SECRET_ACCESS_KEY
+  - AWS_REGION
+- Delete any cassette you want to regenerate (for new tests, you can skip this). If you are making a graphql test, nest your cassette inside the `opensearch_init` cassette.
+
+Example of nested cassettes.
+
+```ruby
+test 'graphql search' do
+  VCR.use_cassette('opensearch init') do
+    VCR.use_cassette('YOUR CASSETTE NAME') do
+      YOUR QUERY
+      YOUR ASSERTIONS
+    end
+  end
+end
+```
+
+- Run your test(s). You may receive VCR errors as the `opensearch init` cassette does not have the HTTP transaction you are requesting. However, the nested cassette for your test will generate if it does not exist yet and on future runs these errors will not recur.
+- Manually confirm the headers do not have sensitive information. This scrubbing process should work, but it is your responsibility to ensure you are not committing secrets to code repositories. If you aren't sure, ask.
+- You have to remove or comment out AWS credentials from `.env` before re-running your test or the tests will fail (i.e. this process can only generate cassettes, it can not re-run them with AWS credentials as we scrub the AWS bits from the cassette so VCR does not match)
+
+> [!Important]
+> We re-use OpenSearch connections, which is handled by the nesting of cassettes (see above). If you have sporadically failing tests, ensure you are nesting your test specific cassette inside of the `opensearch init` cassette.
+
 ## Confirming functionality after updating dependencies
 
 This application has good code coverage, so most issues are detected by just running tests normally:

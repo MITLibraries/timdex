@@ -1,0 +1,64 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:9200/geo/_search
+    body:
+      encoding: UTF-8
+      string: '{"query":{"ids":{"values":["gismit:BD_A8GNS_2003"]}}}'
+    headers:
+      User-Agent:
+      - 'opensearch-ruby/3.1.0 (RUBY_VERSION: 3.2.2; darwin x86_64; Faraday v2.9.0)'
+      Content-Type:
+      - application/json
+      Host:
+      - localhost:9200
+      X-Amz-Date:
+      - 20240221T141923Z
+      X-Amz-Content-Sha256:
+      - "<REDACTED_SHA>"
+      Authorization:
+      - "<REDACTED_AUTHORIZATION>"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 21 Feb 2024 14:19:23 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - Accept-Encoding, User-Agent
+    body:
+      encoding: ASCII-8BIT
+      string: '{"took":0,"timed_out":false,"_shards":{"total":2,"successful":2,"skipped":0,"failed":0},"hits":{"total":{"value":1,"relation":"eq"},"max_score":1.0,"hits":[{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:BD_A8GNS_2003","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:BD_A8GNS_2003","timdex_record_id":"gismit:BD_A8GNS_2003","title":"Bermuda
+        (Geographic Feature Names, 2003)","citation":"United States. National Imagery
+        and Mapping Agency. Bermuda (Geographic Feature Names, 2003). United States.
+        National Imagery and Mapping Agency. Geospatial data. https://search.libraries.mit.edu/record/gismit:BD_A8GNS_2003","content_type":["Geospatial
+        data"],"contributors":[{"value":"United States. National Imagery and Mapping
+        Agency","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2003-10-01"},{"kind":"Coverage","value":"2003-10-01"},{"kind":"Coverage","value":"2003"}],"format":"Vector","identifiers":[{"value":"BD_A8GNS_2003","kind":"Not
+        specified"},{"value":"SDE_DATA.BD_A8GNS_2003","kind":"Not specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/BD_A8GNS_2003.source.fgdc.xml","kind":"Download","text":"Source
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/BD_A8GNS_2003.normalized.aardvark.json","kind":"Download","text":"Aardvark
+        Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/BD_A8GNS_2003.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:BD_A8GNS_2003","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
+        Box","geoshape":"BBOX (-64.908056, -64.616667, 32.416667, 32.233333)"},{"kind":"Geometry","geoshape":"BBOX
+        (-64.908056, -64.616667, 32.416667, 32.233333)"}],"publication_information":["United
+        States. National Imagery and Mapping Agency","GIS Lab, MIT Libraries"],"rights":[{"description":"Public","kind":"Access"}],"subjects":[{"value":["Location"],"kind":"DCAT;
+        Theme"},{"value":["Bermuda Islands"],"kind":"Dublin Core; Spatial"},{"value":["Names,
+        Geographical"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Entity
+        point"],"kind":"Subject scheme not provided"}],"summary":["Geographic feature
+        names for Bermuda."]}}]}}'
+  recorded_at: Wed, 21 Feb 2024 14:19:23 GMT
+recorded_with: VCR 6.2.0

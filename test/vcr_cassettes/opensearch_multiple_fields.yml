@@ -8,9 +8,17 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - 'opensearch-ruby/1.0.0 (RUBY_VERSION: 2.7.5; darwin x86_64; Faraday v1.10.0)'
+      - 'opensearch-ruby/3.1.0 (RUBY_VERSION: 3.2.2; darwin x86_64; Faraday v2.9.0)'
       Content-Type:
       - application/json
+      Host:
+      - localhost:9200
+      X-Amz-Date:
+      - 20240215T235401Z
+      X-Amz-Content-Sha256:
+      - "<REDACTED_SHA>"
+      Authorization:
+      - "<REDACTED_AUTHORIZATION>"
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -20,42 +28,58 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Thu, 15 Feb 2024 23:54:02 GMT
       Content-Type:
       - application/json; charset=UTF-8
-      Content-Length:
-      - '349'
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - Accept-Encoding, User-Agent
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "name" : "8fa7deb19b36",
-          "cluster_name" : "docker-cluster",
-          "cluster_uuid" : "HIwmyPg1T126293eDbQXLA",
+          "name" : "d2308ba9d0028096d973728661db1db3",
+          "cluster_name" : "222053980223:timdex-dev",
+          "cluster_uuid" : "JifTIhfORr6Uz2wpJ9QsSw",
           "version" : {
-            "distribution" : "opensearch",
-            "number" : "1.2.4",
+            "number" : "7.10.2",
             "build_type" : "tar",
-            "build_hash" : "e505b10357c03ae8d26d675172402f2f2144ef0f",
-            "build_date" : "2022-01-14T03:38:06.881862Z",
+            "build_hash" : "unknown",
+            "build_date" : "2023-12-08T16:01:39.080417158Z",
             "build_snapshot" : false,
-            "lucene_version" : "8.10.1",
-            "minimum_wire_compatibility_version" : "6.8.0",
-            "minimum_index_compatibility_version" : "6.0.0-beta1"
+            "lucene_version" : "9.7.0",
+            "minimum_wire_compatibility_version" : "7.10.0",
+            "minimum_index_compatibility_version" : "7.0.0"
           },
           "tagline" : "The OpenSearch Project: https://opensearch.org/"
         }
-  recorded_at: Thu, 19 May 2022 21:01:08 GMT
+  recorded_at: Thu, 15 Feb 2024 23:54:02 GMT
 - request:
     method: post
-    uri: http://localhost:9200/timdex-prod/_search
+    uri: http://localhost:9200/all-current/_search
     body:
       encoding: UTF-8
-      string: '{"from":0,"size":20,"query":{"bool":{"should":[{"prefix":{"title.exact_value":{"value":"chinese","boost":15.0}}},{"term":{"title":{"value":"chinese","boost":1.0}}},{"nested":{"path":"contributors","query":{"term":{"contributors.value":{"value":"chinese","boost":0.1}}}}}],"must":[{"match":{"title":"common"}},{"nested":{"path":"contributors","query":{"bool":{"must":[{"match":{"contributors.value":"mcternan"}}]}}}}],"filter":[]}},"aggregations":{"collections":{"terms":{"field":"collections.keyword"}},"contributors":{"nested":{"path":"contributors"},"aggs":{"contributor_names":{"terms":{"field":"contributors.value.keyword"}}}},"content_type":{"terms":{"field":"content_type"}},"content_format":{"terms":{"field":"format"}},"languages":{"terms":{"field":"languages.keyword"}},"literary_form":{"terms":{"field":"literary_form"}},"source":{"terms":{"field":"source"}},"subjects":{"nested":{"path":"subjects"},"aggs":{"subject_names":{"terms":{"field":"subjects.value.keyword"}}}}}}'
+      string: '{"from":0,"size":20,"query":{"bool":{"should":[{"prefix":{"title.exact_value":{"value":"chinese","boost":15.0}}},{"term":{"title":{"value":"chinese","boost":1.0}}},{"nested":{"path":"contributors","query":{"term":{"contributors.value":{"value":"chinese","boost":0.1}}}}}],"must":[{"multi_match":{"query":"chinese","fields":["alternate_titles","call_numbers","citation","contents","contributors.value","dates.value","edition","funding_information.*","identifiers.value","languages","locations.value","notes.value","numbering","publication_information","subjects.value","summary","title"]}},{"match":{"title":"common"}},{"nested":{"path":"contributors","query":{"bool":{"must":[{"match":{"contributors.value":"mcternan"}}]}}}}],"filter":[]}},"aggregations":{"contributors":{"nested":{"path":"contributors"},"aggs":{"contributor_names":{"terms":{"field":"contributors.value.keyword"}}}},"content_type":{"terms":{"field":"content_type"}},"content_format":{"terms":{"field":"format"}},"dates_ranges":{"nested":{"path":"dates"},"aggs":{"years":{"date_range":{"field":"dates.value.as_date","format":"yyyy","missing":"1989","ranges":[{"to":"1990"},{"from":"1990","to":"2000"},{"from":"2000","to":"2005"},{"from":"2005","to":"2010"},{"from":"2010","to":"2015"},{"from":"2015","to":"now/y"},{"from":"now/y"}]}}}},"languages":{"terms":{"field":"languages.keyword"}},"literary_form":{"terms":{"field":"literary_form"}},"places":{"nested":{"path":"subjects"},"aggs":{"only_spatial":{"filter":{"terms":{"subjects.kind":["Dublin
+        Core; Spatial"]}},"aggs":{"place_names":{"terms":{"field":"subjects.value.keyword"}}}}}},"source":{"terms":{"field":"source"}},"subjects":{"nested":{"path":"subjects"},"aggs":{"subject_names":{"terms":{"field":"subjects.value.keyword"}}}}},"sort":[{"_score":{"order":"desc"}},{"dates.value.as_date":{"order":"desc","nested":{"path":"dates"}}}]}'
     headers:
       User-Agent:
-      - 'opensearch-ruby/1.0.0 (RUBY_VERSION: 2.7.5; darwin x86_64; Faraday v1.10.0)'
+      - 'opensearch-ruby/3.1.0 (RUBY_VERSION: 3.2.2; darwin x86_64; Faraday v2.9.0)'
       Content-Type:
       - application/json
+      Host:
+      - localhost:9200
+      X-Amz-Date:
+      - 20240215T235403Z
+      X-Amz-Content-Sha256:
+      - "<REDACTED_SHA>"
+      Authorization:
+      - "<REDACTED_AUTHORIZATION>"
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -65,49 +89,21 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Thu, 15 Feb 2024 23:54:04 GMT
       Content-Type:
       - application/json; charset=UTF-8
-      Content-Length:
-      - '1947'
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - Accept-Encoding, User-Agent
     body:
       encoding: ASCII-8BIT
-      string: '{"took":2,"timed_out":false,"_shards":{"total":1,"successful":1,"skipped":0,"failed":0},"hits":{"total":{"value":1,"relation":"eq"},"max_score":4.276778,"hits":[{"_index":"mario-2022-05-02t19-43-00z","_type":"_doc","_id":"mit:alma:990027672770206761","_score":4.276778,"_source":{"call_numbers":["TX724.5.A1","641.595"],"content_type":["Text"],"contents":["Breakfast
-        -- Lunch \u0026 small eats -- Date night in -- Celebrations \u0026 gatherings
-        -- On the side -- Sweet -- Drinks."],"contributors":[{"kind":"author","value":"McTernan,
-        Cynthia Chen, author."}],"dates":[{"kind":"Date of publication","value":"2018"}],"edition":"First
-        edition.","format":"Print volume","holdings":[{"call_number":"TX724.5.A1 M38
-        2018","collection":"Stacks","format":"Print volume","location":"Hayden Library"}],"identifiers":[{"kind":"isbn","value":"163565002X
-        (hardback)"},{"kind":"isbn","value":"9781635650020 (hardback)"},{"kind":"oclc","value":"1019737335"},{"kind":"oclc","value":"1061147498"},{"kind":"lccn","value":"2018287279"}],"languages":["English"],"literary_form":"nonfiction","locations":[{"kind":"Place
-        of publication","value":"New York (State)"}],"notes":[{"value":["Cynthia Chen
-        McTernan.","Includes index."]}],"physical_description":"285 pages : color
-        illustrations ; 27 cm","source":"MIT Alma","source_link":"https://mit.primo.exlibrisgroup.com/discovery/fulldisplay?vid=01MIT_INST:MIT\u0026docid=alma990027672770206761","subjects":[{"value":["Asian
-        American cooking."]}],"summary":["In A Common Table, Two Red Bowls blogger
-        Cynthia Chen McTernan shares more than 80 Asian-inspired, modern recipes that
-        marry food from her Chinese roots, Southern upbringing, and Korean mother-in-law''s
-        table. The book chronicles Cynthia''s story alongside the recipes she and
-        her family eat every day--beginning when she met her husband at law school
-        and ate out of two battered red bowls, through the first years of her legal
-        career in New York, to when she moved to Los Angeles to start a family. As
-        Cynthia''s life has changed, her cooking has become more diverse. She shares
-        recipes that celebrate both the commonalities and the diversity of cultures:
-        her mother-in-law''s spicy Korean-inspired take on Hawaiian poke, a sticky
-        sesame peanut pie that combines Chinese peanut sesame brittle with the decadence
-        of a Southern pecan pie, and a grilled cheese topped with a crisp fried egg
-        and fiery kimchi. And of course, she shares the basics: how to make soft,
-        pillowy steamed buns, savory pork dumplings, and a simple fried rice that
-        can form the base of any meal. Asian food may have a reputation for having
-        long ingredient lists and complicated instructions, but Cynthia makes it relatable,
-        avoiding hard-to-find ingredients or equipment, and breaking down how to bring
-        Asian flavors home into your own kitchen. Above all, Cynthia believes that
-        food can bring us together around the same table, no matter where we are from.
-        The message at the heart of A Common Table is that the food we make and eat
-        is rarely the product of one culture or moment, but is richly interwoven--and
-        though some dishes might seem new or different, they are often more alike
-        than they appear. -- Amazon."],"timdex_record_id":"mit:alma:990027672770206761","title":"A
-        common table : 80 recipes and stories from my shared cultures /"}}]},"aggregations":{"languages":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"english","doc_count":1}]},"content_type":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"text","doc_count":1}]},"collections":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"subjects":{"doc_count":1,"subject_names":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"asian
-        american cooking.","doc_count":1}]}},"content_format":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"print
-        volume","doc_count":1}]},"literary_form":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"nonfiction","doc_count":1}]},"source":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"mit
-        alma","doc_count":1}]},"contributors":{"doc_count":1,"contributor_names":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"mcternan,
-        cynthia chen, author.","doc_count":1}]}}}}'
-  recorded_at: Thu, 19 May 2022 21:01:08 GMT
-recorded_with: VCR 6.1.0
+      string: !binary |-
+        eyJ0b29rIjozMDUsInRpbWVkX291dCI6ZmFsc2UsIl9zaGFyZHMiOnsidG90YWwiOjIyLCJzdWNjZXNzZnVsIjoyMiwic2tpcHBlZCI6MCwiZmFpbGVkIjowfSwiaGl0cyI6eyJ0b3RhbCI6eyJ2YWx1ZSI6MSwicmVsYXRpb24iOiJlcSJ9LCJtYXhfc2NvcmUiOm51bGwsImhpdHMiOlt7Il9pbmRleCI6ImFsbWEtMjAyMy0wMy0zMHQxNS0xNi0xNCIsIl9pZCI6ImFsbWE6OTkwMDI3NjcyNzcwMTA2NzYxIiwiX3Njb3JlIjoyNi45NDg5NCwiX3NvdXJjZSI6eyJzb3VyY2UiOiJNSVQgQWxtYSIsInNvdXJjZV9saW5rIjoiaHR0cHM6Ly9taXQucHJpbW8uZXhsaWJyaXNncm91cC5jb20vZGlzY292ZXJ5L2Z1bGxkaXNwbGF5P3ZpZD0wMU1JVF9JTlNUOk1JVCZkb2NpZD1hbG1hOTkwMDI3NjcyNzcwMTA2NzYxIiwidGltZGV4X3JlY29yZF9pZCI6ImFsbWE6OTkwMDI3NjcyNzcwMTA2NzYxIiwidGl0bGUiOiJBIGNvbW1vbiB0YWJsZSA6IDgwIHJlY2lwZXMgYW5kIHN0b3JpZXMgZnJvbSBteSBzaGFyZWQgY3VsdHVyZXMiLCJjYWxsX251bWJlcnMiOlsiVFg3MjQuNS5BMSIsIjY0MS41OTUiXSwiY2l0YXRpb24iOiJNY1Rlcm5hbiwgQ3ludGhpYSBDaGVuICgyMDE4KTogQSBjb21tb24gdGFibGUgOiA4MCByZWNpcGVzIGFuZCBzdG9yaWVzIGZyb20gbXkgc2hhcmVkIGN1bHR1cmVzLiBOZXcgWW9yayA6IFJvZGFsZSBCb29rcywgYW4gaW1wcmludCBvZiB0aGUgQ3Jvd24gUHVibGlzaGluZyBHcm91cCwgYSBkaXZpc2lvbiBvZiBQZW5ndWluIFJhbmRvbSBIb3VzZSBMTEMsIFsyMDE4XS4gTGFuZ3VhZ2UgbWF0ZXJpYWwuIGh0dHBzOi8vbWl0LnByaW1vLmV4bGlicmlzZ3JvdXAuY29tL2Rpc2NvdmVyeS9mdWxsZGlzcGxheT92aWQ9MDFNSVRfSU5TVDpNSVQmZG9jaWQ9YWxtYTk5MDAyNzY3Mjc3MDEwNjc2MSIsImNvbnRlbnRfdHlwZSI6WyJMYW5ndWFnZSBtYXRlcmlhbCJdLCJjb250ZW50cyI6WyJCcmVha2Zhc3QiLCJMdW5jaCAmIHNtYWxsIGVhdHMiLCJEYXRlIG5pZ2h0IGluIiwiQ2VsZWJyYXRpb25zICYgZ2F0aGVyaW5ncyIsIk9uIHRoZSBzaWRlIiwiU3dlZXQiLCJEcmlua3MiXSwiY29udHJpYnV0b3JzIjpbeyJ2YWx1ZSI6Ik1jVGVybmFuLCBDeW50aGlhIENoZW4iLCJraW5kIjoiYXV0aG9yIn1dLCJkYXRlcyI6W3sia2luZCI6IlB1YmxpY2F0aW9uIGRhdGUiLCJ2YWx1ZSI6IjIwMTgifV0sImVkaXRpb24iOiJGaXJzdCBlZGl0aW9uLiIsImhvbGRpbmdzIjpbeyJjYWxsX251bWJlciI6IlRYNzI0LjUuQTEgTTM4IDIwMTgiLCJjb2xsZWN0aW9uIjoiU3RhY2tzIiwiZm9ybWF0IjoiUHJpbnQgdm9sdW1lIiwibG9jYXRpb24iOiJIYXlkZW4gTGlicmFyeSJ9XSwiaWRlbnRpZmllcnMiOlt7InZhbHVlIjoiMjAxODI4NzI3OSIsImtpbmQiOiJMQ0NOIn0seyJ2YWx1ZSI6IjE2MzU2NTAwMlguIChoYXJkYmFjaykiLCJraW5kIjoiSVNCTiJ9LHsidmFsdWUiOiI5NzgxNjM1NjUwMDIwLiAoaGFyZGJhY2spIiwia2luZCI6IklTQk4ifSx7InZhbHVlIjoiKE1DTSkwMDI3NjcyNzdNSVQwMSIsImtpbmQiOiJPQ0xDIE51bWJlciJ9LHsidmFsdWUiOiJOSENDWUJQLiBOSENDWUJQIiwia2luZCI6Ik9DTEMgTnVtYmVyIn0seyJ2YWx1ZSI6IjEwMTk3MzczMzUiLCJraW5kIjoiT0NMQyBOdW1iZXIifSx7InZhbHVlIjoiMTA2MTE0NzQ5OCIsImtpbmQiOiJPQ0xDIE51bWJlciJ9LHsidmFsdWUiOiJOSENDWUJQIiwia2luZCI6Ik9DTEMgTnVtYmVyIn1dLCJsYW5ndWFnZXMiOlsiRW5nbGlzaCJdLCJsaXRlcmFyeV9mb3JtIjoiTm9uZmljdGlvbiIsIm5vdGVzIjpbeyJ2YWx1ZSI6WyJDeW50aGlhIENoZW4gTWNUZXJuYW4iXSwia2luZCI6IlRpdGxlIFN0YXRlbWVudCBvZiBSZXNwb25zaWJpbGl0eSJ9LHsidmFsdWUiOlsiSW5jbHVkZXMgaW5kZXgiXSwia2luZCI6IkdlbmVyYWwgTm90ZSJ9XSwicGh5c2ljYWxfZGVzY3JpcHRpb24iOiIyODUgcGFnZXMgOiBjb2xvciBpbGx1c3RyYXRpb25zIDsgMjcgY20iLCJwdWJsaWNhdGlvbl9pbmZvcm1hdGlvbiI6WyJOZXcgWW9yayA6IFJvZGFsZSBCb29rcywgYW4gaW1wcmludCBvZiB0aGUgQ3Jvd24gUHVibGlzaGluZyBHcm91cCwgYSBkaXZpc2lvbiBvZiBQZW5ndWluIFJhbmRvbSBIb3VzZSBMTEMsIFsyMDE4XSIsIsKpMjAxOCJdLCJzdWJqZWN0cyI6W3sidmFsdWUiOlsiQXNpYW4gQW1lcmljYW4gY29va2luZyJdLCJraW5kIjoiVG9waWNhbCBUZXJtIn0seyJ2YWx1ZSI6WyJBc2lhbiBBbWVyaWNhbiBjb29raW5nIl0sImtpbmQiOiJUb3BpY2FsIFRlcm0ifV0sInN1bW1hcnkiOlsiSW4gQSBDb21tb24gVGFibGUsIFR3byBSZWQgQm93bHMgYmxvZ2dlciBDeW50aGlhIENoZW4gTWNUZXJuYW4gc2hhcmVzIG1vcmUgdGhhbiA4MCBBc2lhbi1pbnNwaXJlZCwgbW9kZXJuIHJlY2lwZXMgdGhhdCBtYXJyeSBmb29kIGZyb20gaGVyIENoaW5lc2Ugcm9vdHMsIFNvdXRoZXJuIHVwYnJpbmdpbmcsIGFuZCBLb3JlYW4gbW90aGVyLWluLWxhdydzIHRhYmxlLiBUaGUgYm9vayBjaHJvbmljbGVzIEN5bnRoaWEncyBzdG9yeSBhbG9uZ3NpZGUgdGhlIHJlY2lwZXMgc2hlIGFuZCBoZXIgZmFtaWx5IGVhdCBldmVyeSBkYXktLWJlZ2lubmluZyB3aGVuIHNoZSBtZXQgaGVyIGh1c2JhbmQgYXQgbGF3IHNjaG9vbCBhbmQgYXRlIG91dCBvZiB0d28gYmF0dGVyZWQgcmVkIGJvd2xzLCB0aHJvdWdoIHRoZSBmaXJzdCB5ZWFycyBvZiBoZXIgbGVnYWwgY2FyZWVyIGluIE5ldyBZb3JrLCB0byB3aGVuIHNoZSBtb3ZlZCB0byBMb3MgQW5nZWxlcyB0byBzdGFydCBhIGZhbWlseS4gQXMgQ3ludGhpYSdzIGxpZmUgaGFzIGNoYW5nZWQsIGhlciBjb29raW5nIGhhcyBiZWNvbWUgbW9yZSBkaXZlcnNlLiBTaGUgc2hhcmVzIHJlY2lwZXMgdGhhdCBjZWxlYnJhdGUgYm90aCB0aGUgY29tbW9uYWxpdGllcyBhbmQgdGhlIGRpdmVyc2l0eSBvZiBjdWx0dXJlczogaGVyIG1vdGhlci1pbi1sYXcncyBzcGljeSBLb3JlYW4taW5zcGlyZWQgdGFrZSBvbiBIYXdhaWlhbiBwb2tlLCBhIHN0aWNreSBzZXNhbWUgcGVhbnV0IHBpZSB0aGF0IGNvbWJpbmVzIENoaW5lc2UgcGVhbnV0IHNlc2FtZSBicml0dGxlIHdpdGggdGhlIGRlY2FkZW5jZSBvZiBhIFNvdXRoZXJuIHBlY2FuIHBpZSwgYW5kIGEgZ3JpbGxlZCBjaGVlc2UgdG9wcGVkIHdpdGggYSBjcmlzcCBmcmllZCBlZ2cgYW5kIGZpZXJ5IGtpbWNoaS4gQW5kIG9mIGNvdXJzZSwgc2hlIHNoYXJlcyB0aGUgYmFzaWNzOiBob3cgdG8gbWFrZSBzb2Z0LCBwaWxsb3d5IHN0ZWFtZWQgYnVucywgc2F2b3J5IHBvcmsgZHVtcGxpbmdzLCBhbmQgYSBzaW1wbGUgZnJpZWQgcmljZSB0aGF0IGNhbiBmb3JtIHRoZSBiYXNlIG9mIGFueSBtZWFsLiBBc2lhbiBmb29kIG1heSBoYXZlIGEgcmVwdXRhdGlvbiBmb3IgaGF2aW5nIGxvbmcgaW5ncmVkaWVudCBsaXN0cyBhbmQgY29tcGxpY2F0ZWQgaW5zdHJ1Y3Rpb25zLCBidXQgQ3ludGhpYSBtYWtlcyBpdCByZWxhdGFibGUsIGF2b2lkaW5nIGhhcmQtdG8tZmluZCBpbmdyZWRpZW50cyBvciBlcXVpcG1lbnQsIGFuZCBicmVha2luZyBkb3duIGhvdyB0byBicmluZyBBc2lhbiBmbGF2b3JzIGhvbWUgaW50byB5b3VyIG93biBraXRjaGVuLiBBYm92ZSBhbGwsIEN5bnRoaWEgYmVsaWV2ZXMgdGhhdCBmb29kIGNhbiBicmluZyB1cyB0b2dldGhlciBhcm91bmQgdGhlIHNhbWUgdGFibGUsIG5vIG1hdHRlciB3aGVyZSB3ZSBhcmUgZnJvbS4gVGhlIG1lc3NhZ2UgYXQgdGhlIGhlYXJ0IG9mIEEgQ29tbW9uIFRhYmxlIGlzIHRoYXQgdGhlIGZvb2Qgd2UgbWFrZSBhbmQgZWF0IGlzIHJhcmVseSB0aGUgcHJvZHVjdCBvZiBvbmUgY3VsdHVyZSBvciBtb21lbnQsIGJ1dCBpcyByaWNobHkgaW50ZXJ3b3Zlbi0tYW5kIHRob3VnaCBzb21lIGRpc2hlcyBtaWdodCBzZWVtIG5ldyBvciBkaWZmZXJlbnQsIHRoZXkgYXJlIG9mdGVuIG1vcmUgYWxpa2UgdGhhbiB0aGV5IGFwcGVhci4gLS0gQW1hem9uLiJdfSwic29ydCI6WzI2Ljk0ODk0LDE1MTQ3NjQ4MDAwMDBdfV19LCJhZ2dyZWdhdGlvbnMiOnsicGxhY2VzIjp7ImRvY19jb3VudCI6Miwib25seV9zcGF0aWFsIjp7ImRvY19jb3VudCI6MCwicGxhY2VfbmFtZXMiOnsiZG9jX2NvdW50X2Vycm9yX3VwcGVyX2JvdW5kIjowLCJzdW1fb3RoZXJfZG9jX2NvdW50IjowLCJidWNrZXRzIjpbXX19fSwibGFuZ3VhZ2VzIjp7ImRvY19jb3VudF9lcnJvcl91cHBlcl9ib3VuZCI6MCwic3VtX290aGVyX2RvY19jb3VudCI6MCwiYnVja2V0cyI6W3sia2V5IjoiZW5nbGlzaCIsImRvY19jb3VudCI6MX1dfSwiY29udGVudF90eXBlIjp7ImRvY19jb3VudF9lcnJvcl91cHBlcl9ib3VuZCI6MCwic3VtX290aGVyX2RvY19jb3VudCI6MCwiYnVja2V0cyI6W3sia2V5IjoibGFuZ3VhZ2UgbWF0ZXJpYWwiLCJkb2NfY291bnQiOjF9XX0sInN1YmplY3RzIjp7ImRvY19jb3VudCI6Miwic3ViamVjdF9uYW1lcyI6eyJkb2NfY291bnRfZXJyb3JfdXBwZXJfYm91bmQiOjAsInN1bV9vdGhlcl9kb2NfY291bnQiOjAsImJ1Y2tldHMiOlt7ImtleSI6ImFzaWFuIGFtZXJpY2FuIGNvb2tpbmciLCJkb2NfY291bnQiOjJ9XX19LCJjb250ZW50X2Zvcm1hdCI6eyJkb2NfY291bnRfZXJyb3JfdXBwZXJfYm91bmQiOjAsInN1bV9vdGhlcl9kb2NfY291bnQiOjAsImJ1Y2tldHMiOltdfSwibGl0ZXJhcnlfZm9ybSI6eyJkb2NfY291bnRfZXJyb3JfdXBwZXJfYm91bmQiOjAsInN1bV9vdGhlcl9kb2NfY291bnQiOjAsImJ1Y2tldHMiOlt7ImtleSI6Im5vbmZpY3Rpb24iLCJkb2NfY291bnQiOjF9XX0sInNvdXJjZSI6eyJkb2NfY291bnRfZXJyb3JfdXBwZXJfYm91bmQiOjAsInN1bV9vdGhlcl9kb2NfY291bnQiOjAsImJ1Y2tldHMiOlt7ImtleSI6Im1pdCBhbG1hIiwiZG9jX2NvdW50IjoxfV19LCJjb250cmlidXRvcnMiOnsiZG9jX2NvdW50IjoxLCJjb250cmlidXRvcl9uYW1lcyI6eyJkb2NfY291bnRfZXJyb3JfdXBwZXJfYm91bmQiOjAsInN1bV9vdGhlcl9kb2NfY291bnQiOjAsImJ1Y2tldHMiOlt7ImtleSI6Im1jdGVybmFuLCBjeW50aGlhIGNoZW4iLCJkb2NfY291bnQiOjF9XX19LCJkYXRlc19yYW5nZXMiOnsiZG9jX2NvdW50IjoxLCJ5ZWFycyI6eyJidWNrZXRzIjpbeyJrZXkiOiIqLTE5OTAiLCJ0byI6Ni4zMTE1MkUxMSwidG9fYXNfc3RyaW5nIjoiMTk5MCIsImRvY19jb3VudCI6MH0seyJrZXkiOiIxOTkwLTIwMDAiLCJmcm9tIjo2LjMxMTUyRTExLCJmcm9tX2FzX3N0cmluZyI6IjE5OTAiLCJ0byI6OS40NjY4NDhFMTEsInRvX2FzX3N0cmluZyI6IjIwMDAiLCJkb2NfY291bnQiOjB9LHsia2V5IjoiMjAwMC0yMDA1IiwiZnJvbSI6OS40NjY4NDhFMTEsImZyb21fYXNfc3RyaW5nIjoiMjAwMCIsInRvIjoxLjEwNDUzNzZFMTIsInRvX2FzX3N0cmluZyI6IjIwMDUiLCJkb2NfY291bnQiOjB9LHsia2V5IjoiMjAwNS0yMDEwIiwiZnJvbSI6MS4xMDQ1Mzc2RTEyLCJmcm9tX2FzX3N0cmluZyI6IjIwMDUiLCJ0byI6MS4yNjIzMDRFMTIsInRvX2FzX3N0cmluZyI6IjIwMTAiLCJkb2NfY291bnQiOjB9LHsia2V5IjoiMjAxMC0yMDE1IiwiZnJvbSI6MS4yNjIzMDRFMTIsImZyb21fYXNfc3RyaW5nIjoiMjAxMCIsInRvIjoxLjQyMDA3MDRFMTIsInRvX2FzX3N0cmluZyI6IjIwMTUiLCJkb2NfY291bnQiOjB9LHsia2V5IjoiMjAxNS0yMDI0IiwiZnJvbSI6MS40MjAwNzA0RTEyLCJmcm9tX2FzX3N0cmluZyI6IjIwMTUiLCJ0byI6MS43MDQwNjcyRTEyLCJ0b19hc19zdHJpbmciOiIyMDI0IiwiZG9jX2NvdW50IjoxfSx7ImtleSI6IjIwMjQtKiIsImZyb20iOjEuNzA0MDY3MkUxMiwiZnJvbV9hc19zdHJpbmciOiIyMDI0IiwiZG9jX2NvdW50IjowfV19fX19
+  recorded_at: Thu, 15 Feb 2024 23:54:04 GMT
+recorded_with: VCR 6.2.0
