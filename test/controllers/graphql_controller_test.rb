@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
+class GraphqlControllerTest < ActionDispatch::IntegrationTest
   test 'graphql playground' do
     get '/playground'
     assert_equal(200, response.status)
@@ -26,7 +26,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
         assert_equal(200, response.status)
         json = JSON.parse(response.body)
         assert_equal('Data analytics and big data',
-                    json['data']['search']['records'].first['title'])
+                     json['data']['search']['records'].first['title'])
 
         # confirm non-requested fields don't return
         assert_nil(json['data']['search']['records'].first['contentType'])
@@ -48,9 +48,9 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
         assert_equal(200, response.status)
         json = JSON.parse(response.body)
         assert_equal('Data analytics and big data',
-                    json['data']['search']['records'].first['title'])
+                     json['data']['search']['records'].first['title'])
         assert_equal('Language material',
-                    json['data']['search']['records'].first['contentType'].first)
+                     json['data']['search']['records'].first['contentType'].first)
       end
     end
   end
@@ -190,10 +190,10 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
         assert_equal(200, response.status)
         json = JSON.parse(response.body)
         assert_equal 'A common table : 80 recipes and stories from my shared cultures',
-                    json['data']['search']['records'].first['title']
+                     json['data']['search']['records'].first['title']
         assert(json['data']['search']['records'].first['contributors'].any? do |c|
-                c.value? 'McTernan, Cynthia Chen'
-              end)
+                 c.value? 'McTernan, Cynthia Chen'
+               end)
         assert(json['data']['search']['records'].first['identifiers'].any? { |i| i.value? '163565002X. (hardback)' })
       end
     end
@@ -480,11 +480,11 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
         assert_equal(200, response.status)
         json = JSON.parse(response.body)
         assert_equal('mit alma',
-                    json['data']['search']['aggregations']['source']
-                    .first['key'])
+                     json['data']['search']['aggregations']['source']
+                     .first['key'])
         assert_equal(160_288,
-                    json['data']['search']['aggregations']['source']
-                    .first['docCount'])
+                     json['data']['search']['aggregations']['source']
+                     .first['docCount'])
       end
     end
   end
@@ -507,11 +507,11 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
         assert_equal(200, response.status)
         json = JSON.parse(response.body)
         assert_equal('mit alma',
-                    json['data']['search']['aggregations']['source']
-                    .first['key'])
+                     json['data']['search']['aggregations']['source']
+                     .first['key'])
         assert_equal(1_399_825,
-                    json['data']['search']['aggregations']['source']
-                    .first['docCount'])
+                     json['data']['search']['aggregations']['source']
+                     .first['docCount'])
       end
     end
   end
@@ -534,11 +534,11 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
         assert_equal(200, response.status)
         json = JSON.parse(response.body)
         assert_equal('mit alma',
-                    json['data']['search']['aggregations']['source']
-                    .first['key'])
+                     json['data']['search']['aggregations']['source']
+                     .first['key'])
         assert_equal(1_399_825,
-                    json['data']['search']['aggregations']['source']
-                    .first['docCount'])
+                     json['data']['search']['aggregations']['source']
+                     .first['docCount'])
       end
     end
   end
@@ -816,7 +816,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
 
   test 'graphql can retrieve a record from a default index' do
     # fragile test: specific item expected in default index
-      VCR.use_cassette('opensearch init') do
+    VCR.use_cassette('opensearch init') do
       VCR.use_cassette('graphql retrieve from default index') do
         post '/graphql', params: { query:
           '{
@@ -871,8 +871,8 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
         json_dataset = JSON.parse(response.body)
         initial_hits_count = json_dataset['data']['search']['hits']
         initial_still_images_count = json_dataset['data']['search']['aggregations']['contentType'].find do |x|
-                                      x['key'] == 'still image'
-                                    end ['docCount']
+                                       x['key'] == 'still image'
+                                     end ['docCount']
 
         post '/graphql', params: { query:
           '{
@@ -930,7 +930,7 @@ class GraphqlControllerV2Test < ActionDispatch::IntegrationTest
 
         json_data = JSON.parse(response.body)
         filtered_hits_count = json_data['data']['search']['hits']
-          
+
         assert(initial_hits_count > 0)
         assert(filtered_hits_count > 0)
         assert(filtered_hits_count < initial_hits_count)
