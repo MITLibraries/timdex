@@ -10,9 +10,12 @@ class GraphqlController < ApplicationController
       # current_user: current_user,
       tracers: [request_tracer]
     }
-    result = TimdexSchema.execute(query, variables: variables,
-                                         context: context,
-                                         operation_name: operation_name)
+    result = TimdexSchema.execute(query, variables:,
+                                         context:,
+                                         operation_name:)
+
+    Timdex::GraphqlQueriesTotal.increment if Flipflop.enabled?(:prometheus)
+
     render json: result
   rescue StandardError => e
     raise e unless Rails.env.development?
