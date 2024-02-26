@@ -248,6 +248,7 @@ GEM
     pathutil (0.16.2)
       forwardable-extended (~> 2.6)
     pg (1.5.4)
+    prometheus-client (4.2.2)
     psych (5.1.2)
       stringio
     public_suffix (5.0.4)
@@ -433,6 +434,7 @@ DEPENDENCIES
   mitlibraries-theme!
   opensearch-ruby
   pg
+  prometheus-client
   puma
   rack-attack
   rack-cors
