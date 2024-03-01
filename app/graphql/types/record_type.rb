@@ -185,8 +185,9 @@ module Types
                                                           'publication'
     field :highlight, [Types::HighlightType], null: true, description: 'Search term matches in item metadata'
     field :score, String, null: true, description: 'Search relevance'
-    field :provider, String, null: true,
-                             description: 'The host institution for a resource. Currently only used for geospatial records'
+    field :provider, String,
+          null: true,
+          description: 'The host institution for a resource. Currently only used for geospatial records'
 
     def in_bibliography
       @object['related_items']&.map { |i| i['uri'] if i['relationship'] == 'IsCitedBy' }&.compact

@@ -61,10 +61,11 @@ module Types
       argument :source, String, required: false, default_value: 'All', deprecation_reason: 'Use `sourceFilter`'
 
       # applied filters
-      argument :access_to_files_filter, [String], required: false, default_value: nil,
-                                                  description: 'Filter results by access type. Use the `AccessToFiles` ' \
-                                                               'aggregation for a list of possible values. Multiple ' \
-                                                               'values are ORed.'
+      argument :access_to_files_filter, [String],
+               required: false, default_value: nil,
+               description: 'Filter results by access type. Use the `AccessToFiles` ' \
+                            'aggregation for a list of possible values. Multiple ' \
+                            'values are ORed.'
 
       argument :content_type_filter, [String], required: false, default_value: nil,
                                                description: 'Filter results by content type. Use the `contentType` ' \
