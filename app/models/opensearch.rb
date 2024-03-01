@@ -218,6 +218,9 @@ class Opensearch
     # source aggregation is "OR" and not "AND" so it does not use the filter_field_by_value method
     f.push filter_sources(params[:source_filter]) if params[:source_filter]
 
+    # access to files aggregation is "OR" and not "AND" so it does not use the filter_field_by_value method
+    f.push filter_access_to_files(params[:access_to_files_filter]) if params[:access_to_files_filter]
+
     if params[:subjects_filter].present?
       params[:subjects_filter].each do |p|
         f.push filter_field_by_value('subjects.value.keyword', p)
@@ -233,6 +236,31 @@ class Opensearch
     }
   end
 
+  # multiple access to files values are ORd
+  def filter_access_to_files(param)
+    { nested: {
+      path: 'rights',
+      query: {
+        bool: {
+          should: access_to_files_array(param)
+        }
+      }
+    } }
+  end
+
+  def access_to_files_array(param)
+    rights = []
+    param.each do |right|
+      rights << {
+        term: {
+          'rights.description.keyword': right
+        }
+      }
+    end
+    rights
+  end
+
+  # multiple sources values are ORd
   def filter_sources(param)
     {
       bool: {

@@ -128,6 +128,25 @@ class OpensearchTest < ActiveSupport::TestCase
     assert_equal(expected, Opensearch.new.filter_sources(sources))
   end
 
+  test 'access_to_files_array creates correct query structure' do
+    rights = ['MIT authentication', 'Free/open to all']
+    expected = [{ term: { 'rights.description.keyword': 'MIT authentication' } },
+                { term: { 'rights.description.keyword': 'Free/open to all' } }]
+
+    assert_equal(expected, Opensearch.new.access_to_files_array(rights))
+  end
+
+  test 'filter_access_to_files creates correct query structure' do
+    sources = ['MIT authentication', 'Free/open to all']
+    expected = { nested: { path: 'rights',
+                           query: { bool: { should: [
+                             { term: { 'rights.description.keyword': 'MIT authentication' } },
+                             { term: { 'rights.description.keyword': 'Free/open to all' } }
+                           ] } } } }
+
+    assert_equal(expected, Opensearch.new.filter_access_to_files(sources))
+  end
+
   test 'filter_field_by_value query structure' do
     expected = {
       term: { fakefield: 'i am a fake value' }
