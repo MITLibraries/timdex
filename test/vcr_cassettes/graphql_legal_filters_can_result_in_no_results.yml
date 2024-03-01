@@ -6,7 +6,8 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"from":"0","size":20,"query":{"bool":{"should":[{"prefix":{"title.exact_value":{"value":"wright","boost":15.0}}},{"term":{"title":{"value":"wright","boost":1.0}}},{"nested":{"path":"contributors","query":{"term":{"contributors.value":{"value":"wright","boost":0.1}}}}}],"must":[{"multi_match":{"query":"wright","fields":["alternate_titles","call_numbers","citation","contents","contributors.value","dates.value","edition","funding_information.*","identifiers.value","languages","locations.value","notes.value","numbering","publication_information","subjects.value","summary","title"]}}],"filter":[{"term":{"subjects.value.keyword":"fake
-        filter value"}}]}},"aggregations":{"contributors":{"nested":{"path":"contributors"},"aggs":{"contributor_names":{"terms":{"field":"contributors.value.keyword"}}}},"content_type":{"terms":{"field":"content_type"}},"content_format":{"terms":{"field":"format"}},"languages":{"terms":{"field":"languages.keyword"}},"literary_form":{"terms":{"field":"literary_form"}},"places":{"nested":{"path":"subjects"},"aggs":{"only_spatial":{"filter":{"terms":{"subjects.kind":["Dublin
+        filter value"}}]}},"aggregations":{"access_to_files":{"nested":{"path":"rights"},"aggs":{"only_file_access":{"filter":{"terms":{"rights.kind":["Access
+        to files"]}},"aggs":{"access_types":{"terms":{"field":"rights.description.keyword"}}}}}},"contributors":{"nested":{"path":"contributors"},"aggs":{"contributor_names":{"terms":{"field":"contributors.value.keyword"}}}},"content_type":{"terms":{"field":"content_type"}},"content_format":{"terms":{"field":"format"}},"languages":{"terms":{"field":"languages.keyword"}},"literary_form":{"terms":{"field":"literary_form"}},"places":{"nested":{"path":"subjects"},"aggs":{"only_spatial":{"filter":{"terms":{"subjects.kind":["Dublin
         Core; Spatial"]}},"aggs":{"place_names":{"terms":{"field":"subjects.value.keyword"}}}}}},"source":{"terms":{"field":"source"}},"subjects":{"nested":{"path":"subjects"},"aggs":{"subject_names":{"terms":{"field":"subjects.value.keyword"}}}}},"sort":[{"_score":{"order":"desc"}},{"dates.value.as_date":{"order":"desc","nested":{"path":"dates"}}}]}'
     headers:
       User-Agent:
@@ -16,7 +17,7 @@ http_interactions:
       Host:
       - localhost:9200
       X-Amz-Date:
-      - 20240221T141923Z
+      - 20240301T183317Z
       X-Amz-Content-Sha256:
       - "<REDACTED_SHA>"
       Authorization:
@@ -31,7 +32,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 21 Feb 2024 14:19:24 GMT
+      - Fri, 01 Mar 2024 18:33:18 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -44,6 +45,6 @@ http_interactions:
       - Accept-Encoding, User-Agent
     body:
       encoding: ASCII-8BIT
-      string: '{"took":158,"timed_out":false,"_shards":{"total":22,"successful":22,"skipped":0,"failed":0},"hits":{"total":{"value":0,"relation":"eq"},"max_score":null,"hits":[]},"aggregations":{"places":{"doc_count":0,"only_spatial":{"doc_count":0,"place_names":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]}}},"languages":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"content_type":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"subjects":{"doc_count":0,"subject_names":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]}},"content_format":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"literary_form":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"source":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"contributors":{"doc_count":0,"contributor_names":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]}}}}'
-  recorded_at: Wed, 21 Feb 2024 14:19:24 GMT
+      string: '{"took":97,"timed_out":false,"_shards":{"total":22,"successful":22,"skipped":0,"failed":0},"hits":{"total":{"value":0,"relation":"eq"},"max_score":null,"hits":[]},"aggregations":{"places":{"doc_count":0,"only_spatial":{"doc_count":0,"place_names":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]}}},"languages":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"content_type":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"subjects":{"doc_count":0,"subject_names":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]}},"content_format":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"literary_form":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"source":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"contributors":{"doc_count":0,"contributor_names":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]}},"access_to_files":{"doc_count":0,"only_file_access":{"doc_count":0,"access_types":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]}}}}}'
+  recorded_at: Fri, 01 Mar 2024 18:33:18 GMT
 recorded_with: VCR 6.2.0

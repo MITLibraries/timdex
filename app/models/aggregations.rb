@@ -4,6 +4,7 @@ class Aggregations
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html
   def self.all
     {
+      access_to_files:,
       contributors:,
       content_type:,
       content_format:,
@@ -12,6 +13,32 @@ class Aggregations
       places:,
       source:,
       subjects:
+    }
+  end
+
+  def self.access_to_files
+    {
+      nested: {
+        path: 'rights'
+      },
+      aggs: {
+        only_file_access: {
+          filter: {
+            terms: {
+              'rights.kind': [
+                'Access to files'
+              ]
+            }
+          },
+          aggs: {
+            access_types: {
+              terms: {
+                field: 'rights.description.keyword'
+              }
+            }
+          }
+        }
+      }
     }
   end
 

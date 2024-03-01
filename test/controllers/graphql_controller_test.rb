@@ -104,7 +104,7 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
                                   }' }
         assert_equal(200, response.status)
         json = JSON.parse(response.body)
-        assert_equal('32.201416', json['data']['search']['records'].first['score'])
+        assert_equal('32.326054', json['data']['search']['records'].first['score'])
       end
     end
   end
@@ -166,7 +166,7 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
                                   }' }
         assert_equal(200, response.status)
         json = JSON.parse(response.body)
-        assert(json['data']['search']['records'].first['contributors'].any? { |c| c.value? 'Kim, Moon S. (Moon Sung)' })
+        assert(json['data']['search']['records'].first['contributors'].any? { |c| c.value? 'Kim, Moon H. (Moon Ho)' })
       end
     end
   end
@@ -482,7 +482,7 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
         assert_equal('mit alma',
                      json['data']['search']['aggregations']['source']
                      .first['key'])
-        assert_equal(160_288,
+        assert_equal(208_361,
                      json['data']['search']['aggregations']['source']
                      .first['docCount'])
       end
@@ -509,7 +509,7 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
         assert_equal('mit alma',
                      json['data']['search']['aggregations']['source']
                      .first['key'])
-        assert_equal(1_399_825,
+        assert_equal(1_636_808,
                      json['data']['search']['aggregations']['source']
                      .first['docCount'])
       end
@@ -536,7 +536,7 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
         assert_equal('mit alma',
                      json['data']['search']['aggregations']['source']
                      .first['key'])
-        assert_equal(1_399_825,
+        assert_equal(1_636_808,
                      json['data']['search']['aggregations']['source']
                      .first['docCount'])
       end
@@ -574,7 +574,7 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
                                   }' }
         assert_equal(200, response.status)
         json = JSON.parse(response.body)
-        assert_equal(234, json['data']['search']['hits'])
+        assert_equal(225, json['data']['search']['hits'])
       end
     end
   end

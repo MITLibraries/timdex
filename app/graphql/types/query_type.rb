@@ -156,6 +156,7 @@ module Types
 
     def collapse_buckets(es_aggs)
       {
+        access_to_files: es_aggs['access_to_files']['only_file_access']['access_types']['buckets'],
         contributors: es_aggs['contributors']['contributor_names']['buckets'],
         source: es_aggs['source']['buckets'],
         subjects: es_aggs['subjects']['subject_names']['buckets'],

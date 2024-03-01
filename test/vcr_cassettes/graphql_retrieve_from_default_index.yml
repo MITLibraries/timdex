@@ -14,7 +14,7 @@ http_interactions:
       Host:
       - localhost:9200
       X-Amz-Date:
-      - 20240221T141924Z
+      - 20240301T183318Z
       X-Amz-Content-Sha256:
       - "<REDACTED_SHA>"
       Authorization:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 21 Feb 2024 14:19:24 GMT
+      - Fri, 01 Mar 2024 18:33:18 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -63,5 +63,5 @@ http_interactions:
         methods for addressing ''errors-in-variable'' and ''weak instrument bias''
         problems, as well a new method for studying errors-in-variables in nonlinear
         contexts."]}}]}}'
-  recorded_at: Wed, 21 Feb 2024 14:19:24 GMT
+  recorded_at: Fri, 01 Mar 2024 18:33:18 GMT
 recorded_with: VCR 6.2.0

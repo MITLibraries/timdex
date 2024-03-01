@@ -5,7 +5,8 @@ http_interactions:
     uri: http://localhost:9200/geo/_search
     body:
       encoding: UTF-8
-      string: '{"from":"0","size":20,"query":{"bool":{"should":[{"prefix":{"title.exact_value":{"value":"bermuda","boost":15.0}}},{"term":{"title":{"value":"bermuda","boost":1.0}}},{"nested":{"path":"contributors","query":{"term":{"contributors.value":{"value":"bermuda","boost":0.1}}}}}],"must":[{"multi_match":{"query":"bermuda","fields":["alternate_titles","call_numbers","citation","contents","contributors.value","dates.value","edition","funding_information.*","identifiers.value","languages","locations.value","notes.value","numbering","publication_information","subjects.value","summary","title"]}}],"filter":[]}},"aggregations":{"contributors":{"nested":{"path":"contributors"},"aggs":{"contributor_names":{"terms":{"field":"contributors.value.keyword"}}}},"content_type":{"terms":{"field":"content_type"}},"content_format":{"terms":{"field":"format"}},"languages":{"terms":{"field":"languages.keyword"}},"literary_form":{"terms":{"field":"literary_form"}},"places":{"nested":{"path":"subjects"},"aggs":{"only_spatial":{"filter":{"terms":{"subjects.kind":["Dublin
+      string: '{"from":"0","size":20,"query":{"bool":{"should":[{"prefix":{"title.exact_value":{"value":"bermuda","boost":15.0}}},{"term":{"title":{"value":"bermuda","boost":1.0}}},{"nested":{"path":"contributors","query":{"term":{"contributors.value":{"value":"bermuda","boost":0.1}}}}}],"must":[{"multi_match":{"query":"bermuda","fields":["alternate_titles","call_numbers","citation","contents","contributors.value","dates.value","edition","funding_information.*","identifiers.value","languages","locations.value","notes.value","numbering","publication_information","subjects.value","summary","title"]}}],"filter":[]}},"aggregations":{"access_to_files":{"nested":{"path":"rights"},"aggs":{"only_file_access":{"filter":{"terms":{"rights.kind":["Access
+        to files"]}},"aggs":{"access_types":{"terms":{"field":"rights.description.keyword"}}}}}},"contributors":{"nested":{"path":"contributors"},"aggs":{"contributor_names":{"terms":{"field":"contributors.value.keyword"}}}},"content_type":{"terms":{"field":"content_type"}},"content_format":{"terms":{"field":"format"}},"languages":{"terms":{"field":"languages.keyword"}},"literary_form":{"terms":{"field":"literary_form"}},"places":{"nested":{"path":"subjects"},"aggs":{"only_spatial":{"filter":{"terms":{"subjects.kind":["Dublin
         Core; Spatial"]}},"aggs":{"place_names":{"terms":{"field":"subjects.value.keyword"}}}}}},"source":{"terms":{"field":"source"}},"subjects":{"nested":{"path":"subjects"},"aggs":{"subject_names":{"terms":{"field":"subjects.value.keyword"}}}}},"sort":[{"_score":{"order":"desc"}},{"dates.value.as_date":{"order":"desc","nested":{"path":"dates"}}}]}'
     headers:
       User-Agent:
@@ -15,7 +16,7 @@ http_interactions:
       Host:
       - localhost:9200
       X-Amz-Date:
-      - 20240221T141911Z
+      - 20240301T183319Z
       X-Amz-Content-Sha256:
       - "<REDACTED_SHA>"
       Authorization:
@@ -30,7 +31,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 21 Feb 2024 14:19:12 GMT
+      - Fri, 01 Mar 2024 18:33:19 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -43,214 +44,157 @@ http_interactions:
       - Accept-Encoding, User-Agent
     body:
       encoding: ASCII-8BIT
-      string: '{"took":42,"timed_out":false,"_shards":{"total":2,"successful":2,"skipped":0,"failed":0},"hits":{"total":{"value":67,"relation":"eq"},"max_score":null,"hits":[{"_index":"gisogm-2024-02-15t00-30-18","_id":"gisogm:edu.columbia:27230568d726","_score":37.511078,"_source":{"source":"OpenGeoMetadata
+      string: '{"took":36,"timed_out":false,"_shards":{"total":2,"successful":2,"skipped":0,"failed":0},"hits":{"total":{"value":67,"relation":"eq"},"max_score":null,"hits":[{"_index":"gisogm-2024-03-01t17-29-45","_id":"gisogm:edu.columbia:27230568d726","_score":37.511078,"_source":{"source":"OpenGeoMetadata
         GIS Resources","source_link":"https://geodata.library.columbia.edu/catalog/sde-columbia-esri_2006_bermuda_gaz","timdex_record_id":"gisogm:edu.columbia:27230568d726","title":"Bermuda
         World Gazetteer Locations, 2006","citation":"ESRI. Bermuda World Gazetteer
-        Locations, 2006. ESRI. Geospatial data. https://geodata.library.columbia.edu/catalog/sde-columbia-esri_2006_bermuda_gaz","content_type":["Geospatial
+        Locations, 2006. ESRI. Point data. https://geodata.library.columbia.edu/catalog/sde-columbia-esri_2006_bermuda_gaz","content_type":["Point
         data"],"contributors":[{"value":"ESRI","kind":"Creator"}],"dates":[{"kind":"Coverage","value":"2006"},{"kind":"Coverage","value":"1992"}],"format":"Shapefile","identifiers":[{"value":"urn:columbia.edu:Columbia.esri_2006_bermuda_gaz","kind":"Not
         specified"}],"languages":["English"],"links":[{"url":"https://www1.columbia.edu/sec/acis/eds/dgate/studies/C1301/data/esri_2006_bermuda_gaz.zip","kind":"Download","text":"Data"},{"url":"https://geodata.library.columbia.edu/catalog/sde-columbia-esri_2006_bermuda_gaz","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-64.992004, -64.620997, 32.385004, 32.164)"},{"kind":"Geometry","geoshape":"BBOX
-        (-64.992004, -64.620997, 32.385004, 32.164)"}],"publication_information":["ESRI","Columbia"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Location"],"kind":"DCAT;
+        (-64.992004, -64.620997, 32.385004, 32.164)"}],"provider":"Columbia","publication_information":["ESRI"],"rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"Not owned by MIT","kind":"Access to files"}],"subjects":[{"value":["Location"],"kind":"DCAT;
         Theme"},{"value":["Oceans"],"kind":"DCAT; Theme"},{"value":["Society"],"kind":"DCAT;
         Theme"},{"value":["Transportation"],"kind":"DCAT; Theme"},{"value":["Bermuda"],"kind":"Dublin
         Core; Spatial"},{"value":["Location"],"kind":"Dublin Core; Subject"},{"value":["Oceans"],"kind":"Dublin
         Core; Subject"},{"value":["Society"],"kind":"Dublin Core; Subject"},{"value":["Transportation"],"kind":"Dublin
-        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Point"],"kind":"Subject
-        scheme not provided"}],"summary":["Bermuda World Gazetteer Locations is a
-        point theme representing the locations and proper names for map features in
-        Bermuda. The gazetteer includes attribute and annotation name information
-        from various layers of the Digital Chart of the World."]},"sort":[37.511078,1136073600000]},{"_index":"gisogm-2024-02-15t00-30-18","_id":"gisogm:edu.columbia:4b725a290df2","_score":36.685684,"_source":{"source":"OpenGeoMetadata
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}],"summary":["Bermuda
+        World Gazetteer Locations is a point theme representing the locations and
+        proper names for map features in Bermuda. The gazetteer includes attribute
+        and annotation name information from various layers of the Digital Chart of
+        the World."]},"sort":[37.511078,1136073600000]},{"_index":"gisogm-2024-03-01t17-29-45","_id":"gisogm:edu.columbia:4b725a290df2","_score":36.685684,"_source":{"source":"OpenGeoMetadata
         GIS Resources","source_link":"https://geodata.library.columbia.edu/catalog/sde-columbia-ev_bermuda_31k","timdex_record_id":"gisogm:edu.columbia:4b725a290df2","title":"Bermuda,
         1:31,680, 1975 (Scanned Map)","citation":"East View Cartographic, Incorporated.
         Bermuda, 1:31,680, 1975 (Scanned Map). East View Cartographic, Incorporated.
-        Geospatial data. https://geodata.library.columbia.edu/catalog/sde-columbia-ev_bermuda_31k","content_type":["Geospatial
+        Raster data. https://geodata.library.columbia.edu/catalog/sde-columbia-ev_bermuda_31k","content_type":["Raster
         data"],"contributors":[{"value":"East View Cartographic, Incorporated","kind":"Creator"}],"dates":[{"kind":"Coverage","value":"1975"}],"format":"GeoTIFF","identifiers":[{"value":"urn:columbia.edu:Columbia.ev_bermuda_31k","kind":"Not
         specified"}],"languages":["English"],"links":[{"url":"https://www1.columbia.edu/sec/acis/eds/dgate/studies/C1301/data/ev_bermuda_31k.zip\n","kind":"Download","text":"Data"},{"url":"https://geodata.library.columbia.edu/catalog/sde-columbia-ev_bermuda_31k","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-64.92748009878599, -64.623437235618, 32.404583831577,
         32.216904729267)"},{"kind":"Geometry","geoshape":"BBOX (-64.92748009878599,
-        -64.623437235618, 32.404583831577, 32.216904729267)"}],"publication_information":["East
-        View Cartographic, Incorporated","Columbia"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Elevation"],"kind":"DCAT;
+        -64.623437235618, 32.404583831577, 32.216904729267)"}],"provider":"Columbia","publication_information":["East
+        View Cartographic, Incorporated"],"rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"Not owned by MIT","kind":"Access to files"}],"subjects":[{"value":["Elevation"],"kind":"DCAT;
         Theme"},{"value":["Bermuda"],"kind":"Dublin Core; Spatial"},{"value":["Elevation"],"kind":"Dublin
         Core; Subject"},{"value":["ImageryBaseMapsEarthCover"],"kind":"Dublin Core;
-        Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Raster"],"kind":"Subject
-        scheme not provided"}],"summary":["Bermuda, 1:31,680, 1975 is a scanned map
-        of Bermuda at a scale of 1:31,680. The map is georeferenced to the surface
-        of the earth and fit to World Geodetic System (1984) coordinates. The original
-        scanned file with addtional information is also provided."]},"sort":[36.685684,157766400000]},{"_index":"gisogm-2024-02-15t00-30-18","_id":"gisogm:edu.psu:b26b798fab70","_score":36.64388,"_source":{"source":"OpenGeoMetadata
+        Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}],"summary":["Bermuda,
+        1:31,680, 1975 is a scanned map of Bermuda at a scale of 1:31,680. The map
+        is georeferenced to the surface of the earth and fit to World Geodetic System
+        (1984) coordinates. The original scanned file with addtional information is
+        also provided."]},"sort":[36.685684,157766400000]},{"_index":"gisogm-2024-03-01t17-29-45","_id":"gisogm:edu.psu:b26b798fab70","_score":36.64388,"_source":{"source":"OpenGeoMetadata
         GIS Resources","source_link":"https://collection1.libraries.psu.edu/cdm/ref/collection/maps1/id/30110","timdex_record_id":"gisogm:edu.psu:b26b798fab70","title":"Bermuda
         Hundred : [map]","citation":"Michler, N. (Nathaniel), 1827-1881. Bermuda Hundred
-        : [map]. Pennsylvania State University. Geospatial data. https://collection1.libraries.psu.edu/cdm/ref/collection/maps1/id/30110","content_type":["Geospatial
-        data"],"contributors":[{"value":"Michler, N. (Nathaniel), 1827-1881","kind":"Creator"}],"dates":[{"kind":"Issued","value":"1867"},{"kind":"Coverage","value":"1865"},{"kind":"Coverage","range":{"gte":"1865","lte":"1865"}}],"format":"JPEG","identifiers":[{"value":"9b7687d0-00b4-4e53-a818-2ae41c679266","kind":"Not
+        : [map]. Military maps. https://collection1.libraries.psu.edu/cdm/ref/collection/maps1/id/30110","content_type":["Military
+        maps"],"contributors":[{"value":"Michler, N. (Nathaniel), 1827-1881","kind":"Creator"}],"dates":[{"kind":"Issued","value":"1867"},{"kind":"Coverage","value":"1865"},{"kind":"Coverage","range":{"gte":"1865","lte":"1865"}}],"format":"JPEG","identifiers":[{"value":"9b7687d0-00b4-4e53-a818-2ae41c679266","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://collection1.libraries.psu.edu/cdm/ref/collection/maps1/id/30110","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
-        Box","geoshape":"BBOX (-77.5189,-77.2156,37.4281,37.2611)"}],"publication_information":["Pennsylvania
-        State University"],"rights":[{"description":"Public","kind":"Access"}],"subjects":[{"value":["Penn
-        State Rare Maps"],"kind":"DCAT; Keyword"},{"value":["2022-creator-sprint"],"kind":"DCAT;
+        Box","geoshape":"BBOX (-77.5189,-77.2156,37.4281,37.2611)"}],"provider":"Pennsylvania
+        State University","rights":[{"description":"Public","kind":"Access rights"},{"description":"Not
+        owned by MIT","kind":"Access to files"}],"subjects":[{"value":["Penn State
+        Rare Maps"],"kind":"DCAT; Keyword"},{"value":["2022-creator-sprint"],"kind":"DCAT;
         Keyword"},{"value":["Virginia"],"kind":"Dublin Core; Spatial"},{"value":["Maps"],"kind":"Subject
-        scheme not provided"},{"value":["Military maps"],"kind":"Subject scheme not
-        provided"}],"summary":["Scale [1:42,240]. 1 1/2 in. to 1 mile; 1 map: hand
-        colored, mounted on cloth; 48 x 73 cm Bermuda Hundred Region (Va.)--History--Civil
-        War, 1861-1865--Maps"]},"sort":[36.64388,-3250368000000]},{"_index":"gisogm-2024-02-15t00-30-18","_id":"gisogm:edu.columbia:7dcd0c97e8d7","_score":36.525307,"_source":{"source":"OpenGeoMetadata
+        scheme not provided"}],"summary":["Scale [1:42,240]. 1 1/2 in. to 1 mile;
+        1 map: hand colored, mounted on cloth; 48 x 73 cm Bermuda Hundred Region (Va.)--History--Civil
+        War, 1861-1865--Maps"]},"sort":[36.64388,-3250368000000]},{"_index":"gisogm-2024-03-01t17-29-45","_id":"gisogm:edu.columbia:7dcd0c97e8d7","_score":36.525307,"_source":{"source":"OpenGeoMetadata
         GIS Resources","source_link":"https://geodata.library.columbia.edu/catalog/sde-columbia-ev_bermuda_10k","timdex_record_id":"gisogm:edu.columbia:7dcd0c97e8d7","title":"Bermuda,
         1:10,560, 1975 (Scanned Map)","citation":"East View Cartographic, Incorporated.
         Bermuda, 1:10,560, 1975 (Scanned Map). East View Cartographic, Incorporated.
-        Geospatial data. https://geodata.library.columbia.edu/catalog/sde-columbia-ev_bermuda_10k","content_type":["Geospatial
+        Raster data. https://geodata.library.columbia.edu/catalog/sde-columbia-ev_bermuda_10k","content_type":["Raster
         data"],"contributors":[{"value":"East View Cartographic, Incorporated","kind":"Creator"}],"dates":[{"kind":"Coverage","value":"1975"}],"format":"GeoTIFF","identifiers":[{"value":"urn:columbia.edu:Columbia.ev_bermuda_10k","kind":"Not
         specified"}],"languages":["English"],"links":[{"url":"https://www1.columbia.edu/sec/acis/eds/dgate/studies/C1301/data/ev_bermuda_10k.zip\n","kind":"Download","text":"Data"},{"url":"https://geodata.library.columbia.edu/catalog/sde-columbia-ev_bermuda_10k","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-64.91220036652284, -64.64577859382437, 32.39437939242936,
         32.23858887752782)"},{"kind":"Geometry","geoshape":"BBOX (-64.91220036652284,
-        -64.64577859382437, 32.39437939242936, 32.23858887752782)"}],"publication_information":["East
-        View Cartographic, Incorporated","Columbia"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Elevation"],"kind":"DCAT;
+        -64.64577859382437, 32.39437939242936, 32.23858887752782)"}],"provider":"Columbia","publication_information":["East
+        View Cartographic, Incorporated"],"rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"Not owned by MIT","kind":"Access to files"}],"subjects":[{"value":["Elevation"],"kind":"DCAT;
         Theme"},{"value":["Bermuda"],"kind":"Dublin Core; Spatial"},{"value":["Elevation"],"kind":"Dublin
         Core; Subject"},{"value":["ImageryBaseMapsEarthCover"],"kind":"Dublin Core;
-        Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Raster"],"kind":"Subject
-        scheme not provided"}],"summary":["Bermuda, 1:10,560, 1975 is a scanned map
-        of Bermuda at a scale of 1:10,560. The map is comprised with six sheets and
-        georeferenced to the surface of the earth and fit to World Geodetic System
-        (1984) coordinates. The original scanned file with addtional information is
-        also provided."]},"sort":[36.525307,157766400000]},{"_index":"gisogm-2024-02-15t00-30-18","_id":"gisogm:edu.columbia:9bb27e9277ab","_score":36.36886,"_source":{"source":"OpenGeoMetadata
+        Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}],"summary":["Bermuda,
+        1:10,560, 1975 is a scanned map of Bermuda at a scale of 1:10,560. The map
+        is comprised with six sheets and georeferenced to the surface of the earth
+        and fit to World Geodetic System (1984) coordinates. The original scanned
+        file with addtional information is also provided."]},"sort":[36.525307,157766400000]},{"_index":"gisogm-2024-03-01t17-29-45","_id":"gisogm:edu.columbia:9bb27e9277ab","_score":36.36886,"_source":{"source":"OpenGeoMetadata
         GIS Resources","source_link":"https://geodata.library.columbia.edu/catalog/sde-columbia-ev_bermuda_2500","timdex_record_id":"gisogm:edu.columbia:9bb27e9277ab","title":"Bermuda,
         1:2,500, 1993 (Scanned Map)","citation":"East View Cartographic, Incorporated.
         Bermuda, 1:2,500, 1993 (Scanned Map). East View Cartographic, Incorporated.
-        Geospatial data. https://geodata.library.columbia.edu/catalog/sde-columbia-ev_bermuda_2500","content_type":["Geospatial
+        Raster data. https://geodata.library.columbia.edu/catalog/sde-columbia-ev_bermuda_2500","content_type":["Raster
         data"],"contributors":[{"value":"East View Cartographic, Incorporated","kind":"Creator"}],"dates":[{"kind":"Coverage","value":"1993"}],"format":"GeoTIFF","identifiers":[{"value":"urn:columbia.edu:Columbia.ev_bermuda_2500","kind":"Not
         specified"}],"languages":["English"],"links":[{"url":"https://www1.columbia.edu/sec/acis/eds/dgate/studies/C1301/data/ev_bermuda_2500.zip\n","kind":"Download","text":"Data"},{"url":"https://geodata.library.columbia.edu/catalog/sde-columbia-ev_bermuda_2500","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-64.72153748673735, -64.65745941223956, 32.37590975497872,
         32.366608625386135)"},{"kind":"Geometry","geoshape":"BBOX (-64.72153748673735,
-        -64.65745941223956, 32.37590975497872, 32.366608625386135)"}],"publication_information":["East
-        View Cartographic, Incorporated","Columbia"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Elevation"],"kind":"DCAT;
+        -64.65745941223956, 32.37590975497872, 32.366608625386135)"}],"provider":"Columbia","publication_information":["East
+        View Cartographic, Incorporated"],"rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"Not owned by MIT","kind":"Access to files"}],"subjects":[{"value":["Elevation"],"kind":"DCAT;
         Theme"},{"value":["Bermuda"],"kind":"Dublin Core; Spatial"},{"value":["Elevation"],"kind":"Dublin
         Core; Subject"},{"value":["ImageryBaseMapsEarthCover"],"kind":"Dublin Core;
-        Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Raster"],"kind":"Subject
-        scheme not provided"}],"summary":["Bermuda, 1:2,500, 1993 is a scanned map
-        of the north east Bermuda at a scale of 1:2,500. The map is comprised with
-        six sheets and georeferenced to the surface of the earth and fit to World
-        Geodetic System (1984) coordinates. The original scanned file with addtional
-        information is also provided."]},"sort":[36.36886,725846400000]},{"_index":"gisogm-2024-02-15t00-30-18","_id":"gisogm:edu.stanford.purl:cf143efcd115","_score":34.766922,"_source":{"source":"OpenGeoMetadata
+        Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}],"summary":["Bermuda,
+        1:2,500, 1993 is a scanned map of the north east Bermuda at a scale of 1:2,500.
+        The map is comprised with six sheets and georeferenced to the surface of the
+        earth and fit to World Geodetic System (1984) coordinates. The original scanned
+        file with addtional information is also provided."]},"sort":[36.36886,725846400000]},{"_index":"gisogm-2024-03-01t17-29-45","_id":"gisogm:edu.stanford.purl:cf143efcd115","_score":34.766922,"_source":{"source":"OpenGeoMetadata
         GIS Resources","source_link":"https://purl.stanford.edu/zz801my9229","timdex_record_id":"gisogm:edu.stanford.purl:cf143efcd115","title":"Bermuda
         Islands (Raster Image)","citation":"Land Info (Firm), United States. Defense
-        Mapping Agency. Bermuda Islands (Raster Image). Land Info (Firm). Geospatial
-        data. https://purl.stanford.edu/zz801my9229","content_type":["Geospatial data"],"contributors":[{"value":"Land
+        Mapping Agency. Bermuda Islands (Raster Image). Land Info (Firm). Raster data.
+        https://purl.stanford.edu/zz801my9229","content_type":["Raster data"],"contributors":[{"value":"Land
         Info (Firm)","kind":"Creator"},{"value":"United States. Defense Mapping Agency","kind":"Creator"}],"dates":[{"kind":"Issued","value":"1996"},{"kind":"Coverage","value":"1996"}],"format":"GeoTIFF","identifiers":[{"value":"http://purl.stanford.edu/zz801my9229","kind":"Not
         specified"}],"languages":["English"],"links":[{"url":"https://stacks.stanford.edu/file/druid:zz801my9229/data.zip","kind":"Download","text":"Data"},{"url":"https://purl.stanford.edu/zz801my9229","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-65.0997839, -64.5164413, 32.5347509, 32.168097)"},{"kind":"Geometry","geoshape":"BBOX
-        (-65.0997839, -64.5164413, 32.5347509, 32.168097)"}],"publication_information":["Land
-        Info (Firm)","Stanford"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
+        (-65.0997839, -64.5164413, 32.5347509, 32.168097)"}],"provider":"Stanford","publication_information":["Land
+        Info (Firm)"],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"Not
+        owned by MIT","kind":"Access to files"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
         Core; Spatial"},{"value":["Navigation"],"kind":"Dublin Core; Subject"},{"value":["Imagery
         and Base Maps"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
-        scheme not provided"},{"value":["Raster"],"kind":"Subject scheme not provided"}],"summary":["Georeferenced
-        nautical chart. Map No.: 26341 This map is part of a collection of scanned
-        and georeferenced nautical charts produced by the National Geospatial-Intelligence
-        Agency (NGA). United States. Defense Mapping Agency. (1996). Bermuda Islands
-        (Raster Image). LandInfo. Available at: https://purl.stanford.edu/zz801my9229
-        This layer is presented in the WGS84 coordinate system for web display purposes.
-        Downloadable data are provided in native coordinate system or projection."]},"sort":[34.766922,820454400000]},{"_index":"gisogm-2024-02-15t00-30-18","_id":"gisogm:edu.stanford.purl:b8da1aabc3cf","_score":33.68461,"_source":{"source":"OpenGeoMetadata
+        scheme not provided"}],"summary":["Georeferenced nautical chart. Map No.:
+        26341 This map is part of a collection of scanned and georeferenced nautical
+        charts produced by the National Geospatial-Intelligence Agency (NGA). United
+        States. Defense Mapping Agency. (1996). Bermuda Islands (Raster Image). LandInfo.
+        Available at: https://purl.stanford.edu/zz801my9229 This layer is presented
+        in the WGS84 coordinate system for web display purposes. Downloadable data
+        are provided in native coordinate system or projection."]},"sort":[34.766922,820454400000]},{"_index":"gisogm-2024-03-01t17-29-45","_id":"gisogm:edu.stanford.purl:b8da1aabc3cf","_score":33.68461,"_source":{"source":"OpenGeoMetadata
         GIS Resources","source_link":"https://purl.stanford.edu/ph074zw1581","timdex_record_id":"gisogm:edu.stanford.purl:b8da1aabc3cf","title":"Bermuda
         Operating Areas (Raster Image)","citation":"Land Info (Firm), United States.
         Defense Mapping Agency. Bermuda Operating Areas (Raster Image). Land Info
-        (Firm). Geospatial data. https://purl.stanford.edu/ph074zw1581","content_type":["Geospatial
+        (Firm). Raster data. https://purl.stanford.edu/ph074zw1581","content_type":["Raster
         data"],"contributors":[{"value":"Land Info (Firm)","kind":"Creator"},{"value":"United
         States. Defense Mapping Agency","kind":"Creator"}],"dates":[{"kind":"Issued","value":"1986"},{"kind":"Coverage","value":"1986"}],"format":"GeoTIFF","identifiers":[{"value":"http://purl.stanford.edu/ph074zw1581","kind":"Not
         specified"}],"languages":["English"],"links":[{"url":"https://stacks.stanford.edu/file/druid:ph074zw1581/data.zip","kind":"Download","text":"Data"},{"url":"https://purl.stanford.edu/ph074zw1581","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-65.9002763, -62.4670749, 34.2502345, 29.7502944)"},{"kind":"Geometry","geoshape":"BBOX
-        (-65.9002763, -62.4670749, 34.2502345, 29.7502944)"}],"publication_information":["Land
-        Info (Firm)","Stanford"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
+        (-65.9002763, -62.4670749, 34.2502345, 29.7502944)"}],"provider":"Stanford","publication_information":["Land
+        Info (Firm)"],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"Not
+        owned by MIT","kind":"Access to files"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
         Core; Spatial"},{"value":["Navigation"],"kind":"Dublin Core; Subject"},{"value":["Imagery
         and Base Maps"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
-        scheme not provided"},{"value":["Raster"],"kind":"Subject scheme not provided"}],"summary":["Georeferenced
-        nautical chart. Map No.: 26030 This map is part of a collection of scanned
-        and georeferenced nautical charts produced by the National Geospatial-Intelligence
-        Agency (NGA). United States. Defense Mapping Agency. (1986). Bermuda Operating
-        Areas (Raster Image). LandInfo. Available at: https://purl.stanford.edu/ph074zw1581
-        This layer is presented in the WGS84 coordinate system for web display purposes.
-        Downloadable data are provided in native coordinate system or projection."]},"sort":[33.68461,504921600000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:BD_A8GNS_2003","_score":33.346725,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:BD_A8GNS_2003","timdex_record_id":"gismit:BD_A8GNS_2003","title":"Bermuda
+        scheme not provided"}],"summary":["Georeferenced nautical chart. Map No.:
+        26030 This map is part of a collection of scanned and georeferenced nautical
+        charts produced by the National Geospatial-Intelligence Agency (NGA). United
+        States. Defense Mapping Agency. (1986). Bermuda Operating Areas (Raster Image).
+        LandInfo. Available at: https://purl.stanford.edu/ph074zw1581 This layer is
+        presented in the WGS84 coordinate system for web display purposes. Downloadable
+        data are provided in native coordinate system or projection."]},"sort":[33.68461,504921600000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:BD_A8GNS_2003","_score":33.346725,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:BD_A8GNS_2003","timdex_record_id":"gismit:BD_A8GNS_2003","title":"Bermuda
         (Geographic Feature Names, 2003)","citation":"United States. National Imagery
         and Mapping Agency. Bermuda (Geographic Feature Names, 2003). United States.
-        National Imagery and Mapping Agency. Geospatial data. https://search.libraries.mit.edu/record/gismit:BD_A8GNS_2003","content_type":["Geospatial
+        National Imagery and Mapping Agency. Point data. https://geodata.libraries.mit.edu/record/gismit:BD_A8GNS_2003","content_type":["Point
         data"],"contributors":[{"value":"United States. National Imagery and Mapping
-        Agency","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2003-10-01"},{"kind":"Coverage","value":"2003-10-01"},{"kind":"Coverage","value":"2003"}],"format":"Vector","identifiers":[{"value":"BD_A8GNS_2003","kind":"Not
+        Agency","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2003-10-01"},{"kind":"Coverage","value":"2003-10-01"},{"kind":"Coverage","value":"2003"}],"format":"Shapefile","identifiers":[{"value":"BD_A8GNS_2003","kind":"Not
         specified"},{"value":"SDE_DATA.BD_A8GNS_2003","kind":"Not specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/BD_A8GNS_2003.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/BD_A8GNS_2003.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/BD_A8GNS_2003.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:BD_A8GNS_2003","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-64.908056, -64.616667, 32.416667, 32.233333)"},{"kind":"Geometry","geoshape":"BBOX
-        (-64.908056, -64.616667, 32.416667, 32.233333)"}],"publication_information":["United
-        States. National Imagery and Mapping Agency","GIS Lab, MIT Libraries"],"rights":[{"description":"Public","kind":"Access"}],"subjects":[{"value":["Location"],"kind":"DCAT;
+        (-64.908056, -64.616667, 32.416667, 32.233333)"}],"provider":"GIS Lab, MIT
+        Libraries","publication_information":["United States. National Imagery and
+        Mapping Agency"],"rights":[{"description":"Public","kind":"Access rights"},{"description":"Free/open
+        to all","kind":"Access to files"}],"subjects":[{"value":["Location"],"kind":"DCAT;
         Theme"},{"value":["Bermuda Islands"],"kind":"Dublin Core; Spatial"},{"value":["Names,
         Geographical"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
-        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Entity
-        point"],"kind":"Subject scheme not provided"}],"summary":["Geographic feature
-        names for Bermuda."]},"sort":[33.346725,1064966400000]},{"_index":"gisogm-2024-02-15t00-30-18","_id":"gisogm:edu.stanford.purl:1875c361fbcc","_score":32.713554,"_source":{"source":"OpenGeoMetadata
-        GIS Resources","source_link":"https://purl.stanford.edu/zf808zf9674","timdex_record_id":"gisogm:edu.stanford.purl:1875c361fbcc","title":"Bermuda
-        3G Mobile Coverage Explorer, 2020","citation":"Collins Bartholomew Ltd. Bermuda
-        3G Mobile Coverage Explorer, 2020. Collins Bartholomew Ltd.. Geospatial data.
-        https://purl.stanford.edu/zf808zf9674","content_type":["Geospatial data"],"contributors":[{"value":"Collins
-        Bartholomew Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2020"},{"kind":"Coverage","value":"2020"}],"format":"GeoTIFF","identifiers":[{"value":"https://purl.stanford.edu/zf808zf9674","kind":"Not
-        specified"}],"languages":["English"],"links":[{"url":"https://stacks.stanford.edu/file/druid:zf808zf9674/data.zip","kind":"Download","text":"Data"},{"url":"https://purl.stanford.edu/zf808zf9674","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
-        Box","geoshape":"BBOX (-67.4999957, -62.6303319, 33.2278148, 31.9514916)"},{"kind":"Geometry","geoshape":"BBOX
-        (-67.4999957, -62.6303319, 33.2278148, 31.9514916)"}],"publication_information":["Collins
-        Bartholomew Ltd.","Stanford"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
-        Core; Spatial"},{"value":["Wireless communication systems"],"kind":"Dublin
-        Core; Subject"},{"value":["Utilities and Communication"],"kind":"Dublin Core;
-        Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}],"summary":["This
-        GeoTIFF is a representation of the coverage area for 3G mobile communications
-        newtworks in Bermuda. Mobile Coverage is released annually in January each
-        year. This data release is named 2020. Any operator data received up to the
-        end of the year 2019 is included in this release. The data is made available
-        in GeoTIFF 2-BIT raster format with pre-built pyramids using nearest-neighbour
-        resampling - with a nominal resolution of approximately 260 metres on the
-        ground at the equator. Operators are asked to submit strong (indoor) and variable
-        (outdoor) signal strengths: 2G (GSM) Greater than / -92 dBm -92 to -100 dBm,
-        3G (UMTS) Greater than -92 dBm / -92 to -100 dBm, 4G (LTE) Greater than -105
-        dBm / -105 to -120 dBm. However, the data received from operators often does
-        not include signal strength information or does not follow the above guidelines.
-        Therefore, whilst the rasters retain the strong and variable distinctions,
-        this inconsistency must be understood by the user.The cell values in the MCE
-        rasters are as follows: 1 - strong signal strength 2 - variable signal strength.
-        Operators are asked to submit strong (&gt;= -92dBm) and variable (&gt;= -100dBm
-        and &lt; 92dBm) signal strengths as part of their submissions. The data here
-        includes both types but does not make a distinction between the two. This
-        layer is presented in the WGS84 coordinate system for web display purposes.
-        Downloadable data are provided in native coordinate system or projection."]},"sort":[32.713554,1577836800000]},{"_index":"gisogm-2024-02-15t00-30-18","_id":"gisogm:edu.stanford.purl:6f80aaa6cce8","_score":32.713554,"_source":{"source":"OpenGeoMetadata
-        GIS Resources","source_link":"https://purl.stanford.edu/pf378jx2985","timdex_record_id":"gisogm:edu.stanford.purl:6f80aaa6cce8","title":"Bermuda
-        2G Mobile Coverage Explorer, 2020","citation":"Collins Bartholomew Ltd. Bermuda
-        2G Mobile Coverage Explorer, 2020. Collins Bartholomew Ltd.. Geospatial data.
-        https://purl.stanford.edu/pf378jx2985","content_type":["Geospatial data"],"contributors":[{"value":"Collins
-        Bartholomew Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2020"},{"kind":"Coverage","value":"2020"}],"format":"GeoTIFF","identifiers":[{"value":"https://purl.stanford.edu/pf378jx2985","kind":"Not
-        specified"}],"languages":["English"],"links":[{"url":"https://stacks.stanford.edu/file/druid:pf378jx2985/data.zip","kind":"Download","text":"Data"},{"url":"https://purl.stanford.edu/pf378jx2985","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
-        Box","geoshape":"BBOX (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"},{"kind":"Geometry","geoshape":"BBOX
-        (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"}],"publication_information":["Collins
-        Bartholomew Ltd.","Stanford"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
-        Core; Spatial"},{"value":["Wireless communication systems"],"kind":"Dublin
-        Core; Subject"},{"value":["Utilities and Communication"],"kind":"Dublin Core;
-        Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}],"summary":["This
-        GeoTIFF is a representation of the coverage area for 2G mobile communications
-        newtworks in Bermuda. Mobile Coverage is released annually in January each
-        year. This data release is named 2020. Any operator data received up to the
-        end of the year 2019 is included in this release. The data is made available
-        in GeoTIFF 2-BIT raster format with pre-built pyramids using nearest-neighbour
-        resampling - with a nominal resolution of approximately 260 metres on the
-        ground at the equator. Operators are asked to submit strong (indoor) and variable
-        (outdoor) signal strengths: 2G (GSM) Greater than / -92 dBm -92 to -100 dBm,
-        3G (UMTS) Greater than -92 dBm / -92 to -100 dBm, 4G (LTE) Greater than -105
-        dBm / -105 to -120 dBm. However, the data received from operators often does
-        not include signal strength information or does not follow the above guidelines.
-        Therefore, whilst the rasters retain the strong and variable distinctions,
-        this inconsistency must be understood by the user.The cell values in the MCE
-        rasters are as follows: 1 - strong signal strength 2 - variable signal strength.
-        Operators are asked to submit strong (&gt;= -92dBm) and variable (&gt;= -100dBm
-        and &lt; 92dBm) signal strengths as part of their submissions. The data here
-        includes both types but does not make a distinction between the two. This
-        layer is presented in the WGS84 coordinate system for web display purposes.
-        Downloadable data are provided in native coordinate system or projection."]},"sort":[32.713554,1577836800000]},{"_index":"gisogm-2024-02-15t00-30-18","_id":"gisogm:edu.stanford.purl:ccf9489674b9","_score":32.713554,"_source":{"source":"OpenGeoMetadata
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}],"summary":["Geographic
+        feature names for Bermuda."]},"sort":[33.346725,1064966400000]},{"_index":"gisogm-2024-03-01t17-29-45","_id":"gisogm:edu.stanford.purl:ccf9489674b9","_score":32.978886,"_source":{"source":"OpenGeoMetadata
         GIS Resources","source_link":"https://purl.stanford.edu/dq339fj8276","timdex_record_id":"gisogm:edu.stanford.purl:ccf9489674b9","title":"Bermuda
         4G Mobile Coverage Explorer, 2020","citation":"Collins Bartholomew Ltd. Bermuda
-        4G Mobile Coverage Explorer, 2020. Collins Bartholomew Ltd.. Geospatial data.
-        https://purl.stanford.edu/dq339fj8276","content_type":["Geospatial data"],"contributors":[{"value":"Collins
-        Bartholomew Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2020"},{"kind":"Coverage","value":"2020"}],"format":"GeoTIFF","identifiers":[{"value":"https://purl.stanford.edu/dq339fj8276","kind":"Not
+        4G Mobile Coverage Explorer, 2020. Collins Bartholomew Ltd.. https://purl.stanford.edu/dq339fj8276","content_type":["Not
+        specified"],"contributors":[{"value":"Collins Bartholomew Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2020"},{"kind":"Coverage","value":"2020"}],"format":"GeoTIFF","identifiers":[{"value":"https://purl.stanford.edu/dq339fj8276","kind":"Not
         specified"}],"languages":["English"],"links":[{"url":"https://stacks.stanford.edu/file/druid:dq339fj8276/data.zip","kind":"Download","text":"Data"},{"url":"https://purl.stanford.edu/dq339fj8276","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-67.4999957, -62.6303319, 33.2278148, 31.9514916)"},{"kind":"Geometry","geoshape":"BBOX
-        (-67.4999957, -62.6303319, 33.2278148, 31.9514916)"}],"publication_information":["Collins
-        Bartholomew Ltd.","Stanford"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
+        (-67.4999957, -62.6303319, 33.2278148, 31.9514916)"}],"provider":"Stanford","publication_information":["Collins
+        Bartholomew Ltd."],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"Not
+        owned by MIT","kind":"Access to files"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
         Core; Spatial"},{"value":["Wireless communication systems"],"kind":"Dublin
         Core; Subject"},{"value":["Utilities and Communication"],"kind":"Dublin Core;
         Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}],"summary":["This
@@ -272,16 +216,78 @@ http_interactions:
         and &lt; 92dBm) signal strengths as part of their submissions. The data here
         includes both types but does not make a distinction between the two. This
         layer is presented in the WGS84 coordinate system for web display purposes.
-        Downloadable data are provided in native coordinate system or projection."]},"sort":[32.713554,1577836800000]},{"_index":"gisogm-2024-02-15t00-30-18","_id":"gisogm:edu.stanford.purl:20eabaf59bae","_score":32.713554,"_source":{"source":"OpenGeoMetadata
+        Downloadable data are provided in native coordinate system or projection."]},"sort":[32.978886,1577836800000]},{"_index":"gisogm-2024-03-01t17-29-45","_id":"gisogm:edu.stanford.purl:1875c361fbcc","_score":32.978886,"_source":{"source":"OpenGeoMetadata
+        GIS Resources","source_link":"https://purl.stanford.edu/zf808zf9674","timdex_record_id":"gisogm:edu.stanford.purl:1875c361fbcc","title":"Bermuda
+        3G Mobile Coverage Explorer, 2020","citation":"Collins Bartholomew Ltd. Bermuda
+        3G Mobile Coverage Explorer, 2020. Collins Bartholomew Ltd.. https://purl.stanford.edu/zf808zf9674","content_type":["Not
+        specified"],"contributors":[{"value":"Collins Bartholomew Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2020"},{"kind":"Coverage","value":"2020"}],"format":"GeoTIFF","identifiers":[{"value":"https://purl.stanford.edu/zf808zf9674","kind":"Not
+        specified"}],"languages":["English"],"links":[{"url":"https://stacks.stanford.edu/file/druid:zf808zf9674/data.zip","kind":"Download","text":"Data"},{"url":"https://purl.stanford.edu/zf808zf9674","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
+        Box","geoshape":"BBOX (-67.4999957, -62.6303319, 33.2278148, 31.9514916)"},{"kind":"Geometry","geoshape":"BBOX
+        (-67.4999957, -62.6303319, 33.2278148, 31.9514916)"}],"provider":"Stanford","publication_information":["Collins
+        Bartholomew Ltd."],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"Not
+        owned by MIT","kind":"Access to files"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
+        Core; Spatial"},{"value":["Wireless communication systems"],"kind":"Dublin
+        Core; Subject"},{"value":["Utilities and Communication"],"kind":"Dublin Core;
+        Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}],"summary":["This
+        GeoTIFF is a representation of the coverage area for 3G mobile communications
+        newtworks in Bermuda. Mobile Coverage is released annually in January each
+        year. This data release is named 2020. Any operator data received up to the
+        end of the year 2019 is included in this release. The data is made available
+        in GeoTIFF 2-BIT raster format with pre-built pyramids using nearest-neighbour
+        resampling - with a nominal resolution of approximately 260 metres on the
+        ground at the equator. Operators are asked to submit strong (indoor) and variable
+        (outdoor) signal strengths: 2G (GSM) Greater than / -92 dBm -92 to -100 dBm,
+        3G (UMTS) Greater than -92 dBm / -92 to -100 dBm, 4G (LTE) Greater than -105
+        dBm / -105 to -120 dBm. However, the data received from operators often does
+        not include signal strength information or does not follow the above guidelines.
+        Therefore, whilst the rasters retain the strong and variable distinctions,
+        this inconsistency must be understood by the user.The cell values in the MCE
+        rasters are as follows: 1 - strong signal strength 2 - variable signal strength.
+        Operators are asked to submit strong (&gt;= -92dBm) and variable (&gt;= -100dBm
+        and &lt; 92dBm) signal strengths as part of their submissions. The data here
+        includes both types but does not make a distinction between the two. This
+        layer is presented in the WGS84 coordinate system for web display purposes.
+        Downloadable data are provided in native coordinate system or projection."]},"sort":[32.978886,1577836800000]},{"_index":"gisogm-2024-03-01t17-29-45","_id":"gisogm:edu.stanford.purl:6f80aaa6cce8","_score":32.978886,"_source":{"source":"OpenGeoMetadata
+        GIS Resources","source_link":"https://purl.stanford.edu/pf378jx2985","timdex_record_id":"gisogm:edu.stanford.purl:6f80aaa6cce8","title":"Bermuda
+        2G Mobile Coverage Explorer, 2020","citation":"Collins Bartholomew Ltd. Bermuda
+        2G Mobile Coverage Explorer, 2020. Collins Bartholomew Ltd.. https://purl.stanford.edu/pf378jx2985","content_type":["Not
+        specified"],"contributors":[{"value":"Collins Bartholomew Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2020"},{"kind":"Coverage","value":"2020"}],"format":"GeoTIFF","identifiers":[{"value":"https://purl.stanford.edu/pf378jx2985","kind":"Not
+        specified"}],"languages":["English"],"links":[{"url":"https://stacks.stanford.edu/file/druid:pf378jx2985/data.zip","kind":"Download","text":"Data"},{"url":"https://purl.stanford.edu/pf378jx2985","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
+        Box","geoshape":"BBOX (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"},{"kind":"Geometry","geoshape":"BBOX
+        (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"}],"provider":"Stanford","publication_information":["Collins
+        Bartholomew Ltd."],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"Not
+        owned by MIT","kind":"Access to files"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
+        Core; Spatial"},{"value":["Wireless communication systems"],"kind":"Dublin
+        Core; Subject"},{"value":["Utilities and Communication"],"kind":"Dublin Core;
+        Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}],"summary":["This
+        GeoTIFF is a representation of the coverage area for 2G mobile communications
+        newtworks in Bermuda. Mobile Coverage is released annually in January each
+        year. This data release is named 2020. Any operator data received up to the
+        end of the year 2019 is included in this release. The data is made available
+        in GeoTIFF 2-BIT raster format with pre-built pyramids using nearest-neighbour
+        resampling - with a nominal resolution of approximately 260 metres on the
+        ground at the equator. Operators are asked to submit strong (indoor) and variable
+        (outdoor) signal strengths: 2G (GSM) Greater than / -92 dBm -92 to -100 dBm,
+        3G (UMTS) Greater than -92 dBm / -92 to -100 dBm, 4G (LTE) Greater than -105
+        dBm / -105 to -120 dBm. However, the data received from operators often does
+        not include signal strength information or does not follow the above guidelines.
+        Therefore, whilst the rasters retain the strong and variable distinctions,
+        this inconsistency must be understood by the user.The cell values in the MCE
+        rasters are as follows: 1 - strong signal strength 2 - variable signal strength.
+        Operators are asked to submit strong (&gt;= -92dBm) and variable (&gt;= -100dBm
+        and &lt; 92dBm) signal strengths as part of their submissions. The data here
+        includes both types but does not make a distinction between the two. This
+        layer is presented in the WGS84 coordinate system for web display purposes.
+        Downloadable data are provided in native coordinate system or projection."]},"sort":[32.978886,1577836800000]},{"_index":"gisogm-2024-03-01t17-29-45","_id":"gisogm:edu.stanford.purl:20eabaf59bae","_score":32.978886,"_source":{"source":"OpenGeoMetadata
         GIS Resources","source_link":"https://purl.stanford.edu/dv165yg3511","timdex_record_id":"gisogm:edu.stanford.purl:20eabaf59bae","title":"Bermuda
         3G Mobile Coverage Explorer, 2019","citation":"Collins Bartholomew Ltd. Bermuda
-        3G Mobile Coverage Explorer, 2019. Collins Bartholomew Ltd.. Geospatial data.
-        https://purl.stanford.edu/dv165yg3511","content_type":["Geospatial data"],"contributors":[{"value":"Collins
-        Bartholomew Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2019"},{"kind":"Coverage","value":"2019"}],"format":"GeoTIFF","identifiers":[{"value":"https://purl.stanford.edu/dv165yg3511","kind":"Not
+        3G Mobile Coverage Explorer, 2019. Collins Bartholomew Ltd.. https://purl.stanford.edu/dv165yg3511","content_type":["Not
+        specified"],"contributors":[{"value":"Collins Bartholomew Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2019"},{"kind":"Coverage","value":"2019"}],"format":"GeoTIFF","identifiers":[{"value":"https://purl.stanford.edu/dv165yg3511","kind":"Not
         specified"}],"languages":["English"],"links":[{"url":"https://stacks.stanford.edu/file/druid:dv165yg3511/data.zip","kind":"Download","text":"Data"},{"url":"https://purl.stanford.edu/dv165yg3511","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"},{"kind":"Geometry","geoshape":"BBOX
-        (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"}],"publication_information":["Collins
-        Bartholomew Ltd.","Stanford"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
+        (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"}],"provider":"Stanford","publication_information":["Collins
+        Bartholomew Ltd."],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"Not
+        owned by MIT","kind":"Access to files"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
         Core; Spatial"},{"value":["Wireless communication systems"],"kind":"Dublin
         Core; Subject"},{"value":["Utilities and Communication"],"kind":"Dublin Core;
         Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}],"summary":["This
@@ -303,16 +309,16 @@ http_interactions:
         and &lt; 92dBm) signal strengths as part of their submissions. The data here
         includes both types but does not make a distinction between the two. This
         layer is presented in the WGS84 coordinate system for web display purposes.
-        Downloadable data are provided in native coordinate system or projection."]},"sort":[32.713554,1546300800000]},{"_index":"gisogm-2024-02-15t00-30-18","_id":"gisogm:edu.stanford.purl:61effbd86b8e","_score":32.713554,"_source":{"source":"OpenGeoMetadata
+        Downloadable data are provided in native coordinate system or projection."]},"sort":[32.978886,1546300800000]},{"_index":"gisogm-2024-03-01t17-29-45","_id":"gisogm:edu.stanford.purl:61effbd86b8e","_score":32.978886,"_source":{"source":"OpenGeoMetadata
         GIS Resources","source_link":"https://purl.stanford.edu/nj241tw0856","timdex_record_id":"gisogm:edu.stanford.purl:61effbd86b8e","title":"Bermuda
         2G Mobile Coverage Explorer, 2019","citation":"Collins Bartholomew Ltd. Bermuda
-        2G Mobile Coverage Explorer, 2019. Collins Bartholomew Ltd.. Geospatial data.
-        https://purl.stanford.edu/nj241tw0856","content_type":["Geospatial data"],"contributors":[{"value":"Collins
-        Bartholomew Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2019"},{"kind":"Coverage","value":"2019"}],"format":"GeoTIFF","identifiers":[{"value":"https://purl.stanford.edu/nj241tw0856","kind":"Not
+        2G Mobile Coverage Explorer, 2019. Collins Bartholomew Ltd.. https://purl.stanford.edu/nj241tw0856","content_type":["Not
+        specified"],"contributors":[{"value":"Collins Bartholomew Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2019"},{"kind":"Coverage","value":"2019"}],"format":"GeoTIFF","identifiers":[{"value":"https://purl.stanford.edu/nj241tw0856","kind":"Not
         specified"}],"languages":["English"],"links":[{"url":"https://stacks.stanford.edu/file/druid:nj241tw0856/data.zip","kind":"Download","text":"Data"},{"url":"https://purl.stanford.edu/nj241tw0856","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"},{"kind":"Geometry","geoshape":"BBOX
-        (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"}],"publication_information":["Collins
-        Bartholomew Ltd.","Stanford"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
+        (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"}],"provider":"Stanford","publication_information":["Collins
+        Bartholomew Ltd."],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"Not
+        owned by MIT","kind":"Access to files"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
         Core; Spatial"},{"value":["Wireless communication systems"],"kind":"Dublin
         Core; Subject"},{"value":["Utilities and Communication"],"kind":"Dublin Core;
         Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}],"summary":["This
@@ -334,16 +340,16 @@ http_interactions:
         and &lt; 92dBm) signal strengths as part of their submissions. The data here
         includes both types but does not make a distinction between the two. This
         layer is presented in the WGS84 coordinate system for web display purposes.
-        Downloadable data are provided in native coordinate system or projection."]},"sort":[32.713554,1546300800000]},{"_index":"gisogm-2024-02-15t00-30-18","_id":"gisogm:edu.stanford.purl:e0f4811a1ac6","_score":32.713554,"_source":{"source":"OpenGeoMetadata
+        Downloadable data are provided in native coordinate system or projection."]},"sort":[32.978886,1546300800000]},{"_index":"gisogm-2024-03-01t17-29-45","_id":"gisogm:edu.stanford.purl:e0f4811a1ac6","_score":32.978886,"_source":{"source":"OpenGeoMetadata
         GIS Resources","source_link":"https://purl.stanford.edu/hv041pw1101","timdex_record_id":"gisogm:edu.stanford.purl:e0f4811a1ac6","title":"Bermuda
         2G Mobile Coverage Explorer, 2018","citation":"Collins Bartholomew Ltd. Bermuda
-        2G Mobile Coverage Explorer, 2018. Collins Bartholomew Ltd.. Geospatial data.
-        https://purl.stanford.edu/hv041pw1101","content_type":["Geospatial data"],"contributors":[{"value":"Collins
-        Bartholomew Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2018"},{"kind":"Coverage","value":"2018"}],"format":"GeoTIFF","identifiers":[{"value":"https://purl.stanford.edu/hv041pw1101","kind":"Not
+        2G Mobile Coverage Explorer, 2018. Collins Bartholomew Ltd.. https://purl.stanford.edu/hv041pw1101","content_type":["Not
+        specified"],"contributors":[{"value":"Collins Bartholomew Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2018"},{"kind":"Coverage","value":"2018"}],"format":"GeoTIFF","identifiers":[{"value":"https://purl.stanford.edu/hv041pw1101","kind":"Not
         specified"}],"languages":["English"],"links":[{"url":"https://stacks.stanford.edu/file/druid:hv041pw1101/data.zip","kind":"Download","text":"Data"},{"url":"https://purl.stanford.edu/hv041pw1101","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"},{"kind":"Geometry","geoshape":"BBOX
-        (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"}],"publication_information":["Collins
-        Bartholomew Ltd.","Stanford"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
+        (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"}],"provider":"Stanford","publication_information":["Collins
+        Bartholomew Ltd."],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"Not
+        owned by MIT","kind":"Access to files"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
         Core; Spatial"},{"value":["Wireless communication systems"],"kind":"Dublin
         Core; Subject"},{"value":["Utilities and Communication"],"kind":"Dublin Core;
         Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}],"summary":["This
@@ -365,16 +371,16 @@ http_interactions:
         and &lt; 92dBm) signal strengths as part of their submissions. The data here
         includes both types but does not make a distinction between the two. This
         layer is presented in the WGS84 coordinate system for web display purposes.
-        Downloadable data are provided in native coordinate system or projection."]},"sort":[32.713554,1514764800000]},{"_index":"gisogm-2024-02-15t00-30-18","_id":"gisogm:edu.stanford.purl:1e141a33d412","_score":32.713554,"_source":{"source":"OpenGeoMetadata
+        Downloadable data are provided in native coordinate system or projection."]},"sort":[32.978886,1514764800000]},{"_index":"gisogm-2024-03-01t17-29-45","_id":"gisogm:edu.stanford.purl:1e141a33d412","_score":32.978886,"_source":{"source":"OpenGeoMetadata
         GIS Resources","source_link":"https://purl.stanford.edu/tz331xw3230","timdex_record_id":"gisogm:edu.stanford.purl:1e141a33d412","title":"Bermuda
         3G Mobile Coverage Explorer, 2018","citation":"Collins Bartholomew Ltd. Bermuda
-        3G Mobile Coverage Explorer, 2018. Collins Bartholomew Ltd.. Geospatial data.
-        https://purl.stanford.edu/tz331xw3230","content_type":["Geospatial data"],"contributors":[{"value":"Collins
-        Bartholomew Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2018"},{"kind":"Coverage","value":"2018"}],"format":"GeoTIFF","identifiers":[{"value":"https://purl.stanford.edu/tz331xw3230","kind":"Not
+        3G Mobile Coverage Explorer, 2018. Collins Bartholomew Ltd.. https://purl.stanford.edu/tz331xw3230","content_type":["Not
+        specified"],"contributors":[{"value":"Collins Bartholomew Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2018"},{"kind":"Coverage","value":"2018"}],"format":"GeoTIFF","identifiers":[{"value":"https://purl.stanford.edu/tz331xw3230","kind":"Not
         specified"}],"languages":["English"],"links":[{"url":"https://stacks.stanford.edu/file/druid:tz331xw3230/data.zip","kind":"Download","text":"Data"},{"url":"https://purl.stanford.edu/tz331xw3230","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"},{"kind":"Geometry","geoshape":"BBOX
-        (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"}],"publication_information":["Collins
-        Bartholomew Ltd.","Stanford"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
+        (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"}],"provider":"Stanford","publication_information":["Collins
+        Bartholomew Ltd."],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"Not
+        owned by MIT","kind":"Access to files"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
         Core; Spatial"},{"value":["Wireless communication systems"],"kind":"Dublin
         Core; Subject"},{"value":["Utilities and Communication"],"kind":"Dublin Core;
         Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}],"summary":["This
@@ -396,47 +402,16 @@ http_interactions:
         and &lt; 92dBm) signal strengths as part of their submissions. The data here
         includes both types but does not make a distinction between the two. This
         layer is presented in the WGS84 coordinate system for web display purposes.
-        Downloadable data are provided in native coordinate system or projection."]},"sort":[32.713554,1514764800000]},{"_index":"gisogm-2024-02-15t00-30-18","_id":"gisogm:edu.stanford.purl:27d93a284b17","_score":32.713554,"_source":{"source":"OpenGeoMetadata
-        GIS Resources","source_link":"https://purl.stanford.edu/mq533tc6582","timdex_record_id":"gisogm:edu.stanford.purl:27d93a284b17","title":"Bermuda
-        2G Mobile Coverage Explorer, 2017","citation":"Collins Bartholomew Ltd. Bermuda
-        2G Mobile Coverage Explorer, 2017. Collins Bartholomew Ltd.. Geospatial data.
-        https://purl.stanford.edu/mq533tc6582","content_type":["Geospatial data"],"contributors":[{"value":"Collins
-        Bartholomew Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2017"},{"kind":"Coverage","value":"2017"}],"format":"GeoTIFF","identifiers":[{"value":"https://purl.stanford.edu/mq533tc6582","kind":"Not
-        specified"}],"languages":["English"],"links":[{"url":"https://stacks.stanford.edu/file/druid:mq533tc6582/data.zip","kind":"Download","text":"Data"},{"url":"https://purl.stanford.edu/mq533tc6582","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
-        Box","geoshape":"BBOX (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"},{"kind":"Geometry","geoshape":"BBOX
-        (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"}],"publication_information":["Collins
-        Bartholomew Ltd.","Stanford"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
-        Core; Spatial"},{"value":["Wireless communication systems"],"kind":"Dublin
-        Core; Subject"},{"value":["Utilities and Communication"],"kind":"Dublin Core;
-        Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}],"summary":["This
-        raster dataset is a representation of the coverage area for 2G mobile communications
-        networks in Bermuda. Mobile Coverage is released annually in January each
-        year. This data release is named 2017. Any operator data received up to the
-        end of the year 2016 is included in this release. The data is made available
-        in GeoTIFF 2-BIT raster format with pre-built pyramids using nearest-neighbour
-        resampling - with a nominal resolution of approximately 260 metres on the
-        ground at the equator. Operators are asked to submit strong (indoor) and variable
-        (outdoor) signal strengths: 2G (GSM) Greater than / -92 dBm -92 to -100 dBm,
-        3G (UMTS) Greater than -92 dBm / -92 to -100 dBm, 4G (LTE) Greater than -105
-        dBm / -105 to -120 dBm. However, the data received from operators often does
-        not include signal strength information or does not follow the above guidelines.
-        Therefore, whilst the rasters retain the strong and variable distinctions,
-        this inconsistency must be understood by the user.The cell values in the MCE
-        rasters are as follows: 1 - strong signal strength 2 - variable signal strength.
-        Operators are asked to submit strong (&gt;= -92dBm) and variable (&gt;= -100dBm
-        and &lt; 92dBm) signal strengths as part of their submissions. The data here
-        includes both types but does not make a distinction between the two. This
-        layer is presented in the WGS84 coordinate system for web display purposes.
-        Downloadable data are provided in native coordinate system or projection."]},"sort":[32.713554,1483228800000]},{"_index":"gisogm-2024-02-15t00-30-18","_id":"gisogm:edu.stanford.purl:73fbd1a57c5e","_score":32.713554,"_source":{"source":"OpenGeoMetadata
+        Downloadable data are provided in native coordinate system or projection."]},"sort":[32.978886,1514764800000]},{"_index":"gisogm-2024-03-01t17-29-45","_id":"gisogm:edu.stanford.purl:73fbd1a57c5e","_score":32.978886,"_source":{"source":"OpenGeoMetadata
         GIS Resources","source_link":"https://purl.stanford.edu/kt390mp7463","timdex_record_id":"gisogm:edu.stanford.purl:73fbd1a57c5e","title":"Bermuda
         3G Mobile Coverage Explorer, 2017","citation":"Collins Bartholomew Ltd. Bermuda
-        3G Mobile Coverage Explorer, 2017. Collins Bartholomew Ltd.. Geospatial data.
-        https://purl.stanford.edu/kt390mp7463","content_type":["Geospatial data"],"contributors":[{"value":"Collins
-        Bartholomew Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2017"},{"kind":"Coverage","value":"2017"}],"format":"GeoTIFF","identifiers":[{"value":"https://purl.stanford.edu/kt390mp7463","kind":"Not
+        3G Mobile Coverage Explorer, 2017. Collins Bartholomew Ltd.. https://purl.stanford.edu/kt390mp7463","content_type":["Not
+        specified"],"contributors":[{"value":"Collins Bartholomew Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2017"},{"kind":"Coverage","value":"2017"}],"format":"GeoTIFF","identifiers":[{"value":"https://purl.stanford.edu/kt390mp7463","kind":"Not
         specified"}],"languages":["English"],"links":[{"url":"https://stacks.stanford.edu/file/druid:kt390mp7463/data.zip","kind":"Download","text":"Data"},{"url":"https://purl.stanford.edu/kt390mp7463","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"},{"kind":"Geometry","geoshape":"BBOX
-        (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"}],"publication_information":["Collins
-        Bartholomew Ltd.","Stanford"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
+        (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"}],"provider":"Stanford","publication_information":["Collins
+        Bartholomew Ltd."],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"Not
+        owned by MIT","kind":"Access to files"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
         Core; Spatial"},{"value":["Wireless communication systems"],"kind":"Dublin
         Core; Subject"},{"value":["Utilities and Communication"],"kind":"Dublin Core;
         Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}],"summary":["This
@@ -458,23 +433,23 @@ http_interactions:
         and &lt; 92dBm) signal strengths as part of their submissions. The data here
         includes both types but does not make a distinction between the two. This
         layer is presented in the WGS84 coordinate system for web display purposes.
-        Downloadable data are provided in native coordinate system or projection."]},"sort":[32.713554,1483228800000]},{"_index":"gisogm-2024-02-15t00-30-18","_id":"gisogm:edu.stanford.purl:77e3c08a4609","_score":32.713554,"_source":{"source":"OpenGeoMetadata
-        GIS Resources","source_link":"https://purl.stanford.edu/cg605kh4534","timdex_record_id":"gisogm:edu.stanford.purl:77e3c08a4609","title":"Bermuda
-        2G Mobile Coverage Explorer, 2016","citation":"Collins Bartholomew Ltd. Bermuda
-        2G Mobile Coverage Explorer, 2016. Collins Bartholomew Ltd.. Geospatial data.
-        https://purl.stanford.edu/cg605kh4534","content_type":["Geospatial data"],"contributors":[{"value":"Collins
-        Bartholomew Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016"},{"kind":"Coverage","value":"2016"}],"format":"GeoTIFF","identifiers":[{"value":"https://purl.stanford.edu/cg605kh4534","kind":"Not
-        specified"}],"languages":["English"],"links":[{"url":"https://stacks.stanford.edu/file/druid:cg605kh4534/data.zip","kind":"Download","text":"Data"},{"url":"https://purl.stanford.edu/cg605kh4534","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
+        Downloadable data are provided in native coordinate system or projection."]},"sort":[32.978886,1483228800000]},{"_index":"gisogm-2024-03-01t17-29-45","_id":"gisogm:edu.stanford.purl:27d93a284b17","_score":32.978886,"_source":{"source":"OpenGeoMetadata
+        GIS Resources","source_link":"https://purl.stanford.edu/mq533tc6582","timdex_record_id":"gisogm:edu.stanford.purl:27d93a284b17","title":"Bermuda
+        2G Mobile Coverage Explorer, 2017","citation":"Collins Bartholomew Ltd. Bermuda
+        2G Mobile Coverage Explorer, 2017. Collins Bartholomew Ltd.. https://purl.stanford.edu/mq533tc6582","content_type":["Not
+        specified"],"contributors":[{"value":"Collins Bartholomew Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2017"},{"kind":"Coverage","value":"2017"}],"format":"GeoTIFF","identifiers":[{"value":"https://purl.stanford.edu/mq533tc6582","kind":"Not
+        specified"}],"languages":["English"],"links":[{"url":"https://stacks.stanford.edu/file/druid:mq533tc6582/data.zip","kind":"Download","text":"Data"},{"url":"https://purl.stanford.edu/mq533tc6582","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"},{"kind":"Geometry","geoshape":"BBOX
-        (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"}],"publication_information":["Collins
-        Bartholomew Ltd.","Stanford"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
+        (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"}],"provider":"Stanford","publication_information":["Collins
+        Bartholomew Ltd."],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"Not
+        owned by MIT","kind":"Access to files"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
         Core; Spatial"},{"value":["Wireless communication systems"],"kind":"Dublin
         Core; Subject"},{"value":["Utilities and Communication"],"kind":"Dublin Core;
         Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}],"summary":["This
         raster dataset is a representation of the coverage area for 2G mobile communications
         networks in Bermuda. Mobile Coverage is released annually in January each
-        year. This data release is named 2016. Any operator data received up to the
-        end of the year 2015 is included in this release. The data is made available
+        year. This data release is named 2017. Any operator data received up to the
+        end of the year 2016 is included in this release. The data is made available
         in GeoTIFF 2-BIT raster format with pre-built pyramids using nearest-neighbour
         resampling - with a nominal resolution of approximately 260 metres on the
         ground at the equator. Operators are asked to submit strong (indoor) and variable
@@ -489,16 +464,16 @@ http_interactions:
         and &lt; 92dBm) signal strengths as part of their submissions. The data here
         includes both types but does not make a distinction between the two. This
         layer is presented in the WGS84 coordinate system for web display purposes.
-        Downloadable data are provided in native coordinate system or projection."]},"sort":[32.713554,1451606400000]},{"_index":"gisogm-2024-02-15t00-30-18","_id":"gisogm:edu.stanford.purl:2b5cdda783ef","_score":32.713554,"_source":{"source":"OpenGeoMetadata
+        Downloadable data are provided in native coordinate system or projection."]},"sort":[32.978886,1483228800000]},{"_index":"gisogm-2024-03-01t17-29-45","_id":"gisogm:edu.stanford.purl:2b5cdda783ef","_score":32.978886,"_source":{"source":"OpenGeoMetadata
         GIS Resources","source_link":"https://purl.stanford.edu/nv716gm3003","timdex_record_id":"gisogm:edu.stanford.purl:2b5cdda783ef","title":"Bermuda
         3G Mobile Coverage Explorer, 2016","citation":"Collins Bartholomew Ltd. Bermuda
-        3G Mobile Coverage Explorer, 2016. Collins Bartholomew Ltd.. Geospatial data.
-        https://purl.stanford.edu/nv716gm3003","content_type":["Geospatial data"],"contributors":[{"value":"Collins
-        Bartholomew Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016"},{"kind":"Coverage","value":"2016"}],"format":"GeoTIFF","identifiers":[{"value":"https://purl.stanford.edu/nv716gm3003","kind":"Not
+        3G Mobile Coverage Explorer, 2016. Collins Bartholomew Ltd.. https://purl.stanford.edu/nv716gm3003","content_type":["Not
+        specified"],"contributors":[{"value":"Collins Bartholomew Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016"},{"kind":"Coverage","value":"2016"}],"format":"GeoTIFF","identifiers":[{"value":"https://purl.stanford.edu/nv716gm3003","kind":"Not
         specified"}],"languages":["English"],"links":[{"url":"https://stacks.stanford.edu/file/druid:nv716gm3003/data.zip","kind":"Download","text":"Data"},{"url":"https://purl.stanford.edu/nv716gm3003","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"},{"kind":"Geometry","geoshape":"BBOX
-        (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"}],"publication_information":["Collins
-        Bartholomew Ltd.","Stanford"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
+        (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"}],"provider":"Stanford","publication_information":["Collins
+        Bartholomew Ltd."],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"Not
+        owned by MIT","kind":"Access to files"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
         Core; Spatial"},{"value":["Wireless communication systems"],"kind":"Dublin
         Core; Subject"},{"value":["Utilities and Communication"],"kind":"Dublin Core;
         Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}],"summary":["This
@@ -520,16 +495,47 @@ http_interactions:
         and &lt; 92dBm) signal strengths as part of their submissions. The data here
         includes both types but does not make a distinction between the two. This
         layer is presented in the WGS84 coordinate system for web display purposes.
-        Downloadable data are provided in native coordinate system or projection."]},"sort":[32.713554,1451606400000]},{"_index":"gisogm-2024-02-15t00-30-18","_id":"gisogm:edu.stanford.purl:ddee6d03a2d0","_score":32.713554,"_source":{"source":"OpenGeoMetadata
+        Downloadable data are provided in native coordinate system or projection."]},"sort":[32.978886,1451606400000]},{"_index":"gisogm-2024-03-01t17-29-45","_id":"gisogm:edu.stanford.purl:77e3c08a4609","_score":32.978886,"_source":{"source":"OpenGeoMetadata
+        GIS Resources","source_link":"https://purl.stanford.edu/cg605kh4534","timdex_record_id":"gisogm:edu.stanford.purl:77e3c08a4609","title":"Bermuda
+        2G Mobile Coverage Explorer, 2016","citation":"Collins Bartholomew Ltd. Bermuda
+        2G Mobile Coverage Explorer, 2016. Collins Bartholomew Ltd.. https://purl.stanford.edu/cg605kh4534","content_type":["Not
+        specified"],"contributors":[{"value":"Collins Bartholomew Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016"},{"kind":"Coverage","value":"2016"}],"format":"GeoTIFF","identifiers":[{"value":"https://purl.stanford.edu/cg605kh4534","kind":"Not
+        specified"}],"languages":["English"],"links":[{"url":"https://stacks.stanford.edu/file/druid:cg605kh4534/data.zip","kind":"Download","text":"Data"},{"url":"https://purl.stanford.edu/cg605kh4534","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
+        Box","geoshape":"BBOX (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"},{"kind":"Geometry","geoshape":"BBOX
+        (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"}],"provider":"Stanford","publication_information":["Collins
+        Bartholomew Ltd."],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"Not
+        owned by MIT","kind":"Access to files"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
+        Core; Spatial"},{"value":["Wireless communication systems"],"kind":"Dublin
+        Core; Subject"},{"value":["Utilities and Communication"],"kind":"Dublin Core;
+        Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}],"summary":["This
+        raster dataset is a representation of the coverage area for 2G mobile communications
+        networks in Bermuda. Mobile Coverage is released annually in January each
+        year. This data release is named 2016. Any operator data received up to the
+        end of the year 2015 is included in this release. The data is made available
+        in GeoTIFF 2-BIT raster format with pre-built pyramids using nearest-neighbour
+        resampling - with a nominal resolution of approximately 260 metres on the
+        ground at the equator. Operators are asked to submit strong (indoor) and variable
+        (outdoor) signal strengths: 2G (GSM) Greater than / -92 dBm -92 to -100 dBm,
+        3G (UMTS) Greater than -92 dBm / -92 to -100 dBm, 4G (LTE) Greater than -105
+        dBm / -105 to -120 dBm. However, the data received from operators often does
+        not include signal strength information or does not follow the above guidelines.
+        Therefore, whilst the rasters retain the strong and variable distinctions,
+        this inconsistency must be understood by the user.The cell values in the MCE
+        rasters are as follows: 1 - strong signal strength 2 - variable signal strength.
+        Operators are asked to submit strong (&gt;= -92dBm) and variable (&gt;= -100dBm
+        and &lt; 92dBm) signal strengths as part of their submissions. The data here
+        includes both types but does not make a distinction between the two. This
+        layer is presented in the WGS84 coordinate system for web display purposes.
+        Downloadable data are provided in native coordinate system or projection."]},"sort":[32.978886,1451606400000]},{"_index":"gisogm-2024-03-01t17-29-45","_id":"gisogm:edu.stanford.purl:ddee6d03a2d0","_score":32.978886,"_source":{"source":"OpenGeoMetadata
         GIS Resources","source_link":"https://purl.stanford.edu/km676kt0305","timdex_record_id":"gisogm:edu.stanford.purl:ddee6d03a2d0","title":"Bermuda
         3G Mobile Coverage Explorer, 2015","citation":"Collins Bartholomew Ltd. Bermuda
-        3G Mobile Coverage Explorer, 2015. Collins Bartholomew Ltd.. Geospatial data.
-        https://purl.stanford.edu/km676kt0305","content_type":["Geospatial data"],"contributors":[{"value":"Collins
-        Bartholomew Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2015"},{"kind":"Coverage","value":"2015"}],"format":"GeoTIFF","identifiers":[{"value":"https://purl.stanford.edu/km676kt0305","kind":"Not
+        3G Mobile Coverage Explorer, 2015. Collins Bartholomew Ltd.. https://purl.stanford.edu/km676kt0305","content_type":["Not
+        specified"],"contributors":[{"value":"Collins Bartholomew Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2015"},{"kind":"Coverage","value":"2015"}],"format":"GeoTIFF","identifiers":[{"value":"https://purl.stanford.edu/km676kt0305","kind":"Not
         specified"}],"languages":["English"],"links":[{"url":"https://stacks.stanford.edu/file/druid:km676kt0305/data.zip","kind":"Download","text":"Data"},{"url":"https://purl.stanford.edu/km676kt0305","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"},{"kind":"Geometry","geoshape":"BBOX
-        (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"}],"publication_information":["Collins
-        Bartholomew Ltd.","Stanford"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
+        (-67.4999957, -62.6315462, 33.2278148, 32.2031075)"}],"provider":"Stanford","publication_information":["Collins
+        Bartholomew Ltd."],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"Not
+        owned by MIT","kind":"Access to files"}],"subjects":[{"value":["Bermuda"],"kind":"Dublin
         Core; Spatial"},{"value":["Wireless communication systems"],"kind":"Dublin
         Core; Subject"},{"value":["Utilities and Communication"],"kind":"Dublin Core;
         Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}],"summary":["This
@@ -551,14 +557,16 @@ http_interactions:
         and &lt; 92dBm) signal strengths as part of their submissions. The data here
         includes both types but does not make a distinction between the two. This
         layer is presented in the WGS84 coordinate system for web display purposes.
-        Downloadable data are provided in native coordinate system or projection."]},"sort":[32.713554,1420070400000]}]},"aggregations":{"places":{"doc_count":799,"only_spatial":{"doc_count":414,"place_names":{"doc_count_error_upper_bound":8,"sum_other_doc_count":286,"buckets":[{"key":"bermuda","doc_count":41},{"key":"bermuda
+        Downloadable data are provided in native coordinate system or projection."]},"sort":[32.978886,1420070400000]}]},"aggregations":{"places":{"doc_count":755,"only_spatial":{"doc_count":414,"place_names":{"doc_count_error_upper_bound":8,"sum_other_doc_count":286,"buckets":[{"key":"bermuda","doc_count":41},{"key":"bermuda
         islands","doc_count":15},{"key":"anguilla","doc_count":9},{"key":"antigua
         and barbuda","doc_count":9},{"key":"aruba","doc_count":9},{"key":"bahamas,
         the","doc_count":9},{"key":"barbados","doc_count":9},{"key":"british virgin
-        islands","doc_count":9},{"key":"colombia","doc_count":9},{"key":"curacao","doc_count":9}]}}},"languages":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"english","doc_count":35},{"key":"eng","doc_count":23}]},"content_type":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"geospatial
-        data","doc_count":67}]},"subjects":{"doc_count":799,"subject_names":{"doc_count_error_upper_bound":9,"sum_other_doc_count":564,"buckets":[{"key":"datasets","doc_count":45},{"key":"bermuda","doc_count":41},{"key":"utilities
-        and communication","doc_count":22},{"key":"wireless communication systems","doc_count":22},{"key":"image","doc_count":20},{"key":"other","doc_count":20},{"key":"transportation","doc_count":20},{"key":"raster","doc_count":18},{"key":"bermuda
-        islands","doc_count":15},{"key":"imagerybasemapsearthcover","doc_count":12}]}},"content_format":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"geotiff","doc_count":40},{"key":"tiff","doc_count":16},{"key":"shapefile","doc_count":4},{"key":"jpeg","doc_count":1},{"key":"tiff/jpeg","doc_count":1},{"key":"vector","doc_count":1}]},"literary_form":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"source":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"opengeometadata
+        islands","doc_count":9},{"key":"colombia","doc_count":9},{"key":"curacao","doc_count":9}]}}},"languages":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"english","doc_count":35},{"key":"eng","doc_count":23}]},"content_type":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"not
+        specified","doc_count":23},{"key":"image data","doc_count":20},{"key":"raster
+        data","doc_count":18},{"key":"point data","doc_count":3},{"key":"polygon data","doc_count":2},{"key":"military
+        maps","doc_count":1}]},"subjects":{"doc_count":755,"subject_names":{"doc_count_error_upper_bound":9,"sum_other_doc_count":538,"buckets":[{"key":"datasets","doc_count":45},{"key":"bermuda","doc_count":41},{"key":"utilities
+        and communication","doc_count":22},{"key":"wireless communication systems","doc_count":22},{"key":"other","doc_count":20},{"key":"transportation","doc_count":20},{"key":"bermuda
+        islands","doc_count":15},{"key":"imagerybasemapsearthcover","doc_count":12},{"key":"maps","doc_count":11},{"key":"anguilla","doc_count":9}]}},"content_format":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"geotiff","doc_count":40},{"key":"tiff","doc_count":16},{"key":"shapefile","doc_count":5},{"key":"jpeg","doc_count":1},{"key":"mixed","doc_count":1}]},"literary_form":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"source":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"opengeometadata
         gis resources","doc_count":66},{"key":"mit gis resources","doc_count":1}]},"contributors":{"doc_count":103,"contributor_names":{"doc_count_error_upper_bound":1,"sum_other_doc_count":37,"buckets":[{"key":"collins
         bartholomew ltd","doc_count":22},{"key":"great britain. directorate of overseas
         surveys","doc_count":6},{"key":"land info (firm)","doc_count":6},{"key":"popple,
@@ -566,6 +574,7 @@ http_interactions:
         map collection, harvard library","doc_count":5},{"key":"arrowsmith, aaron,
         1750-1823.","doc_count":4},{"key":"harvard map collection, harvard college
         library","doc_count":4},{"key":"jones & smith.","doc_count":4},{"key":"boynton,
-        george w., -1884","doc_count":3}]}}}}'
-  recorded_at: Wed, 21 Feb 2024 14:19:12 GMT
+        george w., -1884","doc_count":3}]}},"access_to_files":{"doc_count":135,"only_file_access":{"doc_count":67,"access_types":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"Not
+        owned by MIT","doc_count":66},{"key":"Free/open to all","doc_count":1}]}}}}}'
+  recorded_at: Fri, 01 Mar 2024 18:33:19 GMT
 recorded_with: VCR 6.2.0
