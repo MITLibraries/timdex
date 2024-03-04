@@ -5,6 +5,10 @@ module Types
   end
 
   class AggregationsType < Types::BaseObject
+    field :access_to_files, [Types::AggregationCountType],
+          null: true,
+          description: 'Total seach results by access type (which is a Right with description `Access to files`). ' \
+                       'This is only applicable to geospatial records at this time.'
     field :format, [Types::AggregationCountType], null: true, description: 'Total search results by format'
     field :content_type, [Types::AggregationCountType], null: true, description: 'Total search results by content type'
     field :contributors, [Types::AggregationCountType], null: true,

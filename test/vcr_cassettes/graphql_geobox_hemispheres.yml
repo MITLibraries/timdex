@@ -6,7 +6,8 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"from":"0","size":20,"query":{"bool":{"should":null,"must":[{"bool":{"must":{"match_all":{}},"filter":{"geo_bounding_box":{"locations.geoshape":{"top":90.0,"bottom":-90.0,"left":0.0,"right":180.0}}}}}],"filter":[{"bool":{"should":[{"term":{"source":"MIT
-        GIS Resources"}}]}}]}},"aggregations":{"contributors":{"nested":{"path":"contributors"},"aggs":{"contributor_names":{"terms":{"field":"contributors.value.keyword"}}}},"content_type":{"terms":{"field":"content_type"}},"content_format":{"terms":{"field":"format"}},"languages":{"terms":{"field":"languages.keyword"}},"literary_form":{"terms":{"field":"literary_form"}},"places":{"nested":{"path":"subjects"},"aggs":{"only_spatial":{"filter":{"terms":{"subjects.kind":["Dublin
+        GIS Resources"}}]}}]}},"aggregations":{"access_to_files":{"nested":{"path":"rights"},"aggs":{"only_file_access":{"filter":{"terms":{"rights.kind":["Access
+        to files"]}},"aggs":{"access_types":{"terms":{"field":"rights.description.keyword"}}}}}},"contributors":{"nested":{"path":"contributors"},"aggs":{"contributor_names":{"terms":{"field":"contributors.value.keyword"}}}},"content_type":{"terms":{"field":"content_type"}},"content_format":{"terms":{"field":"format"}},"languages":{"terms":{"field":"languages.keyword"}},"literary_form":{"terms":{"field":"literary_form"}},"places":{"nested":{"path":"subjects"},"aggs":{"only_spatial":{"filter":{"terms":{"subjects.kind":["Dublin
         Core; Spatial"]}},"aggs":{"place_names":{"terms":{"field":"subjects.value.keyword"}}}}}},"source":{"terms":{"field":"source"}},"subjects":{"nested":{"path":"subjects"},"aggs":{"subject_names":{"terms":{"field":"subjects.value.keyword"}}}}},"sort":[{"_score":{"order":"desc"}},{"dates.value.as_date":{"order":"desc","nested":{"path":"dates"}}}]}'
     headers:
       User-Agent:
@@ -16,7 +17,7 @@ http_interactions:
       Host:
       - localhost:9200
       X-Amz-Date:
-      - 20240221T141912Z
+      - 20240301T183317Z
       X-Amz-Content-Sha256:
       - "<REDACTED_SHA>"
       Authorization:
@@ -31,7 +32,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 21 Feb 2024 14:19:12 GMT
+      - Fri, 01 Mar 2024 18:33:17 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -44,328 +45,316 @@ http_interactions:
       - Accept-Encoding, User-Agent
     body:
       encoding: ASCII-8BIT
-      string: '{"took":32,"timed_out":false,"_shards":{"total":22,"successful":4,"skipped":0,"failed":18,"failures":[{"shard":0,"index":"alma-2023-03-30t15-16-14","node":"WW58P_URSyCFi94eesp6OA","reason":{"type":"query_shard_exception","reason":"failed
-        to find geo field [locations.geoshape]","index":"alma-2023-03-30t15-16-14","index_uuid":"P8Xd8tzDSNy3YFAH6vo5Jw"}},{"shard":0,"index":"aspace-2023-08-23t16-30-30","node":"EAG3RdGbTR-B_zyobdtahA","reason":{"type":"query_shard_exception","reason":"failed
-        to find geo field [locations.geoshape]","index":"aspace-2023-08-23t16-30-30","index_uuid":"ElAANOaZTZ6rhpO_ktxVTQ"}},{"shard":0,"index":"jpal-2023-02-10t15-50-28","node":"WW58P_URSyCFi94eesp6OA","reason":{"type":"query_shard_exception","reason":"failed
-        to find geo field [locations.geoshape]","index":"jpal-2023-02-10t15-50-28","index_uuid":"2G1Ip9qMSBimIVW2qPffLg"}},{"shard":0,"index":"researchdatabases-2023-11-25t20-03-46","node":"EAG3RdGbTR-B_zyobdtahA","reason":{"type":"query_shard_exception","reason":"failed
-        to find geo field [locations.geoshape]","index":"researchdatabases-2023-11-25t20-03-46","index_uuid":"51fvEiKHTByTz71_Nihb5g"}},{"shard":0,"index":"whoas-2023-02-08t22-06-40","node":"EAG3RdGbTR-B_zyobdtahA","reason":{"type":"query_shard_exception","reason":"failed
-        to find geo field [locations.geoshape]","index":"whoas-2023-02-08t22-06-40","index_uuid":"3hkl7MyvTcWV7U-jyixavg"}},{"shard":0,"index":"zenodo-2023-02-08t21-52-04","node":"EAG3RdGbTR-B_zyobdtahA","reason":{"type":"query_shard_exception","reason":"failed
-        to find geo field [locations.geoshape]","index":"zenodo-2023-02-08t21-52-04","index_uuid":"rdUyEVFDTNu9CMRgTynDlQ"}}]},"hits":{"total":{"value":893,"relation":"eq"},"max_score":null,"hits":[{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:in_mumbai_uf8firestations_2017","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:in_mumbai_uf8firestations_2017","timdex_record_id":"gismit:in_mumbai_uf8firestations_2017","title":"Mumbai,
+      string: '{"took":40,"timed_out":false,"_shards":{"total":22,"successful":5,"skipped":0,"failed":17,"failures":[{"shard":0,"index":"aspace-2023-08-23t16-30-30","node":"ubIWVNxeQSGWL0gl63Epbw","reason":{"type":"query_shard_exception","reason":"failed
+        to find geo field [locations.geoshape]","index":"aspace-2023-08-23t16-30-30","index_uuid":"ElAANOaZTZ6rhpO_ktxVTQ"}},{"shard":0,"index":"jpal-2023-02-10t15-50-28","node":"xHKNIHN6QpCyg3jYdGIYSA","reason":{"type":"query_shard_exception","reason":"failed
+        to find geo field [locations.geoshape]","index":"jpal-2023-02-10t15-50-28","index_uuid":"2G1Ip9qMSBimIVW2qPffLg"}},{"shard":0,"index":"researchdatabases-2023-11-25t20-03-46","node":"xHKNIHN6QpCyg3jYdGIYSA","reason":{"type":"query_shard_exception","reason":"failed
+        to find geo field [locations.geoshape]","index":"researchdatabases-2023-11-25t20-03-46","index_uuid":"51fvEiKHTByTz71_Nihb5g"}},{"shard":0,"index":"whoas-2023-02-08t22-06-40","node":"xHKNIHN6QpCyg3jYdGIYSA","reason":{"type":"query_shard_exception","reason":"failed
+        to find geo field [locations.geoshape]","index":"whoas-2023-02-08t22-06-40","index_uuid":"3hkl7MyvTcWV7U-jyixavg"}},{"shard":0,"index":"zenodo-2023-02-08t21-52-04","node":"xHKNIHN6QpCyg3jYdGIYSA","reason":{"type":"query_shard_exception","reason":"failed
+        to find geo field [locations.geoshape]","index":"zenodo-2023-02-08t21-52-04","index_uuid":"rdUyEVFDTNu9CMRgTynDlQ"}}]},"hits":{"total":{"value":893,"relation":"eq"},"max_score":null,"hits":[{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:in_mumbai_uf8firestations_2017","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:in_mumbai_uf8firestations_2017","timdex_record_id":"gismit:in_mumbai_uf8firestations_2017","title":"Mumbai,
         India (Fire Stations, 2017)","citation":"ML Infomap Pvt Ltd. Mumbai, India
-        (Fire Stations, 2017). GIS Lab, MIT Libraries. Geospatial data. https://search.libraries.mit.edu/record/gismit:in_mumbai_uf8firestations_2017","content_type":["Geospatial
-        data"],"contributors":[{"value":"ML Infomap Pvt Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2017-08-17"}],"format":"Vector","identifiers":[{"value":"in_mumbai_uf8firestations_2017","kind":"Not
+        (Fire Stations, 2017). Point data. https://geodata.libraries.mit.edu/record/gismit:in_mumbai_uf8firestations_2017","content_type":["Point
+        data"],"contributors":[{"value":"ML Infomap Pvt Ltd","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2017-08-17"}],"format":"Shapefile","identifiers":[{"value":"in_mumbai_uf8firestations_2017","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/in_mumbai_uf8firestations_2017.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/in_mumbai_uf8firestations_2017.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/in_mumbai_uf8firestations_2017.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:in_mumbai_uf8firestations_2017","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (72.812690, 72.966334, 19.247477, 18.915476)"},{"kind":"Geometry","geoshape":"BBOX
-        (72.812690, 72.966334, 19.247477, 18.915476)"}],"publication_information":["GIS
-        Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Structure"],"kind":"DCAT;
+        (72.812690, 72.966334, 19.247477, 18.915476)"}],"provider":"GIS Lab, MIT Libraries","rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"MIT authentication","kind":"Access to files"}],"subjects":[{"value":["Structure"],"kind":"DCAT;
         Theme"},{"value":["India--Mumbai"],"kind":"Dublin Core; Spatial"},{"value":["Fire
         stations"],"kind":"Dublin Core; Subject"},{"value":["structure"],"kind":"Dublin
-        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Entity
-        point"],"kind":"Subject scheme not provided"}],"summary":["Points of all fire
-        stations are shown."]},"sort":[1.0,1502928000000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:dz_a1cities_0k10k_2016","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_a1cities_0k10k_2016","timdex_record_id":"gismit:dz_a1cities_0k10k_2016","title":"Algeria
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}],"summary":["Points
+        of all fire stations are shown."]},"sort":[1.0,1502928000000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:dz_a1cities_0k10k_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_0k10k_2016","timdex_record_id":"gismit:dz_a1cities_0k10k_2016","title":"Algeria
         (Cities (<10k), 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Cities
-        (<10k), 2016). GIS Lab, MIT Libraries. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_a1cities_0k10k_2016","content_type":["Geospatial
-        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_a1cities_0k10k_2016","kind":"Not
+        (<10k), 2016). Point data. https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_0k10k_2016","content_type":["Point
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Shapefile","identifiers":[{"value":"dz_a1cities_0k10k_2016","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_0k10k_2016.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_0k10k_2016.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_a1cities_0k10k_2016.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_0k10k_2016","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-7.843005, 11.241667, 37.075000, 19.166667)"},{"kind":"Geometry","geoshape":"BBOX
-        (-7.843005, 11.241667, 37.075000, 19.166667)"}],"publication_information":["GIS
-        Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"License
+        (-7.843005, 11.241667, 37.075000, 19.166667)"}],"provider":"GIS Lab, MIT Libraries","rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"MIT authentication","kind":"Access to files"},{"description":"License
         required"}],"subjects":[{"value":["Location"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
         Core; Spatial"},{"value":["Cities and towns"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
-        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Entity
-        point"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:dz_a1cities_100k500k_2016","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_a1cities_100k500k_2016","timdex_record_id":"gismit:dz_a1cities_100k500k_2016","title":"Algeria
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:dz_a1cities_100k500k_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_100k500k_2016","timdex_record_id":"gismit:dz_a1cities_100k500k_2016","title":"Algeria
         (Cities (100k-500k), 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Cities
-        (100k-500k), 2016). GIS Lab, MIT Libraries. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_a1cities_100k500k_2016","content_type":["Geospatial
-        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_a1cities_100k500k_2016","kind":"Not
+        (100k-500k), 2016). Point data. https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_100k500k_2016","content_type":["Point
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Shapefile","identifiers":[{"value":"dz_a1cities_100k500k_2016","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_100k500k_2016.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_100k500k_2016.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_a1cities_100k500k_2016.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_100k500k_2016","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-2.216667, 8.124167, 36.900000, 31.616667)"},{"kind":"Geometry","geoshape":"BBOX
-        (-2.216667, 8.124167, 36.900000, 31.616667)"}],"publication_information":["GIS
-        Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"License
+        (-2.216667, 8.124167, 36.900000, 31.616667)"}],"provider":"GIS Lab, MIT Libraries","rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"MIT authentication","kind":"Access to files"},{"description":"License
         required"}],"subjects":[{"value":["Location"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
         Core; Spatial"},{"value":["Cities and towns"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
-        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Entity
-        point"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:dz_a1cities_10k20k_2016","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_a1cities_10k20k_2016","timdex_record_id":"gismit:dz_a1cities_10k20k_2016","title":"Algeria
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:dz_a1cities_10k20k_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_10k20k_2016","timdex_record_id":"gismit:dz_a1cities_10k20k_2016","title":"Algeria
         (Cities (10k-20k), 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Cities
-        (10k-20k), 2016). GIS Lab, MIT Libraries. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_a1cities_10k20k_2016","content_type":["Geospatial
-        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_a1cities_10k20k_2016","kind":"Not
+        (10k-20k), 2016). Point data. https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_10k20k_2016","content_type":["Point
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Shapefile","identifiers":[{"value":"dz_a1cities_10k20k_2016","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_10k20k_2016.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_10k20k_2016.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_a1cities_10k20k_2016.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_10k20k_2016","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-1.423186, 8.313771, 36.917160, 29.388636)"},{"kind":"Geometry","geoshape":"BBOX
-        (-1.423186, 8.313771, 36.917160, 29.388636)"}],"publication_information":["GIS
-        Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"License
+        (-1.423186, 8.313771, 36.917160, 29.388636)"}],"provider":"GIS Lab, MIT Libraries","rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"MIT authentication","kind":"Access to files"},{"description":"License
         required"}],"subjects":[{"value":["Location"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
         Core; Spatial"},{"value":["Cities and towns"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
-        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Entity
-        point"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:dz_a1cities_20k50k_2016","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_a1cities_20k50k_2016","timdex_record_id":"gismit:dz_a1cities_20k50k_2016","title":"Algeria
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:dz_a1cities_20k50k_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_20k50k_2016","timdex_record_id":"gismit:dz_a1cities_20k50k_2016","title":"Algeria
         (Cities (20k-50k), 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Cities
-        (20k-50k), 2016). GIS Lab, MIT Libraries. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_a1cities_20k50k_2016","content_type":["Geospatial
-        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_a1cities_20k50k_2016","kind":"Not
+        (20k-50k), 2016). Point data. https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_20k50k_2016","content_type":["Point
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Shapefile","identifiers":[{"value":"dz_a1cities_20k50k_2016","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_20k50k_2016.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_20k50k_2016.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_a1cities_20k50k_2016.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_20k50k_2016","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-1.856799, 8.443333, 37.007167, 19.573696)"},{"kind":"Geometry","geoshape":"BBOX
-        (-1.856799, 8.443333, 37.007167, 19.573696)"}],"publication_information":["GIS
-        Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"License
+        (-1.856799, 8.443333, 37.007167, 19.573696)"}],"provider":"GIS Lab, MIT Libraries","rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"MIT authentication","kind":"Access to files"},{"description":"License
         required"}],"subjects":[{"value":["Location"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
         Core; Spatial"},{"value":["Cities and towns"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
-        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Entity
-        point"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:dz_a1cities_50k100k_2016","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_a1cities_50k100k_2016","timdex_record_id":"gismit:dz_a1cities_50k100k_2016","title":"Algeria
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:dz_a1cities_50k100k_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_50k100k_2016","timdex_record_id":"gismit:dz_a1cities_50k100k_2016","title":"Algeria
         (Cities (50k-100k), 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Cities
-        (50k-100k), 2016). GIS Lab, MIT Libraries. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_a1cities_50k100k_2016","content_type":["Geospatial
-        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_a1cities_50k100k_2016","kind":"Not
+        (50k-100k), 2016). Point data. https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_50k100k_2016","content_type":["Point
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Shapefile","identifiers":[{"value":"dz_a1cities_50k100k_2016","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_50k100k_2016.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_50k100k_2016.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_a1cities_50k100k_2016.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_50k100k_2016","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-8.147435, 8.129167, 36.823460, 22.785000)"},{"kind":"Geometry","geoshape":"BBOX
-        (-8.147435, 8.129167, 36.823460, 22.785000)"}],"publication_information":["GIS
-        Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"License
+        (-8.147435, 8.129167, 36.823460, 22.785000)"}],"provider":"GIS Lab, MIT Libraries","rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"MIT authentication","kind":"Access to files"},{"description":"License
         required"}],"subjects":[{"value":["Location"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
         Core; Spatial"},{"value":["Cities and towns"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
-        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Entity
-        point"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:dz_c28hydline_2016","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_c28hydline_2016","timdex_record_id":"gismit:dz_c28hydline_2016","title":"Algeria
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:dz_c28hydline_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:dz_c28hydline_2016","timdex_record_id":"gismit:dz_c28hydline_2016","title":"Algeria
         (Hydrographic Features (line), 2016)","citation":"GfK GeoMarketing GmbH. Algeria
-        (Hydrographic Features (line), 2016). GIS Lab, MIT Libraries. Geospatial data.
-        https://search.libraries.mit.edu/record/gismit:dz_c28hydline_2016","content_type":["Geospatial
-        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_c28hydline_2016","kind":"Not
+        (Hydrographic Features (line), 2016). Line data. https://geodata.libraries.mit.edu/record/gismit:dz_c28hydline_2016","content_type":["Line
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Shapefile","identifiers":[{"value":"dz_c28hydline_2016","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_c28hydline_2016.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_c28hydline_2016.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_c28hydline_2016.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:dz_c28hydline_2016","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (0.132726, 5.076599, 36.733252, 33.898693)"},{"kind":"Geometry","geoshape":"BBOX
-        (0.132726, 5.076599, 36.733252, 33.898693)"}],"publication_information":["GIS
-        Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"License
+        (0.132726, 5.076599, 36.733252, 33.898693)"}],"provider":"GIS Lab, MIT Libraries","rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"MIT authentication","kind":"Access to files"},{"description":"License
         required"}],"subjects":[{"value":["Algeria"],"kind":"Dublin Core; Spatial"},{"value":["Hydrology"],"kind":"Dublin
         Core; Subject"},{"value":["inlandWaters"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
-        scheme not provided"},{"value":["String"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:dz_c28hydpoly_2016","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_c28hydpoly_2016","timdex_record_id":"gismit:dz_c28hydpoly_2016","title":"Algeria
+        scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:dz_c28hydpoly_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:dz_c28hydpoly_2016","timdex_record_id":"gismit:dz_c28hydpoly_2016","title":"Algeria
         (Cities (10k-20k), 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Cities
-        (10k-20k), 2016). GIS Lab, MIT Libraries. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_c28hydpoly_2016","content_type":["Geospatial
-        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_c28hydpoly_2016","kind":"Not
+        (10k-20k), 2016). Point data. https://geodata.libraries.mit.edu/record/gismit:dz_c28hydpoly_2016","content_type":["Point
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Shapefile","identifiers":[{"value":"dz_c28hydpoly_2016","kind":"Not
         specified"},{"value":"dz_a1cities_10k20k_2016","kind":"Not specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_c28hydpoly_2016.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_c28hydpoly_2016.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_c28hydpoly_2016.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:dz_c28hydpoly_2016","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-1.423186, 8.313771, 36.917160, 29.388636)"},{"kind":"Geometry","geoshape":"BBOX
-        (-1.423186, 8.313771, 36.917160, 29.388636)"}],"publication_information":["GIS
-        Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"License
+        (-1.423186, 8.313771, 36.917160, 29.388636)"}],"provider":"GIS Lab, MIT Libraries","rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"MIT authentication","kind":"Access to files"},{"description":"License
         required"}],"subjects":[{"value":["Algeria"],"kind":"Dublin Core; Spatial"},{"value":["Hydrology"],"kind":"Dublin
         Core; Subject"},{"value":["inlandWaters"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
-        scheme not provided"},{"value":["Entity point"],"kind":"Subject scheme not
-        provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:dz_p2hig_2016","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_p2hig_2016","timdex_record_id":"gismit:dz_p2hig_2016","title":"Algeria
+        scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:dz_p2hig_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:dz_p2hig_2016","timdex_record_id":"gismit:dz_p2hig_2016","title":"Algeria
         (Cities (100k-500k), 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Cities
-        (100k-500k), 2016). GIS Lab, MIT Libraries. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_p2hig_2016","content_type":["Geospatial
-        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_p2hig_2016","kind":"Not
+        (100k-500k), 2016). Point data. https://geodata.libraries.mit.edu/record/gismit:dz_p2hig_2016","content_type":["Point
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Shapefile","identifiers":[{"value":"dz_p2hig_2016","kind":"Not
         specified"},{"value":"dz_a1cities_100k500k_2016","kind":"Not specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_p2hig_2016.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_p2hig_2016.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_p2hig_2016.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:dz_p2hig_2016","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-2.216667, 8.124167, 36.900000, 31.616667)"},{"kind":"Geometry","geoshape":"BBOX
-        (-2.216667, 8.124167, 36.900000, 31.616667)"}],"publication_information":["GIS
-        Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"License
+        (-2.216667, 8.124167, 36.900000, 31.616667)"}],"provider":"GIS Lab, MIT Libraries","rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"MIT authentication","kind":"Access to files"},{"description":"License
         required"}],"subjects":[{"value":["Transportation"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
         Core; Spatial"},{"value":["Roads"],"kind":"Dublin Core; Subject"},{"value":["transportation"],"kind":"Dublin
-        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Entity
-        point"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:dz_p2roads_2016","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_p2roads_2016","timdex_record_id":"gismit:dz_p2roads_2016","title":"Algeria
-        (Roads, 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Roads, 2016). GIS
-        Lab, MIT Libraries. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_p2roads_2016","content_type":["Geospatial
-        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_p2roads_2016","kind":"Not
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:dz_p2roads_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:dz_p2roads_2016","timdex_record_id":"gismit:dz_p2roads_2016","title":"Algeria
+        (Roads, 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Roads, 2016). Line
+        data. https://geodata.libraries.mit.edu/record/gismit:dz_p2roads_2016","content_type":["Line
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Shapefile","identifiers":[{"value":"dz_p2roads_2016","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_p2roads_2016.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_p2roads_2016.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_p2roads_2016.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:dz_p2roads_2016","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-8.154491, 10.548201, 36.919383, 19.442285)"},{"kind":"Geometry","geoshape":"BBOX
-        (-8.154491, 10.548201, 36.919383, 19.442285)"}],"publication_information":["GIS
-        Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"License
+        (-8.154491, 10.548201, 36.919383, 19.442285)"}],"provider":"GIS Lab, MIT Libraries","rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"MIT authentication","kind":"Access to files"},{"description":"License
         required"}],"subjects":[{"value":["Transportation"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
         Core; Spatial"},{"value":["Roads"],"kind":"Dublin Core; Subject"},{"value":["transportation"],"kind":"Dublin
-        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["String"],"kind":"Subject
-        scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:dz_p61airports_2016","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_p61airports_2016","timdex_record_id":"gismit:dz_p61airports_2016","title":"Algeria
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:dz_p61airports_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:dz_p61airports_2016","timdex_record_id":"gismit:dz_p61airports_2016","title":"Algeria
         (Airports, 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Airports, 2016).
-        GfK GeoMarketing GmbH. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_p61airports_2016","content_type":["Geospatial
-        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_p61airports_2016","kind":"Not
+        GfK GeoMarketing GmbH. Point data. https://geodata.libraries.mit.edu/record/gismit:dz_p61airports_2016","content_type":["Point
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Shapefile","identifiers":[{"value":"dz_p61airports_2016","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_p61airports_2016.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_p61airports_2016.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_p61airports_2016.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:dz_p61airports_2016","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-8.166223, 9.638056, 29.236944, 22.816967)"},{"kind":"Geometry","geoshape":"BBOX
-        (-8.166223, 9.638056, 29.236944, 22.816967)"}],"publication_information":["GfK
-        GeoMarketing GmbH","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"Access
-        is limited to members of the MIT community only -- maps may not be given to
-        anyone not officially and currently affiliated with MIT. Maps may be used
-        only for research, educational, and other scholarly purposes; it is permissible
-        to use images created from the software and data in scholarly publications
-        and dissertations. Any other use, unless it falls within the Fair Use provisions
-        of U.S. copyright law, is not permitted.The copyright of GfK GeoMarketing
-        must be placed on the maps.The data can be published as a Bitmap or comparable
-        format."}],"subjects":[{"value":["Transportation"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
-        Core; Spatial"},{"value":["Airports"],"kind":"Dublin Core; Subject"},{"value":["transportation"],"kind":"Dublin
-        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Entity
-        point"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:in_bhopal_f7ward_2011","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:in_bhopal_f7ward_2011","timdex_record_id":"gismit:in_bhopal_f7ward_2011","title":"Bhopal,
+        (-8.166223, 9.638056, 29.236944, 22.816967)"}],"provider":"GIS Lab, MIT Libraries","publication_information":["GfK
+        GeoMarketing GmbH"],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"MIT
+        authentication","kind":"Access to files"},{"description":"Access is limited
+        to members of the MIT community only -- maps may not be given to anyone not
+        officially and currently affiliated with MIT. Maps may be used only for research,
+        educational, and other scholarly purposes; it is permissible to use images
+        created from the software and data in scholarly publications and dissertations.
+        Any other use, unless it falls within the Fair Use provisions of U.S. copyright
+        law, is not permitted.The copyright of GfK GeoMarketing must be placed on
+        the maps.The data can be published as a Bitmap or comparable format."}],"subjects":[{"value":["Transportation"],"kind":"DCAT;
+        Theme"},{"value":["Algeria"],"kind":"Dublin Core; Spatial"},{"value":["Airports"],"kind":"Dublin
+        Core; Subject"},{"value":["transportation"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
+        scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:in_bhopal_f7ward_2011","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:in_bhopal_f7ward_2011","timdex_record_id":"gismit:in_bhopal_f7ward_2011","title":"Bhopal,
         India (Ward Census Data, 2011)","citation":"ML INFOMAP. Bhopal, India (Ward
-        Census Data, 2011). ML Infomap. Geospatial data. https://search.libraries.mit.edu/record/gismit:in_bhopal_f7ward_2011","content_type":["Geospatial
-        data"],"contributors":[{"value":"ML INFOMAP","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-04-25"},{"kind":"Coverage","value":"2011-01-01"},{"kind":"Coverage","value":"2011"}],"format":"Vector","identifiers":[{"value":"in_bhopal_f7ward_2011","kind":"Not
+        Census Data, 2011). ML Infomap. Polygon data. https://geodata.libraries.mit.edu/record/gismit:in_bhopal_f7ward_2011","content_type":["Polygon
+        data"],"contributors":[{"value":"ML INFOMAP","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-04-25"},{"kind":"Coverage","value":"2011-01-01"},{"kind":"Coverage","value":"2011"}],"format":"Shapefile","identifiers":[{"value":"in_bhopal_f7ward_2011","kind":"Not
         specified"}],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/in_bhopal_f7ward_2011.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/in_bhopal_f7ward_2011.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/in_bhopal_f7ward_2011.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:in_bhopal_f7ward_2011","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (77.258670, 77.503260, 23.342680, 23.143850)"},{"kind":"Geometry","geoshape":"BBOX
-        (77.258670, 77.503260, 23.342680, 23.143850)"}],"publication_information":["ML
-        Infomap","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Society"],"kind":"DCAT;
+        (77.258670, 77.503260, 23.342680, 23.143850)"}],"provider":"GIS Lab, MIT Libraries","publication_information":["ML
+        Infomap"],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"MIT
+        authentication","kind":"Access to files"}],"subjects":[{"value":["Society"],"kind":"DCAT;
         Theme"},{"value":["Boundaries"],"kind":"DCAT; Theme"},{"value":["India--Bhopal"],"kind":"Dublin
         Core; Spatial"},{"value":["Administrative and political divisions"],"kind":"Dublin
         Core; Subject"},{"value":["Election districts"],"kind":"Dublin Core; Subject"},{"value":["Demographic
         surveys"],"kind":"Dublin Core; Subject"},{"value":["society"],"kind":"Dublin
         Core; Subject"},{"value":["boundaries"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
-        scheme not provided"},{"value":["G-polygon"],"kind":"Subject scheme not provided"}],"summary":["This
-        layer shows the ward boundaries in Bhopal (Capital of Madhya Pradesh, India)
-        in 2011. It includes demographic and socio-economic data linked to the 2011
-        Primary Census Abstract."]},"sort":[1.0,1461542400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:in_jabalpur_f7ward_2011","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:in_jabalpur_f7ward_2011","timdex_record_id":"gismit:in_jabalpur_f7ward_2011","title":"Jabalpur,
+        scheme not provided"}],"summary":["This layer shows the ward boundaries in
+        Bhopal (Capital of Madhya Pradesh, India) in 2011. It includes demographic
+        and socio-economic data linked to the 2011 Primary Census Abstract."]},"sort":[1.0,1461542400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:in_jabalpur_f7ward_2011","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:in_jabalpur_f7ward_2011","timdex_record_id":"gismit:in_jabalpur_f7ward_2011","title":"Jabalpur,
         India (Ward Census Data, 2011)","citation":"ML INFOMAP. Jabalpur, India (Ward
-        Census Data, 2011). ML Infomap. Geospatial data. https://search.libraries.mit.edu/record/gismit:in_jabalpur_f7ward_2011","content_type":["Geospatial
-        data"],"contributors":[{"value":"ML INFOMAP","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-04-25"},{"kind":"Coverage","value":"2011-01-01"},{"kind":"Coverage","value":"2011"}],"format":"Vector","identifiers":[{"value":"in_jabalpur_f7ward_2011","kind":"Not
+        Census Data, 2011). ML Infomap. Polygon data. https://geodata.libraries.mit.edu/record/gismit:in_jabalpur_f7ward_2011","content_type":["Polygon
+        data"],"contributors":[{"value":"ML INFOMAP","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-04-25"},{"kind":"Coverage","value":"2011-01-01"},{"kind":"Coverage","value":"2011"}],"format":"Shapefile","identifiers":[{"value":"in_jabalpur_f7ward_2011","kind":"Not
         specified"}],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/in_jabalpur_f7ward_2011.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/in_jabalpur_f7ward_2011.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/in_jabalpur_f7ward_2011.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:in_jabalpur_f7ward_2011","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (79.846140, 80.022830, 23.229930, 23.090740)"},{"kind":"Geometry","geoshape":"BBOX
-        (79.846140, 80.022830, 23.229930, 23.090740)"}],"publication_information":["ML
-        Infomap","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Society"],"kind":"DCAT;
+        (79.846140, 80.022830, 23.229930, 23.090740)"}],"provider":"GIS Lab, MIT Libraries","publication_information":["ML
+        Infomap"],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"MIT
+        authentication","kind":"Access to files"}],"subjects":[{"value":["Society"],"kind":"DCAT;
         Theme"},{"value":["Boundaries"],"kind":"DCAT; Theme"},{"value":["India--Jabalpur"],"kind":"Dublin
         Core; Spatial"},{"value":["Administrative and political divisions"],"kind":"Dublin
         Core; Subject"},{"value":["Election districts"],"kind":"Dublin Core; Subject"},{"value":["Demographic
         surveys"],"kind":"Dublin Core; Subject"},{"value":["society"],"kind":"Dublin
         Core; Subject"},{"value":["boundaries"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
-        scheme not provided"},{"value":["G-polygon"],"kind":"Subject scheme not provided"}],"summary":["This
-        layer shows the ward boundaries in Jabalpur (City in Madhya Pradesh, India)
-        in 2011. It includes demographic and socio-economic data linked to the 2011
-        Primary Census Abstract."]},"sort":[1.0,1461542400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:in_meerut_f7ward_2011","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:in_meerut_f7ward_2011","timdex_record_id":"gismit:in_meerut_f7ward_2011","title":"Meerut,
+        scheme not provided"}],"summary":["This layer shows the ward boundaries in
+        Jabalpur (City in Madhya Pradesh, India) in 2011. It includes demographic
+        and socio-economic data linked to the 2011 Primary Census Abstract."]},"sort":[1.0,1461542400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:in_meerut_f7ward_2011","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:in_meerut_f7ward_2011","timdex_record_id":"gismit:in_meerut_f7ward_2011","title":"Meerut,
         India (Ward Census Data, 2011)","citation":"ML INFOMAP. Meerut, India (Ward
-        Census Data, 2011). ML Infomap. Geospatial data. https://search.libraries.mit.edu/record/gismit:in_meerut_f7ward_2011","content_type":["Geospatial
-        data"],"contributors":[{"value":"ML INFOMAP","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-04-25"},{"kind":"Coverage","value":"2011-01-01"},{"kind":"Coverage","value":"2011"}],"format":"Vector","identifiers":[{"value":"in_meerut_f7ward_2011","kind":"Not
+        Census Data, 2011). ML Infomap. Polygon data. https://geodata.libraries.mit.edu/record/gismit:in_meerut_f7ward_2011","content_type":["Polygon
+        data"],"contributors":[{"value":"ML INFOMAP","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-04-25"},{"kind":"Coverage","value":"2011-01-01"},{"kind":"Coverage","value":"2011"}],"format":"Shapefile","identifiers":[{"value":"in_meerut_f7ward_2011","kind":"Not
         specified"}],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/in_meerut_f7ward_2011.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/in_meerut_f7ward_2011.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/in_meerut_f7ward_2011.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:in_meerut_f7ward_2011","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (77.617350, 77.775680, 29.076860, 28.904870)"},{"kind":"Geometry","geoshape":"BBOX
-        (77.617350, 77.775680, 29.076860, 28.904870)"}],"publication_information":["ML
-        Infomap","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Society"],"kind":"DCAT;
+        (77.617350, 77.775680, 29.076860, 28.904870)"}],"provider":"GIS Lab, MIT Libraries","publication_information":["ML
+        Infomap"],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"MIT
+        authentication","kind":"Access to files"}],"subjects":[{"value":["Society"],"kind":"DCAT;
         Theme"},{"value":["Boundaries"],"kind":"DCAT; Theme"},{"value":["India--Meerut"],"kind":"Dublin
         Core; Spatial"},{"value":["Administrative and political divisions"],"kind":"Dublin
         Core; Subject"},{"value":["Election districts"],"kind":"Dublin Core; Subject"},{"value":["Demographic
         surveys"],"kind":"Dublin Core; Subject"},{"value":["society"],"kind":"Dublin
         Core; Subject"},{"value":["boundaries"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
-        scheme not provided"},{"value":["G-polygon"],"kind":"Subject scheme not provided"}],"summary":["This
-        layer shows the ward boundaries in Meerut (City in Uttar Pradesh, India) in
-        2011. It includes demographic and socio-economic data linked to the 2011 Primary
-        Census Abstract."]},"sort":[1.0,1461542400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:in_varanasi_f7ward_2011","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:in_varanasi_f7ward_2011","timdex_record_id":"gismit:in_varanasi_f7ward_2011","title":"Varanasi,
+        scheme not provided"}],"summary":["This layer shows the ward boundaries in
+        Meerut (City in Uttar Pradesh, India) in 2011. It includes demographic and
+        socio-economic data linked to the 2011 Primary Census Abstract."]},"sort":[1.0,1461542400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:in_varanasi_f7ward_2011","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:in_varanasi_f7ward_2011","timdex_record_id":"gismit:in_varanasi_f7ward_2011","title":"Varanasi,
         India (Ward Census Data, 2011)","citation":"ML INFOMAP. Varanasi, India (Ward
-        Census Data, 2011). ML Infomap. Geospatial data. https://search.libraries.mit.edu/record/gismit:in_varanasi_f7ward_2011","content_type":["Geospatial
-        data"],"contributors":[{"value":"ML INFOMAP","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-04-25"},{"kind":"Coverage","value":"2011-01-01"},{"kind":"Coverage","value":"2011"}],"format":"Vector","identifiers":[{"value":"in_varanasi_f7ward_2011","kind":"Not
+        Census Data, 2011). ML Infomap. Polygon data. https://geodata.libraries.mit.edu/record/gismit:in_varanasi_f7ward_2011","content_type":["Polygon
+        data"],"contributors":[{"value":"ML INFOMAP","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-04-25"},{"kind":"Coverage","value":"2011-01-01"},{"kind":"Coverage","value":"2011"}],"format":"Shapefile","identifiers":[{"value":"in_varanasi_f7ward_2011","kind":"Not
         specified"}],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/in_varanasi_f7ward_2011.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/in_varanasi_f7ward_2011.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/in_varanasi_f7ward_2011.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:in_varanasi_f7ward_2011","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (82.926800, 83.048200, 25.403860, 25.246710)"},{"kind":"Geometry","geoshape":"BBOX
-        (82.926800, 83.048200, 25.403860, 25.246710)"}],"publication_information":["ML
-        Infomap","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Society"],"kind":"DCAT;
+        (82.926800, 83.048200, 25.403860, 25.246710)"}],"provider":"GIS Lab, MIT Libraries","publication_information":["ML
+        Infomap"],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"MIT
+        authentication","kind":"Access to files"}],"subjects":[{"value":["Society"],"kind":"DCAT;
         Theme"},{"value":["Boundaries"],"kind":"DCAT; Theme"},{"value":["India--Va?ra?nasi
         (District)"],"kind":"Dublin Core; Spatial"},{"value":["Administrative and
         political divisions"],"kind":"Dublin Core; Subject"},{"value":["Election districts"],"kind":"Dublin
         Core; Subject"},{"value":["Demographic surveys"],"kind":"Dublin Core; Subject"},{"value":["society"],"kind":"Dublin
         Core; Subject"},{"value":["boundaries"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
-        scheme not provided"},{"value":["G-polygon"],"kind":"Subject scheme not provided"}],"summary":["This
-        layer shows the ward boundaries in Varanasi (City in Uttar Pradesh, India)
-        in 2011. It includes demographic and socio-economic data linked to the 2011
-        Primary Census Abstract."]},"sort":[1.0,1461542400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:in_visakhapatnam_f7ward_2011","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:in_visakhapatnam_f7ward_2011","timdex_record_id":"gismit:in_visakhapatnam_f7ward_2011","title":"Visakhapatnam,
+        scheme not provided"}],"summary":["This layer shows the ward boundaries in
+        Varanasi (City in Uttar Pradesh, India) in 2011. It includes demographic and
+        socio-economic data linked to the 2011 Primary Census Abstract."]},"sort":[1.0,1461542400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:in_visakhapatnam_f7ward_2011","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:in_visakhapatnam_f7ward_2011","timdex_record_id":"gismit:in_visakhapatnam_f7ward_2011","title":"Visakhapatnam,
         India (Ward Census Data, 2011)","citation":"ML INFOMAP. Visakhapatnam, India
-        (Ward Census Data, 2011). ML Infomap. Geospatial data. https://search.libraries.mit.edu/record/gismit:in_visakhapatnam_f7ward_2011","content_type":["Geospatial
-        data"],"contributors":[{"value":"ML INFOMAP","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-04-25"},{"kind":"Coverage","value":"2011-01-01"},{"kind":"Coverage","value":"2011"}],"format":"Vector","identifiers":[{"value":"in_visakhapatnam_f7ward_2011","kind":"Not
+        (Ward Census Data, 2011). ML Infomap. Polygon data. https://geodata.libraries.mit.edu/record/gismit:in_visakhapatnam_f7ward_2011","content_type":["Polygon
+        data"],"contributors":[{"value":"ML INFOMAP","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-04-25"},{"kind":"Coverage","value":"2011-01-01"},{"kind":"Coverage","value":"2011"}],"format":"Shapefile","identifiers":[{"value":"in_visakhapatnam_f7ward_2011","kind":"Not
         specified"}],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/in_visakhapatnam_f7ward_2011.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/in_visakhapatnam_f7ward_2011.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/in_visakhapatnam_f7ward_2011.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:in_visakhapatnam_f7ward_2011","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (83.084050, 83.408650, 17.874250, 17.547400)"},{"kind":"Geometry","geoshape":"BBOX
-        (83.084050, 83.408650, 17.874250, 17.547400)"}],"publication_information":["ML
-        Infomap","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Society"],"kind":"DCAT;
+        (83.084050, 83.408650, 17.874250, 17.547400)"}],"provider":"GIS Lab, MIT Libraries","publication_information":["ML
+        Infomap"],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"MIT
+        authentication","kind":"Access to files"}],"subjects":[{"value":["Society"],"kind":"DCAT;
         Theme"},{"value":["Boundaries"],"kind":"DCAT; Theme"},{"value":["India--Vishakhapatnam"],"kind":"Dublin
         Core; Spatial"},{"value":["Administrative and political divisions"],"kind":"Dublin
         Core; Subject"},{"value":["Election districts"],"kind":"Dublin Core; Subject"},{"value":["Demographic
         surveys"],"kind":"Dublin Core; Subject"},{"value":["society"],"kind":"Dublin
         Core; Subject"},{"value":["boundaries"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
-        scheme not provided"},{"value":["G-polygon"],"kind":"Subject scheme not provided"}],"summary":["This
-        layer shows the ward boundaries in Visakhapatnam (City in Andhra Pradesh,
-        India) in 2011. It includes demographic and socio-economic data linked to
-        the 2011 Primary Census Abstract."]},"sort":[1.0,1461542400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:dz_f7regions_2016","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_f7regions_2016","timdex_record_id":"gismit:dz_f7regions_2016","title":"Algeria
+        scheme not provided"}],"summary":["This layer shows the ward boundaries in
+        Visakhapatnam (City in Andhra Pradesh, India) in 2011. It includes demographic
+        and socio-economic data linked to the 2011 Primary Census Abstract."]},"sort":[1.0,1461542400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:dz_f7regions_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:dz_f7regions_2016","timdex_record_id":"gismit:dz_f7regions_2016","title":"Algeria
         (2-Digit Postal Code Areas, 2016)","citation":"GfK GeoMarketing GmbH. Algeria
-        (2-Digit Postal Code Areas, 2016). GfK GeoMarketing GmbH. Geospatial data.
-        https://search.libraries.mit.edu/record/gismit:dz_f7regions_2016","content_type":["Geospatial
-        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-01-01"}],"format":"Vector","identifiers":[{"value":"dz_f7regions_2016","kind":"Not
+        (2-Digit Postal Code Areas, 2016). GfK GeoMarketing GmbH. Polygon data. https://geodata.libraries.mit.edu/record/gismit:dz_f7regions_2016","content_type":["Polygon
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-01-01"}],"format":"Shapefile","identifiers":[{"value":"dz_f7regions_2016","kind":"Not
         specified"},{"value":"Algeria 2-digit postcode areas 2016Copy","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_f7regions_2016.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_f7regions_2016.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_f7regions_2016.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:dz_f7regions_2016","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-8.667992, 11.994246, 37.089704, 18.956237)"},{"kind":"Geometry","geoshape":"BBOX
-        (-8.667992, 11.994246, 37.089704, 18.956237)"}],"publication_information":["GfK
-        GeoMarketing GmbH","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"Access
-        is limited to members of the MIT community only -- maps may not be given to
-        anyone not officially and currently affiliated with MIT. Maps may be used
-        only for research, educational, and other scholarly purposes; it is permissible
-        to use images created from the software and data in scholarly publications
-        and dissertations. Any other use, unless it falls within the Fair Use provisions
-        of U.S. copyright law, is not permitted.The copyright of GfK GeoMarketing
-        must be placed on the maps.The data can be published as a Bitmap or comparable
-        format."}],"subjects":[{"value":["Location"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
-        Core; Spatial"},{"value":["Postal codes"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
-        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["G-polygon"],"kind":"Subject
-        scheme not provided"}]},"sort":[1.0,1451606400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:dz_p8postcode2dig_2016","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_p8postcode2dig_2016","timdex_record_id":"gismit:dz_p8postcode2dig_2016","title":"Algeria
+        (-8.667992, 11.994246, 37.089704, 18.956237)"}],"provider":"GIS Lab, MIT Libraries","publication_information":["GfK
+        GeoMarketing GmbH"],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"MIT
+        authentication","kind":"Access to files"},{"description":"Access is limited
+        to members of the MIT community only -- maps may not be given to anyone not
+        officially and currently affiliated with MIT. Maps may be used only for research,
+        educational, and other scholarly purposes; it is permissible to use images
+        created from the software and data in scholarly publications and dissertations.
+        Any other use, unless it falls within the Fair Use provisions of U.S. copyright
+        law, is not permitted.The copyright of GfK GeoMarketing must be placed on
+        the maps.The data can be published as a Bitmap or comparable format."}],"subjects":[{"value":["Location"],"kind":"DCAT;
+        Theme"},{"value":["Algeria"],"kind":"Dublin Core; Spatial"},{"value":["Postal
+        codes"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1451606400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:dz_p8postcode2dig_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:dz_p8postcode2dig_2016","timdex_record_id":"gismit:dz_p8postcode2dig_2016","title":"Algeria
         (2-Digit Postal Code Areas, 2016)","citation":"GfK GeoMarketing GmbH. Algeria
-        (2-Digit Postal Code Areas, 2016). GfK GeoMarketing GmbH. Geospatial data.
-        https://search.libraries.mit.edu/record/gismit:dz_p8postcode2dig_2016","content_type":["Geospatial
-        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-01-01"}],"format":"Vector","identifiers":[{"value":"dz_p8postcode2dig_2016","kind":"Not
+        (2-Digit Postal Code Areas, 2016). GfK GeoMarketing GmbH. Polygon data. https://geodata.libraries.mit.edu/record/gismit:dz_p8postcode2dig_2016","content_type":["Polygon
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-01-01"}],"format":"Shapefile","identifiers":[{"value":"dz_p8postcode2dig_2016","kind":"Not
         specified"},{"value":"Algeria 2-digit postcode areas 2016Copy","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_p8postcode2dig_2016.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_p8postcode2dig_2016.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_p8postcode2dig_2016.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:dz_p8postcode2dig_2016","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-8.667992, 11.994246, 37.089704, 18.956237)"},{"kind":"Geometry","geoshape":"BBOX
-        (-8.667992, 11.994246, 37.089704, 18.956237)"}],"publication_information":["GfK
-        GeoMarketing GmbH","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"Access
-        is limited to members of the MIT community only -- maps may not be given to
-        anyone not officially and currently affiliated with MIT. Maps may be used
-        only for research, educational, and other scholarly purposes; it is permissible
-        to use images created from the software and data in scholarly publications
-        and dissertations. Any other use, unless it falls within the Fair Use provisions
-        of U.S. copyright law, is not permitted.The copyright of GfK GeoMarketing
-        must be placed on the maps.The data can be published as a Bitmap or comparable
-        format."}],"subjects":[{"value":["Location"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
-        Core; Spatial"},{"value":["Postal codes"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
-        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["G-polygon"],"kind":"Subject
-        scheme not provided"}]},"sort":[1.0,1451606400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:IN_ODISHA_F7SUBDIST_2011","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:IN_ODISHA_F7SUBDIST_2011","timdex_record_id":"gismit:IN_ODISHA_F7SUBDIST_2011","title":"India,
+        (-8.667992, 11.994246, 37.089704, 18.956237)"}],"provider":"GIS Lab, MIT Libraries","publication_information":["GfK
+        GeoMarketing GmbH"],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"MIT
+        authentication","kind":"Access to files"},{"description":"Access is limited
+        to members of the MIT community only -- maps may not be given to anyone not
+        officially and currently affiliated with MIT. Maps may be used only for research,
+        educational, and other scholarly purposes; it is permissible to use images
+        created from the software and data in scholarly publications and dissertations.
+        Any other use, unless it falls within the Fair Use provisions of U.S. copyright
+        law, is not permitted.The copyright of GfK GeoMarketing must be placed on
+        the maps.The data can be published as a Bitmap or comparable format."}],"subjects":[{"value":["Location"],"kind":"DCAT;
+        Theme"},{"value":["Algeria"],"kind":"Dublin Core; Spatial"},{"value":["Postal
+        codes"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1451606400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:IN_ODISHA_F7SUBDIST_2011","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:IN_ODISHA_F7SUBDIST_2011","timdex_record_id":"gismit:IN_ODISHA_F7SUBDIST_2011","title":"India,
         Odisha (Sub-District Census Data, 2011)","citation":"Registrar General and
         Census Commissioner of India. India, Odisha (Sub-District Census Data, 2011).
-        ML Infomap. Geospatial data. https://search.libraries.mit.edu/record/gismit:IN_ODISHA_F7SUBDIST_2011","content_type":["Geospatial
+        ML Infomap. Polygon data. https://geodata.libraries.mit.edu/record/gismit:IN_ODISHA_F7SUBDIST_2011","content_type":["Polygon
         data"],"contributors":[{"value":"Registrar General and Census Commissioner
-        of India","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2015-12-04"},{"kind":"Coverage","value":"2015-12-04"},{"kind":"Coverage","value":"2015"}],"format":"Vector","identifiers":[{"value":"IN_ODISHA_F7SUBDIST_2011","kind":"Not
+        of India","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2015-12-04"},{"kind":"Coverage","value":"2015-12-04"},{"kind":"Coverage","value":"2015"}],"format":"Shapefile","identifiers":[{"value":"IN_ODISHA_F7SUBDIST_2011","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/IN_ODISHA_F7SUBDIST_2011.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/IN_ODISHA_F7SUBDIST_2011.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/IN_ODISHA_F7SUBDIST_2011.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:IN_ODISHA_F7SUBDIST_2011","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (81.390770, 87.488937, 22.564871, 17.821276)"},{"kind":"Geometry","geoshape":"BBOX
-        (81.390770, 87.488937, 22.564871, 17.821276)"}],"publication_information":["ML
-        Infomap","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Boundaries"],"kind":"DCAT;
+        (81.390770, 87.488937, 22.564871, 17.821276)"}],"provider":"GIS Lab, MIT Libraries","publication_information":["ML
+        Infomap"],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"MIT
+        authentication","kind":"Access to files"}],"subjects":[{"value":["Boundaries"],"kind":"DCAT;
         Theme"},{"value":["Economy"],"kind":"DCAT; Theme"},{"value":["Society"],"kind":"DCAT;
         Theme"},{"value":["India--Odisha"],"kind":"Dublin Core; Spatial"},{"value":["Administrative
         and political divisions"],"kind":"Dublin Core; Subject"},{"value":["Demographic
@@ -373,21 +362,22 @@ http_interactions:
         Core; Subject"},{"value":["Caste"],"kind":"Dublin Core; Subject"},{"value":["Literacy"],"kind":"Dublin
         Core; Subject"},{"value":["Population"],"kind":"Dublin Core; Subject"},{"value":["boundaries"],"kind":"Dublin
         Core; Subject"},{"value":["economy"],"kind":"Dublin Core; Subject"},{"value":["society"],"kind":"Dublin
-        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["G-polygon"],"kind":"Subject
-        scheme not provided"}],"summary":["This layer shows the sub-district boundaries
-        in Odisha, India in 2011, linked to India''s 2011 Primary Census Abstract."]},"sort":[1.0,1449187200000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:IN_ODISHA_F7VILLAGE_2011","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:IN_ODISHA_F7VILLAGE_2011","timdex_record_id":"gismit:IN_ODISHA_F7VILLAGE_2011","title":"India,
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}],"summary":["This
+        layer shows the sub-district boundaries in Odisha, India in 2011, linked to
+        India''s 2011 Primary Census Abstract."]},"sort":[1.0,1449187200000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:IN_ODISHA_F7VILLAGE_2011","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:IN_ODISHA_F7VILLAGE_2011","timdex_record_id":"gismit:IN_ODISHA_F7VILLAGE_2011","title":"India,
         Odisha (Village Census Data, 2011)","citation":"Registrar General and Census
         Commissioner of India. India, Odisha (Village Census Data, 2011). ML Infomap.
-        Geospatial data. https://search.libraries.mit.edu/record/gismit:IN_ODISHA_F7VILLAGE_2011","content_type":["Geospatial
+        Polygon data. https://geodata.libraries.mit.edu/record/gismit:IN_ODISHA_F7VILLAGE_2011","content_type":["Polygon
         data"],"contributors":[{"value":"Registrar General and Census Commissioner
-        of India","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2015-12-04"},{"kind":"Coverage","value":"2015-12-04"},{"kind":"Coverage","value":"2015"}],"format":"Vector","identifiers":[{"value":"IN_ODISHA_F7VILLAGE_2011","kind":"Not
+        of India","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2015-12-04"},{"kind":"Coverage","value":"2015-12-04"},{"kind":"Coverage","value":"2015"}],"format":"Shapefile","identifiers":[{"value":"IN_ODISHA_F7VILLAGE_2011","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/IN_ODISHA_F7VILLAGE_2011.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/IN_ODISHA_F7VILLAGE_2011.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/IN_ODISHA_F7VILLAGE_2011.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:IN_ODISHA_F7VILLAGE_2011","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (81.390770, 87.488937, 22.564871, 17.821276)"},{"kind":"Geometry","geoshape":"BBOX
-        (81.390770, 87.488937, 22.564871, 17.821276)"}],"publication_information":["ML
-        Infomap","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Boundaries"],"kind":"DCAT;
+        (81.390770, 87.488937, 22.564871, 17.821276)"}],"provider":"GIS Lab, MIT Libraries","publication_information":["ML
+        Infomap"],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"MIT
+        authentication","kind":"Access to files"}],"subjects":[{"value":["Boundaries"],"kind":"DCAT;
         Theme"},{"value":["Economy"],"kind":"DCAT; Theme"},{"value":["Society"],"kind":"DCAT;
         Theme"},{"value":["India--Odisha"],"kind":"Dublin Core; Spatial"},{"value":["Villages"],"kind":"Dublin
         Core; Subject"},{"value":["Administrative and political divisions"],"kind":"Dublin
@@ -395,16 +385,18 @@ http_interactions:
         Core; Subject"},{"value":["Caste"],"kind":"Dublin Core; Subject"},{"value":["Literacy"],"kind":"Dublin
         Core; Subject"},{"value":["Population"],"kind":"Dublin Core; Subject"},{"value":["boundaries"],"kind":"Dublin
         Core; Subject"},{"value":["economy"],"kind":"Dublin Core; Subject"},{"value":["society"],"kind":"Dublin
-        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["G-polygon"],"kind":"Subject
-        scheme not provided"}],"summary":["This layer shows the village boundaries
-        in Odisha, India in 2011, linked to India''s 2011 Primary Census Abstract."]},"sort":[1.0,1449187200000]}]},"aggregations":{"places":{"doc_count":6871,"only_spatial":{"doc_count":1405,"place_names":{"doc_count_error_upper_bound":14,"sum_other_doc_count":1012,"buckets":[{"key":"europe","doc_count":111},{"key":"united
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}],"summary":["This
+        layer shows the village boundaries in Odisha, India in 2011, linked to India''s
+        2011 Primary Census Abstract."]},"sort":[1.0,1449187200000]}]},"aggregations":{"places":{"doc_count":5964,"only_spatial":{"doc_count":1405,"place_names":{"doc_count_error_upper_bound":14,"sum_other_doc_count":1012,"buckets":[{"key":"europe","doc_count":111},{"key":"united
         states","doc_count":71},{"key":"earth (planet)","doc_count":67},{"key":"south
         africa--cape town","doc_count":29},{"key":"africa","doc_count":22},{"key":"south
         africa--eastern cape","doc_count":22},{"key":"south africa--western cape","doc_count":22},{"key":"germany","doc_count":17},{"key":"austria","doc_count":16},{"key":"china--shenzhen
-        shi","doc_count":16}]}}},"languages":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"eng","doc_count":873}]},"content_type":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"geospatial
-        data","doc_count":893}]},"subjects":{"doc_count":6871,"subject_names":{"doc_count_error_upper_bound":38,"sum_other_doc_count":2998,"buckets":[{"key":"datasets","doc_count":891},{"key":"boundaries","doc_count":764},{"key":"g-polygon","doc_count":475},{"key":"location","doc_count":406},{"key":"entity
-        point","doc_count":315},{"key":"administrative and political divisions","doc_count":262},{"key":"society","doc_count":220},{"key":"transportation","doc_count":220},{"key":"names,
-        geographical","doc_count":174},{"key":"economy","doc_count":146}]}},"content_format":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"vector","doc_count":884},{"key":"point","doc_count":7},{"key":"raster","doc_count":2}]},"literary_form":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"source":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"mit
+        shi","doc_count":16}]}}},"languages":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"eng","doc_count":873}]},"content_type":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"polygon
+        data","doc_count":476},{"key":"point data","doc_count":319},{"key":"line data","doc_count":100},{"key":"not
+        specified","doc_count":2},{"key":"mixed","doc_count":1}]},"subjects":{"doc_count":5964,"subject_names":{"doc_count_error_upper_bound":28,"sum_other_doc_count":2686,"buckets":[{"key":"datasets","doc_count":891},{"key":"boundaries","doc_count":764},{"key":"location","doc_count":406},{"key":"administrative
+        and political divisions","doc_count":262},{"key":"society","doc_count":220},{"key":"transportation","doc_count":220},{"key":"names,
+        geographical","doc_count":174},{"key":"economy","doc_count":146},{"key":"europe","doc_count":111},{"key":"postal
+        codes","doc_count":84}]}},"content_format":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"shapefile","doc_count":891},{"key":"geotiff","doc_count":2}]},"literary_form":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"source":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"mit
         gis resources","doc_count":893}]},"contributors":{"doc_count":1083,"contributor_names":{"doc_count_error_upper_bound":10,"sum_other_doc_count":381,"buckets":[{"key":"gfk
         geomarketing gmbh","doc_count":216},{"key":"united states. national imagery
         and mapping agency","doc_count":104},{"key":"environmental systems research
@@ -412,15 +404,17 @@ http_interactions:
         mapping agency","doc_count":60},{"key":"surveyor general, cape town, department
         of land affairs","doc_count":45},{"key":"esri","doc_count":41},{"key":"tele
         atlas b.v.","doc_count":41},{"key":"and international publishers n.v.","doc_count":36},{"key":"ml
-        infomap","doc_count":32},{"key":"usgs","doc_count":29}]}}}}'
-  recorded_at: Wed, 21 Feb 2024 14:19:12 GMT
+        infomap","doc_count":32},{"key":"usgs","doc_count":29}]}},"access_to_files":{"doc_count":2223,"only_file_access":{"doc_count":893,"access_types":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"MIT
+        authentication","doc_count":563},{"key":"Free/open to all","doc_count":330}]}}}}}'
+  recorded_at: Fri, 01 Mar 2024 18:33:17 GMT
 - request:
     method: post
     uri: http://localhost:9200/all-current/_search
     body:
       encoding: UTF-8
       string: '{"from":"0","size":20,"query":{"bool":{"should":null,"must":[{"bool":{"must":{"match_all":{}},"filter":{"geo_bounding_box":{"locations.geoshape":{"top":90.0,"bottom":-90.0,"left":180.0,"right":0.0}}}}}],"filter":[{"bool":{"should":[{"term":{"source":"MIT
-        GIS Resources"}}]}}]}},"aggregations":{"contributors":{"nested":{"path":"contributors"},"aggs":{"contributor_names":{"terms":{"field":"contributors.value.keyword"}}}},"content_type":{"terms":{"field":"content_type"}},"content_format":{"terms":{"field":"format"}},"languages":{"terms":{"field":"languages.keyword"}},"literary_form":{"terms":{"field":"literary_form"}},"places":{"nested":{"path":"subjects"},"aggs":{"only_spatial":{"filter":{"terms":{"subjects.kind":["Dublin
+        GIS Resources"}}]}}]}},"aggregations":{"access_to_files":{"nested":{"path":"rights"},"aggs":{"only_file_access":{"filter":{"terms":{"rights.kind":["Access
+        to files"]}},"aggs":{"access_types":{"terms":{"field":"rights.description.keyword"}}}}}},"contributors":{"nested":{"path":"contributors"},"aggs":{"contributor_names":{"terms":{"field":"contributors.value.keyword"}}}},"content_type":{"terms":{"field":"content_type"}},"content_format":{"terms":{"field":"format"}},"languages":{"terms":{"field":"languages.keyword"}},"literary_form":{"terms":{"field":"literary_form"}},"places":{"nested":{"path":"subjects"},"aggs":{"only_spatial":{"filter":{"terms":{"subjects.kind":["Dublin
         Core; Spatial"]}},"aggs":{"place_names":{"terms":{"field":"subjects.value.keyword"}}}}}},"source":{"terms":{"field":"source"}},"subjects":{"nested":{"path":"subjects"},"aggs":{"subject_names":{"terms":{"field":"subjects.value.keyword"}}}}},"sort":[{"_score":{"order":"desc"}},{"dates.value.as_date":{"order":"desc","nested":{"path":"dates"}}}]}'
     headers:
       User-Agent:
@@ -430,7 +424,7 @@ http_interactions:
       Host:
       - localhost:9200
       X-Amz-Date:
-      - 20240221T141912Z
+      - 20240301T183317Z
       X-Amz-Content-Sha256:
       - "<REDACTED_SHA>"
       Authorization:
@@ -445,7 +439,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 21 Feb 2024 14:19:12 GMT
+      - Fri, 01 Mar 2024 18:33:17 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -458,24 +452,23 @@ http_interactions:
       - Accept-Encoding, User-Agent
     body:
       encoding: ASCII-8BIT
-      string: '{"took":45,"timed_out":false,"_shards":{"total":22,"successful":4,"skipped":0,"failed":18,"failures":[{"shard":0,"index":"alma-2023-03-30t15-16-14","node":"67r_e8uWST--ZLUktH5vHQ","reason":{"type":"query_shard_exception","reason":"failed
-        to find geo field [locations.geoshape]","index":"alma-2023-03-30t15-16-14","index_uuid":"P8Xd8tzDSNy3YFAH6vo5Jw"}},{"shard":0,"index":"aspace-2023-08-23t16-30-30","node":"67r_e8uWST--ZLUktH5vHQ","reason":{"type":"query_shard_exception","reason":"failed
-        to find geo field [locations.geoshape]","index":"aspace-2023-08-23t16-30-30","index_uuid":"ElAANOaZTZ6rhpO_ktxVTQ"}},{"shard":0,"index":"jpal-2023-02-10t15-50-28","node":"67r_e8uWST--ZLUktH5vHQ","reason":{"type":"query_shard_exception","reason":"failed
-        to find geo field [locations.geoshape]","index":"jpal-2023-02-10t15-50-28","index_uuid":"2G1Ip9qMSBimIVW2qPffLg"}},{"shard":0,"index":"researchdatabases-2023-11-25t20-03-46","node":"EAG3RdGbTR-B_zyobdtahA","reason":{"type":"query_shard_exception","reason":"failed
-        to find geo field [locations.geoshape]","index":"researchdatabases-2023-11-25t20-03-46","index_uuid":"51fvEiKHTByTz71_Nihb5g"}},{"shard":0,"index":"whoas-2023-02-08t22-06-40","node":"EAG3RdGbTR-B_zyobdtahA","reason":{"type":"query_shard_exception","reason":"failed
-        to find geo field [locations.geoshape]","index":"whoas-2023-02-08t22-06-40","index_uuid":"3hkl7MyvTcWV7U-jyixavg"}},{"shard":0,"index":"zenodo-2023-02-08t21-52-04","node":"EAG3RdGbTR-B_zyobdtahA","reason":{"type":"query_shard_exception","reason":"failed
-        to find geo field [locations.geoshape]","index":"zenodo-2023-02-08t21-52-04","index_uuid":"rdUyEVFDTNu9CMRgTynDlQ"}}]},"hits":{"total":{"value":1450,"relation":"eq"},"max_score":null,"hits":[{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:us_ma_boston_g47parcels_2018","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:us_ma_boston_g47parcels_2018","timdex_record_id":"gismit:us_ma_boston_g47parcels_2018","title":"Boston,
+      string: '{"took":84,"timed_out":false,"_shards":{"total":22,"successful":5,"skipped":0,"failed":17,"failures":[{"shard":0,"index":"aspace-2023-08-23t16-30-30","node":"382EdewQSzqD6NnQ87_M1Q","reason":{"type":"query_shard_exception","reason":"failed
+        to find geo field [locations.geoshape]","index":"aspace-2023-08-23t16-30-30","index_uuid":"ElAANOaZTZ6rhpO_ktxVTQ"}},{"shard":0,"index":"jpal-2023-02-10t15-50-28","node":"382EdewQSzqD6NnQ87_M1Q","reason":{"type":"query_shard_exception","reason":"failed
+        to find geo field [locations.geoshape]","index":"jpal-2023-02-10t15-50-28","index_uuid":"2G1Ip9qMSBimIVW2qPffLg"}},{"shard":0,"index":"researchdatabases-2023-11-25t20-03-46","node":"382EdewQSzqD6NnQ87_M1Q","reason":{"type":"query_shard_exception","reason":"failed
+        to find geo field [locations.geoshape]","index":"researchdatabases-2023-11-25t20-03-46","index_uuid":"51fvEiKHTByTz71_Nihb5g"}},{"shard":0,"index":"whoas-2023-02-08t22-06-40","node":"382EdewQSzqD6NnQ87_M1Q","reason":{"type":"query_shard_exception","reason":"failed
+        to find geo field [locations.geoshape]","index":"whoas-2023-02-08t22-06-40","index_uuid":"3hkl7MyvTcWV7U-jyixavg"}},{"shard":0,"index":"zenodo-2023-02-08t21-52-04","node":"382EdewQSzqD6NnQ87_M1Q","reason":{"type":"query_shard_exception","reason":"failed
+        to find geo field [locations.geoshape]","index":"zenodo-2023-02-08t21-52-04","index_uuid":"rdUyEVFDTNu9CMRgTynDlQ"}}]},"hits":{"total":{"value":1450,"relation":"eq"},"max_score":null,"hits":[{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:us_ma_boston_g47parcels_2018","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:us_ma_boston_g47parcels_2018","timdex_record_id":"gismit:us_ma_boston_g47parcels_2018","title":"Boston,
         MA (Land parcels, 2018)","citation":"City of Boston Assessing Department.
-        Boston, MA (Land parcels, 2018). GIS Lab, MIT Libraries. Geospatial data.
-        https://search.libraries.mit.edu/record/gismit:us_ma_boston_g47parcels_2018","content_type":["Geospatial
-        data"],"contributors":[{"value":"City of Boston Assessing Department","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2018-01-01"},{"kind":"Coverage","value":"2015-01-01"},{"kind":"Coverage","value":"2015"}],"format":"Vector","identifiers":[{"value":"us_ma_boston_g47parcels_2018","kind":"Not
+        Boston, MA (Land parcels, 2018). Polygon data. https://geodata.libraries.mit.edu/record/gismit:us_ma_boston_g47parcels_2018","content_type":["Polygon
+        data"],"contributors":[{"value":"City of Boston Assessing Department","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2018-01-01"},{"kind":"Coverage","value":"2015-01-01"},{"kind":"Coverage","value":"2015"}],"format":"Shapefile","identifiers":[{"value":"us_ma_boston_g47parcels_2018","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/us_ma_boston_g47parcels_2018.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/us_ma_boston_g47parcels_2018.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/us_ma_boston_g47parcels_2018.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:us_ma_boston_g47parcels_2018","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-71.190913, -70.868654, 42.397012, 42.227864)"},{"kind":"Geometry","geoshape":"BBOX
-        (-71.190913, -70.868654, 42.397012, 42.227864)"}],"publication_information":["GIS
-        Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"N/A"}],"subjects":[{"value":["Economy"],"kind":"DCAT;
+        (-71.190913, -70.868654, 42.397012, 42.227864)"}],"provider":"GIS Lab, MIT
+        Libraries","rights":[{"description":"Restricted","kind":"Access rights"},{"description":"MIT
+        authentication","kind":"Access to files"},{"description":"N/A"}],"subjects":[{"value":["Economy"],"kind":"DCAT;
         Theme"},{"value":["Boundaries"],"kind":"DCAT; Theme"},{"value":["Location"],"kind":"DCAT;
         Theme"},{"value":["Massachusetts--Boston"],"kind":"Dublin Core; Spatial"},{"value":["Land
         use"],"kind":"Dublin Core; Subject"},{"value":["Neighborhoods"],"kind":"Dublin
@@ -484,21 +477,20 @@ http_interactions:
         tenure"],"kind":"Dublin Core; Subject"},{"value":["economy"],"kind":"Dublin
         Core; Subject"},{"value":["planningCadastre"],"kind":"Dublin Core; Subject"},{"value":["boundaries"],"kind":"Dublin
         Core; Subject"},{"value":["location"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
-        scheme not provided"},{"value":["G-polygon"],"kind":"Subject scheme not provided"}],"summary":["City
-        of Boston property parcel data from FY 2018 was joined with parcel boundaries
-        from FY 2018. All data is from the City of Boston Assessor''s office and represents
-        data from 2017."]},"sort":[1.0,1514764800000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:US_MA_BOSTON_G47PARCELS_2016","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:US_MA_BOSTON_G47PARCELS_2016","timdex_record_id":"gismit:US_MA_BOSTON_G47PARCELS_2016","title":"Boston,
+        scheme not provided"}],"summary":["City of Boston property parcel data from
+        FY 2018 was joined with parcel boundaries from FY 2018. All data is from the
+        City of Boston Assessor''s office and represents data from 2017."]},"sort":[1.0,1514764800000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:US_MA_BOSTON_G47PARCELS_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:US_MA_BOSTON_G47PARCELS_2016","timdex_record_id":"gismit:US_MA_BOSTON_G47PARCELS_2016","title":"Boston,
         MA (Land parcels, 2016)","citation":"City of Boston Assessing Department.
-        Boston, MA (Land parcels, 2016). GIS Lab, MIT Libraries. Geospatial data.
-        https://search.libraries.mit.edu/record/gismit:US_MA_BOSTON_G47PARCELS_2016","content_type":["Geospatial
-        data"],"contributors":[{"value":"City of Boston Assessing Department","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2017-01-01"},{"kind":"Coverage","value":"2016-01-01"},{"kind":"Coverage","value":"2016"}],"format":"Vector","identifiers":[{"value":"US_MA_BOSTON_G47PARCELS_2016","kind":"Not
+        Boston, MA (Land parcels, 2016). Polygon data. https://geodata.libraries.mit.edu/record/gismit:US_MA_BOSTON_G47PARCELS_2016","content_type":["Polygon
+        data"],"contributors":[{"value":"City of Boston Assessing Department","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2017-01-01"},{"kind":"Coverage","value":"2016-01-01"},{"kind":"Coverage","value":"2016"}],"format":"Shapefile","identifiers":[{"value":"US_MA_BOSTON_G47PARCELS_2016","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/US_MA_BOSTON_G47PARCELS_2016.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/US_MA_BOSTON_G47PARCELS_2016.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/US_MA_BOSTON_G47PARCELS_2016.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:US_MA_BOSTON_G47PARCELS_2016","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-71.190913, -70.923055, 42.397004, 42.227856)"},{"kind":"Geometry","geoshape":"BBOX
-        (-71.190913, -70.923055, 42.397004, 42.227856)"}],"publication_information":["GIS
-        Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"N/A"}],"subjects":[{"value":["Economy"],"kind":"DCAT;
+        (-71.190913, -70.923055, 42.397004, 42.227856)"}],"provider":"GIS Lab, MIT
+        Libraries","rights":[{"description":"Restricted","kind":"Access rights"},{"description":"MIT
+        authentication","kind":"Access to files"},{"description":"N/A"}],"subjects":[{"value":["Economy"],"kind":"DCAT;
         Theme"},{"value":["Boundaries"],"kind":"DCAT; Theme"},{"value":["Location"],"kind":"DCAT;
         Theme"},{"value":["Boston"],"kind":"Dublin Core; Spatial"},{"value":["USA"],"kind":"Dublin
         Core; Spatial"},{"value":["Massachusetts"],"kind":"Dublin Core; Spatial"},{"value":["MA"],"kind":"Dublin
@@ -511,21 +503,20 @@ http_interactions:
         size"],"kind":"Dublin Core; Subject"},{"value":["economy"],"kind":"Dublin
         Core; Subject"},{"value":["planningCadastre"],"kind":"Dublin Core; Subject"},{"value":["boundaries"],"kind":"Dublin
         Core; Subject"},{"value":["location"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
-        scheme not provided"},{"value":["G-polygon"],"kind":"Subject scheme not provided"}],"summary":["City
-        of Boston property parcel data from FY 2016 was joined with parcel boundaries
-        from FY 2016. All data is from the City of Boston Assessor''s office and represents
-        data from 2015."]},"sort":[1.0,1483228800000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:us_ma_boston_g47parcels_2017","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:us_ma_boston_g47parcels_2017","timdex_record_id":"gismit:us_ma_boston_g47parcels_2017","title":"Boston,
+        scheme not provided"}],"summary":["City of Boston property parcel data from
+        FY 2016 was joined with parcel boundaries from FY 2016. All data is from the
+        City of Boston Assessor''s office and represents data from 2015."]},"sort":[1.0,1483228800000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:us_ma_boston_g47parcels_2017","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:us_ma_boston_g47parcels_2017","timdex_record_id":"gismit:us_ma_boston_g47parcels_2017","title":"Boston,
         MA (Land parcels, 2017)","citation":"City of Boston Assessing Department.
-        Boston, MA (Land parcels, 2017). GIS Lab, MIT Libraries. Geospatial data.
-        https://search.libraries.mit.edu/record/gismit:us_ma_boston_g47parcels_2017","content_type":["Geospatial
-        data"],"contributors":[{"value":"City of Boston Assessing Department","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2017-01-01"},{"kind":"Coverage","value":"2017-01-01"},{"kind":"Coverage","value":"2017"}],"format":"Vector","identifiers":[{"value":"us_ma_boston_g47parcels_2017","kind":"Not
+        Boston, MA (Land parcels, 2017). Polygon data. https://geodata.libraries.mit.edu/record/gismit:us_ma_boston_g47parcels_2017","content_type":["Polygon
+        data"],"contributors":[{"value":"City of Boston Assessing Department","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2017-01-01"},{"kind":"Coverage","value":"2017-01-01"},{"kind":"Coverage","value":"2017"}],"format":"Shapefile","identifiers":[{"value":"us_ma_boston_g47parcels_2017","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/us_ma_boston_g47parcels_2017.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/us_ma_boston_g47parcels_2017.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/us_ma_boston_g47parcels_2017.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:us_ma_boston_g47parcels_2017","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-71.190913, -70.923055, 42.397004, 42.227856)"},{"kind":"Geometry","geoshape":"BBOX
-        (-71.190913, -70.923055, 42.397004, 42.227856)"}],"publication_information":["GIS
-        Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"N/A"}],"subjects":[{"value":["Economy"],"kind":"DCAT;
+        (-71.190913, -70.923055, 42.397004, 42.227856)"}],"provider":"GIS Lab, MIT
+        Libraries","rights":[{"description":"Restricted","kind":"Access rights"},{"description":"MIT
+        authentication","kind":"Access to files"},{"description":"N/A"}],"subjects":[{"value":["Economy"],"kind":"DCAT;
         Theme"},{"value":["Boundaries"],"kind":"DCAT; Theme"},{"value":["Location"],"kind":"DCAT;
         Theme"},{"value":["Massachusetts--Boston"],"kind":"Dublin Core; Spatial"},{"value":["Land
         use"],"kind":"Dublin Core; Subject"},{"value":["Neighborhoods"],"kind":"Dublin
@@ -534,200 +525,190 @@ http_interactions:
         tenure"],"kind":"Dublin Core; Subject"},{"value":["economy"],"kind":"Dublin
         Core; Subject"},{"value":["planningCadastre"],"kind":"Dublin Core; Subject"},{"value":["boundaries"],"kind":"Dublin
         Core; Subject"},{"value":["location"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
-        scheme not provided"},{"value":["G-polygon"],"kind":"Subject scheme not provided"}],"summary":["City
-        of Boston property parcel data from FY 2017 was joined with parcel boundaries
-        from FY 2017. All data is from the City of Boston Assessor''s office and represents
-        data from 2016."]},"sort":[1.0,1483228800000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:dz_a1cities_0k10k_2016","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_a1cities_0k10k_2016","timdex_record_id":"gismit:dz_a1cities_0k10k_2016","title":"Algeria
+        scheme not provided"}],"summary":["City of Boston property parcel data from
+        FY 2017 was joined with parcel boundaries from FY 2017. All data is from the
+        City of Boston Assessor''s office and represents data from 2016."]},"sort":[1.0,1483228800000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:dz_a1cities_0k10k_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_0k10k_2016","timdex_record_id":"gismit:dz_a1cities_0k10k_2016","title":"Algeria
         (Cities (<10k), 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Cities
-        (<10k), 2016). GIS Lab, MIT Libraries. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_a1cities_0k10k_2016","content_type":["Geospatial
-        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_a1cities_0k10k_2016","kind":"Not
+        (<10k), 2016). Point data. https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_0k10k_2016","content_type":["Point
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Shapefile","identifiers":[{"value":"dz_a1cities_0k10k_2016","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_0k10k_2016.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_0k10k_2016.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_a1cities_0k10k_2016.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_0k10k_2016","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-7.843005, 11.241667, 37.075000, 19.166667)"},{"kind":"Geometry","geoshape":"BBOX
-        (-7.843005, 11.241667, 37.075000, 19.166667)"}],"publication_information":["GIS
-        Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"License
+        (-7.843005, 11.241667, 37.075000, 19.166667)"}],"provider":"GIS Lab, MIT Libraries","rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"MIT authentication","kind":"Access to files"},{"description":"License
         required"}],"subjects":[{"value":["Location"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
         Core; Spatial"},{"value":["Cities and towns"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
-        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Entity
-        point"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:dz_a1cities_100k500k_2016","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_a1cities_100k500k_2016","timdex_record_id":"gismit:dz_a1cities_100k500k_2016","title":"Algeria
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:dz_a1cities_100k500k_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_100k500k_2016","timdex_record_id":"gismit:dz_a1cities_100k500k_2016","title":"Algeria
         (Cities (100k-500k), 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Cities
-        (100k-500k), 2016). GIS Lab, MIT Libraries. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_a1cities_100k500k_2016","content_type":["Geospatial
-        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_a1cities_100k500k_2016","kind":"Not
+        (100k-500k), 2016). Point data. https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_100k500k_2016","content_type":["Point
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Shapefile","identifiers":[{"value":"dz_a1cities_100k500k_2016","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_100k500k_2016.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_100k500k_2016.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_a1cities_100k500k_2016.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_100k500k_2016","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-2.216667, 8.124167, 36.900000, 31.616667)"},{"kind":"Geometry","geoshape":"BBOX
-        (-2.216667, 8.124167, 36.900000, 31.616667)"}],"publication_information":["GIS
-        Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"License
+        (-2.216667, 8.124167, 36.900000, 31.616667)"}],"provider":"GIS Lab, MIT Libraries","rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"MIT authentication","kind":"Access to files"},{"description":"License
         required"}],"subjects":[{"value":["Location"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
         Core; Spatial"},{"value":["Cities and towns"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
-        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Entity
-        point"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:dz_a1cities_10k20k_2016","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_a1cities_10k20k_2016","timdex_record_id":"gismit:dz_a1cities_10k20k_2016","title":"Algeria
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:dz_a1cities_10k20k_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_10k20k_2016","timdex_record_id":"gismit:dz_a1cities_10k20k_2016","title":"Algeria
         (Cities (10k-20k), 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Cities
-        (10k-20k), 2016). GIS Lab, MIT Libraries. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_a1cities_10k20k_2016","content_type":["Geospatial
-        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_a1cities_10k20k_2016","kind":"Not
+        (10k-20k), 2016). Point data. https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_10k20k_2016","content_type":["Point
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Shapefile","identifiers":[{"value":"dz_a1cities_10k20k_2016","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_10k20k_2016.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_10k20k_2016.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_a1cities_10k20k_2016.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_10k20k_2016","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-1.423186, 8.313771, 36.917160, 29.388636)"},{"kind":"Geometry","geoshape":"BBOX
-        (-1.423186, 8.313771, 36.917160, 29.388636)"}],"publication_information":["GIS
-        Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"License
+        (-1.423186, 8.313771, 36.917160, 29.388636)"}],"provider":"GIS Lab, MIT Libraries","rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"MIT authentication","kind":"Access to files"},{"description":"License
         required"}],"subjects":[{"value":["Location"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
         Core; Spatial"},{"value":["Cities and towns"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
-        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Entity
-        point"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:dz_a1cities_20k50k_2016","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_a1cities_20k50k_2016","timdex_record_id":"gismit:dz_a1cities_20k50k_2016","title":"Algeria
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:dz_a1cities_20k50k_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_20k50k_2016","timdex_record_id":"gismit:dz_a1cities_20k50k_2016","title":"Algeria
         (Cities (20k-50k), 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Cities
-        (20k-50k), 2016). GIS Lab, MIT Libraries. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_a1cities_20k50k_2016","content_type":["Geospatial
-        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_a1cities_20k50k_2016","kind":"Not
+        (20k-50k), 2016). Point data. https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_20k50k_2016","content_type":["Point
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Shapefile","identifiers":[{"value":"dz_a1cities_20k50k_2016","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_20k50k_2016.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_20k50k_2016.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_a1cities_20k50k_2016.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_20k50k_2016","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-1.856799, 8.443333, 37.007167, 19.573696)"},{"kind":"Geometry","geoshape":"BBOX
-        (-1.856799, 8.443333, 37.007167, 19.573696)"}],"publication_information":["GIS
-        Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"License
+        (-1.856799, 8.443333, 37.007167, 19.573696)"}],"provider":"GIS Lab, MIT Libraries","rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"MIT authentication","kind":"Access to files"},{"description":"License
         required"}],"subjects":[{"value":["Location"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
         Core; Spatial"},{"value":["Cities and towns"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
-        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Entity
-        point"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:dz_a1cities_50k100k_2016","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_a1cities_50k100k_2016","timdex_record_id":"gismit:dz_a1cities_50k100k_2016","title":"Algeria
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:dz_a1cities_50k100k_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_50k100k_2016","timdex_record_id":"gismit:dz_a1cities_50k100k_2016","title":"Algeria
         (Cities (50k-100k), 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Cities
-        (50k-100k), 2016). GIS Lab, MIT Libraries. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_a1cities_50k100k_2016","content_type":["Geospatial
-        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_a1cities_50k100k_2016","kind":"Not
+        (50k-100k), 2016). Point data. https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_50k100k_2016","content_type":["Point
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Shapefile","identifiers":[{"value":"dz_a1cities_50k100k_2016","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_50k100k_2016.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_a1cities_50k100k_2016.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_a1cities_50k100k_2016.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:dz_a1cities_50k100k_2016","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-8.147435, 8.129167, 36.823460, 22.785000)"},{"kind":"Geometry","geoshape":"BBOX
-        (-8.147435, 8.129167, 36.823460, 22.785000)"}],"publication_information":["GIS
-        Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"License
+        (-8.147435, 8.129167, 36.823460, 22.785000)"}],"provider":"GIS Lab, MIT Libraries","rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"MIT authentication","kind":"Access to files"},{"description":"License
         required"}],"subjects":[{"value":["Location"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
         Core; Spatial"},{"value":["Cities and towns"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
-        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Entity
-        point"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:dz_c28hydpoly_2016","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_c28hydpoly_2016","timdex_record_id":"gismit:dz_c28hydpoly_2016","title":"Algeria
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:dz_c28hydpoly_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:dz_c28hydpoly_2016","timdex_record_id":"gismit:dz_c28hydpoly_2016","title":"Algeria
         (Cities (10k-20k), 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Cities
-        (10k-20k), 2016). GIS Lab, MIT Libraries. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_c28hydpoly_2016","content_type":["Geospatial
-        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_c28hydpoly_2016","kind":"Not
+        (10k-20k), 2016). Point data. https://geodata.libraries.mit.edu/record/gismit:dz_c28hydpoly_2016","content_type":["Point
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Shapefile","identifiers":[{"value":"dz_c28hydpoly_2016","kind":"Not
         specified"},{"value":"dz_a1cities_10k20k_2016","kind":"Not specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_c28hydpoly_2016.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_c28hydpoly_2016.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_c28hydpoly_2016.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:dz_c28hydpoly_2016","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-1.423186, 8.313771, 36.917160, 29.388636)"},{"kind":"Geometry","geoshape":"BBOX
-        (-1.423186, 8.313771, 36.917160, 29.388636)"}],"publication_information":["GIS
-        Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"License
+        (-1.423186, 8.313771, 36.917160, 29.388636)"}],"provider":"GIS Lab, MIT Libraries","rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"MIT authentication","kind":"Access to files"},{"description":"License
         required"}],"subjects":[{"value":["Algeria"],"kind":"Dublin Core; Spatial"},{"value":["Hydrology"],"kind":"Dublin
         Core; Subject"},{"value":["inlandWaters"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
-        scheme not provided"},{"value":["Entity point"],"kind":"Subject scheme not
-        provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:dz_p2hig_2016","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_p2hig_2016","timdex_record_id":"gismit:dz_p2hig_2016","title":"Algeria
+        scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:dz_p2hig_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:dz_p2hig_2016","timdex_record_id":"gismit:dz_p2hig_2016","title":"Algeria
         (Cities (100k-500k), 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Cities
-        (100k-500k), 2016). GIS Lab, MIT Libraries. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_p2hig_2016","content_type":["Geospatial
-        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_p2hig_2016","kind":"Not
+        (100k-500k), 2016). Point data. https://geodata.libraries.mit.edu/record/gismit:dz_p2hig_2016","content_type":["Point
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Shapefile","identifiers":[{"value":"dz_p2hig_2016","kind":"Not
         specified"},{"value":"dz_a1cities_100k500k_2016","kind":"Not specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_p2hig_2016.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_p2hig_2016.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_p2hig_2016.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:dz_p2hig_2016","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-2.216667, 8.124167, 36.900000, 31.616667)"},{"kind":"Geometry","geoshape":"BBOX
-        (-2.216667, 8.124167, 36.900000, 31.616667)"}],"publication_information":["GIS
-        Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"License
+        (-2.216667, 8.124167, 36.900000, 31.616667)"}],"provider":"GIS Lab, MIT Libraries","rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"MIT authentication","kind":"Access to files"},{"description":"License
         required"}],"subjects":[{"value":["Transportation"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
         Core; Spatial"},{"value":["Roads"],"kind":"Dublin Core; Subject"},{"value":["transportation"],"kind":"Dublin
-        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Entity
-        point"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:dz_p2roads_2016","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_p2roads_2016","timdex_record_id":"gismit:dz_p2roads_2016","title":"Algeria
-        (Roads, 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Roads, 2016). GIS
-        Lab, MIT Libraries. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_p2roads_2016","content_type":["Geospatial
-        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_p2roads_2016","kind":"Not
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:dz_p2roads_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:dz_p2roads_2016","timdex_record_id":"gismit:dz_p2roads_2016","title":"Algeria
+        (Roads, 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Roads, 2016). Line
+        data. https://geodata.libraries.mit.edu/record/gismit:dz_p2roads_2016","content_type":["Line
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Shapefile","identifiers":[{"value":"dz_p2roads_2016","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_p2roads_2016.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_p2roads_2016.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_p2roads_2016.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:dz_p2roads_2016","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-8.154491, 10.548201, 36.919383, 19.442285)"},{"kind":"Geometry","geoshape":"BBOX
-        (-8.154491, 10.548201, 36.919383, 19.442285)"}],"publication_information":["GIS
-        Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"License
+        (-8.154491, 10.548201, 36.919383, 19.442285)"}],"provider":"GIS Lab, MIT Libraries","rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"MIT authentication","kind":"Access to files"},{"description":"License
         required"}],"subjects":[{"value":["Transportation"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
         Core; Spatial"},{"value":["Roads"],"kind":"Dublin Core; Subject"},{"value":["transportation"],"kind":"Dublin
-        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["String"],"kind":"Subject
-        scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:dz_p61airports_2016","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_p61airports_2016","timdex_record_id":"gismit:dz_p61airports_2016","title":"Algeria
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:dz_p61airports_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:dz_p61airports_2016","timdex_record_id":"gismit:dz_p61airports_2016","title":"Algeria
         (Airports, 2016)","citation":"GfK GeoMarketing GmbH. Algeria (Airports, 2016).
-        GfK GeoMarketing GmbH. Geospatial data. https://search.libraries.mit.edu/record/gismit:dz_p61airports_2016","content_type":["Geospatial
-        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Vector","identifiers":[{"value":"dz_p61airports_2016","kind":"Not
+        GfK GeoMarketing GmbH. Point data. https://geodata.libraries.mit.edu/record/gismit:dz_p61airports_2016","content_type":["Point
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-12-01"}],"format":"Shapefile","identifiers":[{"value":"dz_p61airports_2016","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_p61airports_2016.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_p61airports_2016.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_p61airports_2016.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:dz_p61airports_2016","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-8.166223, 9.638056, 29.236944, 22.816967)"},{"kind":"Geometry","geoshape":"BBOX
-        (-8.166223, 9.638056, 29.236944, 22.816967)"}],"publication_information":["GfK
-        GeoMarketing GmbH","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"Access
-        is limited to members of the MIT community only -- maps may not be given to
-        anyone not officially and currently affiliated with MIT. Maps may be used
-        only for research, educational, and other scholarly purposes; it is permissible
-        to use images created from the software and data in scholarly publications
-        and dissertations. Any other use, unless it falls within the Fair Use provisions
-        of U.S. copyright law, is not permitted.The copyright of GfK GeoMarketing
-        must be placed on the maps.The data can be published as a Bitmap or comparable
-        format."}],"subjects":[{"value":["Transportation"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
-        Core; Spatial"},{"value":["Airports"],"kind":"Dublin Core; Subject"},{"value":["transportation"],"kind":"Dublin
-        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["Entity
-        point"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:dz_f7regions_2016","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_f7regions_2016","timdex_record_id":"gismit:dz_f7regions_2016","title":"Algeria
+        (-8.166223, 9.638056, 29.236944, 22.816967)"}],"provider":"GIS Lab, MIT Libraries","publication_information":["GfK
+        GeoMarketing GmbH"],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"MIT
+        authentication","kind":"Access to files"},{"description":"Access is limited
+        to members of the MIT community only -- maps may not be given to anyone not
+        officially and currently affiliated with MIT. Maps may be used only for research,
+        educational, and other scholarly purposes; it is permissible to use images
+        created from the software and data in scholarly publications and dissertations.
+        Any other use, unless it falls within the Fair Use provisions of U.S. copyright
+        law, is not permitted.The copyright of GfK GeoMarketing must be placed on
+        the maps.The data can be published as a Bitmap or comparable format."}],"subjects":[{"value":["Transportation"],"kind":"DCAT;
+        Theme"},{"value":["Algeria"],"kind":"Dublin Core; Spatial"},{"value":["Airports"],"kind":"Dublin
+        Core; Subject"},{"value":["transportation"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
+        scheme not provided"}]},"sort":[1.0,1480550400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:dz_f7regions_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:dz_f7regions_2016","timdex_record_id":"gismit:dz_f7regions_2016","title":"Algeria
         (2-Digit Postal Code Areas, 2016)","citation":"GfK GeoMarketing GmbH. Algeria
-        (2-Digit Postal Code Areas, 2016). GfK GeoMarketing GmbH. Geospatial data.
-        https://search.libraries.mit.edu/record/gismit:dz_f7regions_2016","content_type":["Geospatial
-        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-01-01"}],"format":"Vector","identifiers":[{"value":"dz_f7regions_2016","kind":"Not
+        (2-Digit Postal Code Areas, 2016). GfK GeoMarketing GmbH. Polygon data. https://geodata.libraries.mit.edu/record/gismit:dz_f7regions_2016","content_type":["Polygon
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-01-01"}],"format":"Shapefile","identifiers":[{"value":"dz_f7regions_2016","kind":"Not
         specified"},{"value":"Algeria 2-digit postcode areas 2016Copy","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_f7regions_2016.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_f7regions_2016.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_f7regions_2016.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:dz_f7regions_2016","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-8.667992, 11.994246, 37.089704, 18.956237)"},{"kind":"Geometry","geoshape":"BBOX
-        (-8.667992, 11.994246, 37.089704, 18.956237)"}],"publication_information":["GfK
-        GeoMarketing GmbH","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"Access
-        is limited to members of the MIT community only -- maps may not be given to
-        anyone not officially and currently affiliated with MIT. Maps may be used
-        only for research, educational, and other scholarly purposes; it is permissible
-        to use images created from the software and data in scholarly publications
-        and dissertations. Any other use, unless it falls within the Fair Use provisions
-        of U.S. copyright law, is not permitted.The copyright of GfK GeoMarketing
-        must be placed on the maps.The data can be published as a Bitmap or comparable
-        format."}],"subjects":[{"value":["Location"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
-        Core; Spatial"},{"value":["Postal codes"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
-        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["G-polygon"],"kind":"Subject
-        scheme not provided"}]},"sort":[1.0,1451606400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:dz_p8postcode2dig_2016","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:dz_p8postcode2dig_2016","timdex_record_id":"gismit:dz_p8postcode2dig_2016","title":"Algeria
+        (-8.667992, 11.994246, 37.089704, 18.956237)"}],"provider":"GIS Lab, MIT Libraries","publication_information":["GfK
+        GeoMarketing GmbH"],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"MIT
+        authentication","kind":"Access to files"},{"description":"Access is limited
+        to members of the MIT community only -- maps may not be given to anyone not
+        officially and currently affiliated with MIT. Maps may be used only for research,
+        educational, and other scholarly purposes; it is permissible to use images
+        created from the software and data in scholarly publications and dissertations.
+        Any other use, unless it falls within the Fair Use provisions of U.S. copyright
+        law, is not permitted.The copyright of GfK GeoMarketing must be placed on
+        the maps.The data can be published as a Bitmap or comparable format."}],"subjects":[{"value":["Location"],"kind":"DCAT;
+        Theme"},{"value":["Algeria"],"kind":"Dublin Core; Spatial"},{"value":["Postal
+        codes"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1451606400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:dz_p8postcode2dig_2016","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:dz_p8postcode2dig_2016","timdex_record_id":"gismit:dz_p8postcode2dig_2016","title":"Algeria
         (2-Digit Postal Code Areas, 2016)","citation":"GfK GeoMarketing GmbH. Algeria
-        (2-Digit Postal Code Areas, 2016). GfK GeoMarketing GmbH. Geospatial data.
-        https://search.libraries.mit.edu/record/gismit:dz_p8postcode2dig_2016","content_type":["Geospatial
-        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-01-01"}],"format":"Vector","identifiers":[{"value":"dz_p8postcode2dig_2016","kind":"Not
+        (2-Digit Postal Code Areas, 2016). GfK GeoMarketing GmbH. Polygon data. https://geodata.libraries.mit.edu/record/gismit:dz_p8postcode2dig_2016","content_type":["Polygon
+        data"],"contributors":[{"value":"GfK GeoMarketing GmbH","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2016-01-01"}],"format":"Shapefile","identifiers":[{"value":"dz_p8postcode2dig_2016","kind":"Not
         specified"},{"value":"Algeria 2-digit postcode areas 2016Copy","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_p8postcode2dig_2016.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/dz_p8postcode2dig_2016.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/dz_p8postcode2dig_2016.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:dz_p8postcode2dig_2016","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-8.667992, 11.994246, 37.089704, 18.956237)"},{"kind":"Geometry","geoshape":"BBOX
-        (-8.667992, 11.994246, 37.089704, 18.956237)"}],"publication_information":["GfK
-        GeoMarketing GmbH","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"Access
-        is limited to members of the MIT community only -- maps may not be given to
-        anyone not officially and currently affiliated with MIT. Maps may be used
-        only for research, educational, and other scholarly purposes; it is permissible
-        to use images created from the software and data in scholarly publications
-        and dissertations. Any other use, unless it falls within the Fair Use provisions
-        of U.S. copyright law, is not permitted.The copyright of GfK GeoMarketing
-        must be placed on the maps.The data can be published as a Bitmap or comparable
-        format."}],"subjects":[{"value":["Location"],"kind":"DCAT; Theme"},{"value":["Algeria"],"kind":"Dublin
-        Core; Spatial"},{"value":["Postal codes"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
-        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"},{"value":["G-polygon"],"kind":"Subject
-        scheme not provided"}]},"sort":[1.0,1451606400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:US_MA_BOSTON_G47PARCELS_2015","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:US_MA_BOSTON_G47PARCELS_2015","timdex_record_id":"gismit:US_MA_BOSTON_G47PARCELS_2015","title":"Boston,
+        (-8.667992, 11.994246, 37.089704, 18.956237)"}],"provider":"GIS Lab, MIT Libraries","publication_information":["GfK
+        GeoMarketing GmbH"],"rights":[{"description":"Restricted","kind":"Access rights"},{"description":"MIT
+        authentication","kind":"Access to files"},{"description":"Access is limited
+        to members of the MIT community only -- maps may not be given to anyone not
+        officially and currently affiliated with MIT. Maps may be used only for research,
+        educational, and other scholarly purposes; it is permissible to use images
+        created from the software and data in scholarly publications and dissertations.
+        Any other use, unless it falls within the Fair Use provisions of U.S. copyright
+        law, is not permitted.The copyright of GfK GeoMarketing must be placed on
+        the maps.The data can be published as a Bitmap or comparable format."}],"subjects":[{"value":["Location"],"kind":"DCAT;
+        Theme"},{"value":["Algeria"],"kind":"Dublin Core; Spatial"},{"value":["Postal
+        codes"],"kind":"Dublin Core; Subject"},{"value":["location"],"kind":"Dublin
+        Core; Subject"},{"value":["Datasets"],"kind":"Subject scheme not provided"}]},"sort":[1.0,1451606400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:US_MA_BOSTON_G47PARCELS_2015","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:US_MA_BOSTON_G47PARCELS_2015","timdex_record_id":"gismit:US_MA_BOSTON_G47PARCELS_2015","title":"Boston,
         MA (Land parcels, 2015)","citation":"City of Boston Assessing Department.
-        Boston, MA (Land parcels, 2015). City of Boston Assessing Department. Geospatial
-        data. https://search.libraries.mit.edu/record/gismit:US_MA_BOSTON_G47PARCELS_2015","content_type":["Geospatial
-        data"],"contributors":[{"value":"City of Boston Assessing Department","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2015-01-01"},{"kind":"Coverage","value":"2015-01-01"},{"kind":"Coverage","value":"2015"}],"format":"Vector","identifiers":[{"value":"US_MA_BOSTON_G47PARCELS_2015","kind":"Not
+        Boston, MA (Land parcels, 2015). City of Boston Assessing Department. Polygon
+        data. https://geodata.libraries.mit.edu/record/gismit:US_MA_BOSTON_G47PARCELS_2015","content_type":["Polygon
+        data"],"contributors":[{"value":"City of Boston Assessing Department","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2015-01-01"},{"kind":"Coverage","value":"2015-01-01"},{"kind":"Coverage","value":"2015"}],"format":"Shapefile","identifiers":[{"value":"US_MA_BOSTON_G47PARCELS_2015","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/US_MA_BOSTON_G47PARCELS_2015.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/US_MA_BOSTON_G47PARCELS_2015.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/US_MA_BOSTON_G47PARCELS_2015.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:US_MA_BOSTON_G47PARCELS_2015","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-71.190913, -70.953184, 42.397012, 42.227864)"},{"kind":"Geometry","geoshape":"BBOX
-        (-71.190913, -70.953184, 42.397012, 42.227864)"}],"publication_information":["City
-        of Boston Assessing Department","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"N/A"}],"subjects":[{"value":["Economy"],"kind":"DCAT;
+        (-71.190913, -70.953184, 42.397012, 42.227864)"}],"provider":"GIS Lab, MIT
+        Libraries","publication_information":["City of Boston Assessing Department"],"rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"MIT authentication","kind":"Access to files"},{"description":"N/A"}],"subjects":[{"value":["Economy"],"kind":"DCAT;
         Theme"},{"value":["Boundaries"],"kind":"DCAT; Theme"},{"value":["Location"],"kind":"DCAT;
         Theme"},{"value":["Boston"],"kind":"Dublin Core; Spatial"},{"value":["USA"],"kind":"Dublin
         Core; Spatial"},{"value":["Massachusetts"],"kind":"Dublin Core; Spatial"},{"value":["MA"],"kind":"Dublin
@@ -740,96 +721,96 @@ http_interactions:
         size"],"kind":"Dublin Core; Subject"},{"value":["economy"],"kind":"Dublin
         Core; Subject"},{"value":["planningCadastre"],"kind":"Dublin Core; Subject"},{"value":["boundaries"],"kind":"Dublin
         Core; Subject"},{"value":["location"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
-        scheme not provided"},{"value":["G-polygon"],"kind":"Subject scheme not provided"}],"summary":["City
-        of Boston property parcel data from FY 2015 was joined with parcel boundaries
-        from FY 2015. All data is from the City of Boston Assessor''s office and represents
-        data from 2014."]},"sort":[1.0,1420070400000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:INT_P944G_2014","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:INT_P944G_2014","timdex_record_id":"gismit:INT_P944G_2014","title":"World
+        scheme not provided"}],"summary":["City of Boston property parcel data from
+        FY 2015 was joined with parcel boundaries from FY 2015. All data is from the
+        City of Boston Assessor''s office and represents data from 2014."]},"sort":[1.0,1420070400000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:INT_P944G_2014","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:INT_P944G_2014","timdex_record_id":"gismit:INT_P944G_2014","title":"World
         (4G Mobile Phone Coverage, 2014)","citation":"Collins Bartholomew. World (4G
-        Mobile Phone Coverage, 2014). Collins Bartholomew. Geospatial data. https://search.libraries.mit.edu/record/gismit:INT_P944G_2014","content_type":["Geospatial
-        data"],"contributors":[{"value":"Collins Bartholomew","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2014-12-01"},{"kind":"Coverage","value":"2014-12-01"},{"kind":"Coverage","value":"2014"}],"format":"Vector","identifiers":[{"value":"INT_P944G_2014","kind":"Not
+        Mobile Phone Coverage, 2014). Collins Bartholomew. Polygon data. https://geodata.libraries.mit.edu/record/gismit:INT_P944G_2014","content_type":["Polygon
+        data"],"contributors":[{"value":"Collins Bartholomew","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2014-12-01"},{"kind":"Coverage","value":"2014-12-01"},{"kind":"Coverage","value":"2014"}],"format":"Shapefile","identifiers":[{"value":"INT_P944G_2014","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/INT_P944G_2014.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/INT_P944G_2014.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/INT_P944G_2014.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:INT_P944G_2014","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-135.373169, 178.145985, 68.532066, -46.186684)"},{"kind":"Geometry","geoshape":"BBOX
-        (-135.373169, 178.145985, 68.532066, -46.186684)"}],"publication_information":["Collins
-        Bartholomew","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Earth
+        (-135.373169, 178.145985, 68.532066, -46.186684)"}],"provider":"GIS Lab, MIT
+        Libraries","publication_information":["Collins Bartholomew"],"rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"MIT authentication","kind":"Access to files"}],"subjects":[{"value":["Earth
         (Planet)"],"kind":"Dublin Core; Spatial"},{"value":["utilitiesCommunication"],"kind":"Dublin
         Core; Subject"},{"value":["Public utilities"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
-        scheme not provided"},{"value":["G-polygon"],"kind":"Subject scheme not provided"}],"summary":["Collins
-        Mobile Coverage Explorer is a representation of the area covered by mobile
-        communications around the world. The data is created from submissions, made
-        directly to Collins Bartholomew or the GSMA from mobile operators, which provide
-        roaming detail for inclusion in the online mapping application known as Collins
-        Mobile Coverage Web."]},"sort":[1.0,1417392000000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:INT_P94INCLUSIONS3G_2014","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:INT_P94INCLUSIONS3G_2014","timdex_record_id":"gismit:INT_P94INCLUSIONS3G_2014","title":"World
+        scheme not provided"}],"summary":["Collins Mobile Coverage Explorer is a representation
+        of the area covered by mobile communications around the world. The data is
+        created from submissions, made directly to Collins Bartholomew or the GSMA
+        from mobile operators, which provide roaming detail for inclusion in the online
+        mapping application known as Collins Mobile Coverage Web."]},"sort":[1.0,1417392000000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:INT_P94INCLUSIONS3G_2014","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:INT_P94INCLUSIONS3G_2014","timdex_record_id":"gismit:INT_P94INCLUSIONS3G_2014","title":"World
         (3G Mobile Phone Coverage Inclusion, 2014)","citation":"Collins Bartholomew.
-        World (3G Mobile Phone Coverage Inclusion, 2014). Collins Bartholomew. Geospatial
-        data. https://search.libraries.mit.edu/record/gismit:INT_P94INCLUSIONS3G_2014","content_type":["Geospatial
-        data"],"contributors":[{"value":"Collins Bartholomew","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2014-12-01"},{"kind":"Coverage","value":"2014-12-01"},{"kind":"Coverage","value":"2014"}],"format":"Vector","identifiers":[{"value":"INT_P94INCLUSIONS3G_2014","kind":"Not
+        World (3G Mobile Phone Coverage Inclusion, 2014). Collins Bartholomew. Point
+        data. https://geodata.libraries.mit.edu/record/gismit:INT_P94INCLUSIONS3G_2014","content_type":["Point
+        data"],"contributors":[{"value":"Collins Bartholomew","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2014-12-01"},{"kind":"Coverage","value":"2014-12-01"},{"kind":"Coverage","value":"2014"}],"format":"Shapefile","identifiers":[{"value":"INT_P94INCLUSIONS3G_2014","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/INT_P94INCLUSIONS3G_2014.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/INT_P94INCLUSIONS3G_2014.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/INT_P94INCLUSIONS3G_2014.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:INT_P94INCLUSIONS3G_2014","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-150.000000, 177.972000, 64.793404, -40.000000)"},{"kind":"Geometry","geoshape":"BBOX
-        (-150.000000, 177.972000, 64.793404, -40.000000)"}],"publication_information":["Collins
-        Bartholomew","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Earth
+        (-150.000000, 177.972000, 64.793404, -40.000000)"}],"provider":"GIS Lab, MIT
+        Libraries","publication_information":["Collins Bartholomew"],"rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"MIT authentication","kind":"Access to files"}],"subjects":[{"value":["Earth
         (Planet)"],"kind":"Dublin Core; Spatial"},{"value":["utilitiesCommunication"],"kind":"Dublin
         Core; Subject"},{"value":["Public utilities"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
-        scheme not provided"},{"value":["Entity point"],"kind":"Subject scheme not
-        provided"}],"summary":["These inclusion metadata files for GSM, 3G, and 4G
-        mobile coverage are an attempt at listing all the networks which are included
-        in the separate world mobile phone coverage datasets. Unfortunately the lists
-        cannot be comprehensive because legacy datasets did not maintain the information
-        required to make them complete."]},"sort":[1.0,1417392000000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:INT_P94INCLUSIONS4G_2014","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:INT_P94INCLUSIONS4G_2014","timdex_record_id":"gismit:INT_P94INCLUSIONS4G_2014","title":"World
+        scheme not provided"}],"summary":["These inclusion metadata files for GSM,
+        3G, and 4G mobile coverage are an attempt at listing all the networks which
+        are included in the separate world mobile phone coverage datasets. Unfortunately
+        the lists cannot be comprehensive because legacy datasets did not maintain
+        the information required to make them complete."]},"sort":[1.0,1417392000000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:INT_P94INCLUSIONS4G_2014","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:INT_P94INCLUSIONS4G_2014","timdex_record_id":"gismit:INT_P94INCLUSIONS4G_2014","title":"World
         (4G Mobile Phone Coverage Inclusion, 2014)","citation":"Collins Bartholomew.
-        World (4G Mobile Phone Coverage Inclusion, 2014). Collins Bartholomew. Geospatial
-        data. https://search.libraries.mit.edu/record/gismit:INT_P94INCLUSIONS4G_2014","content_type":["Geospatial
-        data"],"contributors":[{"value":"Collins Bartholomew","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2014-12-01"},{"kind":"Coverage","value":"2014-12-01"},{"kind":"Coverage","value":"2014"}],"format":"Vector","identifiers":[{"value":"INT_P94INCLUSIONS4G_2014","kind":"Not
+        World (4G Mobile Phone Coverage Inclusion, 2014). Collins Bartholomew. Point
+        data. https://geodata.libraries.mit.edu/record/gismit:INT_P94INCLUSIONS4G_2014","content_type":["Point
+        data"],"contributors":[{"value":"Collins Bartholomew","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2014-12-01"},{"kind":"Coverage","value":"2014-12-01"},{"kind":"Coverage","value":"2014"}],"format":"Shapefile","identifiers":[{"value":"INT_P94INCLUSIONS4G_2014","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/INT_P94INCLUSIONS4G_2014.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/INT_P94INCLUSIONS4G_2014.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/INT_P94INCLUSIONS4G_2014.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:INT_P94INCLUSIONS4G_2014","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-100.000000, 170.481070, 64.518784, -40.000000)"},{"kind":"Geometry","geoshape":"BBOX
-        (-100.000000, 170.481070, 64.518784, -40.000000)"}],"publication_information":["Collins
-        Bartholomew","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Earth
+        (-100.000000, 170.481070, 64.518784, -40.000000)"}],"provider":"GIS Lab, MIT
+        Libraries","publication_information":["Collins Bartholomew"],"rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"MIT authentication","kind":"Access to files"}],"subjects":[{"value":["Earth
         (Planet)"],"kind":"Dublin Core; Spatial"},{"value":["utilitiesCommunication"],"kind":"Dublin
         Core; Subject"},{"value":["Public utilities"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
-        scheme not provided"},{"value":["Entity point"],"kind":"Subject scheme not
-        provided"}],"summary":["These inclusion metadata files for GSM, 3G, and 4G
-        mobile coverage are an attempt at listing all the networks which are included
-        in the separate world mobile phone coverage datasets. Unfortunately the lists
-        cannot be comprehensive because legacy datasets did not maintain the information
-        required to make them complete."]},"sort":[1.0,1417392000000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:INT_P94INCLUSIONSGSM_2014","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:INT_P94INCLUSIONSGSM_2014","timdex_record_id":"gismit:INT_P94INCLUSIONSGSM_2014","title":"World
+        scheme not provided"}],"summary":["These inclusion metadata files for GSM,
+        3G, and 4G mobile coverage are an attempt at listing all the networks which
+        are included in the separate world mobile phone coverage datasets. Unfortunately
+        the lists cannot be comprehensive because legacy datasets did not maintain
+        the information required to make them complete."]},"sort":[1.0,1417392000000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:INT_P94INCLUSIONSGSM_2014","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:INT_P94INCLUSIONSGSM_2014","timdex_record_id":"gismit:INT_P94INCLUSIONSGSM_2014","title":"World
         (GSM Mobile Phone Coverage Inclusion, 2014)","citation":"Collins Bartholomew.
-        World (GSM Mobile Phone Coverage Inclusion, 2014). Collins Bartholomew. Geospatial
-        data. https://search.libraries.mit.edu/record/gismit:INT_P94INCLUSIONSGSM_2014","content_type":["Geospatial
-        data"],"contributors":[{"value":"Collins Bartholomew","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2014-12-01"},{"kind":"Coverage","value":"2014-12-01"},{"kind":"Coverage","value":"2014"}],"format":"Vector","identifiers":[{"value":"INT_P94INCLUSIONSGSM_2014","kind":"Not
+        World (GSM Mobile Phone Coverage Inclusion, 2014). Collins Bartholomew. Point
+        data. https://geodata.libraries.mit.edu/record/gismit:INT_P94INCLUSIONSGSM_2014","content_type":["Point
+        data"],"contributors":[{"value":"Collins Bartholomew","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2014-12-01"},{"kind":"Coverage","value":"2014-12-01"},{"kind":"Coverage","value":"2014"}],"format":"Shapefile","identifiers":[{"value":"INT_P94INCLUSIONSGSM_2014","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/INT_P94INCLUSIONSGSM_2014.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/INT_P94INCLUSIONSGSM_2014.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/INT_P94INCLUSIONSGSM_2014.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:INT_P94INCLUSIONSGSM_2014","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-180.000000, 177.972000, 74.786049, -50.000000)"},{"kind":"Geometry","geoshape":"BBOX
-        (-180.000000, 177.972000, 74.786049, -50.000000)"}],"publication_information":["Collins
-        Bartholomew","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"}],"subjects":[{"value":["Earth
+        (-180.000000, 177.972000, 74.786049, -50.000000)"}],"provider":"GIS Lab, MIT
+        Libraries","publication_information":["Collins Bartholomew"],"rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"MIT authentication","kind":"Access to files"}],"subjects":[{"value":["Earth
         (Planet)"],"kind":"Dublin Core; Spatial"},{"value":["utilitiesCommunication"],"kind":"Dublin
         Core; Subject"},{"value":["Cell phones"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
-        scheme not provided"},{"value":["Entity point"],"kind":"Subject scheme not
-        provided"}],"summary":["These inclusion metadata files for GSM, 3G, and 4G
-        mobile coverage are an attempt at listing all the networks which are included
-        in the separate world mobile phone coverage datasets. Unfortunately the lists
-        cannot be comprehensive because legacy datasets did not maintain the information
-        required to make them complete."]},"sort":[1.0,1417392000000]},{"_index":"gismit-2024-02-14t15-48-21","_id":"gismit:US_MA_BOSTON_G47PARCELS_2014","_score":1.0,"_source":{"source":"MIT
-        GIS Resources","source_link":"https://search.libraries.mit.edu/record/gismit:US_MA_BOSTON_G47PARCELS_2014","timdex_record_id":"gismit:US_MA_BOSTON_G47PARCELS_2014","title":"Boston,
+        scheme not provided"}],"summary":["These inclusion metadata files for GSM,
+        3G, and 4G mobile coverage are an attempt at listing all the networks which
+        are included in the separate world mobile phone coverage datasets. Unfortunately
+        the lists cannot be comprehensive because legacy datasets did not maintain
+        the information required to make them complete."]},"sort":[1.0,1417392000000]},{"_index":"gismit-2024-03-01t16-48-40","_id":"gismit:US_MA_BOSTON_G47PARCELS_2014","_score":1.0,"_source":{"source":"MIT
+        GIS Resources","source_link":"https://geodata.libraries.mit.edu/record/gismit:US_MA_BOSTON_G47PARCELS_2014","timdex_record_id":"gismit:US_MA_BOSTON_G47PARCELS_2014","title":"Boston,
         MA (Land Parcels, 2014)","citation":"Boston (Mass.) Assessing Department.
-        Boston, MA (Land Parcels, 2014). Boston (Mass.) Assessing Department. Geospatial
-        data. https://search.libraries.mit.edu/record/gismit:US_MA_BOSTON_G47PARCELS_2014","content_type":["Geospatial
-        data"],"contributors":[{"value":"Boston (Mass.) Assessing Department","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2014-01-01"},{"kind":"Coverage","value":"2014-01-01"},{"kind":"Coverage","value":"2014"}],"format":"Vector","identifiers":[{"value":"US_MA_BOSTON_G47PARCELS_2014","kind":"Not
+        Boston, MA (Land Parcels, 2014). Boston (Mass.) Assessing Department. Polygon
+        data. https://geodata.libraries.mit.edu/record/gismit:US_MA_BOSTON_G47PARCELS_2014","content_type":["Polygon
+        data"],"contributors":[{"value":"Boston (Mass.) Assessing Department","kind":"Creator"}],"dates":[{"kind":"Issued","value":"2014-01-01"},{"kind":"Coverage","value":"2014-01-01"},{"kind":"Coverage","value":"2014"}],"format":"Shapefile","identifiers":[{"value":"US_MA_BOSTON_G47PARCELS_2014","kind":"Not
         specified"}],"languages":["eng"],"links":[{"url":"https://cdn.dev1.mitlibrary.net/geo/public/US_MA_BOSTON_G47PARCELS_2014.source.fgdc.xml","kind":"Download","text":"Source
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/public/US_MA_BOSTON_G47PARCELS_2014.normalized.aardvark.json","kind":"Download","text":"Aardvark
         Metadata"},{"url":"https://cdn.dev1.mitlibrary.net/geo/restricted/US_MA_BOSTON_G47PARCELS_2014.zip","kind":"Download","text":"Data"},{"url":"https://geodata.libraries.mit.edu/record/gismit:US_MA_BOSTON_G47PARCELS_2014","kind":"Website","text":"Website"}],"locations":[{"kind":"Bounding
         Box","geoshape":"BBOX (-71.191182, -70.922635, 42.397678, 42.227005)"},{"kind":"Geometry","geoshape":"BBOX
-        (-71.191182, -70.922635, 42.397678, 42.227005)"}],"publication_information":["Boston
-        (Mass.) Assessing Department","GIS Lab, MIT Libraries"],"rights":[{"description":"Restricted","kind":"Access"},{"description":"N/A"}],"subjects":[{"value":["Economy"],"kind":"DCAT;
+        (-71.191182, -70.922635, 42.397678, 42.227005)"}],"provider":"GIS Lab, MIT
+        Libraries","publication_information":["Boston (Mass.) Assessing Department"],"rights":[{"description":"Restricted","kind":"Access
+        rights"},{"description":"MIT authentication","kind":"Access to files"},{"description":"N/A"}],"subjects":[{"value":["Economy"],"kind":"DCAT;
         Theme"},{"value":["Boundaries"],"kind":"DCAT; Theme"},{"value":["Location"],"kind":"DCAT;
         Theme"},{"value":["Massachusetts--Boston"],"kind":"Dublin Core; Spatial"},{"value":["Land
         use"],"kind":"Dublin Core; Subject"},{"value":["Neighborhoods"],"kind":"Dublin
@@ -838,22 +819,23 @@ http_interactions:
         tenure"],"kind":"Dublin Core; Subject"},{"value":["economy"],"kind":"Dublin
         Core; Subject"},{"value":["planningCadastre"],"kind":"Dublin Core; Subject"},{"value":["boundaries"],"kind":"Dublin
         Core; Subject"},{"value":["location"],"kind":"Dublin Core; Subject"},{"value":["Datasets"],"kind":"Subject
-        scheme not provided"},{"value":["G-polygon"],"kind":"Subject scheme not provided"}],"summary":["City
-        of Boston property parcel data from FY 2014 was joined with parcel boundaries
-        from FY 2014. All data is from the City of Boston Assessor''s office and represents
-        data from 2013."]},"sort":[1.0,1388534400000]}]},"aggregations":{"places":{"doc_count":12414,"only_spatial":{"doc_count":2878,"place_names":{"doc_count_error_upper_bound":16,"sum_other_doc_count":1766,"buckets":[{"key":"united
+        scheme not provided"}],"summary":["City of Boston property parcel data from
+        FY 2014 was joined with parcel boundaries from FY 2014. All data is from the
+        City of Boston Assessor''s office and represents data from 2013."]},"sort":[1.0,1388534400000]}]},"aggregations":{"places":{"doc_count":10857,"only_spatial":{"doc_count":2878,"place_names":{"doc_count_error_upper_bound":16,"sum_other_doc_count":1766,"buckets":[{"key":"united
         states","doc_count":278},{"key":"massachusetts--cambridge","doc_count":197},{"key":"massachusetts","doc_count":143},{"key":"canada","doc_count":112},{"key":"europe","doc_count":108},{"key":"mexico","doc_count":84},{"key":"earth
         (planet)","doc_count":67},{"key":"washington (state)--snohomish county","doc_count":52},{"key":"north
-        america","doc_count":40},{"key":"massachusetts--boston","doc_count":31}]}}},"languages":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"eng","doc_count":1432}]},"content_type":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"geospatial
-        data","doc_count":1450}]},"subjects":{"doc_count":12414,"subject_names":{"doc_count_error_upper_bound":67,"sum_other_doc_count":6804,"buckets":[{"key":"datasets","doc_count":1450},{"key":"boundaries","doc_count":880},{"key":"g-polygon","doc_count":773},{"key":"transportation","doc_count":532},{"key":"entity
-        point","doc_count":418},{"key":"location","doc_count":410},{"key":"society","doc_count":376},{"key":"united
-        states","doc_count":278},{"key":"structure","doc_count":252},{"key":"string","doc_count":241}]}},"content_format":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"vector","doc_count":1428},{"key":"point","doc_count":18},{"key":"raster","doc_count":4}]},"literary_form":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"source":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"mit
+        america","doc_count":40},{"key":"massachusetts--boston","doc_count":31}]}}},"languages":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"eng","doc_count":1432}]},"content_type":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"polygon
+        data","doc_count":777},{"key":"point data","doc_count":457},{"key":"line data","doc_count":241},{"key":"mixed","doc_count":12},{"key":"not
+        specified","doc_count":4}]},"subjects":{"doc_count":10857,"subject_names":{"doc_count_error_upper_bound":52,"sum_other_doc_count":6074,"buckets":[{"key":"datasets","doc_count":1450},{"key":"boundaries","doc_count":880},{"key":"transportation","doc_count":532},{"key":"location","doc_count":410},{"key":"society","doc_count":376},{"key":"united
+        states","doc_count":278},{"key":"structure","doc_count":252},{"key":"administrative
+        and political divisions","doc_count":234},{"key":"massachusetts--cambridge","doc_count":197},{"key":"economy","doc_count":174}]}},"content_format":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"shapefile","doc_count":1436},{"key":"geotiff","doc_count":1}]},"literary_form":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[]},"source":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"mit
         gis resources","doc_count":1450}]},"contributors":{"doc_count":1746,"contributor_names":{"doc_count_error_upper_bound":16,"sum_other_doc_count":850,"buckets":[{"key":"environmental
         systems research institute (redlands, calif.)","doc_count":163},{"key":"massgis
         (office : mass.)","doc_count":134},{"key":"latin force group llc","doc_count":112},{"key":"esri","doc_count":91},{"key":"city
         of cambridge gis","doc_count":82},{"key":"platts","doc_count":80},{"key":"gfk
         geomarketing gmbh","doc_count":66},{"key":"tele atlas b.v.","doc_count":61},{"key":"new
         york (n.y.). department of city planning","doc_count":55},{"key":"snohomish
-        county geographic information system (gis), dept. of information services","doc_count":52}]}}}}'
-  recorded_at: Wed, 21 Feb 2024 14:19:12 GMT
+        county geographic information system (gis), dept. of information services","doc_count":52}]}},"access_to_files":{"doc_count":3430,"only_file_access":{"doc_count":1450,"access_types":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"MIT
+        authentication","doc_count":881},{"key":"Free/open to all","doc_count":569}]}}}}}'
+  recorded_at: Fri, 01 Mar 2024 18:33:17 GMT
 recorded_with: VCR 6.2.0

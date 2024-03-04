@@ -14,7 +14,7 @@ http_interactions:
       Host:
       - localhost:9200
       X-Amz-Date:
-      - 20240221T141923Z
+      - 20240301T183310Z
       X-Amz-Content-Sha256:
       - "<REDACTED_SHA>"
       Authorization:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 21 Feb 2024 14:19:23 GMT
+      - Fri, 01 Mar 2024 18:33:10 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -51,5 +51,5 @@ http_interactions:
         specified"],"file_formats":["application/pdf"],"format":"electronic resource","identifiers":[{"value":"http://hdl.handle.net/1721.1/2789","kind":"uri"}],"languages":["eng"],"links":[{"url":"http://hdl.handle.net/1721.1/2789","kind":"Digital
         object URL","text":"Digital object URL"}],"numbering":"LIDS-IR ; 1226","publication_information":["Laboratory
         for Information and Decision Systems, Massachusetts Institute of Technology"]}}]}}'
-  recorded_at: Wed, 21 Feb 2024 14:19:23 GMT
+  recorded_at: Fri, 01 Mar 2024 18:33:10 GMT
 recorded_with: VCR 6.2.0

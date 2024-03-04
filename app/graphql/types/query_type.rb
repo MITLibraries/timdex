@@ -61,6 +61,12 @@ module Types
       argument :source, String, required: false, default_value: 'All', deprecation_reason: 'Use `sourceFilter`'
 
       # applied filters
+      argument :access_to_files_filter, [String],
+               required: false, default_value: nil,
+               description: 'Filter results by access type. Use the `AccessToFiles` ' \
+                            'aggregation for a list of possible values. Multiple ' \
+                            'values are ORed.'
+
       argument :content_type_filter, [String], required: false, default_value: nil,
                                                description: 'Filter results by content type. Use the `contentType` ' \
                                                             'aggregation for a list of possible values. Multiple ' \
@@ -134,6 +140,7 @@ module Types
       query[:locations] = locations
       query[:subjects] = subjects
       query[:title] = title
+      query[:access_to_files_filter] = filters[:access_to_files_filter]
       query[:collection_filter] = filters[:collection_filter]
       query[:content_format_filter] = filters[:format_filter]
       query[:content_type_filter] = filters[:content_type_filter]
@@ -156,6 +163,7 @@ module Types
 
     def collapse_buckets(es_aggs)
       {
+        access_to_files: es_aggs['access_to_files']['only_file_access']['access_types']['buckets'],
         contributors: es_aggs['contributors']['contributor_names']['buckets'],
         source: es_aggs['source']['buckets'],
         subjects: es_aggs['subjects']['subject_names']['buckets'],

@@ -14,7 +14,7 @@ http_interactions:
       Host:
       - localhost:9200
       X-Amz-Date:
-      - 20240221T141929Z
+      - 20240301T183310Z
       X-Amz-Content-Sha256:
       - "<REDACTED_SHA>"
       Authorization:
@@ -29,17 +29,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 21 Feb 2024 14:19:29 GMT
+      - Fri, 01 Mar 2024 18:33:10 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
-      - '163'
+      - '162'
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
       - "*"
     body:
       encoding: UTF-8
-      string: '{"took":10,"timed_out":false,"_shards":{"total":22,"successful":22,"skipped":0,"failed":0},"hits":{"total":{"value":0,"relation":"eq"},"max_score":null,"hits":[]}}'
-  recorded_at: Wed, 21 Feb 2024 14:19:29 GMT
+      string: '{"took":6,"timed_out":false,"_shards":{"total":22,"successful":22,"skipped":0,"failed":0},"hits":{"total":{"value":0,"relation":"eq"},"max_score":null,"hits":[]}}'
+  recorded_at: Fri, 01 Mar 2024 18:33:10 GMT
 recorded_with: VCR 6.2.0
