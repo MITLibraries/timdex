@@ -131,6 +131,12 @@ module Types
     end
   end
 
+  class PublishersType < Types::BaseObject
+    field :name, String, description: 'The name of the publisher'
+    field :date, String, description: 'The date of the publication'
+    field :location, String, description: 'Where the publisher is located'
+  end
+
   class RecordType < Types::BaseObject
     field :identifier, ID, null: false, deprecation_reason: 'Use `timdex_record_id`'
     field :timdex_record_id, ID, null: false, description: 'TIMDEX unique identifier for the item'
@@ -158,8 +164,8 @@ module Types
     field :call_numbers, [String], null: true, description: 'Identification number used to classify and locate item'
     field :citation, String, null: true, description: 'Citation for item'
     field :edition, String, null: true, description: 'Edition information for item'
-    field :imprint, [String], null: true, deprecation_reason: 'Use `publicationInformation`'
-    field :publication_information, [String], description: 'Imprint information for item'
+    field :imprint, [String], null: true, deprecation_reason: 'Use `publishers`'
+    field :publication_information, [String], deprecation_reason: 'Use `publishers`'
     field :physical_description, String, null: true, description: 'Physical description of item'
     field :publication_frequency, [String], null: true,
                                             description: 'Publication frequency of item (used for serials)'
@@ -188,6 +194,7 @@ module Types
     field :provider, String,
           null: true,
           description: 'The host institution for a resource. Currently only used for geospatial records'
+    field :publishers, [Types::PublishersType], null: true, description: 'Publishers that are associated with the item'
 
     def in_bibliography
       @object['related_items']&.map { |i| i['uri'] if i['relationship'] == 'IsCitedBy' }&.compact
@@ -203,6 +210,10 @@ module Types
 
     def publication_date
       @object['dates']&.map { |date| date['value'] if date['kind'] == 'Publication date' }&.compact&.first
+    end
+
+    def publication_information
+      @object['publishers']&.map { |publisher| publisher.values.join('; ') }
     end
 
     def file_formats
