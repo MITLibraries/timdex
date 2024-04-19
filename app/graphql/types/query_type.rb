@@ -59,6 +59,8 @@ module Types
                                             'you with one for your specific use case'
 
       argument :source, String, required: false, default_value: 'All', deprecation_reason: 'Use `sourceFilter`'
+      argument :boolean_type, String, required: false, default_value: 'OR',
+                                      description: 'How to join multiword queries. Defaults to "OR" which means any of the words much match. Options include: "OR", "AND", "minimum_a"'
 
       # applied filters
       argument :access_to_files_filter, [String],
@@ -96,9 +98,9 @@ module Types
     end
 
     def search(searchterm:, citation:, contributors:, funding_information:, geodistance:, geobox:, identifiers:,
-               locations:, subjects:, title:, index:, source:, from:, **filters)
+               locations:, subjects:, title:, index:, source:, from:, boolean_type:, **filters)
       query = construct_query(searchterm, citation, contributors, funding_information, geodistance, geobox, identifiers,
-                              locations, subjects, title, source, filters)
+                              locations, subjects, title, source, boolean_type, filters)
 
       results = Opensearch.new.search(from, query, Timdex::OSClient, highlight_requested?, index)
 
@@ -128,9 +130,10 @@ module Types
     end
 
     def construct_query(searchterm, citation, contributors, funding_information, geodistance, geobox, identifiers,
-                        locations, subjects, title, source, filters)
+                        locations, subjects, title, source, boolean_type, filters)
       query = {}
       query[:q] = searchterm
+      query[:boolean_type] = boolean_type
       query[:citation] = citation
       query[:contributors] = contributors
       query[:funding_information] = funding_information
