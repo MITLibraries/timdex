@@ -105,6 +105,33 @@ class Opensearch
     ]
   end
 
+  # https://opensearch.org/docs/latest/query-dsl/minimum-should-match/#valid-values
+  # checks for preconfigured cases or uses whatever is supplied (i.e. we currently accept OpenSearch syntax for
+  # minimum_should_match)
+  def minimum_should_match
+    case @params[:boolean_type]
+    when 'OR'
+      '0%'
+    when 'AND'
+      '100%'
+    # 5 or less terms match all (AND)
+    # More than 5 match all but one
+    when 'experiment_a'
+      '4<100% 5<-1'
+    # 4 or less terms match all (AND)
+    # More than 4 match all but one
+    when 'experiment_b'
+      '3<100% 4<-1'
+    # 4 or less terms match all (AND)
+    # 5 to 10 match all but one
+    # 10 or more match 90%
+    when 'experiment_c'
+      '3<100% 9<-1 10<90%'
+    else
+      @params[:boolean_type]
+    end
+  end
+
   def matches
     m = []
     if @params[:q].present?
@@ -113,7 +140,8 @@ class Opensearch
           query: @params[:q].downcase,
           fields: ['alternate_titles', 'call_numbers', 'citation', 'contents', 'contributors.value', 'dates.value',
                    'edition', 'funding_information.*', 'identifiers.value', 'languages', 'locations.value',
-                   'notes.value', 'numbering', 'publication_information', 'subjects.value', 'summary', 'title']
+                   'notes.value', 'numbering', 'publication_information', 'subjects.value', 'summary', 'title'],
+          minimum_should_match:
         }
       }
     end
