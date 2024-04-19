@@ -60,7 +60,8 @@ module Types
 
       argument :source, String, required: false, default_value: 'All', deprecation_reason: 'Use `sourceFilter`'
       argument :boolean_type, String, required: false, default_value: 'OR',
-                                      description: 'How to join multiword queries. Defaults to "OR" which means any of the words much match. Options include: "OR", "AND", "minimum_a"'
+                                      description: 'How to join multiword queries. Defaults to "OR" which means any ' \
+                                                   'of the words much match. Options include: "OR", "AND"'
 
       # applied filters
       argument :access_to_files_filter, [String],
