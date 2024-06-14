@@ -152,7 +152,7 @@ GEM
     globalid (1.2.1)
       activesupport (>= 6.1)
     google-protobuf (3.25.2)
-    graphql (2.3.2)
+    graphql (2.3.5)
       base64
     hashdiff (1.1.0)
     http_parser.rb (0.8.0)
