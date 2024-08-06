@@ -145,6 +145,7 @@ GEM
       aws-sigv4 (~> 1.0)
       faraday (>= 2.0, < 3)
     ffi (1.17.0)
+    fiber-storage (0.1.2)
     flipflop (2.7.1)
       activesupport (>= 4.0)
       terminal-table (>= 1.8)
@@ -154,8 +155,9 @@ GEM
     google-protobuf (4.27.2)
       bigdecimal
       rake (>= 13)
-    graphql (2.3.7)
+    graphql (2.3.12)
       base64
+      fiber-storage
     hashdiff (1.1.0)
     http_parser.rb (0.8.0)
     i18n (1.14.5)
