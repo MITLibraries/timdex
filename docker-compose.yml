@@ -16,7 +16,7 @@ services:
         source: .
         target: /timdex
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.8.4
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.8.4@sha256:f26d2945f1798567e1e63297e3c55ebade0b3202211f23276a7c815a8e496f2d
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
