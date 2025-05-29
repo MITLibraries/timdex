@@ -30,7 +30,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Install SpectaQL
-        run: npm install -g spectaql@v2
+        run: npm install -g spectaql@v3
       - name: Build reference docs
         run: |
           spectaql --introspection-url https://timdex.mit.edu/graphql -e -t ./docs/reference docs/reference/_spectaql_config.yml
