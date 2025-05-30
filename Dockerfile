@@ -1,4 +1,4 @@
-FROM ruby:2.6.5-alpine
+FROM ruby:2.6.5-alpine@sha256:a5b974e2ebb2b72642f4de4e5562597ec0883c3bfd93e9553cee6bd395dfbf00
 RUN mkdir /timdex
 WORKDIR /timdex
 COPY Gemfile /timdex/Gemfile
