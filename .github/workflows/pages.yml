@@ -35,7 +35,7 @@ jobs:
         run: |
           spectaql --introspection-url https://timdex.mit.edu/graphql -e -t ./docs/reference docs/reference/_spectaql_config.yml
       - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
+        uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1
         with:
           source: ./docs
           destination: ./_site
