@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.2.9'
+ruby '3.4.6'
 
 gem 'bootsnap', require: false
 gem 'devise'
@@ -15,7 +15,7 @@ gem 'opensearch-ruby'
 gem 'puma'
 gem 'rack-attack'
 gem 'rack-cors'
-gem 'rails', '~> 7.1.0'
+gem 'rails', '~> 7.2.0'
 gem 'redis'
 gem 'sass-rails'
 gem 'sentry-rails'
@@ -27,7 +27,7 @@ group :production do
 end
 
 group :development, :test do
-  gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'byebug'
   gem 'dotenv-rails'
   gem 'sqlite3'
 end
