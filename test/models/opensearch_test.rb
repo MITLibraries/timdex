@@ -86,6 +86,21 @@ class OpensearchTest < ActiveSupport::TestCase
     end
   end
 
+  test 'fulltext is included when requested' do
+    os = Opensearch.new
+    os.instance_variable_set(:@params, { q: 'this' })
+    os.instance_variable_set(:@fulltext, true)
+
+    assert(os.matches.to_json.include?('"fields":["alternate_titles","call_numbers","citation","contents","contributors.value","dates.value","edition","funding_information.*","identifiers.value","languages","locations.value","notes.value","numbering","publication_information","subjects.value","summary","title","fulltext"]'))
+  end
+
+  test 'fulltext is not included by default' do
+    os = Opensearch.new
+    os.instance_variable_set(:@params, { q: 'this' })
+
+    assert(os.matches.to_json.include?('"fields":["alternate_titles","call_numbers","citation","contents","contributors.value","dates.value","edition","funding_information.*","identifiers.value","languages","locations.value","notes.value","numbering","publication_information","subjects.value","summary","title"]'))
+  end
+
   test 'searches a single field' do
     VCR.use_cassette('opensearch single field') do
       params = { title: 'spice it up' }
