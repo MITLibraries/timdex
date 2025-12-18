@@ -4,12 +4,18 @@ class Opensearch
   SIZE = 20
   MAX_PAGE = 200
 
-  def search(from, params, client, highlight = false, index = nil)
+  def search(from, params, client, highlight = false, index = nil, fulltext = false)
     @params = params
     @highlight = highlight
+    @fulltext = fulltext?(fulltext)
     index = default_index unless index.present?
     client.search(index:,
                   body: build_query(from))
+  end
+
+  # Only treat fulltext as true if it is boolean true or the string 'true' (case insensitive)
+  def fulltext?(fulltext_param)
+    fulltext_param == true || fulltext_param.to_s.downcase == 'true'
   end
 
   def default_index
@@ -132,15 +138,23 @@ class Opensearch
     end
   end
 
+  # Fields to be searched in multi_match query. Adds 'fulltext' field if fulltext search is enabled.
+  def fields_to_search
+    fields = ['alternate_titles', 'call_numbers', 'citation', 'contents', 'contributors.value', 'dates.value',
+              'edition', 'funding_information.*', 'identifiers.value', 'languages', 'locations.value',
+              'notes.value', 'numbering', 'publication_information', 'subjects.value', 'summary', 'title']
+    fields << 'fulltext' if @fulltext
+
+    fields
+  end
+
   def matches
     m = []
     if @params[:q].present?
       m << {
         multi_match: {
           query: @params[:q].downcase,
-          fields: ['alternate_titles', 'call_numbers', 'citation', 'contents', 'contributors.value', 'dates.value',
-                   'edition', 'funding_information.*', 'identifiers.value', 'languages', 'locations.value',
-                   'notes.value', 'numbering', 'publication_information', 'subjects.value', 'summary', 'title'],
+          fields: fields_to_search,
           minimum_should_match:
         }
       }
