@@ -23,6 +23,7 @@ gem 'sentry-ruby'
 gem 'uglifier'
 
 group :production do
+  gem 'connection_pool', '< 3'   # 3.x requires keyword args; pin to 2.x for Rails 7.2.3
   gem 'pg'
 end
 
@@ -46,11 +47,11 @@ end
 group :test do
   gem 'capybara'
   gem 'climate_control'
+  gem 'minitest', '< 6' # required for Rails 7.2.3
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
   gem 'simplecov-lcov', require: false
   gem 'timecop'
   gem 'vcr'
   gem 'webmock'
-  gem 'minitest', '< 6'
 end
