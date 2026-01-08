@@ -23,7 +23,7 @@ gem 'sentry-ruby'
 gem 'uglifier'
 
 group :production do
-  gem 'connection_pool', '< 3'   # 3.x requires keyword args; pin to 2.x for Rails 7.2.3
+  gem 'connection_pool', '< 4'   # 3.x requires keyword args; pin to 2.x for Rails 7.2.3
   gem 'pg'
 end
 
