@@ -236,7 +236,8 @@ GEM
     mercenary (0.4.0)
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
-    minitest (5.27.0)
+    minitest (6.0.1)
+      prism (~> 1.5)
     msgpack (1.8.0)
     multi_json (1.19.1)
     net-http (0.9.1)
@@ -467,7 +468,7 @@ DEPENDENCIES
   jwt
   listen
   lograge
-  minitest (< 6)
+  minitest (< 7)
   mitlibraries-theme!
   opensearch-ruby
   pg

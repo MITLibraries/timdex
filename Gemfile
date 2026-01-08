@@ -47,7 +47,7 @@ end
 group :test do
   gem 'capybara'
   gem 'climate_control'
-  gem 'minitest', '< 6' # required for Rails 7.2.3
+  gem 'minitest', '< 7' # required for Rails 7.2.3
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
   gem 'simplecov-lcov', require: false
