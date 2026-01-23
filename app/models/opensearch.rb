@@ -2,7 +2,7 @@
 # rubocop:disable Metrics/MethodLength
 class Opensearch
   SIZE = 20
-  MAX_PAGE = 200
+  MAX_SIZE = 200
 
   def search(from, params, client, highlight = false, index = nil, fulltext = false)
     @params = params
@@ -28,7 +28,7 @@ class Opensearch
     calculate_size = if @params && @params[:per_page]
                        per_page = @params[:per_page].to_i
                        per_page = SIZE if per_page <= 0
-                       [per_page, MAX_PAGE].min
+                       [per_page, MAX_SIZE].min
                      else
                        SIZE
                      end

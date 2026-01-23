@@ -55,7 +55,7 @@ module Types
       argument :from, String, required: false, default_value: '0',
                               description: 'Search result number to begin with (the first result is 0)'
       argument :per_page, Integer, required: false, default_value: 20,
-                                   description: 'Number of results per page (OpenSearch size). Defaults to 20.'
+                                   description: 'Number of results per page. Defaults to 20.'
       argument :fulltext, Boolean, required: false, default_value: false,
                                    description: 'Include fulltext field in search? Defaults to false.'
       argument :index, String, required: false, default_value: nil,
