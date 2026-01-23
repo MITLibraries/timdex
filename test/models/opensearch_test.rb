@@ -381,10 +381,10 @@ class OpensearchTest < ActiveSupport::TestCase
     assert_equal Opensearch::SIZE, json['size']
   end
 
-  test 'build_query caps per_page at MAX_PAGE' do
+  test 'build_query caps per_page at MAX_SIZE' do
     os = Opensearch.new
-    os.instance_variable_set(:@params, { per_page: Opensearch::MAX_PAGE + 100 })
+    os.instance_variable_set(:@params, { per_page: Opensearch::MAX_SIZE + 100 })
     json = JSON.parse(os.build_query(0))
-    assert_equal Opensearch::MAX_PAGE, json['size']
+    assert_equal Opensearch::MAX_SIZE, json['size']
   end
 end
