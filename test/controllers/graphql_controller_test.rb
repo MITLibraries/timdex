@@ -937,4 +937,23 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
       end
     end
   end
+
+  test 'graphql search respects perPage argument' do
+    VCR.use_cassette('opensearch_init') do
+      VCR.use_cassette('graphql_search_per_page_5', match_requests_on: [:method, :uri]) do
+        post '/graphql', params: { query: '{
+                                    search(perPage:5) {
+                                      hits
+                                      records {
+                                        title
+                                      }
+                                    }
+                                  }' }
+        assert_equal(200, response.status)
+        json = JSON.parse(response.body)
+        assert_equal(5, json['data']['search']['records'].count)
+        assert_equal(100, json['data']['search']['hits'])
+      end
+    end
+  end
 end

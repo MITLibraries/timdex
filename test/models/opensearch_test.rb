@@ -359,4 +359,32 @@ class OpensearchTest < ActiveSupport::TestCase
       os.query.to_json.include?('{"locations.geoshape":{"top":"42.886","bottom":"41.239","left":"-69.507","right":"-73.928"}}')
     )
   end
+
+  test 'build_query uses default size' do
+    os = Opensearch.new
+    os.instance_variable_set(:@params, {})
+    json = JSON.parse(os.build_query(0))
+    assert_equal Opensearch::SIZE, json['size']
+  end
+
+  test 'build_query respects per_page' do
+    os = Opensearch.new
+    os.instance_variable_set(:@params, { per_page: 5 })
+    json = JSON.parse(os.build_query(0))
+    assert_equal 5, json['size']
+  end
+
+  test 'build_query falls back for nonpositive per_page' do
+    os = Opensearch.new
+    os.instance_variable_set(:@params, { per_page: 0 })
+    json = JSON.parse(os.build_query(0))
+    assert_equal Opensearch::SIZE, json['size']
+  end
+
+  test 'build_query caps per_page at MAX_PAGE' do
+    os = Opensearch.new
+    os.instance_variable_set(:@params, { per_page: Opensearch::MAX_PAGE + 100 })
+    json = JSON.parse(os.build_query(0))
+    assert_equal Opensearch::MAX_PAGE, json['size']
+  end
 end
