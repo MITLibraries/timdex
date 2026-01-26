@@ -1,0 +1,70 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:9200/all-current/_search
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - 'opensearch-ruby/3.1.0 (RUBY_VERSION: 3.2.2; darwin x86_64; Faraday v2.9.0)'
+      Content-Type:
+      - application/json
+      Host:
+      - localhost:9200
+      X-Amz-Date:
+      - "<REDACTED>"
+      X-Amz-Content-Sha256:
+      - "<REDACTED_SHA>"
+      Authorization:
+      - "<REDACTED_AUTHORIZATION>"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - "Thu, 01 Jan 1970 00:00:00 GMT"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding, User-Agent
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "took": 1,
+          "timed_out": false,
+          "_shards": { "total": 1, "successful": 1, "failed": 0 },
+          "hits": {
+            "total": { "value": 100, "relation": "eq" },
+            "max_score": 1.0,
+            "hits": [
+              { "_index": "all-current", "_id": "fake1", "_score": 1.0, "_source": { "title": "Fake Title 1" } },
+              { "_index": "all-current", "_id": "fake2", "_score": 1.0, "_source": { "title": "Fake Title 2" } },
+              { "_index": "all-current", "_id": "fake3", "_score": 1.0, "_source": { "title": "Fake Title 3" } },
+              { "_index": "all-current", "_id": "fake4", "_score": 1.0, "_source": { "title": "Fake Title 4" } },
+              { "_index": "all-current", "_id": "fake5", "_score": 1.0, "_source": { "title": "Fake Title 5" } }
+            ]
+          },
+          "aggregations": {
+            "access_to_files": { "only_file_access": { "access_types": { "buckets": [] } } },
+            "contributors": { "contributor_names": { "buckets": [] } },
+            "source": { "buckets": [] },
+            "subjects": { "subject_names": { "buckets": [] } },
+            "places": { "only_spatial": { "place_names": { "buckets": [] } } },
+            "languages": { "buckets": [] },
+            "literary_form": { "buckets": [] },
+            "content_format": { "buckets": [] },
+            "content_type": { "buckets": [] }
+          }
+        }
+  recorded_at: Thu, 23 Jan 2026 00:00:00 GMT
+recorded_with: VCR 6.2.0

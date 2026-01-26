@@ -54,6 +54,8 @@ module Types
       argument :title, String, required: false, default_value: nil, description: 'Search by title'
       argument :from, String, required: false, default_value: '0',
                               description: 'Search result number to begin with (the first result is 0)'
+      argument :per_page, Integer, required: false, default_value: 20,
+                                   description: 'Number of results per page. Defaults to 20.'
       argument :fulltext, Boolean, required: false, default_value: false,
                                    description: 'Include fulltext field in search? Defaults to false.'
       argument :index, String, required: false, default_value: nil,
@@ -101,9 +103,9 @@ module Types
     end
 
     def search(searchterm:, citation:, contributors:, funding_information:, geodistance:, geobox:, identifiers:,
-               locations:, subjects:, title:, index:, source:, from:, boolean_type:, fulltext:, **filters)
+               locations:, subjects:, title:, index:, source:, from:, boolean_type:, fulltext:, per_page: 20, **filters)
       query = construct_query(searchterm, citation, contributors, funding_information, geodistance, geobox, identifiers,
-                              locations, subjects, title, source, boolean_type, filters)
+                              locations, subjects, title, source, boolean_type, filters, per_page)
 
       results = Opensearch.new.search(from, query, Timdex::OSClient, highlight_requested?, index, fulltext)
 
@@ -133,7 +135,7 @@ module Types
     end
 
     def construct_query(searchterm, citation, contributors, funding_information, geodistance, geobox, identifiers,
-                        locations, subjects, title, source, boolean_type, filters)
+                        locations, subjects, title, source, boolean_type, filters, per_page)
       query = {}
       query[:q] = searchterm
       query[:boolean_type] = boolean_type
@@ -144,6 +146,7 @@ module Types
       query[:geobox] = geobox
       query[:identifiers] = identifiers
       query[:locations] = locations
+      query[:per_page] = per_page
       query[:subjects] = subjects
       query[:title] = title
       query[:access_to_files_filter] = filters[:access_to_files_filter]
