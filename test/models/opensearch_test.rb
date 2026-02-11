@@ -387,4 +387,22 @@ class OpensearchTest < ActiveSupport::TestCase
     json = JSON.parse(os.build_query(0))
     assert_equal Opensearch::MAX_SIZE, json['size']
   end
+
+  test 'can exclude fields from _source' do
+    ClimateControl.modify(OPENSEARCH_SOURCE_EXCLUDES: 'field1,field2') do
+      os = Opensearch.new
+      os.instance_variable_set(:@params, {})
+      json = JSON.parse(os.build_query(0))
+      assert_equal %w[field1 field2], json['_source']['excludes']
+    end
+  end
+
+  test 'does not include _source if OPENSEARCH_SOURCE_EXCLUDES is not set' do
+    ClimateControl.modify(OPENSEARCH_SOURCE_EXCLUDES: nil) do
+      os = Opensearch.new
+      os.instance_variable_set(:@params, {})
+      json = JSON.parse(os.build_query(0))
+      refute json.key?('_source')
+    end
+  end
 end
