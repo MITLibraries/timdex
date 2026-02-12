@@ -181,6 +181,8 @@ locally.
   confused.
   ```
 
+- `OPENSEARCH_SOURCE_EXCLUDES` comma separated list of fields to exclude from the OpenSearch `_source` field. Leave unset to return all fields.
+  - recommended value: `embedding_full_record,fulltext`
 - `PLATFORM_NAME`: The value set is added to the header after the MIT Libraries logo. The logic and CSS for this comes from our theme gem.
 - `PREFERRED_DOMAIN` - set this to the domain you would like to to use. Any
   other requests that come to the app will redirect to the root of this domain.
