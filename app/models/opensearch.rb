@@ -22,363 +22,51 @@ class Opensearch
     ENV.fetch('OPENSEARCH_INDEX', nil)
   end
 
+  # Calculate the size parameter for the query, allowing override via per_page parameter
+  def calculate_size
+    if @params && @params[:per_page]
+      per_page = @params[:per_page].to_i
+      per_page = SIZE if per_page <= 0
+      [per_page, MAX_SIZE].min
+    else
+      SIZE
+    end
+  end
+
   # Construct the json query to send to elasticsearch
   def build_query(from)
-    # allow overriding the OpenSearch `size` via params (per_page), capped by MAX_PAGE
-    calculate_size = if @params && @params[:per_page]
-                       per_page = @params[:per_page].to_i
-                       per_page = SIZE if per_page <= 0
-                       [per_page, MAX_SIZE].min
-                     else
-                       SIZE
-                     end
-
     query_hash = {
       from:,
       size: calculate_size,
       query:,
       aggregations: Aggregations.all,
-      sort:
+      sort: sort_builder.build
     }
 
-    # If ENV OPENSEARCH_SOURCE_EXCLUDES is set, use the values in it's comma-separated list;
-    #   otherwise leave out the _source attribute entirely (which will return all fields in _source)
-    # excludes are used to prevent large fields from being returned in the search results, which can cause performance issues
-    # these fields are still searchable, just not returned in the search results
-    if ENV['OPENSEARCH_SOURCE_EXCLUDES'].present?
-      query_hash[:_source] = {
-        excludes: ENV['OPENSEARCH_SOURCE_EXCLUDES'].split(',').map(&:strip)
-      }
-    end
+    source = source_builder.build
+    query_hash[:_source] = source if source.present?
 
+    highlight = highlight_builder.build
     query_hash[:highlight] = highlight if @highlight
+
     query_hash.to_json
   end
 
   # Build the query portion of the elasticsearch json
   def query
-    {
-      bool: {
-        should: multisearch,
-        must: matches,
-        filter: filters(@params)
-      }
-    }
+    @query_strategy ||= LexicalQueryBuilder.new
+    @query_strategy.build(@params, @fulltext)
   end
 
-  def sort
-    [
-      { _score: { order: 'desc' } },
-      {
-        'dates.value.as_date': {
-          order: 'desc',
-          nested: {
-            path: 'dates'
-          }
-        }
-      }
-    ]
+  def sort_builder
+    @sort_builder ||= SortBuilder.new
   end
 
-  def highlight
-    {
-      pre_tags: [
-        '<span class="highlight">'
-      ],
-      post_tags: [
-        '</span>'
-      ],
-      fields: {
-        '*': {}
-      }
-    }
+  def source_builder
+    @source_builder ||= SourceBuilder.new
   end
 
-  def multisearch
-    return unless @params[:q].present?
-
-    [
-      {
-        prefix: {
-          'title.exact_value': {
-            value: @params[:q].downcase,
-            boost: 15.0
-          }
-        }
-      },
-      {
-        term: {
-          title: {
-            value: @params[:q].downcase,
-            boost: 1.0
-          }
-        }
-      },
-      {
-        nested: {
-          path: 'contributors',
-          query: {
-            term: {
-              'contributors.value': {
-                value: @params[:q].downcase,
-                boost: 0.1
-              }
-            }
-          }
-        }
-      }
-    ]
-  end
-
-  # https://opensearch.org/docs/latest/query-dsl/minimum-should-match/#valid-values
-  # checks for preconfigured cases or uses whatever is supplied (i.e. we currently accept OpenSearch syntax for
-  # minimum_should_match)
-  def minimum_should_match
-    case @params[:boolean_type]
-    when 'OR'
-      '0%'
-    when 'AND'
-      '100%'
-    # 5 or less terms match all (AND)
-    # More than 5 match all but one
-    when 'experiment_a'
-      '4<100% 5<-1'
-    # 4 or less terms match all (AND)
-    # More than 4 match all but one
-    when 'experiment_b'
-      '3<100% 4<-1'
-    # 4 or less terms match all (AND)
-    # 5 to 10 match all but one
-    # 10 or more match 90%
-    when 'experiment_c'
-      '3<100% 9<-1 10<90%'
-    else
-      @params[:boolean_type]
-    end
-  end
-
-  # Fields to be searched in multi_match query. Adds 'fulltext' field if fulltext search is enabled.
-  def fields_to_search
-    fields = ['alternate_titles', 'call_numbers', 'citation', 'contents', 'contributors.value', 'dates.value',
-              'edition', 'funding_information.*', 'identifiers.value', 'languages', 'locations.value',
-              'notes.value', 'numbering', 'publication_information', 'subjects.value', 'summary', 'title']
-    fields << 'fulltext' if @fulltext
-
-    fields
-  end
-
-  def matches
-    m = []
-    if @params[:q].present?
-      m << {
-        multi_match: {
-          query: @params[:q].downcase,
-          fields: fields_to_search,
-          minimum_should_match:
-        }
-      }
-    end
-    match_single_field(:citation, m)
-    match_single_field(:title, m)
-
-    match_single_field_nested(:contributors, m)
-    match_single_field_nested(:funding_information, m)
-    match_single_field_nested(:identifiers, m)
-    match_single_field_nested(:locations, m)
-    match_single_field_nested(:subjects, m)
-
-    match_geodistance(m) if @params[:geodistance].present?
-    match_geobox(m) if @params[:geobox].present?
-    m
-  end
-
-  # https://opensearch.org/docs/latest/query-dsl/geo-and-xy/geo-bounding-box/
-  def match_geobox(match_array)
-    match_array << {
-      bool: {
-        must: {
-          match_all: {}
-        },
-        filter: {
-          geo_bounding_box: {
-            'locations.geoshape': {
-              top: @params[:geobox][:max_latitude],
-              bottom: @params[:geobox][:min_latitude],
-              left: @params[:geobox][:min_longitude],
-              right: @params[:geobox][:max_longitude]
-            }
-          }
-        }
-      }
-    }
-  end
-
-  # https://www.elastic.co/guide/en/elasticsearch/reference/7.17/query-dsl-geo-distance-query.html
-  # Note: at the time of this implementation, opensearch does not have documentation on
-  # this features hence the link to the prefork elasticsearch docs
-  def match_geodistance(match_array)
-    match_array << {
-      bool: {
-        must: {
-          match_all: {}
-        },
-        filter: {
-          geo_distance: {
-            distance: @params[:geodistance][:distance],
-            'locations.geoshape': {
-              lat: @params[:geodistance][:latitude],
-              lon: @params[:geodistance][:longitude]
-            }
-          }
-        }
-      }
-    }
-  end
-
-  # https://www.elastic.co/guide/en/elasticsearch/reference/current/query-filter-context.html
-  def filters(params)
-    f = []
-
-    if params[:contributors_filter].present?
-      params[:contributors_filter].each do |p|
-        f.push filter_field_by_value('contributors.value.keyword', p)
-      end
-    end
-
-    if params[:content_type_filter].present?
-      params[:content_type_filter].each do |p|
-        f.push filter_field_by_value('content_type', p)
-      end
-    end
-
-    if params[:content_format_filter].present?
-      params[:content_format_filter].each do |p|
-        f.push filter_field_by_value('format', p)
-      end
-    end
-
-    if params[:languages_filter].present?
-      params[:languages_filter].each do |p|
-        f.push filter_field_by_value('languages', p)
-      end
-    end
-
-    # literary_form is a single value aggregation
-    if params[:literary_form_filter].present?
-      f.push filter_field_by_value('literary_form',
-                                   params[:literary_form_filter])
-    end
-
-    # places are really just a subset of subjects so the filter uses the subject field
-    if params[:places_filter].present?
-      params[:places_filter].each do |p|
-        f.push filter_field_by_value('subjects.value.keyword', p)
-      end
-    end
-
-    # source aggregation is "OR" and not "AND" so it does not use the filter_field_by_value method
-    f.push filter_sources(params[:source_filter]) if params[:source_filter]
-
-    # access to files aggregation is "OR" and not "AND" so it does not use the filter_field_by_value method
-    f.push filter_access_to_files(params[:access_to_files_filter]) if params[:access_to_files_filter]
-
-    if params[:subjects_filter].present?
-      params[:subjects_filter].each do |p|
-        f.push filter_field_by_value('subjects.value.keyword', p)
-      end
-    end
-
-    f
-  end
-
-  def filter_field_by_value(field, value)
-    {
-      term: { "#{field}": value }
-    }
-  end
-
-  # multiple access to files values are ORd
-  def filter_access_to_files(param)
-    { nested: {
-      path: 'rights',
-      query: {
-        bool: {
-          should: access_to_files_array(param)
-        }
-      }
-    } }
-  end
-
-  def access_to_files_array(param)
-    rights = []
-    param.each do |right|
-      rights << {
-        term: {
-          'rights.description.keyword': right
-        }
-      }
-    end
-    rights
-  end
-
-  # multiple sources values are ORd
-  def filter_sources(param)
-    {
-      bool: {
-        should: source_array(param)
-      }
-    }
-  end
-
-  def source_array(param)
-    sources = []
-    param.each do |source|
-      sources << {
-        term: {
-          source:
-        }
-      }
-    end
-    sources
-  end
-
-  private
-
-  def match_single_field(field, match_array)
-    return unless @params[field]
-
-    match_array << {
-      match: {
-        field => @params[field].downcase
-      }
-    }
-  end
-
-  def match_single_field_nested(field, match_array)
-    return unless @params[field]
-
-    match_array << {
-      nested: {
-        path: field.to_s,
-        query: {
-          bool: {
-            must: [
-              { match: { "#{field}.#{nested_field(field)}": @params[field].downcase } }
-            ]
-          }
-        }
-      }
-    }
-  end
-
-  # For most nested fields, we only care about 'value'; this handles the exceptions to that rule.
-  def nested_field(field)
-    if field == :funding_information
-      'funder_name'
-    else
-      'value'
-    end
+  def highlight_builder
+    @highlight_builder ||= HighlightBuilder.new
   end
 end
-# rubocop:enable Metrics/ClassLength
-# rubocop:enable Metrics/MethodLength
