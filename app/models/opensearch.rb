@@ -22,36 +22,33 @@ class Opensearch
     ENV.fetch('OPENSEARCH_INDEX', nil)
   end
 
+  # Calculate the size parameter for the query, allowing override via per_page parameter
+  def calculate_size
+    if @params && @params[:per_page]
+      per_page = @params[:per_page].to_i
+      per_page = SIZE if per_page <= 0
+      [per_page, MAX_SIZE].min
+    else
+      SIZE
+    end
+  end
+
   # Construct the json query to send to elasticsearch
   def build_query(from)
-    # allow overriding the OpenSearch `size` via params (per_page), capped by MAX_PAGE
-    calculate_size = if @params && @params[:per_page]
-                       per_page = @params[:per_page].to_i
-                       per_page = SIZE if per_page <= 0
-                       [per_page, MAX_SIZE].min
-                     else
-                       SIZE
-                     end
-
     query_hash = {
       from:,
       size: calculate_size,
       query:,
       aggregations: Aggregations.all,
-      sort:
+      sort: sort_builder.build
     }
 
-    # If ENV OPENSEARCH_SOURCE_EXCLUDES is set, use the values in it's comma-separated list;
-    #   otherwise leave out the _source attribute entirely (which will return all fields in _source)
-    # excludes are used to prevent large fields from being returned in the search results, which can cause performance issues
-    # these fields are still searchable, just not returned in the search results
-    if ENV['OPENSEARCH_SOURCE_EXCLUDES'].present?
-      query_hash[:_source] = {
-        excludes: ENV['OPENSEARCH_SOURCE_EXCLUDES'].split(',').map(&:strip)
-      }
-    end
+    source = source_builder.build
+    query_hash[:_source] = source if source.present?
 
+    highlight = highlight_builder.build
     query_hash[:highlight] = highlight if @highlight
+
     query_hash.to_json
   end
 
@@ -61,31 +58,15 @@ class Opensearch
     @query_strategy.build(@params, @fulltext)
   end
 
-  def sort
-    [
-      { _score: { order: 'desc' } },
-      {
-        'dates.value.as_date': {
-          order: 'desc',
-          nested: {
-            path: 'dates'
-          }
-        }
-      }
-    ]
+  def sort_builder
+    @sort_builder ||= SortBuilder.new
   end
 
-  def highlight
-    {
-      pre_tags: [
-        '<span class="highlight">'
-      ],
-      post_tags: [
-        '</span>'
-      ],
-      fields: {
-        '*': {}
-      }
-    }
+  def source_builder
+    @source_builder ||= SourceBuilder.new
+  end
+
+  def highlight_builder
+    @highlight_builder ||= HighlightBuilder.new
   end
 end
