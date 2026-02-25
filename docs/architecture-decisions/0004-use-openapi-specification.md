@@ -4,7 +4,7 @@ Date: 2018-10-16
 
 ## Status
 
-Accepted
+Superceded by [6. Use GraphQL for API](0006-use-graphql-for-api.md)
 
 ## Context
 
