@@ -83,7 +83,7 @@ GEM
       minitest (>= 5.1)
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
-    addressable (2.8.8)
+    addressable (2.8.9)
       public_suffix (>= 2.0.2, < 8.0)
     annotate (3.2.0)
       activerecord (>= 3.2, < 8.0)
@@ -161,7 +161,7 @@ GEM
     google-protobuf (4.33.2)
       bigdecimal
       rake (>= 13)
-    graphql (2.5.20)
+    graphql (2.5.21)
       base64
       fiber-storage
       logger
@@ -280,7 +280,7 @@ GEM
     psych (5.3.1)
       date
       stringio
-    public_suffix (7.0.2)
+    public_suffix (7.0.5)
     puma (7.2.0)
       nio4r (~> 2.0)
     racc (1.8.1)
@@ -351,7 +351,7 @@ GEM
       railties (>= 7.0)
     rexml (3.4.4)
     rouge (4.7.0)
-    rubocop (1.85.0)
+    rubocop (1.85.1)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -363,7 +363,7 @@ GEM
       rubocop-ast (>= 1.49.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 4.0)
-    rubocop-ast (1.49.0)
+    rubocop-ast (1.49.1)
       parser (>= 3.3.7.2)
       prism (~> 1.7)
     rubocop-rails (2.34.3)
@@ -417,7 +417,7 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
-    sqlite3 (2.9.1)
+    sqlite3 (2.9.2)
       mini_portile2 (~> 2.8.0)
     stringio (3.2.0)
     terminal-table (3.0.2)
