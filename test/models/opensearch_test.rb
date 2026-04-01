@@ -5,7 +5,7 @@ class OpensearchTest < ActiveSupport::TestCase
     # fragile test: assumes opensearch instance with at least one index in the `geo` alias
     VCR.use_cassette('opensearch non-default index') do
       params = { title: 'bermuda' }
-      results = Opensearch.new.search(0, params, Timdex::OSClient, false, 'geo')
+      results = Opensearch.new.search(0, params, Timdex::OSClient, highlight: false, index: 'geo')
       assert results['hits']['hits'].map { |hit| hit['_index'] }.uniq.map { |index| index.start_with?('gis') }.any?
     end
   end
@@ -15,7 +15,7 @@ class OpensearchTest < ActiveSupport::TestCase
     # that start with rdi*
     VCR.use_cassette('opensearch default index') do
       params = { title: 'data' }
-      results = Opensearch.new.search(0, params, Timdex::OSClient)
+      results = Opensearch.new.search(0, params, Timdex::OSClient, highlight: false, index: nil)
       refute results['hits']['hits'].map { |hit| hit['_index'] }.uniq.map { |index| index.start_with?('rdi') }.any?
       assert results['hits']['hits'].map { |hit| hit['_index'] }.uniq.any?
     end
@@ -24,7 +24,7 @@ class OpensearchTest < ActiveSupport::TestCase
   test 'searches a single field' do
     VCR.use_cassette('opensearch single field') do
       params = { title: 'spice it up' }
-      results = Opensearch.new.search(0, params, Timdex::OSClient)
+      results = Opensearch.new.search(0, params, Timdex::OSClient, highlight: false, index: nil)
       assert_equal 'Spice it up!',
                    results['hits']['hits'].first['_source']['title']
     end
@@ -33,7 +33,7 @@ class OpensearchTest < ActiveSupport::TestCase
   test 'searches a single field with nested subfields' do
     VCR.use_cassette('opensearch single field nested') do
       params = { contributors: 'mcternan' }
-      results = Opensearch.new.search(0, params, Timdex::OSClient)
+      results = Opensearch.new.search(0, params, Timdex::OSClient, highlight: false, index: nil)
       assert_equal 'A common table : 80 recipes and stories from my shared cultures',
                    results['hits']['hits'].first['_source']['title']
     end
@@ -42,7 +42,7 @@ class OpensearchTest < ActiveSupport::TestCase
   test 'searches multiple fields' do
     VCR.use_cassette('opensearch multiple fields') do
       params = { q: 'chinese', title: 'common', contributors: 'mcternan' }
-      results = Opensearch.new.search(0, params, Timdex::OSClient)
+      results = Opensearch.new.search(0, params, Timdex::OSClient, highlight: false, index: nil)
       assert_equal 'A common table : 80 recipes and stories from my shared cultures',
                    results['hits']['hits'].first['_source']['title']
     end
@@ -107,5 +107,36 @@ class OpensearchTest < ActiveSupport::TestCase
       json = JSON.parse(os.build_query(0))
       refute json.key?('_source')
     end
+  end
+
+  test 'uses LexicalQueryBuilder by default when queryMode is keyword' do
+    os = Opensearch.new
+    os.instance_variable_set(:@params, { q: 'test' })
+    os.instance_variable_set(:@fulltext, false)
+    os.instance_variable_set(:@query_mode, 'keyword')
+
+    expected_query = { bool: { must: [{ match: { text: { query: 'test' } } }] } }
+    mock_builder = mock
+    mock_builder.stubs(:build).returns(expected_query)
+    LexicalQueryBuilder.expects(:new).once.returns(mock_builder)
+    result = os.query
+
+    assert result.is_a?(Hash)
+    assert_includes(result.keys, :bool)
+  end
+
+  test 'uses SemanticQueryBuilder when queryMode is semantic' do
+    os = Opensearch.new
+    os.instance_variable_set(:@params, { q: 'test' })
+    os.instance_variable_set(:@fulltext, false)
+    os.instance_variable_set(:@query_mode, 'semantic')
+
+    mock_response = { 'bool' => { 'should' => [{ 'rank_feature' => { 'field' => 'test', 'boost' => 1.0 } }] } }
+    mock_builder = mock
+    mock_builder.stubs(:build).returns(mock_response)
+    SemanticQueryBuilder.expects(:new).once.returns(mock_builder)
+
+    result = os.query
+    assert_equal(mock_response, result)
   end
 end

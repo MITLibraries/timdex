@@ -1,5 +1,5 @@
 class LexicalQueryBuilder
-  def build(params, fulltext = false)
+  def build(params, fulltext: false)
     {
       bool: {
         should: multisearch(params),

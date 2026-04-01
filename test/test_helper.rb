@@ -12,6 +12,7 @@ SimpleCov.start('rails')
 
 require_relative '../config/environment'
 require 'rails/test_help'
+require 'mocha/minitest'
 
 VCR.configure do |config|
   config.ignore_localhost = false
