@@ -108,4 +108,45 @@ class OpensearchTest < ActiveSupport::TestCase
       refute json.key?('_source')
     end
   end
+
+  test 'uses LexicalQueryBuilder by default when queryMode is keyword' do
+    os = Opensearch.new
+    os.instance_variable_set(:@params, { q: 'test' })
+    os.instance_variable_set(:@fulltext, false)
+    os.instance_variable_set(:@query_mode, 'keyword')
+
+    result = os.query
+
+    # Verify lexical builder returns a bool query
+    assert result.is_a?(Hash)
+    assert_includes(result.keys, :bool)
+  end
+
+  test 'uses LexicalQueryBuilder by default when no queryMode given' do
+    os = Opensearch.new
+    os.instance_variable_set(:@params, { q: 'test' })
+    os.instance_variable_set(:@fulltext, false)
+    os.instance_variable_set(:@query_mode, nil)
+
+    result = os.query
+
+    # Verify lexical builder returns a bool query
+    assert result.is_a?(Hash)
+    assert_includes(result.keys, :bool)
+  end
+
+  test 'uses SemanticQueryBuilder when queryMode is semantic' do
+    os = Opensearch.new
+    os.instance_variable_set(:@params, { q: 'test' })
+    os.instance_variable_set(:@fulltext, false)
+    os.instance_variable_set(:@query_mode, 'semantic')
+
+    # Mock SemanticQueryBuilder to avoid actual Lambda call
+    mock_response = { 'bool' => { 'should' => [{ 'rank_feature' => { 'field' => 'test', 'boost' => 1.0 } }] } }
+
+    SemanticQueryBuilder.any_instance.stubs(:build).returns(mock_response)
+
+    result = os.query
+    assert_equal(mock_response, result)
+  end
 end

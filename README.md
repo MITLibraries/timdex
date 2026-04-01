@@ -45,8 +45,8 @@ The test recording process is as follows:
 - Set the following values to whatever cluster you want to connect to in `.env` (Note: `.env` is preferred over `.env.test` because it is already in our `.gitignore` and will work together with `.env.test`.)
   - OPENSEARCH_URL
   - AWS_OPENSEARCH=true
-  - AWS_OPENSEARCH_ACCESS_KEY_ID
-  - AWS_OPENSEARCH_SECRET_ACCESS_KEY
+  - AWS_ACCESS_KEY_ID
+  - AWS_SECRET_ACCESS_KEY
   - AWS_REGION
 - Delete any cassette you want to regenerate (for new tests, you can skip this). If you are making a graphql test, nest your cassette inside the `opensearch_init` cassette.
 
@@ -158,14 +158,16 @@ locally.
 
 ## Production required Environment Variables
 
-- `AWS_OPENSEARCH`: boolean. Set to true to enable AWSv4 Signing
-- `AWS_OPENSEARCH_ACCESS_KEY_ID`
-- `AWS_OPENSEARCH_SECRET_ACCESS_KEY`
-- `AWS_REGION`
+- `AWS_ACCESS_KEY_ID`: AWS credentials for OpenSearch and Lambda
+- `AWS_SECRET_ACCESS_KEY`: AWS credentials for OpenSearch and Lambda
+- `AWS_REGION`: AWS region for OpenSearch and Lambda services
+- `AWS_OPENSEARCH`: boolean. Set to true to enable AWSv4 Signing for OpenSearch
 - `OPENSEARCH_INDEX`: Opensearch index or alias to query, default will be to search all indexes which is generally not
                       expected. `timdex` or `all-current` are aliases used consistently in our data pipelines, with
                       `timdex` being most likely what most use cases will want.
 - `OPENSEARCH_URL`: Opensearch URL, defaults to `http://localhost:9200`
+- `TIMDEX_SEMANTIC_BUILDER_FUNCTION_NAME`: AWS Lambda function name with alias for semantic query building.
+                     Configurable to use alternative deployment tiers (e.g., dev1, stage, prod).
 - `SMTP_ADDRESS`
 - `SMTP_PASSWORD`
 - `SMTP_PORT`

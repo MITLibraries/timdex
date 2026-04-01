@@ -66,6 +66,8 @@ module Types
       argument :boolean_type, String, required: false, default_value: 'OR',
                                       description: 'How to join multiword queries. Defaults to "OR" which means any ' \
                                                    'of the words much match. Options include: "OR", "AND"'
+      argument :query_mode, String, required: false, default_value: 'keyword',
+                                    description: 'Search mode, either "keyword" or "semantic"'
 
       # applied filters
       argument :access_to_files_filter, [String],
@@ -103,11 +105,11 @@ module Types
     end
 
     def search(searchterm:, citation:, contributors:, funding_information:, geodistance:, geobox:, identifiers:,
-               locations:, subjects:, title:, index:, source:, from:, boolean_type:, fulltext:, per_page: 20, **filters)
+               locations:, subjects:, title:, index:, source:, from:, boolean_type:, fulltext:, per_page: 20, query_mode: 'keyword', **filters)
       query = construct_query(searchterm, citation, contributors, funding_information, geodistance, geobox, identifiers,
-                              locations, subjects, title, source, boolean_type, filters, per_page)
+                              locations, subjects, title, source, boolean_type, filters, per_page, query_mode)
 
-      results = Opensearch.new.search(from, query, Timdex::OSClient, highlight_requested?, index, fulltext)
+      results = Opensearch.new.search(from, query, Timdex::OSClient, highlight_requested?, index, fulltext, query_mode)
 
       response = {}
       response[:hits] = results['hits']['total']['value']
@@ -135,9 +137,10 @@ module Types
     end
 
     def construct_query(searchterm, citation, contributors, funding_information, geodistance, geobox, identifiers,
-                        locations, subjects, title, source, boolean_type, filters, per_page)
+                        locations, subjects, title, source, boolean_type, filters, per_page, query_mode = 'keyword')
       query = {}
       query[:q] = searchterm
+      query[:query_mode] = query_mode
       query[:boolean_type] = boolean_type
       query[:citation] = citation
       query[:contributors] = contributors

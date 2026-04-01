@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.4.8'
 
+gem 'aws-sdk-lambda'
 gem 'bootsnap', require: false
 gem 'devise'
 gem 'faraday_middleware-aws-sigv4'
@@ -48,6 +49,7 @@ group :test do
   gem 'capybara'
   gem 'climate_control'
   gem 'minitest', '< 6' # required for Rails 7.2.3
+  gem 'mocha'
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
   gem 'simplecov-lcov', require: false

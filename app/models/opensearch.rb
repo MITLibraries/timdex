@@ -1,13 +1,13 @@
-# rubocop:disable Metrics/ClassLength
 # rubocop:disable Metrics/MethodLength
 class Opensearch
   SIZE = 20
   MAX_SIZE = 200
 
-  def search(from, params, client, highlight = false, index = nil, fulltext = false)
+  def search(from, params, client, highlight = false, index = nil, fulltext = false, query_mode = 'keyword')
     @params = params
     @highlight = highlight
     @fulltext = fulltext?(fulltext)
+    @query_mode = query_mode
     index = default_index unless index.present?
     client.search(index:,
                   body: build_query(from))
@@ -54,8 +54,14 @@ class Opensearch
 
   # Build the query portion of the elasticsearch json
   def query
-    @query_strategy ||= LexicalQueryBuilder.new
-    @query_strategy.build(@params, @fulltext)
+    builder = case @query_mode
+              when 'semantic'
+                SemanticQueryBuilder.new
+              else
+                LexicalQueryBuilder.new
+              end
+
+    builder.build(@params, @fulltext)
   end
 
   def sort_builder
