@@ -71,14 +71,14 @@ class LexicalQueryBuilderTest < ActiveSupport::TestCase
     builder = LexicalQueryBuilder.new
     params = { q: 'this' }
 
-    assert(builder.build(params, true).to_json.include?('"fields":["alternate_titles","call_numbers","citation","contents","contributors.value","dates.value","edition","funding_information.*","identifiers.value","languages","locations.value","notes.value","numbering","publication_information","subjects.value","summary","title","fulltext"]'))
+    assert(builder.build(params, fulltext: true).to_json.include?('"fields":["alternate_titles","call_numbers","citation","contents","contributors.value","dates.value","edition","funding_information.*","identifiers.value","languages","locations.value","notes.value","numbering","publication_information","subjects.value","summary","title","fulltext"]'))
   end
 
   test 'fulltext is not included by default' do
     builder = LexicalQueryBuilder.new
     params = { q: 'this' }
 
-    assert(builder.build(params, false).to_json.include?('"fields":["alternate_titles","call_numbers","citation","contents","contributors.value","dates.value","edition","funding_information.*","identifiers.value","languages","locations.value","notes.value","numbering","publication_information","subjects.value","summary","title"]'))
+    assert(builder.build(params, fulltext: false).to_json.include?('"fields":["alternate_titles","call_numbers","citation","contents","contributors.value","dates.value","edition","funding_information.*","identifiers.value","languages","locations.value","notes.value","numbering","publication_information","subjects.value","summary","title"]'))
   end
 
   test 'can search by geopoint' do
