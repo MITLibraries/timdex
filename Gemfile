@@ -4,6 +4,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.4.8'
 
 gem 'aws-sdk-lambda'
+gem 'aws-sdk-sts'
+gem 'aws-sigv4'
 gem 'bootsnap', require: false
 gem 'devise'
 gem 'faraday_middleware-aws-sigv4'
@@ -12,6 +14,7 @@ gem 'graphql'
 gem 'jwt'
 gem 'lograge'
 gem 'mitlibraries-theme', git: 'https://github.com/mitlibraries/mitlibraries-theme', tag: 'v1.4'
+gem 'opensearch-aws-sigv4'
 gem 'opensearch-ruby'
 gem 'puma'
 gem 'rack-attack'
@@ -24,7 +27,7 @@ gem 'sentry-ruby'
 gem 'uglifier'
 
 group :production do
-  gem 'connection_pool', '< 3'   # 3.x requires keyword args; pin to 2.x for Rails 7.2.3
+  gem 'connection_pool', '< 3' # 3.x requires keyword args; pin to 2.x for Rails 7.2.3
   gem 'pg'
 end
 

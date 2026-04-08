@@ -102,6 +102,9 @@ GEM
     aws-sdk-lambda (1.176.0)
       aws-sdk-core (~> 3, >= 3.244.0)
       aws-sigv4 (~> 1.5)
+    aws-sdk-sts (1.12.0)
+      aws-sdk-core (~> 3, >= 3.110.0)
+      aws-sigv4 (~> 1.1)
     aws-sigv4 (1.12.1)
       aws-eventstream (~> 1, >= 1.0.2)
     base64 (0.3.0)
@@ -277,6 +280,9 @@ GEM
     nokogiri (1.19.1)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
+    opensearch-aws-sigv4 (1.3.0)
+      aws-sigv4 (>= 1)
+      opensearch-ruby (>= 1.0.1, < 4.0)
     opensearch-ruby (3.4.0)
       faraday (>= 1.0, < 3)
       multi_json (>= 1.0)
@@ -478,6 +484,8 @@ PLATFORMS
 DEPENDENCIES
   annotate
   aws-sdk-lambda
+  aws-sdk-sts
+  aws-sigv4
   bootsnap
   byebug
   capybara
@@ -497,6 +505,7 @@ DEPENDENCIES
   minitest (< 6)
   mitlibraries-theme!
   mocha
+  opensearch-aws-sigv4
   opensearch-ruby
   pg
   puma
