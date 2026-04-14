@@ -5,7 +5,7 @@
 class TimdexFieldUsageAnalyzer < GraphQL::Analysis::AST::FieldUsage
   # This overrides a GraphQL::Analysis::AST::FieldUsage method
   def result
-    Rails.logger.info("GraphQL used fields: #{@used_fields.to_a}")
+    Rails.logger.debug("GraphQL used fields: #{@used_fields.to_a}")
     Rails.logger.info("GraphQL used deprecated fields: #{@used_deprecated_fields.to_a}")
     Rails.logger.info("GraphQL used deprecated arguments: #{@used_deprecated_arguments.to_a}")
     {

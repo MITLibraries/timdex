@@ -4,6 +4,26 @@
 
 This application interfaces with an OpenSearch backend and exposes a GraphQL endpoint to allow anonymous users to query our data.
 
+- [Architecture Decision Records](#architecture-decision-records)
+- [Developing this application](#developing-this-application)
+- [Generating cassettes for tests](#generating-cassettes-for-tests)
+- [Confirming functionality after updating dependencies](#confirming-functionality-after-updating-dependencies)
+- [Publishing User Facing Documentation](#publishing-user-facing-documentation)
+  - [Running jekyll documentation locally](#running-jekyll-documentation-locally)
+  - [Automatic generation of technical specifications from GraphQL](#automatic-generation-of-technical-specifications-from-graphql)
+- [General Configuration](#general-configuration)
+  - [Name and Domain](#name-and-domain)
+  - [Authentication](#authentication)
+  - [Email Configuration](#email-configuration)
+  - [Observability (Optional)](#observability-optional)
+  - [Rate Limiting (Optional)](#rate-limiting-optional)
+- [AWS Configuration](#aws-configuration)
+  - [OpenSearch Configuration](#opensearch-configuration)
+  - [AWS Credentials (Used for AWS-based OpenSearch and timdex-semantic-builder)](#aws-credentials-used-for-aws-based-opensearch-and-timdex-semantic-builder)
+  - [AWS OpenSearch Service (Legacy)](#aws-opensearch-service-legacy)
+  - [AWS OpenSearch Serverless (AOSS)](#aws-opensearch-serverless-aoss)
+  - [TIMDEX Semantic Builder Lambda](#timdex-semantic-builder-lambda)
+
 ## Architecture Decision Records
 
 This repository contains Architecture Decision Records in the
@@ -127,7 +147,7 @@ to ensure everything looks as expected.
 bundle exec jekyll serve --incremental --source ./docs
 ```
 
-Once the jekyll server is running, you can access the local docs at http://localhost:4000/timdex/
+Once the jekyll server is running, you can access the local docs at <http://localhost:4000/timdex/>
 
 Note: it is important to load the documentation from the `/timdex/` path locally as that is how it works when built and deployed to GitHub Pages so testing locally the same way will ensure our asset paths will work when deployed.
 
@@ -146,51 +166,70 @@ The config file `./docs/reference/_spectaql_config.yml` controls the build proce
 and making changes to this file (which is included in version control) would be the main reason to run the process
 locally.
 
-## Required Environment Variables (all ENVs)
+## General Configuration
 
-- `EMAIL_FROM`: email address to send message from, including the registration
-  and forgot password messages.
-- `EMAIL_URL_HOST` - base url to use when sending emails that link back to the
-  application. In development, often `localhost:3000`. On heroku, often
-  `yourapp.herokuapp.com`. However, if you use a custom domain in production,
-  that should be the value you use in production.
-- `JWT_SECRET_KEY`: generate with `rails secret`
+### Name and Domain
 
-## Production required Environment Variables
-
-- `AWS_ACCESS_KEY_ID`: AWS credentials for OpenSearch and Lambda
-- `AWS_SECRET_ACCESS_KEY`: AWS credentials for OpenSearch and Lambda
-- `AWS_REGION`: AWS region for OpenSearch and Lambda services
-- `AWS_OPENSEARCH`: boolean. Set to true to enable AWSv4 Signing for OpenSearch
-- `OPENSEARCH_INDEX`: Opensearch index or alias to query, default will be to search all indexes which is generally not
-                      expected. `timdex` or `all-current` are aliases used consistently in our data pipelines, with
-                      `timdex` being most likely what most use cases will want.
-- `OPENSEARCH_URL`: Opensearch URL, defaults to `http://localhost:9200`
-- `TIMDEX_SEMANTIC_BUILDER_FUNCTION_NAME`: AWS Lambda function name with alias for semantic query building.
-                     Configurable to use alternative deployment tiers (e.g., dev1, stage, prod).
-- `SMTP_ADDRESS`
-- `SMTP_PASSWORD`
-- `SMTP_PORT`
-- `SMTP_USER`
-
-## Optional Environment Variables (all ENVs)
-
-- `AWS_SESSION_TOKEN`: AWS session token for temporary credentials when using expiring AWS credentials
-- `OPENSEARCH_LOG` if `true`, verbosely logs OpenSearch queries.
-
-  ```text
-  NOTE: do not set this ENV at all if you want ES logging fully disabled.
-  Setting it to `false` is still setting it and you will be annoyed and
-  confused.
-  ```
-- `OPENSEARCH_SOURCE_EXCLUDES` comma separated list of fields to exclude from the OpenSearch `_source` field. Leave unset to return all fields.
-  - recommended value: `embedding_full_record,fulltext`
 - `PLATFORM_NAME`: The value set is added to the header after the MIT Libraries logo. The logic and CSS for this comes from our theme gem.
-- `PREFERRED_DOMAIN` - set this to the domain you would like to to use. Any
-  other requests that come to the app will redirect to the root of this domain.
-  This is useful to prevent access to herokuapp.com domains.
-- `REQUESTS_PER_PERIOD` - requests allowed before throttling. Default is 100.
-- `REQUEST_PERIOD` - number of minutes for the period in `REQUESTS_PER_PERIOD`.
-  Default is 1.
+- `PREFERRED_DOMAIN`: set this to the domain you would like to use. Any other requests that come to the app will redirect to the root of this domain. This is useful to prevent access to herokuapp.com domains.
+
+### Authentication
+
+- `JWT_SECRET_KEY`: generate with `rails secret` **required**
+
+### Email Configuration
+
+- `EMAIL_FROM`: email address to send message from, including the registration and forgot password messages. **required**
+- `EMAIL_URL_HOST`: base url to use when sending emails that link back to the application. In development, often `localhost:3000`. On heroku, often `yourapp.herokuapp.com`. However, if you use a custom domain in production, that should be the value you use in production. **required**
+- `SMTP_ADDRESS`: SMTP server address (Required for production)
+- `SMTP_PORT`: SMTP server port (Required for production)
+- `SMTP_USER`: SMTP authentication user (Required for production)
+- `SMTP_PASSWORD`: SMTP authentication password (Required for production)
+
+### Observability (Optional)
+
+- `RAILS_LOG_LEVEL`: defaults to debug in development and info in production
 - `SENTRY_DSN`: client key for Sentry exception logging
 - `SENTRY_ENV`: Sentry environment for the application. Defaults to 'unknown' if unset.
+
+### Rate Limiting (Optional)
+
+- `REQUESTS_PER_PERIOD`: requests allowed before throttling. Default is 100.
+- `REQUEST_PERIOD`: number of minutes for the period in `REQUESTS_PER_PERIOD`. Default is 1.
+
+## AWS Configuration
+
+### OpenSearch Configuration
+
+- `OPENSEARCH_URL`: OpenSearch endpoint URL, defaults to `http://localhost:9200`
+- `OPENSEARCH_INDEX`: OpenSearch index or alias to query. Defaults to searching all indexes (generally not recommended). `timdex` or `all-current` are aliases used consistently in our data pipelines, with `timdex` being most likely what most use cases will want. **required**
+- `OPENSEARCH_LOG`: if set to `true` (case-insensitive), verbosely logs OpenSearch queries. Leave unset, or set to any other value such as `false`, to keep OpenSearch logging disabled.
+- `OPENSEARCH_SOURCE_EXCLUDES`: comma-separated list of fields to exclude from the OpenSearch `_source` field. Leave unset to return all fields. Recommended value: `embedding_full_record,fulltext`
+
+### AWS Credentials (Used for AWS-based OpenSearch and timdex-semantic-builder)
+
+- `AWS_ACCESS_KEY_ID`: AWS access key for OpenSearch and Lambda
+- `AWS_SECRET_ACCESS_KEY`: AWS secret key for OpenSearch and Lambda
+- `AWS_REGION`: AWS region for OpenSearch and Lambda services
+- `AWS_SESSION_TOKEN`: (Optional) AWS session token for temporary credentials when using expiring AWS credentials.
+  Use this with temporary AWS credentials for AWS-based OpenSearch access and Lambda.
+  For AOSS, when this is set, temporary credentials are used directly and `AWS_AOSS_ROLE_ARN` is not needed.
+
+### AWS OpenSearch Service (Legacy)
+
+This is our legacy AWS OpenSearch Service Cluster. All production instances should use this until our migration to Serverless (AOSS) is complete.
+
+- `AWS_OPENSEARCH`: boolean. Set to `true` to enable AWS SigV4 signing for AWS OpenSearch Service. This is the legacy approach and will be replaced with `AWS_AOSS` when we complete our migration to Serverless.
+
+### AWS OpenSearch Serverless (AOSS)
+
+This is our upcoming configuration once migration is complete. This uses a different [authentication mechanism](https://github.com/awsdocs/amazon-opensearch-service-developer-guide/blob/master/doc_source/serverless-clients.md#ruby) than our legacy AWS OpenSearch Service.
+
+- `AWS_AOSS`: boolean. Set to `true` to enable AWS OpenSearch Serverless (AOSS).
+- `AWS_AOSS_ROLE_ARN`: AWS IAM role ARN to assume for AOSS authentication. **Required when** `AWS_AOSS=true` **and** `AWS_SESSION_TOKEN` is not set. This enables automatic credential refresh via role assumption.
+  When `AWS_SESSION_TOKEN` is present, temporary credentials are used directly and `AWS_AOSS_ROLE_ARN` is not needed. This is only used in local development. `AWS_AOSS_ROLE_ARN` is used in production.
+
+### TIMDEX Semantic Builder Lambda
+
+- `TIMDEX_SEMANTIC_BUILDER_FUNCTION_NAME`: AWS Lambda function name with alias for semantic query building.
+  Configurable to use alternative deployment tiers (e.g., dev1, stage, prod). Generally takes the format `function_name:live` where `live` is the alias. Failure to include the alias will result in extremely slow performance at best. Use the alias. Note: the lambda must be in the same AWS account as OpenSearch. If you want to test dev1 OpenSearch, you must also switch the lambda name to a dev1 variant.
