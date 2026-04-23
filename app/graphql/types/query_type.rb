@@ -67,7 +67,7 @@ module Types
                                       description: 'How to join multiword queries. Defaults to "OR" which means any ' \
                                                    'of the words much match. Options include: "OR", "AND"'
       argument :query_mode, String, required: false, default_value: 'keyword',
-                                    description: 'Search mode, either "keyword" or "semantic"'
+                                    description: 'Search mode: "keyword" (lexical search), "semantic" (vector search), or "hybrid" (both)'
 
       # applied filters
       argument :access_to_files_filter, [String],

@@ -57,6 +57,8 @@ class Opensearch
     builder = case @query_mode
               when 'semantic'
                 SemanticQueryBuilder.new
+              when 'hybrid'
+                HybridQueryBuilder.new
               else
                 LexicalQueryBuilder.new
               end
