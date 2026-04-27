@@ -1,4 +1,7 @@
 class SemanticQueryBuilder
+  # Dedicated exception for Lambda invocation failures (not parsing/validation errors)
+  class LambdaError < StandardError; end
+
   def build(params, fulltext: false)
     query_text = params[:q].to_s.strip
 
@@ -13,16 +16,21 @@ class SemanticQueryBuilder
 
   def invoke_semantic_builder(query_text)
     payload = { query: query_text }
+    function_name = ENV.fetch('TIMDEX_SEMANTIC_BUILDER_FUNCTION_NAME')
 
-    response = Timdex::LambdaClient.invoke(
-      function_name: ENV.fetch('TIMDEX_SEMANTIC_BUILDER_FUNCTION_NAME'),
-      invocation_type: 'RequestResponse',
-      payload: payload.to_json
-    )
+    begin
+      response = Timdex::LambdaClient.invoke(
+        function_name: function_name,
+        invocation_type: 'RequestResponse',
+        payload: payload.to_json
+      )
+    rescue StandardError => e
+      # Only Lambda invocation errors are wrapped in LambdaError for graceful fallback
+      raise LambdaError, "Lambda invocation error: #{e.message}", e.backtrace
+    end
 
+    # Parse the response payload - errors here are not Lambda-specific
     parse_lambda_payload(response.payload)
-  rescue StandardError => e
-    raise "Semantic query builder Lambda error: #{e.message}"
   end
 
   def parse_lambda_payload(payload)

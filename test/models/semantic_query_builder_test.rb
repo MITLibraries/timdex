@@ -70,7 +70,7 @@ class SemanticQueryBuilderTest < ActiveSupport::TestCase
 
     params = { q: query_text }
 
-    assert_raises(RuntimeError) do
+    assert_raises(SemanticQueryBuilder::LambdaError) do
       @builder.build(params)
     end
   end
