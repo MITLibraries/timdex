@@ -161,4 +161,45 @@ class OpensearchTest < ActiveSupport::TestCase
     result = os.query
     assert_equal(mock_response, result)
   end
+
+  test 'build_query includes aggregations when requested' do
+    os = Opensearch.new
+    os.instance_variable_set(:@params, { q: 'test' })
+    os.instance_variable_set(:@requested_aggregations, %i[source contributors])
+
+    json = JSON.parse(os.build_query(0))
+    assert json.key?('aggregations')
+    assert json['aggregations'].key?('source')
+    assert json['aggregations'].key?('contributors')
+    assert_not json['aggregations'].key?('languages')
+  end
+
+  test 'build_query excludes aggregations when none requested' do
+    os = Opensearch.new
+    os.instance_variable_set(:@params, { q: 'test' })
+    os.instance_variable_set(:@requested_aggregations, [])
+
+    json = JSON.parse(os.build_query(0))
+    assert_not json.key?('aggregations')
+  end
+
+  test 'build_query excludes aggregations when requested_aggregations is nil' do
+    os = Opensearch.new
+    os.instance_variable_set(:@params, { q: 'test' })
+    os.instance_variable_set(:@requested_aggregations, nil)
+
+    json = JSON.parse(os.build_query(0))
+    assert_not json.key?('aggregations')
+  end
+
+  test 'build_query with aggregations ignores invalid aggregation names' do
+    os = Opensearch.new
+    os.instance_variable_set(:@params, { q: 'test' })
+    os.instance_variable_set(:@requested_aggregations, %i[source invalid_agg])
+
+    json = JSON.parse(os.build_query(0))
+    assert json.key?('aggregations')
+    assert json['aggregations'].key?('source')
+    assert_not json['aggregations'].key?('invalid_agg')
+  end
 end

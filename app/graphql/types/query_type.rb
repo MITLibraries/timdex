@@ -109,7 +109,8 @@ module Types
       query = construct_query(searchterm, citation, contributors, funding_information, geodistance, geobox, identifiers,
                               locations, subjects, title, source, boolean_type, filters, per_page, query_mode)
 
-      results = Opensearch.new.search(from, query, Timdex::OSClient, highlight: highlight_requested?, index: index, fulltext: fulltext, query_mode: query_mode)
+      results = Opensearch.new.search(from, query, Timdex::OSClient, highlight: highlight_requested?, index: index,
+                                                                     fulltext: fulltext, query_mode: query_mode, requested_aggregations: requested_aggregations)
 
       response = {}
       response[:hits] = results['hits']['total']['value']
@@ -120,6 +121,12 @@ module Types
 
     def highlight_requested?
       context[:tracers].first.log_data[:used_fields].include?('Record.highlight')
+    end
+
+    def requested_aggregations
+      used_fields = context[:tracers].first.log_data[:used_fields]
+      used_fields.select { |field| field.start_with?('Aggregations.') }
+                 .map { |field| field.sub('Aggregations.', '').to_sym }
     end
 
     # Long-term, we will probably want to define these fields discretely in RecordType. However, this might end up
@@ -174,17 +181,19 @@ module Types
     end
 
     def collapse_buckets(es_aggs)
+      return nil if es_aggs.nil? || es_aggs.empty?
+
       {
-        access_to_files: es_aggs['access_to_files']['only_file_access']['access_types']['buckets'],
-        contributors: es_aggs['contributors']['contributor_names']['buckets'],
-        source: es_aggs['source']['buckets'],
-        subjects: es_aggs['subjects']['subject_names']['buckets'],
-        places: es_aggs['places']['only_spatial']['place_names']['buckets'],
-        languages: es_aggs['languages']['buckets'],
-        literary_form: es_aggs['literary_form']['buckets'],
-        format: es_aggs['content_format']['buckets'],
-        content_type: es_aggs['content_type']['buckets']
-      }
+        access_to_files: es_aggs.dig('access_to_files', 'only_file_access', 'access_types', 'buckets'),
+        contributors: es_aggs.dig('contributors', 'contributor_names', 'buckets'),
+        source: es_aggs.dig('source', 'buckets'),
+        subjects: es_aggs.dig('subjects', 'subject_names', 'buckets'),
+        places: es_aggs.dig('places', 'only_spatial', 'place_names', 'buckets'),
+        languages: es_aggs.dig('languages', 'buckets'),
+        literary_form: es_aggs.dig('literary_form', 'buckets'),
+        format: es_aggs.dig('content_format', 'buckets'),
+        content_type: es_aggs.dig('content_type', 'buckets')
+      }.compact
     end
   end
 end

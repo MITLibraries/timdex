@@ -3,11 +3,13 @@ class Opensearch
   SIZE = 20
   MAX_SIZE = 200
 
-  def search(from, params, client, highlight: false, index: nil, fulltext: false, query_mode: 'keyword')
+  def search(from, params, client, highlight: false, index: nil, fulltext: false, query_mode: 'keyword',
+             requested_aggregations: [])
     @params = params
     @highlight = highlight
     @fulltext = fulltext?(fulltext)
     @query_mode = query_mode
+    @requested_aggregations = requested_aggregations
     index = default_index unless index.present?
     client.search(index:,
                   body: build_query(from))
@@ -39,9 +41,12 @@ class Opensearch
       from:,
       size: calculate_size,
       query:,
-      aggregations: Aggregations.all,
       sort: sort_builder.build
     }
+
+    # Only include aggregations if any were requested
+    aggregations = Aggregations.for_request(@requested_aggregations)
+    query_hash[:aggregations] = aggregations if aggregations.present?
 
     source = source_builder.build
     query_hash[:_source] = source if source.present?
