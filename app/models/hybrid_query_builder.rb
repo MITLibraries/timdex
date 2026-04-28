@@ -12,11 +12,9 @@ class HybridQueryBuilder
 
       # Both succeeded - combine them with should clause while preserving filters
       combine_queries(semantic_query, lexical_query)
-    rescue StandardError => e
-      # Semantic builder failed (Lambda error, etc.) - use lexical only
+    rescue SemanticQueryBuilder::LambdaError => e
+      # Lambda service failure - gracefully fall back to lexical search
       log_semantic_error(e)
-      raise unless semantic_fallback_error?(e)
-
       lexical_query
     end
   end
@@ -47,7 +45,7 @@ class HybridQueryBuilder
 
     hybrid_bool = {
       should: [
-        normalize_keys(semantic_query),
+        semantic_query,
         lexical_search
       ]
     }
@@ -55,8 +53,10 @@ class HybridQueryBuilder
     # Apply only filters (non-q constraints) at top level so they apply to both branches
     hybrid_bool[:filter] = top_level_filters if top_level_filters.present?
 
-    # When filters are present, require at least one of the semantic/lexical branches
-    # to match so the query does not degrade into a filter-only match
+    # In OpenSearch, when a bool query has no filters, should clauses are required by default.
+    # When filters are added, should clauses become optional. We explicitly require at least
+    # one should clause to match (semantic or lexical) when filters are present, so we don't
+    # return filter-only results that matched neither branch.
     hybrid_bool[:minimum_should_match] = 1 if top_level_filters.present?
 
     {
@@ -66,30 +66,8 @@ class HybridQueryBuilder
 
   # Logs semantic query builder failures for observability
   def log_semantic_error(error)
-    return unless defined?(Rails) && Rails.respond_to?(:logger) && Rails.logger
-
     Rails.logger.warn(
       "HybridQueryBuilder semantic query failed: #{error.class}: #{error.message}"
     )
-  end
-
-  # Only fall back to lexical for Lambda/invocation errors from SemanticQueryBuilder.
-  # All other errors (parsing, validation, unexpected bugs) should be re-raised.
-  def semantic_fallback_error?(error)
-    error.is_a?(SemanticQueryBuilder::LambdaError)
-  end
-
-  # Recursively converts all string keys to symbols in hashes and nested structures.
-  # This ensures consistency since semantic builder returns string keys while lexical uses symbols.
-  def normalize_keys(value)
-    case value
-    when Hash
-      value.transform_keys { |k| k.is_a?(String) ? k.to_sym : k }
-           .transform_values { |v| normalize_keys(v) }
-    when Array
-      value.map { |item| normalize_keys(item) }
-    else
-      value
-    end
   end
 end

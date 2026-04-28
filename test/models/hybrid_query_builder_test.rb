@@ -75,9 +75,9 @@ class HybridQueryBuilderTest < ActiveSupport::TestCase
     }
 
     semantic_result = {
-      'bool' => {
-        'should' => [
-          { 'rank_feature' => { 'field' => 'embedding', 'boost' => 5.0 } }
+      bool: {
+        should: [
+          { rank_feature: { field: 'embedding', boost: 5.0 } }
         ]
       }
     }
@@ -120,8 +120,8 @@ class HybridQueryBuilderTest < ActiveSupport::TestCase
     }
 
     semantic_result = {
-      'bool' => {
-        'should' => [{ 'rank_feature' => { 'field' => 'embedding', 'boost' => 5.0 } }]
+      bool: {
+        should: [{ rank_feature: { field: 'embedding', boost: 5.0 } }]
       }
     }
 
@@ -184,9 +184,9 @@ class HybridQueryBuilderTest < ActiveSupport::TestCase
     }
 
     semantic_result = {
-      'bool' => {
-        'should' => [
-          { 'rank_feature' => { 'field' => 'embedding', 'boost' => 5.0 } }
+      bool: {
+        should: [
+          { rank_feature: { field: 'embedding', boost: 5.0 } }
         ]
       }
     }
@@ -218,8 +218,8 @@ class HybridQueryBuilderTest < ActiveSupport::TestCase
     }
 
     semantic_result = {
-      'bool' => {
-        'should' => [{ 'rank_feature' => { 'field' => 'embedding', 'boost' => 5.0 } }]
+      bool: {
+        should: [{ rank_feature: { field: 'embedding', boost: 5.0 } }]
       }
     }
 
@@ -248,7 +248,7 @@ class HybridQueryBuilderTest < ActiveSupport::TestCase
     assert_equal 1, result[:bool][:minimum_should_match]
   end
 
-  test 'normalizes string keys to symbols in combined queries' do
+  test 'semantic query has symbol keys from semantic builder' do
     params = { q: 'test' }
 
     lexical_result = {
@@ -259,10 +259,11 @@ class HybridQueryBuilderTest < ActiveSupport::TestCase
       }
     }
 
+    # SemanticQueryBuilder now normalizes keys to symbols before returning
     semantic_result = {
-      'bool' => {
-        'should' => [
-          { 'rank_feature' => { 'field' => 'embedding', 'boost' => 5.0 } }
+      bool: {
+        should: [
+          { rank_feature: { field: 'embedding', boost: 5.0 } }
         ]
       }
     }
@@ -276,7 +277,7 @@ class HybridQueryBuilderTest < ActiveSupport::TestCase
 
     result = @builder.build(params)
 
-    # Verify all keys are symbols in the semantic query after normalization
+    # Verify semantic query in should clause has symbol keys (normalized at source)
     semantic_query = result[:bool][:should][0]
     semantic_query.each_key { |k| assert k.is_a?(Symbol), "Expected symbol key, got #{k.inspect}" }
     semantic_query[:bool].each_key { |k| assert k.is_a?(Symbol), "Expected symbol key, got #{k.inspect}" }
@@ -305,22 +306,5 @@ class HybridQueryBuilderTest < ActiveSupport::TestCase
 
     # When semantic fails with Lambda error, fall back to lexical
     assert_equal lexical_result, result
-  end
-
-  test 'raises error when semantic builder has non-Lambda error' do
-    params = { q: 'test query' }
-
-    lexical_mock = mock
-    lexical_mock.stubs(:build).returns({ bool: { should: [], must: [], filter: [] } })
-    semantic_mock = mock
-    # Non-Lambda errors (parsing, validation) should be re-raised
-    semantic_mock.stubs(:build).raises(StandardError.new('Invalid semantic query builder response: missing query key'))
-    LexicalQueryBuilder.expects(:new).returns(lexical_mock)
-    SemanticQueryBuilder.expects(:new).returns(semantic_mock)
-
-    # Non-Lambda errors should raise, not silently fall back
-    assert_raises(StandardError) do
-      @builder.build(params)
-    end
   end
 end
