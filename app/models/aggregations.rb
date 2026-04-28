@@ -16,6 +16,18 @@ class Aggregations
     }
   end
 
+  # Return only the aggregations that were requested
+  # @param requested_names [Array<Symbol>] Array of aggregation names to include (e.g., [:source, :contributors])
+  # @return [Hash] Filtered aggregations hash with only requested aggregations
+  def self.for_request(requested_names)
+    return {} if requested_names.nil? || requested_names.empty?
+
+    all_aggs = all
+    requested_names.each_with_object({}) do |name, result|
+      result[name] = all_aggs[name] if all_aggs.key?(name)
+    end
+  end
+
   def self.access_to_files
     {
       nested: {
