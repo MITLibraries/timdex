@@ -53,10 +53,10 @@ class SemanticQueryBuilderTest < ActiveSupport::TestCase
     result = @builder.build(params)
 
     expected_query = {
-      'bool' => {
-        'should' => [
-          { 'rank_feature' => { 'field' => 'embedding_full_record.hello', 'boost' => 6.94 } },
-          { 'rank_feature' => { 'field' => 'embedding_full_record.world', 'boost' => 3.42 } }
+      bool: {
+        should: [
+          { rank_feature: { field: 'embedding_full_record.hello', boost: 6.94 } },
+          { rank_feature: { field: 'embedding_full_record.world', boost: 3.42 } }
         ]
       }
     }
@@ -70,7 +70,7 @@ class SemanticQueryBuilderTest < ActiveSupport::TestCase
 
     params = { q: query_text }
 
-    assert_raises(RuntimeError) do
+    assert_raises(SemanticQueryBuilder::LambdaError) do
       @builder.build(params)
     end
   end

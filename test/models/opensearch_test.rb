@@ -139,4 +139,26 @@ class OpensearchTest < ActiveSupport::TestCase
     result = os.query
     assert_equal(mock_response, result)
   end
+
+  test 'uses HybridQueryBuilder when queryMode is hybrid' do
+    os = Opensearch.new
+    os.instance_variable_set(:@params, { q: 'test' })
+    os.instance_variable_set(:@fulltext, false)
+    os.instance_variable_set(:@query_mode, 'hybrid')
+
+    mock_response = {
+      bool: {
+        should: [
+          { bool: { should: [{ rank_feature: { field: 'test', boost: 1.0 } }] } },
+          { bool: { must: [{ match: { text: { query: 'test' } } }] } }
+        ]
+      }
+    }
+    mock_builder = mock
+    mock_builder.stubs(:build).returns(mock_response)
+    HybridQueryBuilder.expects(:new).once.returns(mock_builder)
+
+    result = os.query
+    assert_equal(mock_response, result)
+  end
 end

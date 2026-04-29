@@ -956,4 +956,134 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
       end
     end
   end
+
+  test 'graphql search with queryMode keyword uses lexical builder' do
+    VCR.use_cassette('opensearch init') do
+      VCR.use_cassette('graphql search data analytics keyword') do
+        post '/graphql', params: { query: '{
+                                    search(searchterm: "data analytics", queryMode: "keyword") {
+                                      records {
+                                        title
+                                        score
+                                      }
+                                    }
+                                  }' }
+        assert_equal(200, response.status)
+        json = JSON.parse(response.body)
+
+        # Verify results are present with no errors
+        assert_nil(json['errors'])
+        assert(json['data']['search']['records'].any?)
+      end
+    end
+  end
+
+  test 'graphql search with queryMode semantic uses semantic builder' do
+    VCR.use_cassette('opensearch init') do
+      # Stub Lambda response
+      mock_lambda_response = Struct.new(:payload).new(StringIO.new({
+        'query' => {
+          'bool' => {
+            'should' => [
+              { 'rank_feature' => { 'field' => 'embedding_full_record.test', 'boost' => 5.0 } }
+            ]
+          }
+        }
+      }.to_json))
+      Aws::Lambda::Client.any_instance.stubs(:invoke).returns(mock_lambda_response)
+
+      VCR.use_cassette('graphql search data analytics semantic') do
+        post '/graphql', params: { query: '{
+                                    search(searchterm: "data analytics", queryMode: "semantic") {
+                                      records {
+                                        title
+                                      }
+                                    }
+                                  }' }
+        assert_equal(200, response.status)
+        json = JSON.parse(response.body)
+
+        # Verify results are present with no errors
+        assert_nil(json['errors'])
+        assert(json['data']['search']['records'].any?, 'Expected search results')
+      end
+    end
+  end
+
+  test 'graphql search with queryMode hybrid combines semantic and lexical results' do
+    VCR.use_cassette('opensearch init') do
+      # Stub Lambda response
+      mock_lambda_response = Struct.new(:payload).new(StringIO.new({
+        'query' => {
+          'bool' => {
+            'should' => [
+              { 'rank_feature' => { 'field' => 'embedding_full_record.hybrid_test', 'boost' => 4.5 } }
+            ]
+          }
+        }
+      }.to_json))
+      Aws::Lambda::Client.any_instance.stubs(:invoke).returns(mock_lambda_response)
+
+      VCR.use_cassette('graphql search data analytics hybrid') do
+        post '/graphql', params: { query: '{
+                                    search(searchterm: "data analytics", queryMode: "hybrid") {
+                                      records {
+                                        title
+                                        score
+                                      }
+                                    }
+                                  }' }
+        assert_equal(200, response.status)
+        json = JSON.parse(response.body)
+
+        # Verify results are present with no errors
+        assert_nil(json['errors'])
+        assert(json['data']['search']['records'].any?)
+      end
+    end
+  end
+
+  test 'graphql search with filter only (no searchterm) returns filtered results' do
+    VCR.use_cassette('opensearch init') do
+      VCR.use_cassette('graphql search title') do
+        post '/graphql', params: { query: '{
+                                    search(title: "Spice") {
+                                      records {
+                                        title
+                                      }
+                                    }
+                                  }' }
+        assert_equal(200, response.status)
+        json = JSON.parse(response.body)
+
+        # Verify results are present with no errors
+        assert_nil(json['errors'])
+        assert(json['data']['search']['records'].any?)
+
+        # Verify results match the filter
+        assert(json['data']['search']['records'].any? { |r| r['title'].include?('Spice') })
+      end
+    end
+  end
+
+  test 'graphql search defaults to lexical when queryMode not provided' do
+    VCR.use_cassette('opensearch init') do
+      VCR.use_cassette('graphql search data analytics') do
+        post '/graphql', params: { query: '{
+                                    search(searchterm: "data analytics") {
+                                      records {
+                                        title
+                                        score
+                                      }
+                                    }
+                                  }' }
+        assert_equal(200, response.status)
+        json = JSON.parse(response.body)
+
+        # Verify results are present with no errors
+        assert_nil(json['errors'])
+        assert(json['data']['search']['records'].any?)
+      end
+    end
+  end
 end

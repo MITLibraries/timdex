@@ -1,4 +1,7 @@
 class SemanticQueryBuilder
+  # Dedicated exception for Lambda invocation failures (not parsing/validation errors)
+  class LambdaError < StandardError; end
+
   def build(params, fulltext: false)
     query_text = params[:q].to_s.strip
 
@@ -13,16 +16,23 @@ class SemanticQueryBuilder
 
   def invoke_semantic_builder(query_text)
     payload = { query: query_text }
+    function_name = ENV.fetch('TIMDEX_SEMANTIC_BUILDER_FUNCTION_NAME')
 
-    response = Timdex::LambdaClient.invoke(
-      function_name: ENV.fetch('TIMDEX_SEMANTIC_BUILDER_FUNCTION_NAME'),
-      invocation_type: 'RequestResponse',
-      payload: payload.to_json
-    )
+    begin
+      response = Timdex::LambdaClient.invoke(
+        function_name: function_name,
+        invocation_type: 'RequestResponse',
+        payload: payload.to_json
+      )
+    rescue StandardError => e
+      # All errors from the Lambda service call are wrapped in LambdaError
+      # so HybridQueryBuilder can catch it and gracefully fall back to lexical search.
+      raise LambdaError, "Lambda invocation error: #{e.message}", e.backtrace
+    end
 
+    # Response parsing below is outside the rescue block, so JSON/validation errors
+    # propagate as-is and fail fast rather than triggering graceful fallback.
     parse_lambda_payload(response.payload)
-  rescue StandardError => e
-    raise "Semantic query builder Lambda error: #{e.message}"
   end
 
   def parse_lambda_payload(payload)
@@ -39,12 +49,26 @@ class SemanticQueryBuilder
 
   def parse_lambda_response(lambda_response)
     # Lambda returns: { "query": { "bool": { "should": [...] } } }
-    # We extract and return just the inner query object
+    # We extract and return just the inner query object with keys normalized to symbols
     raise "Invalid semantic query builder response: missing 'query' key" unless lambda_response.key?('query')
 
     query = lambda_response['query']
     raise 'Invalid semantic query builder response: query must be a Hash' unless query.is_a?(Hash)
 
-    query
+    # Normalize string keys to symbols for consistency with LexicalQueryBuilder
+    normalize_keys(query)
+  end
+
+  # Recursively converts all string keys to symbols in hashes and nested structures.
+  def normalize_keys(value)
+    case value
+    when Hash
+      value.transform_keys { |k| k.is_a?(String) ? k.to_sym : k }
+           .transform_values { |v| normalize_keys(v) }
+    when Array
+      value.map { |item| normalize_keys(item) }
+    else
+      value
+    end
   end
 end
