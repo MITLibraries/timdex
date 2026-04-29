@@ -13,8 +13,11 @@ class HybridQueryBuilder
       # Both succeeded - combine them with should clause while preserving filters
       combine_queries(semantic_query, lexical_query)
     rescue SemanticQueryBuilder::LambdaError => e
-      # Lambda service failure - gracefully fall back to lexical search
-      log_semantic_error(e)
+      # Lambda service failure - report to Sentry and gracefully fall back to lexical search
+      Sentry.capture_exception(e, level: 'warning')
+      Rails.logger.warn(
+        "HybridQueryBuilder semantic query failed: #{e.class}: #{e.message}"
+      )
       lexical_query
     end
   end
@@ -62,12 +65,5 @@ class HybridQueryBuilder
     {
       bool: hybrid_bool
     }
-  end
-
-  # Logs semantic query builder failures for observability
-  def log_semantic_error(error)
-    Rails.logger.warn(
-      "HybridQueryBuilder semantic query failed: #{error.class}: #{error.message}"
-    )
   end
 end
