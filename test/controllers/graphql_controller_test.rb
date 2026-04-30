@@ -980,18 +980,6 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
 
   test 'graphql search with queryMode semantic uses semantic builder' do
     VCR.use_cassette('opensearch init') do
-      # Stub Lambda response
-      mock_lambda_response = Struct.new(:payload).new(StringIO.new({
-        'query' => {
-          'bool' => {
-            'should' => [
-              { 'rank_feature' => { 'field' => 'embedding_full_record.test', 'boost' => 5.0 } }
-            ]
-          }
-        }
-      }.to_json))
-      Aws::Lambda::Client.any_instance.stubs(:invoke).returns(mock_lambda_response)
-
       VCR.use_cassette('graphql search data analytics semantic') do
         post '/graphql', params: { query: '{
                                     search(searchterm: "data analytics", queryMode: "semantic") {
@@ -1012,18 +1000,6 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
 
   test 'graphql search with queryMode hybrid combines semantic and lexical results' do
     VCR.use_cassette('opensearch init') do
-      # Stub Lambda response
-      mock_lambda_response = Struct.new(:payload).new(StringIO.new({
-        'query' => {
-          'bool' => {
-            'should' => [
-              { 'rank_feature' => { 'field' => 'embedding_full_record.hybrid_test', 'boost' => 4.5 } }
-            ]
-          }
-        }
-      }.to_json))
-      Aws::Lambda::Client.any_instance.stubs(:invoke).returns(mock_lambda_response)
-
       VCR.use_cassette('graphql search data analytics hybrid') do
         post '/graphql', params: { query: '{
                                     search(searchterm: "data analytics", queryMode: "hybrid") {
