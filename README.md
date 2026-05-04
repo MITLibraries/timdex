@@ -85,7 +85,8 @@ end
 
 - Run your test(s). You may receive VCR errors as the `opensearch init` cassette does not have the HTTP transaction you are requesting. However, the nested cassette for your test will generate if it does not exist yet and on future runs these errors will not recur.
 - Manually confirm the headers do not have sensitive information. This scrubbing process should work, but it is your responsibility to ensure you are not committing secrets to code repositories. If you aren't sure, ask.
-- You have to remove or comment out AWS credentials from `.env` before re-running your test or the tests will fail (i.e. this process can only generate cassettes, it can not re-run them with AWS credentials as we scrub the AWS bits from the cassette so VCR does not match)
+- You have to remove or comment out AWS credentials from `.env` before re-running your test or the tests will fail (i.e. this process can only generate cassettes, it can not re-run them with AWS credentials as we scrub the AWS bits from the cassette so VCR does not match).
+- You have to set `AWS_ENDPOINT_URL_LAMBDA` to `http://localhost:9200` in `.env.test` before re-running tests. This is necessary because the initial call uses the default value set by the AWS SDK but subsequent calls use the filtered value.
 
 > [!Important]
 > We re-use OpenSearch connections, which is handled by the nesting of cassettes (see above). If you have sporadically failing tests, ensure you are nesting your test specific cassette inside of the `opensearch init` cassette.
