@@ -1062,4 +1062,82 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
       end
     end
   end
+
+  test 'graphql search with camelCase aggregation fields (accessToFiles, contentType)' do
+    VCR.use_cassette('opensearch init') do
+      VCR.use_cassette('graphql search data analytics') do
+        post '/graphql', params: { query: '{
+                                    search(searchterm: "data analytics") {
+                                      aggregations {
+                                        accessToFiles {
+                                          key
+                                          docCount
+                                        }
+                                        contentType {
+                                          key
+                                          docCount
+                                        }
+                                      }
+                                    }
+                                  }' }
+        assert_equal(200, response.status)
+        json = JSON.parse(response.body)
+        aggs = json['data']['search']['aggregations']
+
+        # Verify aggregations are present when requested
+        assert_not_nil aggs
+        assert_not_nil aggs['accessToFiles']
+        assert_not_nil aggs['contentType']
+
+        # Verify structure
+        assert aggs['accessToFiles'].is_a?(Array)
+        assert aggs['contentType'].is_a?(Array)
+      end
+    end
+  end
+
+  test 'graphql search with format aggregation (should map to content_format)' do
+    VCR.use_cassette('opensearch init') do
+      VCR.use_cassette('graphql search data analytics') do
+        post '/graphql', params: { query: '{
+                                    search(searchterm: "data analytics") {
+                                      aggregations {
+                                        format {
+                                          key
+                                          docCount
+                                        }
+                                      }
+                                    }
+                                  }' }
+        assert_equal(200, response.status)
+        json = JSON.parse(response.body)
+        aggs = json['data']['search']['aggregations']
+
+        # Verify format aggregation is present and populated
+        assert_not_nil aggs
+        assert_not_nil aggs['format']
+        assert aggs['format'].is_a?(Array)
+      end
+    end
+  end
+
+  test 'graphql search without aggregations excludes them from OpenSearch query' do
+    VCR.use_cassette('opensearch init') do
+      VCR.use_cassette('graphql search data analytics') do
+        post '/graphql', params: { query: '{
+                                    search(searchterm: "data analytics") {
+                                      hits
+                                      records {
+                                        title
+                                      }
+                                    }
+                                  }' }
+        assert_equal(200, response.status)
+        json = JSON.parse(response.body)
+
+        # Verify aggregations field is null when not requested
+        assert_nil json['data']['search']['aggregations']
+      end
+    end
+  end
 end

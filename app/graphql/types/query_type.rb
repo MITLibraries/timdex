@@ -123,10 +123,20 @@ module Types
       context[:tracers].first.log_data[:used_fields].include?('Record.highlight')
     end
 
+    # Convert aggregation fields to format expected by aggregations model.
+    # We believe format was set to `content_format` because when TIMDEX was a rest REST API, the
+    # format parameter would likely have triggered the format feature (i.e. format html, format
+    # json, format xml, etc). We are retaining this out of caution.
+    def requested_aggregation_field(field_name)
+      return :content_format if field_name == 'format'
+
+      field_name.underscore.to_sym
+    end
+
     def requested_aggregations
       used_fields = context[:tracers].first.log_data[:used_fields]
       used_fields.select { |field| field.start_with?('Aggregations.') }
-                 .map { |field| field.sub('Aggregations.', '').to_sym }
+                 .map { |field| requested_aggregation_field(field.sub('Aggregations.', '')) }
     end
 
     # Long-term, we will probably want to define these fields discretely in RecordType. However, this might end up
