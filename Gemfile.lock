@@ -90,7 +90,7 @@ GEM
       rake (>= 10.4, < 14.0)
     ast (2.4.3)
     aws-eventstream (1.4.0)
-    aws-partitions (1.1250.0)
+    aws-partitions (1.1251.0)
     aws-sdk-core (3.247.0)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.992.0)
@@ -99,7 +99,7 @@ GEM
       bigdecimal
       jmespath (~> 1, >= 1.6.1)
       logger
-    aws-sdk-lambda (1.179.0)
+    aws-sdk-lambda (1.180.0)
       aws-sdk-core (~> 3, >= 3.247.0)
       aws-sigv4 (~> 1.5)
     aws-sdk-sts (1.12.0)
@@ -470,7 +470,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.8.0)
+    zeitwerk (2.8.1)
 
 PLATFORMS
   ruby
