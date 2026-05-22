@@ -872,7 +872,7 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
         initial_hits_count = json_dataset['data']['search']['hits']
         initial_still_images_count = json_dataset['data']['search']['aggregations']['contentType'].find do |x|
                                        x['key'] == 'still image'
-                                     end ['docCount']
+                                     end['docCount']
 
         post '/graphql', params: { query:
           '{
@@ -940,7 +940,7 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
 
   test 'graphql search respects perPage argument' do
     VCR.use_cassette('opensearch_init') do
-      VCR.use_cassette('graphql_search_per_page_5', match_requests_on: [:method, :uri]) do
+      VCR.use_cassette('graphql_search_per_page_5', match_requests_on: %i[method uri]) do
         post '/graphql', params: { query: '{
                                     search(perPage:5) {
                                       hits
@@ -1139,5 +1139,89 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
         assert_nil json['data']['search']['aggregations']
       end
     end
+  end
+
+  test 'graphql search with useGlobalScoring true passes search_type to opensearch' do
+    mock_response = {
+      'hits' => {
+        'total' => { 'value' => 1 },
+        'hits' => [
+          {
+            '_source' => {
+              'title' => 'Data analytics and big data'
+            }
+          }
+        ]
+      }
+    }
+    # Verify that when useGlobalScoring is true, the search_type parameter is set
+    Opensearch.any_instance.expects(:search).with do |_from, _params, _client, **kwargs|
+      kwargs[:use_global_scoring] == true
+    end.returns(mock_response)
+
+    post '/graphql', params: { query: '{
+                                search(searchterm: "data analytics", useGlobalScoring: true) {
+                                  records {
+                                    title
+                                  }
+                                }
+                              }' }
+    assert_equal(200, response.status)
+  end
+
+  test 'graphql search with useGlobalScoring false passes use_global_scoring false to opensearch' do
+    mock_response = {
+      'hits' => {
+        'total' => { 'value' => 1 },
+        'hits' => [
+          {
+            '_source' => {
+              'title' => 'Data analytics and big data'
+            }
+          }
+        ]
+      }
+    }
+    # Verify that when useGlobalScoring is false (or omitted), use_global_scoring is false
+    Opensearch.any_instance.expects(:search).with do |_from, _params, _client, **kwargs|
+      kwargs[:use_global_scoring] == false
+    end.returns(mock_response)
+
+    post '/graphql', params: { query: '{
+                                search(searchterm: "data analytics", useGlobalScoring: false) {
+                                  records {
+                                    title
+                                  }
+                                }
+                              }' }
+    assert_equal(200, response.status)
+  end
+
+  test 'graphql search useGlobalScoring defaults to false' do
+    mock_response = {
+      'hits' => {
+        'total' => { 'value' => 1 },
+        'hits' => [
+          {
+            '_source' => {
+              'title' => 'Data analytics and big data'
+            }
+          }
+        ]
+      }
+    }
+    # Verify that when useGlobalScoring is not specified, use_global_scoring defaults to false
+    Opensearch.any_instance.expects(:search).with do |_from, _params, _client, **kwargs|
+      kwargs[:use_global_scoring] == false
+    end.returns(mock_response)
+
+    post '/graphql', params: { query: '{
+                                search(searchterm: "data analytics") {
+                                  records {
+                                    title
+                                  }
+                                }
+                              }' }
+    assert_equal(200, response.status)
   end
 end

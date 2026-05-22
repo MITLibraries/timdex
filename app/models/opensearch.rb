@@ -4,15 +4,16 @@ class Opensearch
   MAX_SIZE = 200
 
   def search(from, params, client, highlight: false, index: nil, fulltext: false, query_mode: 'keyword',
-             requested_aggregations: [])
+             requested_aggregations: [], use_global_scoring: false)
     @params = params
     @highlight = highlight
     @fulltext = fulltext?(fulltext)
     @query_mode = query_mode
     @requested_aggregations = requested_aggregations
     index = default_index unless index.present?
-    client.search(index:,
-                  body: build_query(from))
+    search_params = { index:, body: build_query(from) }
+    search_params[:search_type] = 'dfs_query_then_fetch' if use_global_scoring
+    client.search(**search_params)
   end
 
   # Only treat fulltext as true if it is boolean true or the string 'true' (case insensitive)
