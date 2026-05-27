@@ -90,8 +90,8 @@ GEM
       rake (>= 10.4, < 14.0)
     ast (2.4.3)
     aws-eventstream (1.4.0)
-    aws-partitions (1.1251.0)
-    aws-sdk-core (3.247.0)
+    aws-partitions (1.1253.0)
+    aws-sdk-core (3.249.0)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.992.0)
       aws-sigv4 (~> 1.9)
@@ -99,8 +99,8 @@ GEM
       bigdecimal
       jmespath (~> 1, >= 1.6.1)
       logger
-    aws-sdk-lambda (1.180.0)
-      aws-sdk-core (~> 3, >= 3.247.0)
+    aws-sdk-lambda (1.181.0)
+      aws-sdk-core (~> 3, >= 3.248.0)
       aws-sigv4 (~> 1.5)
     aws-sdk-sts (1.12.0)
       aws-sdk-core (~> 3, >= 3.110.0)
@@ -112,7 +112,7 @@ GEM
     benchmark (0.5.0)
     bigdecimal (4.1.2)
     bindex (0.8.1)
-    bootsnap (1.24.4)
+    bootsnap (1.24.5)
       msgpack (~> 1.2)
     builder (3.3.0)
     byebug (13.0.0)
@@ -173,10 +173,10 @@ GEM
     forwardable-extended (2.6.0)
     globalid (1.3.0)
       activesupport (>= 6.1)
-    google-protobuf (4.34.1)
+    google-protobuf (4.35.0)
       bigdecimal
       rake (~> 13.3)
-    graphql (2.6.2)
+    graphql (2.6.3)
       base64
       fiber-storage
       logger
@@ -209,13 +209,14 @@ GEM
       safe_yaml (~> 1.0)
       terminal-table (>= 1.8, < 4.0)
       webrick (~> 1.7)
-    jekyll-remote-theme (0.4.3)
+    jekyll-remote-theme (0.5.0)
       addressable (~> 2.0)
       jekyll (>= 3.5, < 5.0)
-      jekyll-sass-converter (>= 1.0, <= 3.0.0, != 2.0.0)
+      jekyll-sass-converter (>= 1.0, < 4.0, != 2.0.0)
+      openssl (~> 3.0, >= 3.1.2)
       rubyzip (>= 1.3.0, < 3.0)
-    jekyll-sass-converter (3.0.0)
-      sass-embedded (~> 1.54)
+    jekyll-sass-converter (3.1.0)
+      sass-embedded (~> 1.75)
     jekyll-seo-tag (2.9.0)
       jekyll (>= 3.8, < 5.0)
     jekyll-watch (2.2.1)
@@ -281,6 +282,7 @@ GEM
     opensearch-ruby (3.4.0)
       faraday (>= 1.0, < 3)
       multi_json (>= 1.0)
+    openssl (3.3.3)
     orm_adapter (0.5.0)
     parallel (1.28.0)
     parser (3.3.11.1)
@@ -297,7 +299,7 @@ GEM
       date
       stringio
     public_suffix (7.0.5)
-    puma (8.0.1)
+    puma (8.0.2)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.6)
@@ -381,7 +383,7 @@ GEM
     rubocop-ast (1.49.1)
       parser (>= 3.3.7.2)
       prism (~> 1.7)
-    rubocop-rails (2.35.2)
+    rubocop-rails (2.35.3)
       activesupport (>= 4.2.0)
       lint_roller (~> 1.1)
       rack (>= 1.1)
@@ -391,7 +393,7 @@ GEM
     ruby2_keywords (0.0.5)
     rubyzip (2.4.1)
     safe_yaml (1.0.5)
-    sass-embedded (1.99.0)
+    sass-embedded (1.100.0)
       google-protobuf (~> 4.31)
       rake (>= 13)
     sass-rails (6.0.0)
@@ -470,7 +472,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.8.1)
+    zeitwerk (2.8.2)
 
 PLATFORMS
   ruby
