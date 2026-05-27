@@ -68,6 +68,9 @@ module Types
                                                    'of the words much match. Options include: "OR", "AND"'
       argument :query_mode, String, required: false, default_value: 'keyword',
                                     description: 'Search mode: "keyword" (lexical search), "semantic" (vector search), or "hybrid" (both)'
+      argument :use_global_scoring, Boolean, required: false, default_value: false,
+                                             description: 'Calculate relevance scores globally across all shards ' \
+                                                          'instead of per-shard. Defaults to false.'
 
       # applied filters
       argument :access_to_files_filter, [String],
@@ -105,12 +108,15 @@ module Types
     end
 
     def search(searchterm:, citation:, contributors:, funding_information:, geodistance:, geobox:, identifiers:,
-               locations:, subjects:, title:, index:, source:, from:, boolean_type:, fulltext:, per_page: 20, query_mode: 'keyword', **filters)
+               locations:, subjects:, title:, index:, source:, from:, boolean_type:, fulltext:, per_page: 20,
+               query_mode: 'keyword', use_global_scoring: false, **filters)
       query = construct_query(searchterm, citation, contributors, funding_information, geodistance, geobox, identifiers,
                               locations, subjects, title, source, boolean_type, filters, per_page, query_mode)
 
       results = Opensearch.new.search(from, query, Timdex::OSClient, highlight: highlight_requested?, index: index,
-                                                                     fulltext: fulltext, query_mode: query_mode, requested_aggregations: requested_aggregations)
+                                                                     fulltext: fulltext, query_mode: query_mode,
+                                                                     requested_aggregations: requested_aggregations,
+                                                                     use_global_scoring: use_global_scoring)
 
       response = {}
       response[:hits] = results['hits']['total']['value']

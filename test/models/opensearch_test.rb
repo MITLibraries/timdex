@@ -202,4 +202,34 @@ class OpensearchTest < ActiveSupport::TestCase
     assert json['aggregations'].key?('source')
     assert_not json['aggregations'].key?('invalid_agg')
   end
+
+  test 'search with use_global_scoring false does not set search_type' do
+    mock_client = mock
+    mock_client.expects(:search).with do |params|
+      !params.key?(:search_type)
+    end.returns({ 'hits' => { 'hits' => [], 'total' => { 'value' => 0 } } })
+
+    os = Opensearch.new
+    os.search(0, {}, mock_client, use_global_scoring: false)
+  end
+
+  test 'search with use_global_scoring true sets search_type to dfs_query_then_fetch' do
+    mock_client = mock
+    mock_client.expects(:search).with do |params|
+      params[:search_type] == 'dfs_query_then_fetch'
+    end.returns({ 'hits' => { 'hits' => [], 'total' => { 'value' => 0 } } })
+
+    os = Opensearch.new
+    os.search(0, {}, mock_client, use_global_scoring: true)
+  end
+
+  test 'search defaults to use_global_scoring false' do
+    mock_client = mock
+    mock_client.expects(:search).with do |params|
+      !params.key?(:search_type)
+    end.returns({ 'hits' => { 'hits' => [], 'total' => { 'value' => 0 } } })
+
+    os = Opensearch.new
+    os.search(0, {}, mock_client)
+  end
 end
