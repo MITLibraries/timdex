@@ -5,11 +5,28 @@ class SemanticQueryBuilder
   def build(params, fulltext: false)
     query_text = params[:q].to_s.strip
 
-    # If no query text provided, return a match_all query (consistent with keyword search behavior)
-    return { match_all: {} } if query_text.blank?
+    # If no query text provided, return a match_all query with filters applied
+    # (consistent with keyword search behavior and enabling tab filtering with empty search)
+    if query_text.blank?
+      filters = FilterBuilder.new.build(params)
+      return { bool: { filter: filters } } if filters.present?
+
+      return { match_all: {} }
+    end
 
     lambda_response = invoke_semantic_builder(query_text)
-    parse_lambda_response(lambda_response)
+    semantic_query = parse_lambda_response(lambda_response)
+
+    # Validate the query structure has a bool clause before applying filters
+    unless semantic_query.is_a?(Hash) && semantic_query[:bool].is_a?(Hash)
+      raise "Invalid semantic query structure: expected bool clause, got #{semantic_query.inspect}"
+    end
+
+    # Apply filters to the semantic query (matching LexicalQueryBuilder pattern)
+    filters = FilterBuilder.new.build(params)
+    semantic_query[:bool][:filter] = filters
+
+    semantic_query
   end
 
   private

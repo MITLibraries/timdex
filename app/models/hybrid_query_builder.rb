@@ -46,9 +46,19 @@ class HybridQueryBuilder
                        lexical_query
                      end
 
+    # Remove filters from semantic branch since they'll be applied at top level
+    # to avoid redundant filter clauses
+    semantic_without_filters = if semantic_query.is_a?(Hash) && semantic_query[:bool]
+                                 {
+                                   bool: semantic_query[:bool].except(:filter)
+                                 }
+                               else
+                                 semantic_query
+                               end
+
     hybrid_bool = {
       should: [
-        semantic_query,
+        semantic_without_filters,
         lexical_search
       ]
     }
