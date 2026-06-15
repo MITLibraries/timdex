@@ -217,7 +217,7 @@ module Types
     end
 
     def file_formats
-      @object['file_formats'].uniq
+      @object['file_formats']&.uniq
     end
 
     def imprint
