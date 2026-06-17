@@ -34,6 +34,16 @@ class SemanticQueryBuilderTest < ActiveSupport::TestCase
     assert_equal({ match_all: {} }, result)
   end
 
+  test 'applies filters to blank query' do
+    params = { q: '', source_filter: ['aspace'] }
+    result = @builder.build(params)
+
+    # When query is blank but filters are specified, should return bool query with filter clause
+    assert result.key?(:bool)
+    assert result[:bool].key?(:filter)
+    assert result[:bool][:filter].present?
+  end
+
   test 'builds semantic query from lambda response' do
     query_text = 'hello world'
     mock_response = {
@@ -57,7 +67,8 @@ class SemanticQueryBuilderTest < ActiveSupport::TestCase
         should: [
           { rank_feature: { field: 'embedding_full_record.hello', boost: 6.94 } },
           { rank_feature: { field: 'embedding_full_record.world', boost: 3.42 } }
-        ]
+        ],
+        filter: []
       }
     }
 
@@ -113,5 +124,78 @@ class SemanticQueryBuilderTest < ActiveSupport::TestCase
     assert_raises(RuntimeError) do
       @builder.build(params)
     end
+  end
+
+  test 'preserves source_filter in semantic queries' do
+    query_text = 'test search'
+    mock_response = {
+      'query' => {
+        'bool' => {
+          'should' => [
+            { 'rank_feature' => { 'field' => 'embedding_full_record.test', 'boost' => 5.0 } }
+          ]
+        }
+      }
+    }
+
+    setup_mock_lambda(mock_response)
+
+    params = { q: query_text, source_filter: ['aspace'] }
+    result = @builder.build(params)
+
+    # Verify filter clause was added to the semantic query
+    assert_includes result[:bool].keys, :filter
+    assert result[:bool][:filter].present?
+
+    # Verify the filter contains the source filter
+    filter_terms = result[:bool][:filter].map { |f| f[:bool][:should].first[:term][:source] }.flatten
+    assert_includes filter_terms, 'aspace'
+  end
+
+  test 'preserves content_type_filter in semantic queries' do
+    query_text = 'test search'
+    mock_response = {
+      'query' => {
+        'bool' => {
+          'should' => [
+            { 'rank_feature' => { 'field' => 'embedding_full_record.test', 'boost' => 5.0 } }
+          ]
+        }
+      }
+    }
+
+    setup_mock_lambda(mock_response)
+
+    params = { q: query_text, content_type_filter: %w[article book] }
+    result = @builder.build(params)
+
+    # Verify filter clause was added to the semantic query
+    assert_includes result[:bool].keys, :filter
+    assert result[:bool][:filter].present?
+
+    # Verify the filter contains multiple content type filters
+    assert_equal 2, result[:bool][:filter].length
+  end
+
+  test 'applies empty filters array when no filters specified' do
+    query_text = 'test search'
+    mock_response = {
+      'query' => {
+        'bool' => {
+          'should' => [
+            { 'rank_feature' => { 'field' => 'embedding_full_record.test', 'boost' => 5.0 } }
+          ]
+        }
+      }
+    }
+
+    setup_mock_lambda(mock_response)
+
+    params = { q: query_text }
+    result = @builder.build(params)
+
+    # Verify filter clause exists but is empty array
+    assert_includes result[:bool].keys, :filter
+    assert_equal [], result[:bool][:filter]
   end
 end
