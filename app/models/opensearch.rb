@@ -4,12 +4,13 @@ class Opensearch
   MAX_SIZE = 200
 
   def search(from, params, client, highlight: false, index: nil, fulltext: false, query_mode: 'keyword',
-             requested_aggregations: [], use_global_scoring: false)
+             requested_aggregations: [], use_global_scoring: false, semantic_options: {})
     @params = params
     @highlight = highlight
     @fulltext = fulltext?(fulltext)
     @query_mode = query_mode
     @requested_aggregations = requested_aggregations
+    @semantic_options = semantic_options
     index = default_index unless index.present?
     search_params = { index:, body: build_query(from) }
     search_params[:search_type] = 'dfs_query_then_fetch' if use_global_scoring
@@ -69,7 +70,12 @@ class Opensearch
                 LexicalQueryBuilder.new
               end
 
-    builder.build(@params, fulltext: @fulltext)
+    # Only pass semantic_options to builders that support it (semantic and hybrid)
+    if @query_mode.in?(%w[semantic hybrid])
+      builder.build(@params, fulltext: @fulltext, semantic_options: @semantic_options)
+    else
+      builder.build(@params, fulltext: @fulltext)
+    end
   end
 
   def sort_builder

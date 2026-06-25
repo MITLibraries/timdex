@@ -1,5 +1,5 @@
 class HybridQueryBuilder
-  def build(params, fulltext: false)
+  def build(params, fulltext: false, semantic_options: {})
     query_text = params[:q].to_s.strip
 
     lexical_query = LexicalQueryBuilder.new.build(params, fulltext: fulltext)
@@ -8,7 +8,7 @@ class HybridQueryBuilder
     return lexical_query if query_text.blank?
 
     begin
-      semantic_query = SemanticQueryBuilder.new.build(params, fulltext: fulltext)
+      semantic_query = SemanticQueryBuilder.new.build(params, fulltext: fulltext, semantic_options: semantic_options)
 
       # Both succeeded - combine them with should clause while preserving filters
       combine_queries(semantic_query, lexical_query)
