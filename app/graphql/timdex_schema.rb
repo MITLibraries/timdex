@@ -14,9 +14,9 @@ class TimdexSchema < GraphQL::Schema
       # 2. Extract the root operation fields being requested
       selected_fields = context.query&.selected_operation&.selections || []
 
-      # 3. Check if any root field starts with "__schema" or "__type"
+      # 3. Check if any root field is an introspection entrypoint (__schema or __type)
       is_introspection = selected_fields.any? do |selection|
-        selection.respond_to?(:name) && selection.name.start_with?('__')
+        selection.respond_to?(:name) && %w[__schema __type].include?(selection.name)
       end
 
       # 4. Hide the arguments if GraphiQL/Introspection is sniffing the schema

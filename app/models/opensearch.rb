@@ -72,7 +72,7 @@ class Opensearch
 
     # Only pass semantic_options to builders that support it (semantic and hybrid)
     if @query_mode.in?(%w[semantic hybrid])
-      builder.build(@params, fulltext: @fulltext, semantic_options: @semantic_options)
+      builder.build(@params, fulltext: @fulltext, semantic_options: @semantic_options || {})
     else
       builder.build(@params, fulltext: @fulltext)
     end

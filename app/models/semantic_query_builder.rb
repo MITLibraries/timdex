@@ -15,7 +15,7 @@ class SemanticQueryBuilder
     end
 
     lambda_response = invoke_semantic_builder(query_text, semantic_options)
-    Rails.logger.debug("SemanticQueryBuilder Lambda response: #{lambda_response.inspect}")
+
     semantic_query = parse_lambda_response(lambda_response)
 
     # Validate the query structure has a bool clause before applying filters
