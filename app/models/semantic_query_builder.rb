@@ -2,7 +2,7 @@ class SemanticQueryBuilder
   # Dedicated exception for Lambda invocation failures (not parsing/validation errors)
   class LambdaError < StandardError; end
 
-  def build(params, fulltext: false)
+  def build(params, fulltext: false, semantic_options: {})
     query_text = params[:q].to_s.strip
 
     # If no query text provided, return a match_all query with filters applied
@@ -14,7 +14,8 @@ class SemanticQueryBuilder
       return { match_all: {} }
     end
 
-    lambda_response = invoke_semantic_builder(query_text)
+    lambda_response = invoke_semantic_builder(query_text, semantic_options)
+
     semantic_query = parse_lambda_response(lambda_response)
 
     # Validate the query structure has a bool clause before applying filters
@@ -31,8 +32,23 @@ class SemanticQueryBuilder
 
   private
 
-  def invoke_semantic_builder(query_text)
+  def invoke_semantic_builder(query_text, semantic_options = {})
     payload = { query: query_text }
+
+    # Add optional semantic tuning parameters if provided
+    if semantic_options[:must_boost_threshold].present?
+      payload[:must_boost_threshold] =
+        semantic_options[:must_boost_threshold]
+    end
+    if semantic_options[:drop_boost_threshold].present?
+      payload[:drop_boost_threshold] =
+        semantic_options[:drop_boost_threshold]
+    end
+    if semantic_options[:short_query_max_tokens].present?
+      payload[:short_query_max_tokens] =
+        semantic_options[:short_query_max_tokens]
+    end
+
     function_name = ENV.fetch('TIMDEX_SEMANTIC_BUILDER_FUNCTION_NAME')
 
     begin

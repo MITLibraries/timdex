@@ -105,18 +105,38 @@ module Types
       argument :subjects_filter, [String], required: false, default_value: nil,
                                            description: 'Filter by subject terms. Use the `contentType` aggregation ' \
                                                         'for a list of possible values. Multiple values are ANDed.'
+
+      # Internal semantic query tuning parameters (not documented publicly). Must start with `INTERNAL USE ONLY` to be
+      # excluded from public documentation.
+      argument :semantic_must_boost_threshold, Float, required: false, default_value: nil,
+                                                      description: 'INTERNAL USE ONLY: Semantic query must boost ' \
+                                                                   'threshold (0.0-1.0)'
+      argument :semantic_drop_boost_threshold, Float, required: false, default_value: nil,
+                                                      description: 'INTERNAL USE ONLY: Semantic query drop boost ' \
+                                                                   'threshold (0.0-1.0)'
+      argument :semantic_short_query_max_tokens, Integer, required: false, default_value: nil,
+                                                          description: 'INTERNAL USE ONLY: Semantic query short ' \
+                                                                       'query max tokens'
     end
 
     def search(searchterm:, citation:, contributors:, funding_information:, geodistance:, geobox:, identifiers:,
                locations:, subjects:, title:, index:, source:, from:, boolean_type:, fulltext:, per_page: 20,
-               query_mode: 'keyword', use_global_scoring: false, **filters)
+               query_mode: 'keyword', use_global_scoring: false, semantic_must_boost_threshold: nil,
+               semantic_drop_boost_threshold: nil, semantic_short_query_max_tokens: nil, **filters)
       query = construct_query(searchterm, citation, contributors, funding_information, geodistance, geobox, identifiers,
                               locations, subjects, title, source, boolean_type, filters, per_page, query_mode)
+
+      semantic_options = {
+        must_boost_threshold: semantic_must_boost_threshold,
+        drop_boost_threshold: semantic_drop_boost_threshold,
+        short_query_max_tokens: semantic_short_query_max_tokens
+      }
 
       results = Opensearch.new.search(from, query, Timdex::OSClient, highlight: highlight_requested?, index: index,
                                                                      fulltext: fulltext, query_mode: query_mode,
                                                                      requested_aggregations: requested_aggregations,
-                                                                     use_global_scoring: use_global_scoring)
+                                                                     use_global_scoring: use_global_scoring,
+                                                                     semantic_options: semantic_options)
 
       response = {}
       response[:hits] = results['hits']['total']['value']

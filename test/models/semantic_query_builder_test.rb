@@ -198,4 +198,186 @@ class SemanticQueryBuilderTest < ActiveSupport::TestCase
     assert_includes result[:bool].keys, :filter
     assert_equal [], result[:bool][:filter]
   end
+
+  # Tests for semantic_options in Lambda payload
+
+  test 'includes semantic options in lambda payload' do
+    query_text = 'test query'
+    mock_response = {
+      'query' => {
+        'bool' => {
+          'should' => [
+            { 'rank_feature' => { 'field' => 'embedding_full_record.test', 'boost' => 5.0 } }
+          ]
+        }
+      }
+    }
+
+    captured_payload = nil
+    Aws::Lambda::Client.any_instance.expects(:invoke).with do |args|
+      captured_payload = JSON.parse(args[:payload])
+      true
+    end.returns(Struct.new(:payload).new(StringIO.new(mock_response.to_json)))
+
+    params = { q: query_text }
+    semantic_options = { must_boost_threshold: 0.5 }
+    @builder.build(params, semantic_options: semantic_options)
+
+    # Verify the payload contains the semantic option
+    assert_equal 0.5, captured_payload['must_boost_threshold']
+  end
+
+  test 'includes multiple semantic options in lambda payload' do
+    query_text = 'test query'
+    mock_response = {
+      'query' => {
+        'bool' => {
+          'should' => [
+            { 'rank_feature' => { 'field' => 'embedding_full_record.test', 'boost' => 5.0 } }
+          ]
+        }
+      }
+    }
+
+    captured_payload = nil
+    Aws::Lambda::Client.any_instance.expects(:invoke).with do |args|
+      captured_payload = JSON.parse(args[:payload])
+      true
+    end.returns(Struct.new(:payload).new(StringIO.new(mock_response.to_json)))
+
+    params = { q: query_text }
+    semantic_options = {
+      must_boost_threshold: 0.5,
+      drop_boost_threshold: 0.2,
+      short_query_max_tokens: 10
+    }
+    @builder.build(params, semantic_options: semantic_options)
+
+    # Verify all semantic options are in the payload
+    assert_equal 0.5, captured_payload['must_boost_threshold']
+    assert_equal 0.2, captured_payload['drop_boost_threshold']
+    assert_equal 10, captured_payload['short_query_max_tokens']
+  end
+
+  test 'omits nil semantic options from lambda payload' do
+    query_text = 'test query'
+    mock_response = {
+      'query' => {
+        'bool' => {
+          'should' => [
+            { 'rank_feature' => { 'field' => 'embedding_full_record.test', 'boost' => 5.0 } }
+          ]
+        }
+      }
+    }
+
+    captured_payload = nil
+    Aws::Lambda::Client.any_instance.expects(:invoke).with do |args|
+      captured_payload = JSON.parse(args[:payload])
+      true
+    end.returns(Struct.new(:payload).new(StringIO.new(mock_response.to_json)))
+
+    params = { q: query_text }
+    semantic_options = {
+      must_boost_threshold: 0.5,
+      drop_boost_threshold: nil,
+      short_query_max_tokens: nil
+    }
+    @builder.build(params, semantic_options: semantic_options)
+
+    # Verify only non-nil options are in the payload
+    assert_equal 0.5, captured_payload['must_boost_threshold']
+    # Verify they are not keys in the payload hash
+    refute captured_payload.key?('drop_boost_threshold')
+    refute captured_payload.key?('short_query_max_tokens')
+  end
+
+  test 'omits empty string semantic options from lambda payload' do
+    query_text = 'test query'
+    mock_response = {
+      'query' => {
+        'bool' => {
+          'should' => [
+            { 'rank_feature' => { 'field' => 'embedding_full_record.test', 'boost' => 5.0 } }
+          ]
+        }
+      }
+    }
+
+    captured_payload = nil
+    Aws::Lambda::Client.any_instance.expects(:invoke).with do |args|
+      captured_payload = JSON.parse(args[:payload])
+      true
+    end.returns(Struct.new(:payload).new(StringIO.new(mock_response.to_json)))
+
+    params = { q: query_text }
+    semantic_options = {
+      must_boost_threshold: '',
+      drop_boost_threshold: 0.2
+    }
+    @builder.build(params, semantic_options: semantic_options)
+
+    # Verify empty string options are not included
+    refute captured_payload.key?('must_boost_threshold')
+    assert_equal 0.2, captured_payload['drop_boost_threshold']
+  end
+
+  test 'includes only query key when no semantic options provided' do
+    query_text = 'test query'
+    mock_response = {
+      'query' => {
+        'bool' => {
+          'should' => [
+            { 'rank_feature' => { 'field' => 'embedding_full_record.test', 'boost' => 5.0 } }
+          ]
+        }
+      }
+    }
+
+    captured_payload = nil
+    Aws::Lambda::Client.any_instance.expects(:invoke).with do |args|
+      captured_payload = JSON.parse(args[:payload])
+      true
+    end.returns(Struct.new(:payload).new(StringIO.new(mock_response.to_json)))
+
+    params = { q: query_text }
+    @builder.build(params, semantic_options: {})
+
+    # Verify only query key is in the payload
+    assert_equal({ 'query' => query_text }, captured_payload)
+  end
+
+  test 'semantic options payload contains both query and options' do
+    query_text = 'test query'
+    mock_response = {
+      'query' => {
+        'bool' => {
+          'should' => [
+            { 'rank_feature' => { 'field' => 'embedding_full_record.test', 'boost' => 5.0 } }
+          ]
+        }
+      }
+    }
+
+    captured_payload = nil
+    Aws::Lambda::Client.any_instance.expects(:invoke).with do |args|
+      captured_payload = JSON.parse(args[:payload])
+      true
+    end.returns(Struct.new(:payload).new(StringIO.new(mock_response.to_json)))
+
+    params = { q: query_text }
+    semantic_options = {
+      must_boost_threshold: 0.75,
+      short_query_max_tokens: 5
+    }
+    @builder.build(params, semantic_options: semantic_options)
+
+    # Verify payload structure contains query and both options
+    expected_payload = {
+      'query' => query_text,
+      'must_boost_threshold' => 0.75,
+      'short_query_max_tokens' => 5
+    }
+    assert_equal expected_payload, captured_payload
+  end
 end

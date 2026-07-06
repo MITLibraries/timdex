@@ -1224,4 +1224,96 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
                               }' }
     assert_equal(200, response.status)
   end
+
+  test 'graphql introspection hides internal semantic arguments via __schema' do
+    post '/graphql', params: { query: '{
+                                __schema {
+                                  queryType {
+                                    fields(includeDeprecated: true) {
+                                      name
+                                      args {
+                                        name
+                                      }
+                                    }
+                                  }
+                                }
+                              }' }
+    assert_equal(200, response.status)
+    json = JSON.parse(response.body)
+
+    # Find the 'search' field
+    search_field = json['data']['__schema']['queryType']['fields'].find { |f| f['name'] == 'search' }
+    assert(search_field, 'search field should exist in schema')
+
+    # Get all argument names for the search field
+    arg_names = search_field['args'].map { |arg| arg['name'] }
+
+    # Verify internal semantic arguments are NOT present
+    assert_not_includes arg_names, 'semanticMustBoostThreshold'
+    assert_not_includes arg_names, 'semanticDropBoostThreshold'
+    assert_not_includes arg_names, 'semanticShortQueryMaxTokens'
+
+    # Verify other expected arguments ARE present
+    assert_includes arg_names, 'searchterm'
+    assert_includes arg_names, 'sourceFilter'
+  end
+
+  test 'graphql introspection hides internal semantic arguments via __type' do
+    post '/graphql', params: { query: '{
+                                __type(name: "Query") {
+                                  fields(includeDeprecated: true) {
+                                    name
+                                    args {
+                                      name
+                                    }
+                                  }
+                                }
+                              }' }
+    assert_equal(200, response.status)
+    json = JSON.parse(response.body)
+
+    # Find the 'search' field
+    search_field = json['data']['__type']['fields'].find { |f| f['name'] == 'search' }
+    assert(search_field, 'search field should exist in Query type')
+
+    # Get all argument names for the search field
+    arg_names = search_field['args'].map { |arg| arg['name'] }
+
+    # Verify internal semantic arguments are NOT present
+    assert_not_includes arg_names, 'semanticMustBoostThreshold'
+    assert_not_includes arg_names, 'semanticDropBoostThreshold'
+    assert_not_includes arg_names, 'semanticShortQueryMaxTokens'
+
+    # Verify other expected arguments ARE present
+    assert_includes arg_names, 'searchterm'
+    assert_includes arg_names, 'sourceFilter'
+  end
+
+  test 'graphql internal semantic arguments still work in actual queries' do
+    VCR.use_cassette('opensearch init') do
+      VCR.use_cassette('graphql search data analytics') do
+        # Verify that the arguments work when sent in a real query
+        # (they are just hidden from introspection)
+        post '/graphql', params: { query: '{
+                                    search(
+                                      searchterm: "data analytics",
+                                      semanticMustBoostThreshold: 0.5,
+                                      semanticDropBoostThreshold: 0.2,
+                                      semanticShortQueryMaxTokens: 10
+                                    ) {
+                                      records {
+                                        title
+                                      }
+                                    }
+                                  }' }
+        assert_equal(200, response.status)
+        json = JSON.parse(response.body)
+
+        # Verify the query succeeded and returned records
+        assert_nil json['errors'], "Query should not have errors: #{json['errors']}"
+        assert_equal('Data analytics and big data',
+                     json['data']['search']['records'].first['title'])
+      end
+    end
+  end
 end
