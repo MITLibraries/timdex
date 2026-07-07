@@ -1,6 +1,6 @@
 {
   "name": "timdex",
-  "stack": "heroku-22",
+  "stack": "heroku-26",
   "scripts": {},
   "env": {
     "AWS_REGION": {
