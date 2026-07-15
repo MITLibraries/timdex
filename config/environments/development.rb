@@ -59,6 +59,9 @@ Rails.application.configure do
   # Allow changing log level in development
   config.log_level = ENV['RAILS_LOG_LEVEL'] || :debug
 
+  # Highlight code that triggered redirect in logs.
+  config.action_dispatch.verbose_redirect_logs = true
+
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 
@@ -67,7 +70,7 @@ Rails.application.configure do
   config.logger = ActiveSupport::TaggedLogging.new(logger)
 
   # Annotate rendered view with file names.
-  config.action_view.annotate_rendered_view_with_filenames = false
+  config.action_view.annotate_rendered_view_with_filenames = true
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
