@@ -34,8 +34,6 @@ additional records with a standardized template.
 
 ## Developing this application
 
-- please `bundle exec annotate` when making changes to models to update the
-  internal documentation
 - don't commit your .env or .env.development, but do commit .env.test after
   confirming your test values are not actual secrets that need protecting
 
