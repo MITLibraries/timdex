@@ -14,7 +14,7 @@
       "matchPackageNames": [
         "rails"
       ],
-      "allowedVersions": "<8.1"
+      "allowedVersions": "<8.2"
     }
   ]
 }
