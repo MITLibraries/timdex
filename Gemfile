@@ -13,9 +13,9 @@ gem 'flipflop'
 gem 'graphql'
 gem 'jwt'
 gem 'lograge'
-gem "mitlibraries-theme",
-    git: "https://github.com/MITLibraries/mitlibraries-theme.git",
-    branch: "rails8"
+gem 'mitlibraries-theme',
+    git: 'https://github.com/MITLibraries/mitlibraries-theme.git',
+    branch: 'rails8'
 gem 'opensearch-aws-sigv4'
 gem 'opensearch-ruby'
 gem 'puma'
@@ -40,6 +40,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'annotaterb'
   gem 'jekyll'
   gem 'jekyll-remote-theme'
   gem 'jekyll-seo-tag'
