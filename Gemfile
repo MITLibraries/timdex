@@ -13,13 +13,15 @@ gem 'flipflop'
 gem 'graphql'
 gem 'jwt'
 gem 'lograge'
-gem 'mitlibraries-theme', git: 'https://github.com/mitlibraries/mitlibraries-theme', tag: 'v1.4'
+gem 'mitlibraries-theme',
+    git: 'https://github.com/mitlibraries/mitlibraries-theme',
+    tag: 'v1.5'
 gem 'opensearch-aws-sigv4'
 gem 'opensearch-ruby'
 gem 'puma'
 gem 'rack-attack'
 gem 'rack-cors'
-gem 'rails', '~> 7.2.0'
+gem 'rails', '~> 8.1.0'
 gem 'redis'
 gem 'sass-rails'
 gem 'sentry-rails'
@@ -27,7 +29,7 @@ gem 'sentry-ruby'
 gem 'uglifier'
 
 group :production do
-  gem 'connection_pool', '< 3' # 3.x requires keyword args; pin to 2.x for Rails 7.2.3
+  gem 'connection_pool'
   gem 'pg'
 end
 
@@ -38,7 +40,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'annotate'
+  gem 'annotaterb'
   gem 'jekyll'
   gem 'jekyll-remote-theme'
   gem 'jekyll-seo-tag'
@@ -51,7 +53,7 @@ end
 group :test do
   gem 'capybara'
   gem 'climate_control'
-  gem 'minitest', '< 6' # required for Rails 7.2.3
+  gem 'minitest'
   gem 'mocha'
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
