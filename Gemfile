@@ -14,8 +14,8 @@ gem 'graphql'
 gem 'jwt'
 gem 'lograge'
 gem 'mitlibraries-theme',
-    git: 'https://github.com/MITLibraries/mitlibraries-theme.git',
-    branch: 'rails8'
+    git: 'https://github.com/mitlibraries/mitlibraries-theme',
+    tag: 'v1.5'
 gem 'opensearch-aws-sigv4'
 gem 'opensearch-ruby'
 gem 'puma'
