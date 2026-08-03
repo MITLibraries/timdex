@@ -18,7 +18,7 @@ These arguments are accepted at runtime, but are intentionally hidden from Graph
 
 This creates a mismatch for downstream clients that validate against introspection-derived schema artifacts, including graphql-client. Those clients fail validation because the schema they consume does not include arguments that our internal callers (timdex-ui in particular) need to send.
 
-Our GraphQL API is public, but exposing advanced tuning arguments is acceptable, even if most external users do not need them. We can state clearly they are likely not useful to most users in the documentation exposed by the Introspection queries.
+Our GraphQL API is public, but exposing advanced tuning arguments is acceptable, even if most external users do not need them. These parameters can be in the public schema as they do not do anything harmful or expose hidden data, they just set different threshholds for how we build our queries. Worst case is someone gets less results than they otherwise would if they use them improperly. We can state clearly they are likely not useful to most users in the documentation exposed by the Introspection queries.
 
 We also want a parameter design that allows adding new tuning knobs with minimal schema churn.
 
