@@ -109,7 +109,7 @@ module Types
       argument :tuning_parameters_input, TuningParametersInputType, required: false, default_value: nil,
                                                                     description: 'Experimental tuning parameters ' \
                                                                                  'for semantic search. Not ' \
-                                                                                 'recommended for use. '
+                                                                                 'recommended for use.'
     end
 
     def search(searchterm:, citation:, contributors:, funding_information:, geodistance:, geobox:, identifiers:,
@@ -212,7 +212,8 @@ module Types
       if tuning_parameters[:must_boost_threshold].present?
         threshold = tuning_parameters[:must_boost_threshold]
         unless threshold.between?(0.0, 1.0)
-          raise GraphQL::ExecutionError, "mustBoostThreshold must be between 0.0 and 1.0, got #{threshold}"
+          raise GraphQL::ExecutionError,
+                "tuningParametersInput.mustBoostThreshold must be between 0.0 and 1.0, got #{threshold}"
         end
 
         semantic_options[:must_boost_threshold] = threshold
@@ -221,7 +222,8 @@ module Types
       if tuning_parameters[:drop_boost_threshold].present?
         threshold = tuning_parameters[:drop_boost_threshold]
         unless threshold.between?(0.0, 1.0)
-          raise GraphQL::ExecutionError, "dropBoostThreshold must be between 0.0 and 1.0, got #{threshold}"
+          raise GraphQL::ExecutionError,
+                "tuningParametersInput.dropBoostThreshold must be between 0.0 and 1.0, got #{threshold}"
         end
 
         semantic_options[:drop_boost_threshold] = threshold
@@ -231,7 +233,7 @@ module Types
         tokens = tuning_parameters[:short_query_max_tokens]
         unless tokens.positive?
           raise GraphQL::ExecutionError,
-                "shortQueryMaxTokens must be greater than 0, got #{tokens}"
+                "tuningParametersInput.shortQueryMaxTokens must be greater than 0, got #{tokens}"
         end
 
         semantic_options[:short_query_max_tokens] = tokens
