@@ -1225,7 +1225,7 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
     assert_equal(200, response.status)
   end
 
-  test 'graphql introspection hides internal semantic arguments via __schema' do
+  test 'graphql introspection exposes tuningParametersInput argument' do
     post '/graphql', params: { query: '{
                                 __schema {
                                   queryType {
@@ -1248,58 +1248,30 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
     # Get all argument names for the search field
     arg_names = search_field['args'].map { |arg| arg['name'] }
 
-    # Verify internal semantic arguments are NOT present
+    # Verify tuningParametersInput is now visible
+    assert_includes arg_names, 'tuningParametersInput'
+
+    # Verify old hidden arguments no longer exist
     assert_not_includes arg_names, 'semanticMustBoostThreshold'
     assert_not_includes arg_names, 'semanticDropBoostThreshold'
     assert_not_includes arg_names, 'semanticShortQueryMaxTokens'
 
-    # Verify other expected arguments ARE present
+    # Verify other expected arguments are present
     assert_includes arg_names, 'searchterm'
     assert_includes arg_names, 'sourceFilter'
   end
 
-  test 'graphql introspection hides internal semantic arguments via __type' do
-    post '/graphql', params: { query: '{
-                                __type(name: "Query") {
-                                  fields(includeDeprecated: true) {
-                                    name
-                                    args {
-                                      name
-                                    }
-                                  }
-                                }
-                              }' }
-    assert_equal(200, response.status)
-    json = JSON.parse(response.body)
-
-    # Find the 'search' field
-    search_field = json['data']['__type']['fields'].find { |f| f['name'] == 'search' }
-    assert(search_field, 'search field should exist in Query type')
-
-    # Get all argument names for the search field
-    arg_names = search_field['args'].map { |arg| arg['name'] }
-
-    # Verify internal semantic arguments are NOT present
-    assert_not_includes arg_names, 'semanticMustBoostThreshold'
-    assert_not_includes arg_names, 'semanticDropBoostThreshold'
-    assert_not_includes arg_names, 'semanticShortQueryMaxTokens'
-
-    # Verify other expected arguments ARE present
-    assert_includes arg_names, 'searchterm'
-    assert_includes arg_names, 'sourceFilter'
-  end
-
-  test 'graphql internal semantic arguments still work in actual queries' do
+  test 'graphql tuningParametersInput works with valid values' do
     VCR.use_cassette('opensearch init') do
       VCR.use_cassette('graphql search data analytics') do
-        # Verify that the arguments work when sent in a real query
-        # (they are just hidden from introspection)
         post '/graphql', params: { query: '{
                                     search(
                                       searchterm: "data analytics",
-                                      semanticMustBoostThreshold: 0.5,
-                                      semanticDropBoostThreshold: 0.2,
-                                      semanticShortQueryMaxTokens: 10
+                                      tuningParametersInput: {
+                                        mustBoostThreshold: 0.5,
+                                        dropBoostThreshold: 0.2,
+                                        shortQueryMaxTokens: 10
+                                      }
                                     ) {
                                       records {
                                         title
@@ -1307,13 +1279,66 @@ class GraphqlControllerTest < ActionDispatch::IntegrationTest
                                     }
                                   }' }
         assert_equal(200, response.status)
-        json = JSON.parse(response.body)
 
-        # Verify the query succeeded and returned records
-        assert_nil json['errors'], "Query should not have errors: #{json['errors']}"
+        json = JSON.parse(response.body)
+        assert_nil json['errors']
         assert_equal('Data analytics and big data',
                      json['data']['search']['records'].first['title'])
       end
     end
+  end
+
+  test 'graphql tuningParametersInput rejects out-of-range mustBoostThreshold' do
+    post '/graphql', params: { query: '{
+                                search(
+                                  searchterm: "test",
+                                  tuningParametersInput: {
+                                    mustBoostThreshold: 1.5
+                                  }
+                                ) {
+                                  hits
+                                }
+                              }' }
+    assert_equal(200, response.status)
+
+    json = JSON.parse(response.body)
+    assert json['errors'].present?
+    assert_includes json['errors'][0]['message'], 'mustBoostThreshold must be between 0.0 and 1.0'
+  end
+
+  test 'graphql tuningParametersInput rejects out-of-range dropBoostThreshold' do
+    post '/graphql', params: { query: '{
+                                search(
+                                  searchterm: "test",
+                                  tuningParametersInput: {
+                                    dropBoostThreshold: -0.1
+                                  }
+                                ) {
+                                  hits
+                                }
+                              }' }
+    assert_equal(200, response.status)
+
+    json = JSON.parse(response.body)
+    assert json['errors'].present?
+    assert_includes json['errors'][0]['message'], 'dropBoostThreshold must be between 0.0 and 1.0'
+  end
+
+  test 'graphql tuningParametersInput rejects zero or negative shortQueryMaxTokens' do
+    post '/graphql', params: { query: '{
+                                search(
+                                  searchterm: "test",
+                                  tuningParametersInput: {
+                                    shortQueryMaxTokens: 0
+                                  }
+                                ) {
+                                  hits
+                                }
+                              }' }
+    assert_equal(200, response.status)
+
+    json = JSON.parse(response.body)
+    assert json['errors'].present?
+    assert_includes json['errors'][0]['message'], 'shortQueryMaxTokens must be greater than 0'
   end
 end
