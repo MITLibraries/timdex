@@ -106,31 +106,19 @@ module Types
                                            description: 'Filter by subject terms. Use the `contentType` aggregation ' \
                                                         'for a list of possible values. Multiple values are ANDed.'
 
-      # Internal semantic query tuning parameters (not documented publicly). Must start with `INTERNAL USE ONLY` to be
-      # excluded from public documentation.
-      argument :semantic_must_boost_threshold, Float, required: false, default_value: nil,
-                                                      description: 'INTERNAL USE ONLY: Semantic query must boost ' \
-                                                                   'threshold (0.0-1.0)'
-      argument :semantic_drop_boost_threshold, Float, required: false, default_value: nil,
-                                                      description: 'INTERNAL USE ONLY: Semantic query drop boost ' \
-                                                                   'threshold (0.0-1.0)'
-      argument :semantic_short_query_max_tokens, Integer, required: false, default_value: nil,
-                                                          description: 'INTERNAL USE ONLY: Semantic query short ' \
-                                                                       'query max tokens'
+      argument :tuning_parameters_input, TuningParametersInputType, required: false, default_value: nil,
+                                                                    description: 'Experimental tuning parameters ' \
+                                                                                 'for semantic search. Not ' \
+                                                                                 'recommended for use.'
     end
 
     def search(searchterm:, citation:, contributors:, funding_information:, geodistance:, geobox:, identifiers:,
                locations:, subjects:, title:, index:, source:, from:, boolean_type:, fulltext:, per_page: 20,
-               query_mode: 'keyword', use_global_scoring: false, semantic_must_boost_threshold: nil,
-               semantic_drop_boost_threshold: nil, semantic_short_query_max_tokens: nil, **filters)
+               query_mode: 'keyword', use_global_scoring: false, tuning_parameters_input: nil, **filters)
       query = construct_query(searchterm, citation, contributors, funding_information, geodistance, geobox, identifiers,
                               locations, subjects, title, source, boolean_type, filters, per_page, query_mode)
 
-      semantic_options = {
-        must_boost_threshold: semantic_must_boost_threshold,
-        drop_boost_threshold: semantic_drop_boost_threshold,
-        short_query_max_tokens: semantic_short_query_max_tokens
-      }
+      semantic_options = validate_and_build_semantic_options(tuning_parameters_input)
 
       results = Opensearch.new.search(from, query, Timdex::OSClient, highlight: highlight_requested?, index: index,
                                                                      fulltext: fulltext, query_mode: query_mode,
@@ -214,6 +202,44 @@ module Types
       query[:source_filter] = [old_source] if old_source != 'All' && old_source.present?
       query[:source_filter] = new_source if new_source != 'All' && new_source.present?
       query
+    end
+
+    def validate_and_build_semantic_options(tuning_parameters)
+      return {} if tuning_parameters.blank?
+
+      semantic_options = {}
+
+      if tuning_parameters[:must_boost_threshold].present?
+        threshold = tuning_parameters[:must_boost_threshold]
+        unless threshold.between?(0.0, 1.0)
+          raise GraphQL::ExecutionError,
+                "tuningParametersInput.mustBoostThreshold must be between 0.0 and 1.0, got #{threshold}"
+        end
+
+        semantic_options[:must_boost_threshold] = threshold
+      end
+
+      if tuning_parameters[:drop_boost_threshold].present?
+        threshold = tuning_parameters[:drop_boost_threshold]
+        unless threshold.between?(0.0, 1.0)
+          raise GraphQL::ExecutionError,
+                "tuningParametersInput.dropBoostThreshold must be between 0.0 and 1.0, got #{threshold}"
+        end
+
+        semantic_options[:drop_boost_threshold] = threshold
+      end
+
+      if tuning_parameters[:short_query_max_tokens].present?
+        tokens = tuning_parameters[:short_query_max_tokens]
+        unless tokens.positive?
+          raise GraphQL::ExecutionError,
+                "tuningParametersInput.shortQueryMaxTokens must be greater than 0, got #{tokens}"
+        end
+
+        semantic_options[:short_query_max_tokens] = tokens
+      end
+
+      semantic_options
     end
 
     def collapse_buckets(es_aggs)
