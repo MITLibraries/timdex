@@ -1,17 +1,17 @@
-# TimdexFieldUsageAnalyzer largely overrides some methods from the inherited FieldUsage
-# We to log data in a format we can work with and return it to be used along with Tracers
-# to determine which fields are being requested so we can modify our OpenSearch query.
+# TimdexFieldUsageAnalyzer overrides FieldUsage so we can collect query usage data
+# (including deprecated fields and arguments) and place it directly on GraphQL context.
+# Resolvers then read this context data to shape OpenSearch query behavior and logging.
 # https://graphql-ruby.org/queries/ast_analysis.html
 class TimdexFieldUsageAnalyzer < GraphQL::Analysis::AST::FieldUsage
   # This overrides a GraphQL::Analysis::AST::FieldUsage method
   def result
-    Rails.logger.debug("GraphQL used fields: #{@used_fields.to_a}")
-    Rails.logger.info("GraphQL used deprecated fields: #{@used_deprecated_fields.to_a}")
-    Rails.logger.info("GraphQL used deprecated arguments: #{@used_deprecated_arguments.to_a}")
-    {
+    analysis_data = {
       used_fields: @used_fields.to_a,
       used_deprecated_fields: @used_deprecated_fields.to_a,
       used_deprecated_arguments: @used_deprecated_arguments.to_a
     }
+
+    query.context[:graphql_analysis] = analysis_data
+    analysis_data
   end
 end

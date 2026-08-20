@@ -12,7 +12,6 @@ gem 'faraday_middleware-aws-sigv4'
 gem 'flipflop'
 gem 'graphql'
 gem 'jwt'
-gem 'lograge'
 gem 'mitlibraries-theme',
     git: 'https://github.com/mitlibraries/mitlibraries-theme',
     tag: 'v1.5'
@@ -22,6 +21,7 @@ gem 'puma'
 gem 'rack-attack'
 gem 'rack-cors'
 gem 'rails', '~> 8.1.0'
+gem 'rails_semantic_logger'
 gem 'redis'
 gem 'sass-rails'
 gem 'sentry-rails'
@@ -34,6 +34,7 @@ group :production do
 end
 
 group :development, :test do
+  gem 'amazing_print'
   gem 'byebug'
   gem 'dotenv-rails'
   gem 'sqlite3'
