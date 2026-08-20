@@ -115,6 +115,8 @@ module Types
     def search(searchterm:, citation:, contributors:, funding_information:, geodistance:, geobox:, identifiers:,
                locations:, subjects:, title:, index:, source:, from:, boolean_type:, fulltext:, per_page: 20,
                query_mode: 'keyword', use_global_scoring: false, tuning_parameters_input: nil, **filters)
+      Rails.logger.info("Searchterm: #{format_searchterm_for_log(searchterm)}")
+
       query = construct_query(searchterm, citation, contributors, funding_information, geodistance, geobox, identifiers,
                               locations, subjects, title, source, boolean_type, filters, per_page, query_mode)
 
@@ -202,6 +204,12 @@ module Types
       query[:source_filter] = [old_source] if old_source != 'All' && old_source.present?
       query[:source_filter] = new_source if new_source != 'All' && new_source.present?
       query
+    end
+
+    def format_searchterm_for_log(searchterm)
+      return '[missing]' if searchterm.blank?
+
+      searchterm.to_s.truncate(200)
     end
 
     def validate_and_build_semantic_options(tuning_parameters)
