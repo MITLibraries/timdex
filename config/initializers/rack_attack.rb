@@ -79,15 +79,19 @@ class Rack::Attack
   # bad intent. We are assuming good intent and thus provide users with info
   # about how many requests are allowed in a time period and how to remove
   # those restrictions by registering.
-  Rack::Attack.throttled_responder = lambda do |env|
-    match_data = env['rack.attack.match_data']
-    now = match_data[:epoch_time]
+  # Rack::Attack 6.x calls throttled_responder with a request object.
+  # Read throttle metadata from request.env rather than from a raw env hash.
+  Rack::Attack.throttled_responder = lambda do |request|
+    match_data = request.env['rack.attack.match_data'] || {}
+    now = match_data[:epoch_time] || Time.now.to_i
+    period = match_data[:period].to_i
+    reset = period.positive? ? (now + (period - now % period)) : now
 
     headers = {
       'Content-Type' => 'application/json',
       'RateLimit-Limit' => match_data[:limit].to_s,
       'RateLimit-Remaining' => '0',
-      'RateLimit-Reset' => (now + (match_data[:period] - now % match_data[:period])).to_s
+      'RateLimit-Reset' => reset.to_s
     }
 
     body = {
