@@ -7,16 +7,17 @@ def validate_lambda_config!
 end
 
 def lambda_credentials
+  if ENV['AWS_SESSION_TOKEN'].present?
+    Rails.logger.debug 'Configuring Lambda client with temporary static credentials (session token)'
+    return AwsAuth.static_credentials
+  end
+
   if AwsAuth.role_arn_present?
     Rails.logger.debug 'Configuring Lambda client with assumed role credentials'
     return AwsAuth.assume_role_credentials(role_session_name: 'timdex-lambda')
   end
 
-  if ENV['AWS_SESSION_TOKEN'].present?
-    Rails.logger.debug 'Configuring Lambda client with temporary static credentials (session token)'
-  else
-    Rails.logger.debug 'Configuring Lambda client with long-lived static credentials'
-  end
+  Rails.logger.debug 'Configuring Lambda client with long-lived static credentials'
 
   AwsAuth.static_credentials
 end

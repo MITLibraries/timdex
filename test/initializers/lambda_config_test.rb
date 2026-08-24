@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class LambdaConfigTest < ActiveSupport::TestCase
-  test 'configure_lambda_client uses assume role credentials when AWS_ROLE_ARN is set' do
+  test 'configure_lambda_client uses assume role credentials when AWS_ROLE_ARN is set and no session token is present' do
     captured_options = nil
 
     ClimateControl.modify(
@@ -33,6 +33,32 @@ class LambdaConfigTest < ActiveSupport::TestCase
         )
       )
       lambda_credentials
+    end
+  end
+
+  test 'configure_lambda_client uses session token credentials when both AWS_SESSION_TOKEN and AWS_ROLE_ARN are set' do
+    captured_options = nil
+
+    ClimateControl.modify(
+      AWS_REGION: 'us-east-1',
+      AWS_ROLE_ARN: 'arn:aws:iam::123456789:role/MyLambdaRole',
+      AWS_ACCESS_KEY_ID: 'AKIAIOSFODNN7EXAMPLE',
+      AWS_SECRET_ACCESS_KEY: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+      AWS_SESSION_TOKEN: 'FwoGZXIvYXdzEBEaDKB...',
+      AWS_ENDPOINT_URL_LAMBDA: nil
+    ) do
+      Aws::AssumeRoleCredentials.expects(:new).never
+      Aws::Lambda::Client.stubs(:new).with do |opts|
+        captured_options = opts
+        true
+      end.returns(:lambda_client)
+
+      configure_lambda_client
+
+      assert_equal 'us-east-1', captured_options[:region]
+      assert_kind_of Aws::Credentials, captured_options[:credentials]
+      assert_nil captured_options[:endpoint]
+      assert_equal 'FwoGZXIvYXdzEBEaDKB...', captured_options[:credentials].session_token
     end
   end
 

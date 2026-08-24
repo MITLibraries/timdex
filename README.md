@@ -20,6 +20,7 @@ This application interfaces with an OpenSearch backend and exposes a GraphQL end
 - [AWS Configuration](#aws-configuration)
   - [OpenSearch Configuration](#opensearch-configuration)
   - [AWS Credentials (Used for AWS-based OpenSearch and timdex-semantic-builder)](#aws-credentials-used-for-aws-based-opensearch-and-timdex-semantic-builder)
+  - [TIMDEX Semantic Builder Lambda Authentication](#timdex-semantic-builder-lambda-authentication)
   - [AWS OpenSearch Service (Legacy)](#aws-opensearch-service-legacy)
   - [AWS OpenSearch Serverless (AOSS)](#aws-opensearch-serverless-aoss)
   - [TIMDEX Semantic Builder Lambda](#timdex-semantic-builder-lambda)
@@ -213,7 +214,7 @@ locally.
 - `AWS_SECRET_ACCESS_KEY`: AWS secret key for OpenSearch and Lambda
 - `AWS_REGION`: AWS region for OpenSearch and Lambda services
 - `AWS_ROLE_ARN`: IAM role ARN to assume when using role-based AWS authentication.
-  Used by both OpenSearch (AOSS) and Lambda when `AWS_SESSION_TOKEN` is not set.
+  Used by OpenSearch (AOSS) and TIMDEX Semantic Builder Lambda when `AWS_SESSION_TOKEN` is not set.
 - `AWS_SESSION_TOKEN`: (Optional) AWS session token for temporary credentials when using expiring AWS credentials.
   Use this with temporary AWS credentials for AWS-based OpenSearch access and Lambda.
   When this is set, temporary credentials are used directly and `AWS_ROLE_ARN` is not needed.
@@ -222,9 +223,12 @@ locally.
 
 Credential behavior for the Lambda client is:
 
-1. If `AWS_ROLE_ARN` is set, assume that role.
-2. Otherwise, if `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` are set, use those static credentials (and `AWS_SESSION_TOKEN` if present).
-3. If required credential env vars are missing, initialization fails with an explicit configuration error.
+1. If `AWS_SESSION_TOKEN` is set, use static credentials with the session token.
+2. Otherwise, if `AWS_ROLE_ARN` is set, assume that role.
+3. Otherwise, if `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` are set, use long-lived static credentials.
+4. If required credential env vars are missing, initialization fails with an explicit configuration error.
+
+When both `AWS_ROLE_ARN` and `AWS_SESSION_TOKEN` are set, Lambda uses `AWS_SESSION_TOKEN` directly.
 
 ### AWS OpenSearch Service (Legacy)
 
