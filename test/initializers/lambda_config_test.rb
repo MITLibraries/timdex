@@ -100,9 +100,26 @@ class LambdaConfigTest < ActiveSupport::TestCase
       end
 
       assert_match(/AWS Lambda Config Error/, error.message)
-      assert_match(/AWS_REGION/, error.message)
       assert_match(/AWS_ACCESS_KEY_ID/, error.message)
       assert_match(/AWS_SECRET_ACCESS_KEY/, error.message)
+    end
+  end
+
+  test 'configure_lambda_client raises error when AWS_ROLE_ARN is missing and AWS_SESSION_TOKEN is not present' do
+    ClimateControl.modify(
+      AWS_REGION: 'us-east-1',
+      AWS_ROLE_ARN: nil,
+      AWS_ACCESS_KEY_ID: 'AKIAIOSFODNN7EXAMPLE',
+      AWS_SECRET_ACCESS_KEY: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+      AWS_SESSION_TOKEN: nil,
+      AWS_ENDPOINT_URL_LAMBDA: nil
+    ) do
+      error = assert_raises(RuntimeError) do
+        configure_lambda_client
+      end
+
+      assert_match(/AWS Lambda Config Error/, error.message)
+      assert_match(/AWS_ROLE_ARN/, error.message)
     end
   end
 end

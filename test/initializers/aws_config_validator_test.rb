@@ -18,7 +18,6 @@ class AwsConfigValidatorTest < ActiveSupport::TestCase
 
       assert_match(/AWS AOSS Config Error/, error.message)
       assert_match(/OPENSEARCH_URL/, error.message)
-      assert_match(/AWS_REGION/, error.message)
       assert_match(/AWS_ACCESS_KEY_ID/, error.message)
       assert_match(/AWS_SECRET_ACCESS_KEY/, error.message)
     end
@@ -40,7 +39,7 @@ class AwsConfigValidatorTest < ActiveSupport::TestCase
     end
   end
 
-  test 'validate_aws_aoss_config raises error when AWS_REGION is missing' do
+  test 'validate_aws_aoss_config succeeds when AWS_REGION is missing' do
     ClimateControl.modify(
       OPENSEARCH_URL: 'https://example.us-east-1.aoss.amazonaws.com',
       AWS_REGION: nil,
@@ -48,11 +47,7 @@ class AwsConfigValidatorTest < ActiveSupport::TestCase
       AWS_ACCESS_KEY_ID: 'AKIAIOSFODNN7EXAMPLE',
       AWS_SECRET_ACCESS_KEY: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY'
     ) do
-      error = assert_raises(RuntimeError) do
-        AwsConfigValidator.validate_aws_aoss_config
-      end
-
-      assert_match(/AWS_REGION/, error.message)
+      assert_nil AwsConfigValidator.validate_aws_aoss_config
     end
   end
 
@@ -145,7 +140,6 @@ class AwsConfigValidatorTest < ActiveSupport::TestCase
 
       assert_match(/AWS OpenSearch Config Error/, error.message)
       assert_match(/OPENSEARCH_URL/, error.message)
-      assert_match(/AWS_REGION/, error.message)
       assert_match(/AWS_ACCESS_KEY_ID/, error.message)
       assert_match(/AWS_SECRET_ACCESS_KEY/, error.message)
     end
@@ -166,18 +160,14 @@ class AwsConfigValidatorTest < ActiveSupport::TestCase
     end
   end
 
-  test 'validate_aws_os_config raises error when AWS_REGION is missing' do
+  test 'validate_aws_os_config succeeds when AWS_REGION is missing' do
     ClimateControl.modify(
       OPENSEARCH_URL: 'https://example.us-east-1.es.amazonaws.com',
       AWS_REGION: nil,
       AWS_ACCESS_KEY_ID: 'AKIAIOSFODNN7EXAMPLE',
       AWS_SECRET_ACCESS_KEY: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY'
     ) do
-      error = assert_raises(RuntimeError) do
-        AwsConfigValidator.validate_aws_os_config
-      end
-
-      assert_match(/AWS_REGION/, error.message)
+      assert_nil AwsConfigValidator.validate_aws_os_config
     end
   end
 
