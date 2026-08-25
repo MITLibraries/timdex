@@ -20,6 +20,7 @@ This application interfaces with an OpenSearch backend and exposes a GraphQL end
 - [AWS Configuration](#aws-configuration)
   - [OpenSearch Configuration](#opensearch-configuration)
   - [AWS Credentials (Used for AWS-based OpenSearch and timdex-semantic-builder)](#aws-credentials-used-for-aws-based-opensearch-and-timdex-semantic-builder)
+  - [TIMDEX Semantic Builder Lambda Authentication](#timdex-semantic-builder-lambda-authentication)
   - [AWS OpenSearch Service (Legacy)](#aws-opensearch-service-legacy)
   - [AWS OpenSearch Serverless (AOSS)](#aws-opensearch-serverless-aoss)
   - [TIMDEX Semantic Builder Lambda](#timdex-semantic-builder-lambda)
@@ -212,9 +213,22 @@ locally.
 - `AWS_ACCESS_KEY_ID`: AWS access key for OpenSearch and Lambda
 - `AWS_SECRET_ACCESS_KEY`: AWS secret key for OpenSearch and Lambda
 - `AWS_REGION`: AWS region for OpenSearch and Lambda services
+- `AWS_ROLE_ARN`: IAM role ARN to assume when using role-based AWS authentication.
+  Used by OpenSearch (AOSS) and TIMDEX Semantic Builder Lambda when `AWS_SESSION_TOKEN` is not set.
 - `AWS_SESSION_TOKEN`: (Optional) AWS session token for temporary credentials when using expiring AWS credentials.
   Use this with temporary AWS credentials for AWS-based OpenSearch access and Lambda.
-  For AOSS, when this is set, temporary credentials are used directly and `AWS_AOSS_ROLE_ARN` is not needed.
+  When this is set, temporary credentials are used directly and `AWS_ROLE_ARN` is not needed.
+
+### TIMDEX Semantic Builder Lambda Authentication
+
+Credential behavior for the Lambda client is:
+
+1. If `AWS_SESSION_TOKEN` is set, use static credentials with the session token.
+2. Otherwise, if `AWS_ROLE_ARN` is set, assume that role.
+3. Otherwise, if `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` are set, use long-lived static credentials.
+4. If required credential env vars are missing, initialization fails with an explicit configuration error.
+
+When both `AWS_ROLE_ARN` and `AWS_SESSION_TOKEN` are set, Lambda uses `AWS_SESSION_TOKEN` directly.
 
 ### AWS OpenSearch Service (Legacy)
 
@@ -227,8 +241,8 @@ This is our legacy AWS OpenSearch Service Cluster. All production instances shou
 This is our upcoming configuration once migration is complete. This uses a different [authentication mechanism](https://github.com/awsdocs/amazon-opensearch-service-developer-guide/blob/master/doc_source/serverless-clients.md#ruby) than our legacy AWS OpenSearch Service.
 
 - `AWS_AOSS`: boolean. Set to `true` to enable AWS OpenSearch Serverless (AOSS).
-- `AWS_AOSS_ROLE_ARN`: AWS IAM role ARN to assume for AOSS authentication. **Required when** `AWS_AOSS=true` **and** `AWS_SESSION_TOKEN` is not set. This enables automatic credential refresh via role assumption.
-  When `AWS_SESSION_TOKEN` is present, temporary credentials are used directly and `AWS_AOSS_ROLE_ARN` is not needed. This is only used in local development. `AWS_AOSS_ROLE_ARN` is used in production.
+- `AWS_ROLE_ARN`: AWS IAM role ARN to assume for AOSS authentication. **Required when** `AWS_AOSS=true` **and** `AWS_SESSION_TOKEN` is not set. This enables automatic credential refresh via role assumption.
+  When `AWS_SESSION_TOKEN` is present, temporary credentials are used directly and `AWS_ROLE_ARN` is not needed.
 
 ### TIMDEX Semantic Builder Lambda
 

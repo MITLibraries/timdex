@@ -1,7 +1,8 @@
 require 'faraday_middleware/aws_sigv4' if ENV['AWS_OPENSEARCH'] == 'true' && ENV.fetch('AWS_AOSS', 'false') == 'false'
 require 'opensearch-aws-sigv4'
 require 'aws-sigv4'
-require 'opensearch_config_validator'
+require 'aws_auth'
+require 'aws_config_validator'
 
 # Helper method to parse OPENSEARCH_LOG as a boolean
 # Environment variables are always strings, so 'false' is truthy
@@ -13,10 +14,10 @@ end
 # Priority is given to AWS AOSS, then AWS OpenSearch, and finally vanilla OpenSearch
 def configure_opensearch
   if ENV['AWS_AOSS'] == 'true'
-    OpensearchConfigValidator.validate_aws_aoss_config
+    AwsConfigValidator.validate_aws_aoss_config
     aws_aoss_client
   elsif ENV['AWS_OPENSEARCH'] == 'true'
-    OpensearchConfigValidator.validate_aws_os_config
+    AwsConfigValidator.validate_aws_os_config
     aws_os_client
   else
     os_client
@@ -44,10 +45,10 @@ end
 # obtained by assuming a role.
 def aws_os_client
   OpenSearch::Client.new log: opensearch_logging_enabled?, url: ENV.fetch('OPENSEARCH_URL', nil) do |config|
-    Rails.logger.debug "Configuring Legacy AWS OpenSearch Service client"
+    Rails.logger.debug 'Configuring Legacy AWS OpenSearch Service client'
     # personal keys use expiring credentials with tokens
     if ENV['AWS_SESSION_TOKEN'].present?
-      Rails.logger.debug 'Using temporary credentials with session token'
+      Rails.logger.debug 'Using temporary credentials with session token for OpenSearch Service client'
       config.request :aws_sigv4,
                      service: 'es',
                      region: ENV.fetch('AWS_REGION', nil),
@@ -56,7 +57,7 @@ def aws_os_client
                      session_token: ENV['AWS_SESSION_TOKEN']
     # application keys don't use tokens
     else
-      Rails.logger.debug 'Using long-lived credentials without session token'
+      Rails.logger.debug 'Using long-lived credentials without session token for OpenSearch Service client'
       config.request :aws_sigv4,
                      service: 'es',
                      region: ENV.fetch('AWS_REGION', nil),
@@ -74,12 +75,22 @@ end
 # @note this configuration uses temporary credentials obtained by assuming a role or via the AWS console, unlike
 # AWS OpenSearch Service which can use long-lived access keys directly.
 def aws_aoss_client
-  Rails.logger.debug "Configuring AWS AOSS client"
+  Rails.logger.debug 'Configuring AWS OpenSearch Serverless (AOSS) client'
+
+  credentials_provider = if ENV.fetch('AWS_SESSION_TOKEN', false).present?
+                           Rails.logger.debug 'Using temporary credentials with session token for OpenSearch AOSS ' \
+                                              'client'
+                           AwsAuth.static_credentials
+                         else
+                           Rails.logger.debug 'Using long-lived credentials and assuming role for OpenSearch AOSS ' \
+                                              'client'
+                           AwsAuth.assume_role_credentials(role_session_name: 'timdex-opensearch')
+                         end
 
   signer = Aws::Sigv4::Signer.new(
     service: 'aoss',
-    region: ENV.fetch('AWS_REGION', nil),
-    credentials_provider: credentials
+    region: ENV.fetch('AWS_REGION', 'us-east-1'),
+    credentials_provider: credentials_provider
   )
 
   OpenSearch::Aws::Sigv4Client.new(
@@ -88,44 +99,6 @@ def aws_aoss_client
       log: opensearch_logging_enabled?
     },
     signer
-  )
-end
-
-def credentials
-  if ENV.fetch('AWS_SESSION_TOKEN', false).present?
-    Rails.logger.debug 'Using temporary credentials with session token'
-    temporary_credentials
-  else
-    Rails.logger.debug 'Using long-lived credentials and assuming role'
-    assume_role_credentials
-  end
-end
-
-# personal keys use expiring credentials with tokens, so we use them directly without assuming a role
-# application keys use long-lived credentials and assume a role to get temporary credentials for AOSS
-def temporary_credentials
-  Aws::Credentials.new(
-    ENV.fetch('AWS_ACCESS_KEY_ID', nil),
-    ENV.fetch('AWS_SECRET_ACCESS_KEY', nil),
-    ENV.fetch('AWS_SESSION_TOKEN', nil)
-  )
-end
-
-# AWS AOSS uses temporary credentials that are obtained by assuming a role. The
-# Aws::AssumeRoleCredentials class is used to get these temporary credentials. It requires the ARN of
-# the role to assume, a session name, and a client for the AWS Security Token Service (STS) which is
-# used to perform the AssumeRole operation. It uses the AWS region and access keys from the
-# environment variables to create the STS client. When the session token expires, the
-# Aws::AssumeRoleCredentials will automatically refresh the credentials by calling AssumeRole again.
-def assume_role_credentials
-  Aws::AssumeRoleCredentials.new(
-    role_arn: ENV.fetch('AWS_AOSS_ROLE_ARN', nil),
-    role_session_name: 'timdex-opensearch',
-    client: Aws::STS::Client.new(
-      region: ENV.fetch('AWS_REGION', nil),
-      access_key_id: ENV.fetch('AWS_ACCESS_KEY_ID', nil),
-      secret_access_key: ENV.fetch('AWS_SECRET_ACCESS_KEY', nil)
-    )
   )
 end
 
