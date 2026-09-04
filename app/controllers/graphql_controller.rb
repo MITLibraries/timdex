@@ -2,13 +2,15 @@ class GraphqlController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def execute
+    @graphql_search_events = []
     variables = ensure_hash(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
     context = {
       # Query context goes here, for example:
       # current_user: current_user,
-      tracers: [request_tracer]
+      request_id: request.request_id,
+      graphql_search_events: @graphql_search_events
     }
     result = TimdexSchema.execute(query, variables: variables,
                                          context: context,
@@ -48,7 +50,13 @@ class GraphqlController < ApplicationController
                    data: {} }, status: :internal_server_error
   end
 
-  def request_tracer
-    @request_tracer ||= TimdexRequestTracer.new
+  # Appends additional information to the log payload that is specific to GraphQL requests
+  def append_info_to_payload(payload)
+    super
+
+    return if @graphql_search_events.blank?
+
+    payload[:graphql_search_events] = @graphql_search_events
+    payload.merge!(@graphql_search_events.first) if @graphql_search_events.one?
   end
 end

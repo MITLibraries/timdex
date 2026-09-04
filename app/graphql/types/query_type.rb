@@ -115,7 +115,7 @@ module Types
     def search(searchterm:, citation:, contributors:, funding_information:, geodistance:, geobox:, identifiers:,
                locations:, subjects:, title:, index:, source:, from:, boolean_type:, fulltext:, per_page: 20,
                query_mode: 'keyword', use_global_scoring: false, tuning_parameters_input: nil, **filters)
-      Rails.logger.info("Searchterm: #{format_searchterm_for_log(searchterm)}")
+      analyzer_data = context[:graphql_analysis] || {}
 
       query = construct_query(searchterm, citation, contributors, funding_information, geodistance, geobox, identifiers,
                               locations, subjects, title, source, boolean_type, filters, per_page, query_mode)
@@ -132,11 +132,21 @@ module Types
       response[:hits] = results['hits']['total']['value']
       response[:records] = inject_hits_fields_into_source(results['hits']['hits'])
       response[:aggregations] = collapse_buckets(results['aggregations'])
+
+      context[:graphql_search_events]&.push(
+        searchterm: format_searchterm_for_log(searchterm),
+        query_mode: query_mode,
+        timdex_result_count: response[:hits],
+        used_deprecated_fields: analyzer_data[:used_deprecated_fields] || [],
+        used_deprecated_arguments: analyzer_data[:used_deprecated_arguments] || []
+      )
+
       response
     end
 
     def highlight_requested?
-      context[:tracers].first.log_data[:used_fields].include?('Record.highlight')
+      used_fields = context.dig(:graphql_analysis, :used_fields) || []
+      used_fields.include?('Record.highlight')
     end
 
     # Convert aggregation fields to format expected by aggregations model.
@@ -150,7 +160,7 @@ module Types
     end
 
     def requested_aggregations
-      used_fields = context[:tracers].first.log_data[:used_fields]
+      used_fields = context.dig(:graphql_analysis, :used_fields) || []
       used_fields.select { |field| field.start_with?('Aggregations.') }
                  .map { |field| requested_aggregation_field(field.sub('Aggregations.', '')) }
     end
