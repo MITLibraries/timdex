@@ -147,7 +147,7 @@ class LexicalQueryBuilder
     fields = ['alternate_titles', 'call_numbers', 'citation', 'contents', 'contributors.value', 'dates.value',
               'edition', 'funding_information.*', 'identifiers.value', 'languages', 'locations.value',
               'notes.value', 'numbering', 'publication_information', 'subjects.value', 'summary', 'title']
-    fields << 'fulltext' if fulltext
+    fields << 'fulltext^0.1' if fulltext
 
     fields
   end
