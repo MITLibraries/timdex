@@ -7,4 +7,4 @@ on:
 
 jobs:
   shared:
-    uses: mitlibraries/.github/.github/workflows/ruby-shared-ci.yml@main
+    uses: mitlibraries/.github/.github/workflows/ruby-shared-ci.yml@145dc67a34f222d194728214ca95d275bdc58e3f # main
