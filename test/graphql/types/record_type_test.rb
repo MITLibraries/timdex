@@ -30,4 +30,10 @@ class RecordTypeTest < ActiveSupport::TestCase
     result = record_type.file_formats
     assert_equal %w[PDF EPUB], result, 'file_formats should return unique values'
   end
+
+  test 'deprecated identifiers return nil when identifiers key is missing' do
+    record_type = Types::RecordType.send(:new, { 'title' => 'Test Record' }, {})
+
+    assert_nil record_type.isbns
+  end
 end
