@@ -249,7 +249,7 @@ module Types
     end
 
     def deprecated_identifiers(field)
-      @object['identifiers'].map { |id| id['value'] if id['kind'] == field }.compact
+      @object['identifiers']&.map { |id| id['value'] if id['kind'] == field }&.compact
     end
   end
 end
